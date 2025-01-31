@@ -43,7 +43,7 @@ export const NavWrap = styled.nav`
           transition: 0.3s;
 
           &:hover {
-            color: var(--primary-color);
+            color: var(--hover-color);
           }
         }
         &:last-child span {
