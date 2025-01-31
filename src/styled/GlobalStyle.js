@@ -4,16 +4,28 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
   ${reset}
   /* other styles */
+  :root {
+    --primary-color: #F05A7E;
+    --secondary-color: #6c757d;
+    --text-color: #fff;
+    --background-color: #1c1c1e;
+  }
   
+
+
+
+
+
   body {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.2;
     font-family: 'Noto Sans KR', sans-serif;
-    color:#333;
+    color:var(--text-color);
+    background-color: var(--background-color);
   }
   a {
     text-decoration: none;
-    color:#333; 
+    color:var(--text-color);
   }
   li { list-style:none }
   img { vertical-align: top; }
