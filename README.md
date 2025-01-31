@@ -1,130 +1,127 @@
 ```
 src/
+├── components/                    # 공통 컴포넌트
+│   ├── common/
+│   │   ├── Button/
+│   │   │   ├── index.jsx
+│   │   │   └── styles.js
+│   │   ├── Input/
+│   │   ├── Modal/
+│   │   ├── Form/
+│   │   ├── Card/
+│   │   └── Navigation/
+│   ├── layout/
+│   │   ├── Header/
+│   │   │   ├── index.jsx
+│   │   │   ├── UserMenu.jsx
+│   │   │   └── SearchBar.jsx
+│   │   ├── Footer/
+│   │   └── Sidebar/
+│   └── features/                  # 기능별 공통 컴포넌트
+│       ├── player/
+│       │   ├── VideoPlayer.jsx
+│       │   └── Controls.jsx
+│       ├── review/
+│       └── recommendation/
 │
-├── assets/                  # 이미지, 폰트 등 정적 리소스
+├── pages/
+│   ├── Landing/                   # 랜딩 페이지
+│   │   ├── index.jsx
+│   │   └── components/
+│   │       ├── Hero/
+│   │       ├── Features/
+│   │       └── Pricing/
+│   │
+│   ├── Auth/                      # 인증 관련 페이지
+│   │   ├── Login/
+│   │   │   ├── index.jsx
+│   │   │   └── components/
+│   │   │       ├── LoginForm/
+│   │   │       └── SocialLogin/
+│   │   └── SignUp/
+│   │       ├── index.jsx
+│   │       └── components/
+│   │           ├── SignUpForm/
+│   │           └── TermsAgreement/
+│   │
+│   ├── Home/                      # 메인 페이지
+│   │   ├── index.jsx
+│   │   └── components/
+│   │       ├── MainBanner/
+│   │       ├── TrendingSection/
+│   │       ├── ContinueWatching/
+│   │       └── CategoryRows/
+│   │
+│   ├── Detail/                    # 상세 페이지
+│   │   ├── index.jsx
+│   │   └── components/
+│   │       ├── ContentInfo/
+│   │       ├── ReviewSection/
+│   │       ├── RelatedContent/
+│   │       └── EpisodeList/
+│   │
+│   ├── Category/                  # 카테고리 페이지
+│   │   ├── index.jsx
+│   │   └── components/
+│   │       ├── CategoryFilter/
+│   │       ├── ContentGrid/
+│   │       └── SortingOptions/
+│   │
+│   ├── Search/                    # 검색 페이지
+│   │   ├── index.jsx
+│   │   └── components/
+│   │       ├── SearchBar/
+│   │       ├── FilterSection/
+│   │       └── ResultGrid/
+│   │
+│   └── MyPage/                    # 마이 페이지
+│       ├── index.jsx
+│       └── components/
+│           ├── Profile/
+│           ├── WatchHistory/
+│           └── WishList/
+│
+├── store/                         # Redux 관련
+│   ├── index.js                   # 스토어 설정
+│   └── slices/
+│       ├── authSlice.js          # 인증 관련 상태
+│       ├── contentSlice.js       # 콘텐츠 관련 상태
+│       ├── playerSlice.js        # 플레이어 관련 상태
+│       ├── reviewSlice.js        # 리뷰 관련 상태
+│       └── uiSlice.js            # UI 관련 상태
+│
+├── api/                           # API 통신
+│   ├── axios.js                   # axios 인스턴스 설정
+│   ├── auth.js
+│   ├── content.js
+│   ├── review.js
+│   └── user.js
+
+├── utils/                         # 유틸리티 함수들
+│   ├── format.js
+│   ├── validation.js
+│   ├── storage.js
+│   └── constants.js
+
+├── hooks/                         # 커스텀 훅
+│   ├── useAuth.js
+│   ├── usePlayer.js
+│   └── useInfiniteScroll.js
+
+├── styles/                        # 스타일 관련
+│   ├── theme.js
+│   ├── globalStyles.js
+│   └── variables.js
+
+├── assets/                        # 정적 자원
 │   ├── images/
+│   ├── icons/
 │   └── fonts/
 │
-├── components/             # 재사용 가능한 공통 컴포넌트
-│   ├── common/            # 공통으로 사용되는 컴포넌트
-│   │   ├── Button/
-│   │   ├── Input/
-│   │   └── Modal/
-│   │
-│   ├── layout/            # 레이아웃 관련 컴포넌트
-│   │   ├── Header/
-│   │   ├── Footer/
-│   │   ├── Section/
-│   │   └── Navigation/
-│   │
-│   └── features/          # 특정 기능과 관련된 컴포넌트
-│       ├── auth/          # 인증 관련 컴포넌트
-│       ├── movie/         # 영화 관련 컴포넌트
-│       ├── drama/         # 드라마 관련 컴포넌트
-│       ├── variety/       # 예능 관련 컴포넌트
-│       ├── anime/         # 애니메이션 관련 컴포넌트
-│       ├── kids/          # 키즈 콘텐츠 관련 컴포넌트
-│       └── mypage/        # 마이페이지 재사용 컴포넌트
-│           ├── ProfileBadge/
-│           ├── ContentProgress/
-│           └── WatchHistory/
-│
-├── pages/                 # 페이지 컴포넌트
-│   ├── Landing/          # 랜딩 페이지
-│   │
-│   ├── Auth/            # 로그인/회원가입 페이지
-│   │   ├── Login/
-│   │   └── Register/
-│   │
-│   ├── Movie/           # 영화 페이지
-│   │   ├── List/
-│   │   └── Detail/
-│   │
-│   ├── Drama/           # 드라마 페이지
-│   │   ├── List/
-│   │   └── Detail/
-│   │
-│   ├── Variety/         # 예능 페이지
-│   │   ├── List/
-│   │   └── Detail/
-│   │
-│   ├── Anime/           # 애니메이션 페이지
-│   │   ├── List/
-│   │   └── Detail/
-│   │
-│   ├── Kids/            # 키즈 페이지
-│   │   ├── List/
-│   │   └── Detail/
-│   │
-│   ├── MyPage/          # 마이페이지
-│   │   ├── index.jsx    # 마이페이지 메인 컴포넌트
-│   │   ├── styles.css   # 마이페이지 스타일
-│   │   │
-│   │   ├── components/  # 마이페이지 전용 컴포넌트
-│   │   │   ├── Profile/
-│   │   │   │   ├── ProfileInfo/
-│   │   │   │   ├── ProfileEdit/
-│   │   │   │   └── Notification/
-│   │   │   │
-│   │   │   ├── ContentList/
-│   │   │   │   ├── RecentContent/
-│   │   │   │   ├── WatchingContent/
-│   │   │   │   ├── LikedContent/
-│   │   │   │   └── ContentCard/
-│   │   │   │
-│   │   │   ├── Subscription/
-│   │   │   │   ├── CurrentPlan/
-│   │   │   │   ├── PaymentHistory/
-│   │   │   │   └── BillingInfo/
-│   │   │   │
-│   │   │   └── Settings/
-│   │   │       ├── AccountSettings/
-│   │   │       ├── SecuritySettings/
-│   │   │       └── PreferenceSettings/
-│   │   │
-│   │   ├── hooks/      # 마이페이지 전용 훅
-│   │   │   ├── useProfileUpdate.js
-│   │   │   ├── useContentList.js
-│   │   │   └── useSubscription.js
-│   │   │
-│   │   └── constants/  # 마이페이지 관련 상수
-│   │       ├── profileOptions.js
-│   │       └── contentTypes.js
-│   │
-│   └── Subscription/   # 구독권 페이지
-│
-├── services/          # API 통신 관련 로직
-│   ├── api/          # API 엔드포인트 설정
-│   │   ├── auth.js
-│   │   ├── movie.js
-│   │   ├── drama.js
-│   │   ├── variety.js
-│   │   ├── anime.js
-│   │   └── kids.js
-│   └── axios/        # Axios 인스턴스 및 인터셉터
-│
-├── hooks/            # 공통 커스텀 훅
-│   ├── useAuth.js
-│   ├── useMedia.js
-│   └── useDetail.js
-│
-├── store/           # 상태 관리 (Redux/Recoil 등)
-│   ├── auth/
-│   └── media/
-│
-├── styles/          # 스타일 관련 파일
-│   ├── global.css
-│   └── theme.js
-│
-├── utils/          # 유틸리티 함수
-│   ├── formatters.js
-│   └── validators.js
-│
-├── constants/      # 상수 정의
-│   ├── routes.js
-│   └── api.js
-│
-└── App.jsx        # 루트 컴포넌트
+└── routes/                        # 라우팅 설정
+    ├── index.jsx
+    ├── PrivateRoute.jsx
+    └── PublicRoute.jsx
 ```
 
 ```
