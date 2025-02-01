@@ -122,8 +122,6 @@ src/
     ├── index.jsx
     ├── PrivateRoute.jsx
     └── PublicRoute.jsx
-```
+``````
 
-```
-
-```
+```;
