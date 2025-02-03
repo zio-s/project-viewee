@@ -38,7 +38,7 @@ const sizes = {
   `,
   large: css`
     height: 52px;
-    padding: 0 32px;
+    padding: 0 52px;
     font-size: 18px;
   `,
 };

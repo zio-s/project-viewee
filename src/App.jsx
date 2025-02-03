@@ -9,7 +9,9 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/" element={<Layout />}></Route>
+          <Route path="/" element={<Layout />}>
+          
+          </Route>
 
           <Route path="*" element={<NotFiles />} />
         </Routes>
