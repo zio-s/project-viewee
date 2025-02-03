@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <FooterWrap>
       <div>footer</div>
-      <Button variant='gray' size='medium'>
+      <Button variant="primary" size="large">
         바로가기
       </Button>
     </FooterWrap>
