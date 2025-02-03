@@ -1,13 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-//https://gist.githubusercontent.com/eun00/5c694a8e1a78f331e463d214bbc4eca3/raw/cf7bbad0f2d0768b9d68ca12f3a6a9aa1b9623ec/musicDate
-export const getMusic = createAsyncThunk('music/getMusic', async () => {
-  const url = `https://gist.githubusercontent.com/eun00/5c694a8e1a78f331e463d214bbc4eca3/raw/022d477bb0a525643a88b477561bf01d20282cf1/musicDate`;
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const BASE_URL = 'https://api.themoviedb.org/3';
+
+// 🎥 비동기 Thunk: 인기 영화 가져오기
+export const getTmdb = createAsyncThunk('movies/fetchPopular', async () => {
+  const url = `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=ko-KR`;
   try {
     const res = await axios.get(url);
-    return res.data.music;
+    return res.data.results; // 영화 데이터 반환
   } catch (error) {
-    console.log(error);
+    throw new Error('영화 데이터를 불러오지 못했습니다.');
   }
 });
