@@ -123,9 +123,3 @@ src/
     ├── PrivateRoute.jsx
     └── PublicRoute.jsx
 ```
-
-````
-깃 연습입니다
-```
-저도 연습중입니다.
-````
