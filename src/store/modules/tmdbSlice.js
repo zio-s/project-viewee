@@ -38,15 +38,11 @@ export const contentSlice = createSlice({
       .addCase(getContent.fulfilled, (state, action) => {
         const { type, data, currentPage, totalPages } = action.payload;
         const contentState = type === 'movie' ? state.movies : state.tvShows;
-
-        if (currentPage === 1) {
-          contentState.data = data;
-        } else {
-          contentState.data = [...contentState.data, ...data];
-        }
+        contentState.data = data;
 
         contentState.currentPage = currentPage;
         contentState.totalPages = totalPages;
+        state.loading = false;
         state.loading = false;
         state.currentPage = currentPage;
         state.totalPages = totalPages;
