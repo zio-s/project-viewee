@@ -10,7 +10,7 @@ const Index = () => {
 
       <VisualWrap>
         <SectionWrapper>
-          <ContentSwiper />a
+          <ContentSwiper />b
         </SectionWrapper>
       </VisualWrap>
     </>
