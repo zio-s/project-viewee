@@ -77,6 +77,9 @@ export const MyPageNavWrap = styled.div`
         color: var(--hover-color);
       }
     }
+    .on {
+      color: var(--primary-50);
+    }
   }
 `;
 export const MyPageContentWrap = styled.div`
