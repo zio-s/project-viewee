@@ -48,6 +48,64 @@ const GlobalStyle = createGlobalStyle`
     --background-secondary: var(--gray-80);
     --hover-color: var(--primary-50);
     --border-color: var(--gray-70);
+
+    /* layout */
+    --layout: 1440px;
+    --p-tablet: 30px;
+    --p-mobile: 15px;
+
+    /* font styles */
+    --font-primary: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    --font-size-root: 10px;
+    --font-size-base: 1.0rem;
+
+    /* font-size */
+    --font-title-s: 64px;
+    --font-title-m: 72px;
+    --font-title-l: 90px;
+    --font-title-xl: 120px;
+    --font-heading-m: 17px;
+    --font-content-s: 16px;
+    --font-content-m: 17px;
+    --font-content-l: 20px;
+    --font-content-xl: 24px;
+    --font-content-xxl: 26px;
+    --font-content-xxxl: 36px;
+    --font-label-s: 14px;
+    --font-label-m: 20px;
+    --font-label-l: 24px;
+    --font-footer-m: 2.0rem;
+
+    --font-title-m-tablet: 48px;
+    --font-heading-m-tablet: 17px;
+    --font-content-m-tablet: 16px;
+    --font-content-xxl-tablet: 24px;
+    --font-label-m-tablet: 12px;
+    --font-label-xl-tablet: 14px;
+    --font-footer-m-tablet: 12px;
+
+    --font-title-m-mobile: 30px;
+    --font-heading-m-mobile: 15px;
+    --font-content-m-mobile: 14px;
+    --font-content-l-mobile: 16px;
+    --font-content-xxl-mobile: 20px;
+    --font-label-m-mobile: 7px;
+    --font-label-xl-mobile: 14px;
+    --font-footer-m-mobile: 10px;
+
+    /* font-weight */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+
+    /* line-hieght */
+    --line-height-base: 1.2;
+
+
+
   }
   
 
@@ -68,14 +126,17 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
+	font-size: var(--font-size-root);
 	font: inherit;
 	vertical-align: baseline;
 }
+  html{
+  font-size: var(--font-size-root);
+  }
   body {
     font-size: 16px;
     line-height: 1.2;
-    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-family: var(--font-primary);
     color:var(--gray-0);
     background-color: var(--background-color);
     -webkit-overflow-scrolling: touch;
