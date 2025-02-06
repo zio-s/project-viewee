@@ -40,6 +40,10 @@ export const ProfileWrap = styled.div`
       }
       .membership {
         width: 265px;
+        cursor: default;
+        &:hover {
+          background: var(--gray-70);
+        }
       }
     }
   }
@@ -67,6 +71,15 @@ export const MyPageNavWrap = styled.div`
       font-size: var(--font-content-xl);  
       color: var(--gray-40);
       `}
+    li {
+      cursor: pointer;
+      &:hover {
+        color: var(--hover-color);
+      }
+    }
+    .on {
+      color: var(--primary-50);
+    }
   }
 `;
 export const MyPageContentWrap = styled.div`
