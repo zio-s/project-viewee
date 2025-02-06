@@ -45,7 +45,7 @@ const ENDPOINTS = {
 
 export const getContent = createAsyncThunk(
   'content/getContent',
-  async ({ type = 'movie', category = 'now_playing', genre }) => {
+  async ({ type = 'movie', category = 'now_playing', genre, page = 1 }) => {
     const endpoint = ENDPOINTS[category][type];
     const url = `${BASE_URL}/${endpoint}`;
 
@@ -53,6 +53,7 @@ export const getContent = createAsyncThunk(
       const options = {
         ...baseOptions,
         with_genres: genre ? GENRES[type][genre] : undefined,
+        page: page,
       };
 
       const response = await axios.get(url, { params: options });
@@ -61,6 +62,8 @@ export const getContent = createAsyncThunk(
         category,
         genre,
         data: response.data.results,
+        totalPages: response.data.total_pages,
+        currentPage: response.data.page,
       };
     } catch (error) {
       console.error(error);
