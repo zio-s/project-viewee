@@ -1,31 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getDB } from './getThunk';
-// 🎬 초기 상태
+import { getContent } from './getThunk';
+
 const initialState = {
-  movies: [],
-  status: 'idle', // "idle" | "loading" | "succeeded" | "failed"
+  movies: [], // 영화 데이터
+  tvShows: [], // TV 프로그램 데이터
+  loading: false,
   error: null,
+  currentContent: null,
 };
 
-// 🎬 Redux 슬라이스 생성
-const moviesSlice = createSlice({
-  name: 'movies',
+export const contentSlice = createSlice({
+  name: 'content',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentContent: (state, action) => {
+      state.currentContent = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getDB.pending, (state) => {
-        state.status = 'loading';
+      .addCase(getContent.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(getDB.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.movies = action.payload;
+      .addCase(getContent.fulfilled, (state, action) => {
+        const { type, data } = action.payload;
+        if (type === 'movie') {
+          state.movies = data;
+        } else {
+          state.tvShows = data;
+        }
+        state.loading = false;
       })
-      .addCase(getDB.rejected, (state, action) => {
-        state.status = 'failed';
+      .addCase(getContent.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.error.message;
       });
   },
 });
 
-export default moviesSlice.reducer;
+export const { setCurrentContent } = contentSlice.actions;
+export default contentSlice.reducer;
