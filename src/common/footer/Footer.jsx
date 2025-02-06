@@ -1,28 +1,58 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../button';
 import { FooterWrap } from './style';
 import { useEffect } from 'react';
 import { getContent } from '../../store/modules/getThunk';
-
+import { tmdbActions } from '../../store/modules/tmdbSlice';
+import ItemList from './itemList';
 const Footer = () => {
-  const { movies } = useSelector((state) => state.tmdbR);
-  const { tvShows } = useSelector((state) => state.tmdbR);
+  const { movies, tvShows, loading } = useSelector((state) => state.tmdbR);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getContent({ type: 'tv', category: 'popular' }));
-    dispatch(getContent({ type: 'movie', category: 'now_playing', genre: 'drama' }));
-    // dispatch(getContent({ type: 'movie', category: 'now_playing', genre: 'animation' }));
-  }, []);
+    dispatch(
+      getContent({
+        type: 'tv',
+        category: 'popular',
+        page: tvShows.currentPage,
+      })
+    );
+    dispatch(
+      getContent({
+        type: 'movie',
+        category: 'now_playing',
+        genre: 'drama',
+        page: movies.currentPage,
+      })
+    );
+  }, [dispatch, movies.currentPage, tvShows.currentPage]);
+
+  const handleNextPage = (contentType) => {
+    const content = contentType === 'movie' ? movies : tvShows;
+    if (content.currentPage < content.totalPages) {
+      dispatch(
+        tmdbActions.setPage({
+          contentType,
+          page: content.currentPage + 1,
+        })
+      );
+    }
+  };
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
   return (
     <FooterWrap>
-      <div>footer</div>
-      {movies && movies.map((movie) => <div key={movie.id}>{movie.title}</div>)}
-      {tvShows.map((item) => (
-        <div key={item.id}>{item.name}</div>
+      <div>Movies</div>
+      {movies.data.map((movie) => (
+        <div key={movie.id}>{movie.title}</div>
       ))}
-      <Button variant="primary" size="large">
-        바로가기
-      </Button>
+      <button onClick={() => handleNextPage('movie')} disabled={movies.currentPage === movies.totalPages}>
+        다음 영화
+      </button>
+      {movies.data.map((item) => (
+        <ItemList key={item.id} item={item} />
+      ))}
     </FooterWrap>
   );
 };

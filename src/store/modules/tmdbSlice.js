@@ -2,19 +2,31 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getContent } from './getThunk';
 
 const initialState = {
-  movies: [], // 영화 데이터
-  tvShows: [], // TV 프로그램 데이터
+  movies: {
+    data: [],
+    currentPage: 1,
+    totalPages: 1,
+  },
+  tvShows: {
+    data: [],
+    currentPage: 1,
+    totalPages: 1,
+  },
   loading: false,
   error: null,
-  currentContent: null,
 };
 
 export const contentSlice = createSlice({
   name: 'content',
   initialState,
   reducers: {
-    setCurrentContent: (state, action) => {
-      state.currentContent = action.payload;
+    setPage: (state, action) => {
+      const { contentType, page } = action.payload;
+      if (contentType === 'movie') {
+        state.movies.currentPage = page;
+      } else {
+        state.tvShows.currentPage = page;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -24,12 +36,16 @@ export const contentSlice = createSlice({
         state.error = null;
       })
       .addCase(getContent.fulfilled, (state, action) => {
-        const { type, data } = action.payload;
-        if (type === 'movie') {
-          state.movies = data;
-        } else {
-          state.tvShows = data;
-        }
+        const { type, data, currentPage, totalPages } = action.payload;
+        const contentState = type === 'movie' ? state.movies : state.tvShows;
+        contentState.data = data;
+
+        contentState.currentPage = currentPage;
+        contentState.totalPages = totalPages;
+        state.loading = false;
+        state.loading = false;
+        state.currentPage = currentPage;
+        state.totalPages = totalPages;
         state.loading = false;
       })
       .addCase(getContent.rejected, (state, action) => {
@@ -39,5 +55,5 @@ export const contentSlice = createSlice({
   },
 });
 
-export const { setCurrentContent } = contentSlice.actions;
+export const tmdbActions = contentSlice.actions;
 export default contentSlice.reducer;
