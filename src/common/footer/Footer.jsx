@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../button';
 import { FooterWrap } from './style';
 import { useEffect } from 'react';
 import { getContent } from '../../store/modules/getThunk';
 import { tmdbActions } from '../../store/modules/tmdbSlice';
-
+import ItemList from './itemList';
 const Footer = () => {
   const { movies, tvShows, loading } = useSelector((state) => state.tmdbR);
   const dispatch = useDispatch();
@@ -51,18 +50,9 @@ const Footer = () => {
       <button onClick={() => handleNextPage('movie')} disabled={movies.currentPage === movies.totalPages}>
         다음 영화
       </button>
-
-      <div>TV Shows</div>
-      {tvShows.data.map((show) => (
-        <div key={show.id}>{show.name}</div>
+      {movies.data.map((item) => (
+        <ItemList key={item.id} item={item} />
       ))}
-      <button onClick={() => handleNextPage('tv')} disabled={tvShows.currentPage === tvShows.totalPages}>
-        다음 TV 프로그램
-      </button>
-
-      <Button variant="primary" size="large">
-        바로가기
-      </Button>
     </FooterWrap>
   );
 };
