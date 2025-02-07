@@ -11,7 +11,6 @@ const MyPageNav = ({ changeContent }) => {
     setIsActive(tap);
     changeContent(content);
   };
-
   return (
     <MyPageNavWrap>
       <ul>

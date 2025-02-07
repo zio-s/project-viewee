@@ -111,10 +111,12 @@ export const MyPageContentWrap = styled.div`
     }
     ul {
       display: flex;
-      gap: 1.5rem;
+      gap: 5rem 1.5rem;
+      flex-wrap: wrap;
       img {
-        width: 276px;
+        width: 272px;
         height: 386px;
+        border-radius: 5px;
       }
     }
   }
