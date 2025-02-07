@@ -5,6 +5,9 @@ import { MarqueeItem, MarqueeWrapper, NewCardsSectionTitle } from '../style';
 const MarqueeSection = () => {
   return (
     <>
+
+      <NewCardsSectionTitle>지구에서 나만 안본 그 작품</NewCardsSectionTitle>
+
       <Marquee direction="left" speed={50} gradient={false} loop={0}>
         <MarqueeWrapper>
           <MarqueeItem>moive1</MarqueeItem>

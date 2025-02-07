@@ -1,22 +1,20 @@
 import { useState } from 'react';
 import { ProfileWrap } from './style';
 import Button from '../../../ui/button/defaultButton';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
-  const couponNumber = 0;
-  const name = '김민지';
-  const [isMembershiped, useIsMemebershiped] = useState(true);
+  const { user } = useSelector((state) => state.authR);
+  const { username, profileImg, isMembershiped, couponNumber } = user;
+  console.log(isMembershiped);
   return (
     <ProfileWrap>
       <div className="profile">
-        <img
-          className="profileImg"
-          src="https://i.namu.wiki/i/khXs0TuOmkXJgKpC4ybkuB_A1h57NBKsbNz_TkVE1K1Dv5-wceOmrmYjUMWZjEEzUKrgMJERPlcVuK0BU7wjwv1x9R0gC4M6kB7RMurrTomL8sU6FiU-O3uhxh5312NXdOMG8cskBQKneF4wsZmXXg.webp"
-        />
+        <img className="profileImg" src={profileImg} />
         <div className="profileInfo">
           <div className="user">
             <h2>
-              환영합니다 <div className="userName">{name}</div> 님!
+              환영합니다 <div className="userName">{username}</div> 님!
             </h2>
             <div className="edit">수정</div>
             <a href="/changeProfile">
@@ -31,8 +29,12 @@ const Profile = () => {
         </div>
       </div>
       <div className="profileRight">
-        <div className="coupon">보유중인 쿠폰 {couponNumber}</div>
-        <div className="userEdit">회원정보 수정</div>
+        <a href="/coupon">
+          <div className="coupon">보유중인 쿠폰 {couponNumber}</div>
+        </a>
+        <a href="/useredit">
+          <div className="userEdit">회원정보 수정</div>
+        </a>
       </div>
     </ProfileWrap>
   );
