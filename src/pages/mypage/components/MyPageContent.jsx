@@ -1,31 +1,40 @@
 import { useState } from 'react';
 import Button from '../../../ui/button/defaultButton';
 import { MyPageContentWrap } from './style';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../../store/modules/authSlice';
 
 const MyPageContent = () => {
-  const title = '나의 관심 콘텐츠';
-  const [iseditOpen, useIsEditOpen] = useState(false);
-  const imgUrl = [
-    'https://i.namu.wiki/i/DUfx0Fx81wG8BzpZbFv7TqZ8-Ni2fvWCV7bT9ecVnKY5k29GdnG0llLlsMwSzZODJnbqTPt3EIyMDBxyMVcZNnwLsdyzMCAaAlY3XFRVL0JxYzmG6E7s2TkjSm437ECDGR4ou5p83e7ZmRMqgwkneA.webp',
-    'https://i.namu.wiki/i/eV8CouPW0g4ItdpgXbNAC6idRGLv8YcKKyEwHvKVJ4U4RALnqlYTsIDY1iNFZrjOnP065YFXDZ57k8ksxoFrPj06jU0BK-6dUzVoKxI56nUGh1LAMZq0k7tebASOGsyQLyEfiwDZUmF-djyJCd8Rmw.webp',
-  ];
+  const dispatch = useDispatch();
+  const [iseditOpen, setIsEditOpen] = useState(false);
+  const [onDelete, setOnDelete] = useState(false);
+  const [isDelete, setIsDelete] = useState([]);
   const openToggle = () => {
-    useIsEditOpen(!iseditOpen);
+    setIsEditOpen(!iseditOpen);
+    setOnDelete(!onDelete);
+  };
+  const { user } = useSelector((state) => state.authR);
+  const { liked } = user;
+  const deleteClicked = (index) => {
+    if (onDelete) {
+      setIsDelete([index]);
+      dispatch(authActions.deleteLiked(isDelete));
+    }
   };
   return (
     <MyPageContentWrap>
       <div className="header">
-        <h2>{title}</h2>
+        <h2>나의 관심 콘텐츠</h2>
         <div className="contentEdit">
           {iseditOpen ? (
             <>
-              <Button variant="gray" size="small">
+              <Button variant="gray" size="small" onClick={() => onDelete(liked.length - 1)}>
                 전체선택
               </Button>
               <Button variant="gray" size="small" onClick={openToggle}>
                 취소
               </Button>
-              <Button variant="primary" size="small">
+              <Button variant="primary" size="small" onClick={() => onDelete(0)}>
                 선택삭제
               </Button>
             </>
@@ -39,7 +48,7 @@ const MyPageContent = () => {
 
       <div className="content">
         <ul>
-          {imgUrl.map((url, i) => (
+          {liked.map((url, i) => (
             <li key={i}>
               <img src={url} />
             </li>
