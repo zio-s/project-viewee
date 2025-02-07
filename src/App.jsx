@@ -4,6 +4,7 @@ import Layout from './common/Layout';
 import NotFiles from './pages/notfile';
 import MyPage from './pages/mypage';
 import Home from './pages/home';
+import CateGoryPage from './pages/category';
 
 const App = () => {
   return (
@@ -12,10 +13,10 @@ const App = () => {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/:category" element={<CateGoryPage />} />
             <Route path="/mypage" element={<MyPage />} />
           </Route>
-
           <Route path="*" element={<NotFiles />} />
         </Routes>
       </BrowserRouter>
