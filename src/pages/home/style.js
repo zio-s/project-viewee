@@ -14,7 +14,19 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   background-position: center;
   background-size: cover;
   width: 1440px;
-  height: 695px;
+    height: 695px;
+  @media (max-width: 1280px) {
+    width: 840px;
+    height: 540px;
+  }
+  @media (max-width: 1024px) {
+    width: 560px;
+    height: 360px;
+  }
+  @media (max-width: 600px) {
+    width: 280px;
+    height: 180px;
+  }
 
   img {
     display: block;
@@ -38,6 +50,9 @@ export const VisualWrap = styled.div`
 
 export const SectionWrapper = styled.div`
   margin-bottom: 75px;
+  @media (max-width: 600px) {
+    margin-bottom: 15px;
+  }
 `;
 
 export const NewSectionWrapper = styled.section`
@@ -53,6 +68,9 @@ export const NewCardsSectionTitle = styled.div`
   font-size: 26px;
   font-weight: bold;
   margin-bottom: 20px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 
 export const NewMoreLink = styled.a`
@@ -110,7 +128,7 @@ export const NewCustomButtonPrev = styled.div`
   cursor: pointer;
   z-index: 10;
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     width: 30px;
     height: 30px;
   }
@@ -126,8 +144,19 @@ export const NewCustomButtonNext = styled.div`
   cursor: pointer;
   z-index: 10;
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     width: 30px;
     height: 30px;
   }
+`;
+
+export const MarqueeWrapper = styled.ul`
+  display: flex;
+  gap: 15px;
+`;
+
+export const MarqueeItem = styled.li`
+  width: 400px;
+  height: 230px;
+  background: #333333;
 `;

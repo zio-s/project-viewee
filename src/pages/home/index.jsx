@@ -3,6 +3,8 @@ import { VisualWrap, SectionWrapper } from './style';
 
 import SwiperSection from './components/SwiperSection';
 import ContentSwiper from './components/ContentSwiper';
+import MarqueeSection from './components/MarqueeSection';
+import MarqueeSection2 from './components/MarqueeSection2';
 const Index = () => {
   return (
     <>
@@ -10,7 +12,11 @@ const Index = () => {
 
       <VisualWrap>
         <SectionWrapper>
-          <ContentSwiper />b
+          <ContentSwiper />
+        </SectionWrapper>
+        <SectionWrapper>
+          <MarqueeSection />
+          <MarqueeSection2 />
         </SectionWrapper>
       </VisualWrap>
     </>
