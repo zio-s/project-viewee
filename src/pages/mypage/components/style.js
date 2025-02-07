@@ -117,6 +117,10 @@ export const MyPageContentWrap = styled.div`
         width: 272px;
         height: 386px;
         border-radius: 5px;
+        cursor: pointer;
+      }
+      .on {
+        filter: brightness(0.4);
       }
     }
   }
