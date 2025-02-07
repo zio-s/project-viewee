@@ -5,6 +5,8 @@ import NotFiles from './pages/notfile';
 import MyPage from './pages/mypage';
 import Home from './pages/home';
 import CateGoryPage from './pages/category';
+import Login from './pages/auth/login';
+import ChangeProfile from './pages/mypage/changeprofile';
 
 const App = () => {
   return (
@@ -15,7 +17,10 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/:category" element={<CateGoryPage />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/changeprofile" element={<ChangeProfile />} />
           </Route>
           <Route path="*" element={<NotFiles />} />
         </Routes>

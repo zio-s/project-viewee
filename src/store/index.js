@@ -6,6 +6,7 @@ import kidsR from './modules/kidsSlice';
 import dramaR from './modules/dramaSlice';
 import comedyR from './modules/comedySlice';
 import authR from './modules/authSlice';
+import pageR from './modules/pageSlice';
 export const store = configureStore({
   reducer: {
     tmdbR,
@@ -15,5 +16,6 @@ export const store = configureStore({
     dramaR,
     comedyR,
     authR,
+    pageR,
   },
 });
