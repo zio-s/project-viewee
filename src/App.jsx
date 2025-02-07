@@ -4,7 +4,7 @@ import Layout from './common/Layout';
 import NotFiles from './pages/notfile';
 import MyPage from './pages/mypage';
 import Home from './pages/home';
-
+import Login from './pages/auth/login';
 const App = () => {
   return (
     <>
@@ -13,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<MyPage />} />
           </Route>
 
