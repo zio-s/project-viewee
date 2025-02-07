@@ -60,6 +60,7 @@ const GlobalStyle = createGlobalStyle`
     --font-size-base: 1.0rem;
 
     /* font-size */
+    --font-title-xs: 56px;
     --font-title-s: 64px;
     --font-title-m: 72px;
     --font-title-l: 90px;

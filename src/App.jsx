@@ -4,6 +4,7 @@ import Layout from './common/Layout';
 import NotFiles from './pages/notfile';
 import MyPage from './pages/mypage';
 import Home from './pages/home';
+import ChangeProfile from './pages/mypage/changeprofile';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route path="/home" element={<Home />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/changeprofile" element={<ChangeProfile />} />
           </Route>
 
           <Route path="*" element={<NotFiles />} />
