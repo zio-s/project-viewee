@@ -5,22 +5,22 @@ import { useDispatch, useSelector } from 'react-redux';
 const NavBar = () => {
   return (
     <>
-      <NavWrap className='nav'>
+      <NavWrap className="nav">
         <ul>
           <li>
-            <Link to='/music'>영화</Link>
+            <Link to="/movie">영화</Link>
           </li>
           <li>
-            <Link to='/about'>드라마</Link>
+            <Link to="/drama">드라마</Link>
           </li>
           <li>
-            <Link to='/artist'>예능</Link>
+            <Link to="/comedy">예능</Link>
           </li>
           <li>
-            <Link to='/gallery'>애니</Link>
+            <Link to="/animation">애니</Link>
           </li>
           <li>
-            <Link to='/notice'>키즈</Link>
+            <Link to="/kids">키즈</Link>
           </li>
         </ul>
       </NavWrap>
