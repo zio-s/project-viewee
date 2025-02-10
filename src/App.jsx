@@ -18,11 +18,11 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/:category" element={<CateGoryPage />} />
+            <Route path="/:category/:id" element={<Detail />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/changeprofile" element={<ChangeProfile />} />
-            <Route path="/detail" element={<Detail />} />
           </Route>
           <Route path="*" element={<NotFiles />} />
         </Routes>
