@@ -123,7 +123,7 @@ const CateGoryPage = () => {
           <h1>{category}</h1>
           <CategoryFilter />
         </div>
-        <CategoryList data={currentCategory.data} />
+        <CategoryList data={currentCategory.data} category={category} />
       </CateGoryWrap>
     </>
   );

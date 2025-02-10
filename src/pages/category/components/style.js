@@ -14,5 +14,6 @@ export const CateGoryItem = styled.li`
     height: 386px;
     object-fit: cover;
     border-radius: 5px;
+    cursor: pointer;
   }
 `;

@@ -18,7 +18,7 @@ const TopRated = () => {
     // Swiper가 초기화될 때, DOM에 요소가 모두 렌더링된 이후에 실행되도록
     const swiper = new Swiper('.new-card-carousel2', {
       slidesPerView: 'auto',
-      spaceBetween: 60,
+      spaceBetween: 30,
 
       navigation: {
         nextEl: '.new-swiper-button-next',

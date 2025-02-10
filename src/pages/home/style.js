@@ -131,12 +131,6 @@ export const RatedSwiperSlide = styled.li`
     height: auto;
     display: block;
   }
-
-  p {
-    padding: 10px;
-    font-size: 18px;
-    color: #333;
-  }
 `;
 
 export const SlideNumber = styled.div`
@@ -286,7 +280,15 @@ export const MarqueeWrapper2 = styled.ul`
 `;
 
 export const MarqueeItem = styled.li`
-  width: 400px;
-  height: 230px;
+  width: 160px;
+  height: 80px;
   background: #333333;
+  ${mobileMore`
+    width: 320px;
+    height: 160px;
+  `}
+  ${tabletMore`
+    width: 400px;
+    height: 230px;
+  `}
 `;
