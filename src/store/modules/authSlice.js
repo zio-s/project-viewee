@@ -295,6 +295,9 @@ export const authSlice = createSlice({
     deleteDowned: (state, action) => {
       state.user.downed = state.user.downed.filter((item) => !action.payload.includes(item.id));
     },
+    deleteReviewed: (state, action) => {
+      state.user.reviewed = state.user.reviewed.filter((item) => item.id !== action.payload);
+    },
     changeUser: (state, action) => {
       state.user = state.joinData.find((item) => item.id === action.payload);
     },

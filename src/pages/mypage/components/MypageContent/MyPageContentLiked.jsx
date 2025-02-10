@@ -47,7 +47,6 @@ const MyPageContentLiked = () => {
     dispatch(pageActions.totalData());
   }, [liked]);
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
-  console.log(totalPage);
   const lastPost = currentPage * postsperPage;
   const currentPost = liked.slice(0, lastPost);
   const morePost = () => {

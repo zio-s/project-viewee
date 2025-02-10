@@ -11,6 +11,9 @@ export const pageSlice = createSlice({
   name: 'page',
   initialState,
   reducers: {
+    changePostsPerPage: (state, action) => {
+      state.postsperPage = action.payload;
+    },
     addData: (state, action) => {
       state.postData = action.payload;
     },

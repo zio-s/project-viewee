@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ProfileWrap } from './style';
 import Button from '../../../ui/button/defaultButton';
 import { useSelector } from 'react-redux';
@@ -6,7 +5,6 @@ import { useSelector } from 'react-redux';
 const Profile = () => {
   const { user } = useSelector((state) => state.authR);
   const { username, profileImg, isMembershiped, couponNumber } = user;
-  console.log(isMembershiped);
   return (
     <ProfileWrap>
       <div className="profile">
