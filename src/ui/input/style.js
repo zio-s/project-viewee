@@ -52,6 +52,7 @@ export const StyledInput = styled.input.attrs({ type: 'text' })`
     font-size: var(--font-content-l);
     font-weight: var(--font-weight-semibold);
   }
+  box-sizing: border-box;
 
   /* Disabled State */
   &:disabled {
