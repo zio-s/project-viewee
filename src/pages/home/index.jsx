@@ -5,8 +5,7 @@ import ContentSwiper from './components/ContentSwiper';
 import MarqueeSection from './components/MarqueeSection';
 import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
-import Input from '../../ui/input/index';
-
+import Tag from '../../ui/tag';
 const Home = () => {
   return (
     <>
@@ -20,10 +19,7 @@ const Home = () => {
           <ContentSwiper />
         </SectionWrapper>
       </VisualWrap>
-      <VisualWrap>
-        <NewCardsSectionTitle>지구에서 나만 안본 그 작품</NewCardsSectionTitle>
-        <Input variant="gray" size="medium" />
-      </VisualWrap>
+      <VisualWrap></VisualWrap>
       <MarqueeSection />
       <MarqueeSection2 />
     </>
