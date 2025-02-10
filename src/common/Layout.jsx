@@ -14,7 +14,7 @@ const Layout = () => {
     } else {
       setPath(true);
     }
-  }, location.pathname);
+  });
   return (
     <div className="wrap">
       {path ? <Header /> : <SubHeader />}

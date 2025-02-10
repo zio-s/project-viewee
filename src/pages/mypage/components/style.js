@@ -64,6 +64,7 @@ export const ProfileWrap = styled.div`
 export const MyPageNavWrap = styled.div`
   width: 100%;
   padding: 6rem 0;
+  transition: all 0.2s ease;
   ul {
     display: flex;
     ${tabletMore`
@@ -73,55 +74,35 @@ export const MyPageNavWrap = styled.div`
       `}
     li {
       cursor: pointer;
+      position: relative;
+      ul {
+        position: absolute;
+        top: 100%;
+        left: -50%;
+        transform: translateX(-10%);
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        font-size: var(--font-content-m);
+        padding-top: 0.5rem;
+        li {
+          display: flex;
+          width: 106px;
+          height: 43px;
+          justify-content: center;
+          align-items: center;
+          background-color: var(--gray-80);
+        }
+      }
       &:hover {
         color: var(--hover-color);
+        ul {
+          display: flex;
+        }
       }
     }
     .on {
       color: var(--primary-50);
-    }
-  }
-`;
-export const MyPageContentWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  ${tabletMore`
-      padding-top : 13.7rem;
-      font-size: var(--font-content-xxl);
-      gap: 5.5rem;
-  `}
-  .header {
-    display: flex;
-    justify-content: space-between;
-    .contentEdit {
-      display: flex;
-      ${tabletMore`
-        gap: 1.4rem;
-    `}
-    }
-  }
-  .content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3.7rem;
-    button {
-      width: 320px;
-    }
-    ul {
-      display: flex;
-      gap: 5rem 1.5rem;
-      flex-wrap: wrap;
-      img {
-        width: 272px;
-        height: 386px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      .on {
-        filter: brightness(0.4);
-      }
     }
   }
 `;

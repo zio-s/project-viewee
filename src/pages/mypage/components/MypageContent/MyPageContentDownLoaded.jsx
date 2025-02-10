@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
-import Button from '../../../ui/button/defaultButton';
-import { MyPageContentWrap } from './style';
+import Button from '../../../../ui/button/defaultButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../../store/modules/authSlice';
-import { pageActions } from '../../../store/modules/pageSlice';
+import { authActions } from '../../../../store/modules/authSlice';
+import { pageActions } from '../../../../store/modules/pageSlice';
+import { MyPageContentLikedWrap } from './style';
 
-const MyPageContent = () => {
+const MyPageContentDownLoaded = () => {
   const dispatch = useDispatch();
   const [iseditOpen, setIsEditOpen] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const [isDelete, setIsDelete] = useState([]);
   const openToggle = () => {
-    if (liked.length !== 0) {
+    if (downed.length !== 0) {
       setIsEditOpen(!iseditOpen);
       setOnDelete(!onDelete);
     } else {
-      alert('관심 콘텐츠가 없습니다.');
+      alert('다운로드한 콘텐츠가 없습니다.');
     }
   };
   const { user } = useSelector((state) => state.authR);
-  const { liked } = user;
+  const { downed } = user;
   const isDeleteToggle = (id) => {
     if (onDelete) {
       setIsDelete((item) => [...item, id]);
@@ -30,7 +30,7 @@ const MyPageContent = () => {
   const deletedToggle = (index) => {
     if (onDelete && index.length !== 0) {
       if (confirm('삭제하시겠습니까?') === true) {
-        dispatch(authActions.deleteLiked(index));
+        dispatch(authActions.deleteDowned(index));
         setIsEditOpen(false);
       } else {
         setIsDelete([]);
@@ -41,23 +41,23 @@ const MyPageContent = () => {
       alert('오류! 새로고침 후 다시 시도하세요.');
     }
   };
-  const allLikedId = liked.map((item) => item.id);
+  const allLikedId = downed.map((item) => item.id);
   useEffect(() => {
-    dispatch(pageActions.addData(liked));
+    dispatch(pageActions.addData(downed));
     dispatch(pageActions.totalData());
-  }, [liked]);
+  }, [downed]);
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
   console.log(totalPage);
   const lastPost = currentPage * postsperPage;
-  const currentPost = liked.slice(0, lastPost);
+  const currentPost = downed.slice(0, lastPost);
   const morePost = () => {
     dispatch(pageActions.nextPage());
   };
 
   return (
-    <MyPageContentWrap>
+    <MyPageContentLikedWrap>
       <div className="header">
-        <h2>나의 관심 콘텐츠</h2>
+        <h2>다운 받은 콘텐츠</h2>
         <div className="contentEdit">
           {iseditOpen ? (
             <>
@@ -95,8 +95,8 @@ const MyPageContent = () => {
           </Button>
         )}
       </div>
-    </MyPageContentWrap>
+    </MyPageContentLikedWrap>
   );
 };
 
-export default MyPageContent;
+export default MyPageContentDownLoaded;
