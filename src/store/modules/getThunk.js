@@ -62,3 +62,21 @@ export const getContent = createAsyncThunk('content/getContent', async ({ catego
     throw error;
   }
 });
+
+export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }) => {
+  const url = `${BASE_URL}/${type}/${id}`;
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        ...baseOptions,
+        append_to_response: 'credits,videos',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+});
