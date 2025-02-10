@@ -37,6 +37,7 @@ const CATEGORY_CONFIG = {
   },
 };
 
+//컨텐츠 조회
 export const getContent = createAsyncThunk('content/getContent', async ({ category, page = 1 }) => {
   const config = CATEGORY_CONFIG[category];
   if (!config) throw new Error('불러온 데이터가 없습니다.');
@@ -63,6 +64,7 @@ export const getContent = createAsyncThunk('content/getContent', async ({ catego
   }
 });
 
+//상세페이지 조회
 export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }) => {
   const url = `${BASE_URL}/${type}/${id}`;
 
@@ -70,13 +72,36 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
     const response = await axios.get(url, {
       params: {
         ...baseOptions,
-        append_to_response: 'credits,videos',
+        append_to_response: 'credits,videos,similar,recommendations',
       },
     });
-
     return response.data;
   } catch (error) {
     console.error('API Error:', error);
+    throw error;
+  }
+});
+
+//검색
+export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1, type = 'multi' }) => {
+  const url = `${BASE_URL}/search/${type}`;
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        ...baseOptions,
+        query,
+        page,
+      },
+    });
+
+    return {
+      data: response.data.results,
+      totalPages: response.data.total_pages,
+      currentPage: response.data.page,
+    };
+  } catch (error) {
+    console.error('Search API Error:', error);
     throw error;
   }
 });
