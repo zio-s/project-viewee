@@ -64,7 +64,6 @@ export const getContent = createAsyncThunk('content/getContent', async ({ catego
   }
 });
 
-//상세페이지 조회
 export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }) => {
   const url = `${BASE_URL}/${type}/${id}`;
 
@@ -72,9 +71,11 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
     const response = await axios.get(url, {
       params: {
         ...baseOptions,
+
         append_to_response: 'credits,videos,similar,recommendations',
       },
     });
+
     return response.data;
   } catch (error) {
     console.error('API Error:', error);
