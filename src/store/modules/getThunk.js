@@ -64,10 +64,6 @@ export const getContent = createAsyncThunk('content/getContent', async ({ catego
   }
 });
 
-<<<<<<< HEAD
-//상세페이지 조회
-=======
->>>>>>> 7738c5b (detail 데이터 가져오기, 해당 컨텐츠의 id로 데이터 넘겨주어 데이터 받아오기)
 export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }) => {
   const url = `${BASE_URL}/${type}/${id}`;
 
@@ -75,23 +71,17 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
     const response = await axios.get(url, {
       params: {
         ...baseOptions,
-<<<<<<< HEAD
+
         append_to_response: 'credits,videos,similar,recommendations',
       },
     });
-=======
-        append_to_response: 'credits,videos',
-      },
-    });
 
->>>>>>> 7738c5b (detail 데이터 가져오기, 해당 컨텐츠의 id로 데이터 넘겨주어 데이터 받아오기)
     return response.data;
   } catch (error) {
     console.error('API Error:', error);
     throw error;
   }
 });
-<<<<<<< HEAD
 
 //검색
 export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1, type = 'multi' }) => {
@@ -116,5 +106,3 @@ export const searchContent = createAsyncThunk('content/searchContent', async ({ 
     throw error;
   }
 });
-=======
->>>>>>> 7738c5b (detail 데이터 가져오기, 해당 컨텐츠의 id로 데이터 넘겨주어 데이터 받아오기)
