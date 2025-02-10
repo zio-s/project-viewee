@@ -4,6 +4,8 @@ import Button from '../../../../ui/button/defaultButton';
 import { authActions } from '../../../../store/modules/authSlice';
 import { useEffect, useState } from 'react';
 import { pageActions } from '../../../../store/modules/pageSlice';
+import { MyReviewPopUp } from './MyReviewPopup';
+import { GiConsoleController } from 'react-icons/gi';
 
 export const MyReview = () => {
   const dispatch = useDispatch();
@@ -14,6 +16,10 @@ export const MyReview = () => {
   useEffect(() => {
     setNowRevied(reviewed);
   }, [user]);
+  useEffect(() => {
+    dispatch(pageActions.addData(reviewed));
+    dispatch(pageActions.totalData());
+  }, [reviewed]);
   const deletedToggle = (id) => {
     if (confirm('삭제하시겠습니까?') === true) {
       dispatch(authActions.deleteReviewed(id));
@@ -24,6 +30,13 @@ export const MyReview = () => {
   const currentPost = nowReviewed.slice(0, lastPost);
   const morePost = () => {
     dispatch(pageActions.nextPage());
+  };
+
+  const [editItem, setEditItem] = useState();
+  const [onPopup, setOnPopup] = useState(false);
+  const editToggle = (item) => {
+    setOnPopup(!onPopup);
+    setEditItem(item);
   };
   return (
     <MyReviewWrap>
@@ -46,7 +59,9 @@ export const MyReview = () => {
               <Button variant="gray" onClick={() => deletedToggle(item.id)}>
                 삭제
               </Button>
-              <Button variant="primary">수정</Button>
+              <Button variant="primary" onClick={() => editToggle(item.id)}>
+                수정
+              </Button>
             </div>
           </li>
         ))}
@@ -58,6 +73,7 @@ export const MyReview = () => {
           더보기
         </Button>
       )}
+      {onPopup ? <MyReviewPopUp itemID={editItem} editToggle={editToggle} /> : ''}
     </MyReviewWrap>
   );
 };
