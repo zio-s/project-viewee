@@ -14,7 +14,11 @@ const Profile = () => {
         <div className="profileInfo">
           <div className="user">
             <h2>
-              환영합니다 <div className="userName">{username}</div> 님!
+              환영합니다{' '}
+              <div className="userName">
+                <a href="/useredit">{username}</a>
+              </div>{' '}
+              님!
             </h2>
             <div className="edit">수정</div>
             <a href="/changeProfile">

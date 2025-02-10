@@ -9,65 +9,99 @@ const baseOptions = {
   language: 'ko-KR',
 };
 
-// 콘텐츠 타입별 장르 ID
-const GENRES = {
+const CATEGORY_CONFIG = {
   movie: {
-    action: 28,
-    animation: 16,
-    comedy: 35,
-    drama: 18,
-    family: 10751,
+    type: 'movie',
+    endpoint: 'discover/movie',
+    genreId: null,
   },
-  tv: {
-    animation: 16,
-    comedy: 35,
-    drama: 18,
-    reality: 10764,
-    kids: 10762,
+  drama: {
+    type: 'tv',
+    endpoint: 'discover/tv',
+    genreId: 18,
   },
-};
-
-// 카테고리별 엔드포인트
-const ENDPOINTS = {
-  now_playing: {
-    movie: 'movie/now_playing',
-    tv: 'tv/on_the_air',
+  comedy: {
+    type: 'tv',
+    endpoint: 'discover/tv',
+    genreId: 35,
   },
-  popular: {
-    movie: 'movie/popular',
-    tv: 'tv/popular',
+  animation: {
+    type: 'movie',
+    endpoint: 'discover/movie',
+    genreId: 16,
   },
-  top_rated: {
-    movie: 'movie/top_rated',
-    tv: 'tv/top_rated',
+  kids: {
+    type: 'tv',
+    endpoint: 'discover/tv',
+    genreId: 10762,
   },
 };
 
-export const getContent = createAsyncThunk(
-  'content/getContent',
-  async ({ type = 'movie', category = 'now_playing', genre, page = 1 }) => {
-    const endpoint = ENDPOINTS[category][type];
-    const url = `${BASE_URL}/${endpoint}`;
+//컨텐츠 조회
+export const getContent = createAsyncThunk('content/getContent', async ({ category, page = 1 }) => {
+  const config = CATEGORY_CONFIG[category];
+  if (!config) throw new Error('불러온 데이터가 없습니다.');
 
-    try {
-      const options = {
-        ...baseOptions,
-        with_genres: genre ? GENRES[type][genre] : undefined,
-        page: page,
-      };
+  const url = `${BASE_URL}/${config.endpoint}`;
 
-      const response = await axios.get(url, { params: options });
-      return {
-        type,
-        category,
-        genre,
-        data: response.data.results,
-        totalPages: response.data.total_pages,
-        currentPage: response.data.page,
-      };
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+  try {
+    const options = {
+      ...baseOptions,
+      page,
+      with_genres: config.genreId,
+    };
+
+    const response = await axios.get(url, { params: options });
+
+    return {
+      data: response.data.results,
+      totalPages: response.data.total_pages,
+      currentPage: response.data.page,
+    };
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
   }
-);
+});
+
+//상세페이지 조회
+export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }) => {
+  const url = `${BASE_URL}/${type}/${id}`;
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        ...baseOptions,
+        append_to_response: 'credits,videos,similar,recommendations',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+});
+
+//검색
+export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1, type = 'multi' }) => {
+  const url = `${BASE_URL}/search/${type}`;
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        ...baseOptions,
+        query,
+        page,
+      },
+    });
+
+    return {
+      data: response.data.results,
+      totalPages: response.data.total_pages,
+      currentPage: response.data.page,
+    };
+  } catch (error) {
+    console.error('Search API Error:', error);
+    throw error;
+  }
+});
