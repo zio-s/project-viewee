@@ -13,7 +13,7 @@ const Detail = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const dispatch = useDispatch();
-  const { detail, loading, error } = useSelector((state) => state.detailR);
+  const { detail, loading, error, cachedImages } = useSelector((state) => state.detailR);
 
   useEffect(() => {
     if (id && state?.type) {
@@ -30,10 +30,19 @@ const Detail = () => {
   const changeContent = (content) => {
     setActiveTabContent(content);
   };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
-  const bgurl = `https://image.tmdb.org/t/p/w500/`;
+
+  const { trailer } = detail.videoData;
+  const { title, overview, backdrop_path, poster_path } = detail;
+  const opts = trailer
+    ? ['autoplay=1', 'mute=1', 'modestbranding=1', 'controls=0', 'loop=1', 'rel=0', 'playlist=' + trailer.key].join('&')
+    : '';
+  const imagePath = backdrop_path || poster_path;
+  const imageUrl = cachedImages[imagePath] || `https://image.tmdb.org/t/p/w1280${imagePath}`;
+  // const videoUrl = `https://www.youtube.com/watch?v=`;
   return (
     <Container>
       <div className="video-header">
@@ -42,12 +51,33 @@ const Detail = () => {
         <div className="actions">
           <button>관심</button>
           <button>공유</button>
-          {/* 데이터 이미지 사용방법 */}
-          <img src={`${bgurl}/${detail.poster_path}`} alt="" />
-
+          {trailer ? (
+            <div>
+              <iframe
+                src={`https://www.youtube.com/embed/${trailer.key}?${opts}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="autoplay; encrypted-media;"
+                allowFullScreen
+                style={{ pointerEvents: 'none', width: '100%', height: '500px' }}
+              ></iframe>
+            </div>
+          ) : (
+            <div>
+              <img
+                src={imageUrl}
+                alt={title}
+                style={{
+                  width: '100%',
+                  height: '500px',
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+          )}
           <button onClick={() => changeContent(<ReviewSection />)}>리뷰</button>
         </div>
-        <Description onClick={() => changeContent(<InfoSection />)}>{detail.overview}</Description>
+        <Description onClick={() => changeContent(<InfoSection />)}>{overview}</Description>
       </div>
 
       <DetailPageNav activeTab={activeTabContent} changeContent={changeContent} />

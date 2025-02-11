@@ -15,6 +15,11 @@ const dramaSlice = createSlice({
     setPage: (state, action) => {
       state.currentPage = action.payload;
     },
+    clearData: (state) => {
+      state.data = [];
+      state.currentPage = 1;
+      state.totalPages = 1;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -23,7 +28,14 @@ const dramaSlice = createSlice({
         state.error = null;
       })
       .addCase(getContent.fulfilled, (state, action) => {
-        state.data = action.payload.data;
+        if (action.payload.currentPage === 1) {
+          state.data = action.payload.data;
+        } else {
+          const newData = action.payload.data.filter(
+            (newItem) => !state.data.some((existingItem) => existingItem.id === newItem.id)
+          );
+          state.data = [...state.data, ...newData];
+        }
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.loading = false;
