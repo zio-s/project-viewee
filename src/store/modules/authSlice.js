@@ -153,7 +153,24 @@ const initialState = {
     profileImg:
       'https://i.namu.wiki/i/khXs0TuOmkXJgKpC4ybkuB_A1h57NBKsbNz_TkVE1K1Dv5-wceOmrmYjUMWZjEEzUKrgMJERPlcVuK0BU7wjwv1x9R0gC4M6kB7RMurrTomL8sU6FiU-O3uhxh5312NXdOMG8cskBQKneF4wsZmXXg.webp',
     isMembershiped: false,
-    couponNumber: 2,
+    coupon: [
+      {
+        id: 1,
+        title: '[설날 특집]  모든 영화  무료 시청 쿠폰 (1개)',
+        dday: '2025.02.01',
+        code: 'newyears',
+        use: false,
+        used: true,
+      },
+      {
+        id: 2,
+        title: '[Viewee 출시기념] 무료이용권(30일)',
+        dday: '2026.01.01',
+        code: 'viewee',
+        use: true,
+        used: false,
+      },
+    ],
     liked: [
       {
         id: 1,
@@ -612,6 +629,14 @@ export const authSlice = createSlice({
       );
       state.user.reviewed = state.user.reviewed.map((item) => (item.id === id ? { ...item, content: content } : item));
       state.prevUser = state.user;
+    },
+    couponAdd: (state, action) => {
+      state.user.coupon.push(action.payload);
+    },
+    couponUse: (state, action) => {
+      const id = action.payload;
+      state.user.coupon = state.user.coupon.map((item) => (item.id === id ? { ...item, used: true } : item));
+      state.user.isMembershiped = true;
     },
   },
 });

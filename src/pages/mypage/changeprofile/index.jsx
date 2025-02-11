@@ -117,7 +117,7 @@ const ChangeProfile = () => {
               <div className="editName">
                 <div className="userName">{item.username}</div>
                 <div className="edit" onClick={changeUserName}>
-                  수정
+                  <img src="/icons/util/pencil.svg" />
                 </div>
               </div>
             </div>

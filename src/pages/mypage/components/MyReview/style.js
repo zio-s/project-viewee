@@ -8,7 +8,6 @@ export const MyReviewWrap = styled.div`
   padding: 12rem 0;
   gap: 9rem;
   ul {
-    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -75,7 +74,6 @@ export const MyReviewPopupWrap = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
   justify-content: center;
   align-items: center;
   -webkit-backdrop-filter: blur(50px);
@@ -85,11 +83,11 @@ export const MyReviewPopupWrap = styled.div`
     flex-direction: column;
     align-items: center;
     width: 800px;
-    hieght: 100%;
+    height: 90%;
     background-color: var(--background-color);
     .img {
       width: 100%;
-      height: 410px;
+      height: 30%;
       position: relative;
       img {
         width: 100%;
@@ -126,14 +124,14 @@ export const MyReviewPopupWrap = styled.div`
     }
     .content {
       width: 600px;
-      height: 250px;
+      height: 220px;
       margin-top: 4rem;
       padding: 1.6rem;
       background-color: var(--gray-80);
       border-radius: 5px;
       textarea {
         width: 100%;
-        height: 250px;
+        height: 100%;
         text-wrap: wrap;
         color: var(--gray-0);
         font-size: var(--font-content-l);
@@ -148,7 +146,7 @@ export const MyReviewPopupWrap = styled.div`
     .button {
       display: flex;
       gap: 3rem;
-      margin-top: 6rem;
+      margin-top: 3rem;
       margin-bottom: 8rem;
       button {
         width: 200px;

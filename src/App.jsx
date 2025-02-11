@@ -8,6 +8,8 @@ import CateGoryPage from './pages/category';
 import Login from './pages/auth/login';
 import ChangeProfile from './pages/mypage/changeprofile';
 import Detail from './pages/detail';
+import Coupon from './pages/mypage/coupon';
+import Subscribe from './pages/mypage/subscribe';
 
 const App = () => {
   return (
@@ -23,6 +25,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/changeprofile" element={<ChangeProfile />} />
+            <Route path="/coupon" element={<Coupon />} />
+            <Route path="/subscribe" element={<Subscribe />} />
           </Route>
           <Route path="*" element={<NotFiles />} />
         </Routes>
