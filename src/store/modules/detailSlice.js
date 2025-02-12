@@ -5,6 +5,7 @@ const initialState = {
   detail: null,
   loading: false,
   error: null,
+  cachedImages: {},
 };
 
 const detailSlice = createSlice({
@@ -13,6 +14,10 @@ const detailSlice = createSlice({
   reducers: {
     clearDetail: (state) => {
       state.detail = null;
+      state.error = null;
+    },
+    cacheImage: (state, action) => {
+      state.cachedImages[action.payload.path] = action.payload.imageUrl;
     },
   },
   extraReducers: (builder) => {
