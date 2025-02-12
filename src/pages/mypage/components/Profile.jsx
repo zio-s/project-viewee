@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import { ProfileWrap } from './style';
 import Button from '../../../ui/button/defaultButton';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const { user } = useSelector((state) => state.authR);
-  const { username, profileImg, isMembershiped, couponNumber } = user;
-  console.log(isMembershiped);
+  const { username, profileImg, isMembershiped, coupon } = user;
+  const couponNumber = coupon.filter((item) => item.used === true).length;
   return (
     <ProfileWrap>
       <div className="profile">
@@ -20,7 +19,9 @@ const Profile = () => {
               </div>{' '}
               님!
             </h2>
-            <div className="edit">수정</div>
+            <div className="edit">
+              <img src="/icons/util/pencil.svg" />
+            </div>
             <a href="/changeProfile">
               <Button variant="gray" size="small">
                 프로필 전환
@@ -28,13 +29,18 @@ const Profile = () => {
             </a>
           </div>
           <Button variant="gray" size="small" className="membership">
-            {isMembershiped ? '뷰이 프리미엄 구독 중' : '구독권 없음'}
+            {isMembershiped ? '뷰이 프리미엄 구독 중' : <a href="/subscribe">구독권 없음</a>}
           </Button>
         </div>
       </div>
       <div className="profileRight">
         <a href="/coupon">
-          <div className="coupon">보유중인 쿠폰 {couponNumber}</div>
+          <div className="nowCoupon">
+            <div className="icon">
+              <img src="/icons/util/ticket.svg" />
+            </div>
+            <div className="coupon">보유중인 쿠폰 {couponNumber}</div>
+          </div>
         </a>
         <a href="/useredit">
           <div className="userEdit">회원정보 수정</div>

@@ -16,9 +16,11 @@ const MyPage = () => {
     <>
       {authed ? (
         <MyPageWrap>
-          <Profile />
-          <MyPageNav changeContent={changeContent} />
-          {content}
+          <div className="content">
+            <Profile />
+            <MyPageNav changeContent={changeContent} />
+            {content}
+          </div>
         </MyPageWrap>
       ) : (
         <NotFiles />

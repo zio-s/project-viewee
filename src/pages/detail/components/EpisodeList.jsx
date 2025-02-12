@@ -1,16 +1,18 @@
-import React from 'react';
+import {CardBox} from '../style'
 
-const EpisodeList = () => {
-  return (
-    <div>
-      <h2>에피소드 목록</h2>
-      <ul>
-        <li>Episode 1: 시작</li>
-        <li>Episode 2: 위기</li>
-        <li>Episode 3: 탈출</li>
-      </ul>
-    </div>
+const EpisodeList =() =>{
+  return(
+    <CardBox>
+      <div className="pic">
+        <img src="" alt="" />
+      </div>
+      <div className="text-info">
+        <h2>애피소드 타이틀</h2>
+        <h3>방영날짜, 재생시간</h3>
+        <p>에피소드 설명</p>
+      </div>
+    </CardBox>
   );
-};
-
-export default EpisodeList;
+ };
+ 
+ export default EpisodeList;

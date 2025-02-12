@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { detailActions } from './detailSlice';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -64,8 +65,17 @@ export const getContent = createAsyncThunk('content/getContent', async ({ catego
   }
 });
 
-//상세페이지 조회
-export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }) => {
+//상세페이지
+const preloadImage = async (imageUrl) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => resolve(imageUrl);
+    img.onerror = reject;
+  });
+};
+
+export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }, { dispatch }) => {
   const url = `${BASE_URL}/${type}/${id}`;
 
   try {
@@ -75,7 +85,33 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
         append_to_response: 'credits,videos,similar,recommendations',
       },
     });
-    return response.data;
+
+    const data = response.data;
+    const imageUrl = `https://image.tmdb.org/t/p/w1280${data.backdrop_path || data.poster_path}`;
+
+    try {
+      await preloadImage(imageUrl);
+      dispatch(
+        detailActions.cacheImage({
+          path: data.backdrop_path || data.poster_path,
+          imageUrl,
+        })
+      );
+    } catch (error) {
+      console.error('Image preload failed:', error);
+    }
+
+    const videoData = {
+      trailer:
+        data.videos?.results?.find((video) => video.type === 'Trailer' && video.official) ||
+        data.videos?.results?.find((video) => video.type === 'Trailer') ||
+        null,
+    };
+
+    return {
+      ...data,
+      videoData,
+    };
   } catch (error) {
     console.error('API Error:', error);
     throw error;

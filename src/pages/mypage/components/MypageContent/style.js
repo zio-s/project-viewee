@@ -47,28 +47,39 @@ export const MyPageContentLikedWrap = styled.div`
 export const MyPageContentWrap = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 0 2rem;
+  font-size: var(--font-label-xs);
+  gap: 3rem;
   ${tabletMore`
     padding-top : 1.5rem;
-      font-size: var(--font-content-xxl);
-      gap: 7.5rem;
+    font-size: var(--font-content-xxl);
+    gap: 7.5rem;
+    padding: 0;
   `}
   section {
     display: flex;
     flex-direction: column;
+    gap: 0.8rem;
     ${tabletMore`
       gap: 2rem;
   `}
     .title {
       display: flex;
-      gap: 2rem;
+      gap: 0.8rem;
       cursor: pointer;
+      ${tabletMore`
+      gap: 2rem;
+      `}
     }
     ul {
       width: 100%;
       position: relative;
       overflow: hidden;
       display: flex;
+      gap: 0.6rem;
+      ${tabletMore`
       gap: 1.5rem;
+      `}
     }
     ul::after {
       content: '';
@@ -86,27 +97,37 @@ export const MyPageContentWrap = styled.div`
 
     li {
       img {
+        width: 150px;
+        height: 95px;
+        object-fit: cover;
+        border-radius: 0.2rem;
         ${tabletMore`
           width: 350px;
           height: 200px;
-          object-fit: cover;
           border-radius: 0.5rem;
-          `}
+          `};
       }
     }
   }
   .liked {
     img {
+      width: 120px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 0.2rem;
       ${tabletMore`
           width: 275px;
           height: 400px;
-          object-fit: cover;
           border-radius: 0.5rem;
       `}
     }
   }
   .downed {
     img {
+      width: 150px;
+      height: 95px;
+      object-fit: cover;
+      border-radius: 0.2rem;
       ${tabletMore`
           width: 350px;
           height: 220px;
@@ -115,9 +136,13 @@ export const MyPageContentWrap = styled.div`
       `}
     }
     .caution {
-      margin-top: 0.3rem;
+      margin-top: 0.1rem;
       color: var(--gray-60);
+      font-size: var(--font-label-m-mobile);
+      ${tabletMore`      
+      margin-top: 0.3rem;
       font-size: var(--font-label-m);
+      `}
     }
   }
 `;
