@@ -8,9 +8,14 @@ export const MyPageWrap = styled.div`
   transition: all 0.2s ease;
   white-space: nowrap;
   ${tabletMore`
-        padding: 3.7rem 24rem;
-          max-width: 1440px;
-      `}
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3.7rem 5rem;
+  `}
+  .content {
+    max-width: 1440px;
+  }
 
   /* Disabled State */
   &:disabled {

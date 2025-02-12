@@ -6,15 +6,18 @@ export const FooterWrap = styled.footer`
   color: var(--gray-40);
   font-size: var(--font-footer-m-mobile);
   padding: 0 1.5rem;
-  margin-top: 18rem;
+  margin-top: 5rem;
   margin-bottom: 5rem;
   ${mobileMore`
     font-size: var(--font-footer-m-tablet);
           padding: 0 3.5rem; 
+            margin-top: 18rem;
   `}
   ${tabletMore`
     font-size: var(--font-footer-m);
-          padding: 0 24rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `}
   a {
     color: var(--gray-40);
@@ -25,6 +28,8 @@ export const FooterWrap = styled.footer`
     flex-direction: column;
     width: 100%;
     gap: 2rem;
+    padding: 0 0.5rem;
+    max-width: 1440px;
     ${mobileMore`
       gap: 3.5rem;
 

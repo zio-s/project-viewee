@@ -8,6 +8,7 @@ import comedyR from './modules/comedySlice';
 import authR from './modules/authSlice';
 import pageR from './modules/pageSlice';
 import detailR from './modules/detailSlice';
+import couponR from './modules/couponSlice';
 export const store = configureStore({
   reducer: {
     tmdbR,
@@ -19,5 +20,6 @@ export const store = configureStore({
     authR,
     pageR,
     detailR,
+    couponR,
   },
 });
