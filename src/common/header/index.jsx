@@ -58,7 +58,7 @@ const Header = () => {
           </>
         )}
       </TopMenu>
-      <SearchBar isOpen={isSearchOpen} />
+      <SearchBar isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />
     </HeaderWrap>
   );
 };
