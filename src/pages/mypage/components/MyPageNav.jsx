@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Ask from './Ask';
 import CustomerCenter from './CustomerCenter';
 import MyPageContent from './MypageContent/MyPageContent';
-import { MyReview } from './MyReview';
+import { MyReview } from './MyReview/MyReview';
 import { MyPageNavWrap } from './style';
 
 const MyPageNav = ({ changeContent }) => {
@@ -19,10 +19,7 @@ const MyPageNav = ({ changeContent }) => {
         <li className={isActive === 'content' ? 'on' : ''} onClick={() => handleTap('content', <MyPageContent />)}>
           나의 컨텐츠
         </li>
-        <li
-          className={isActive === 'review' ? 'on' : ''}
-          onClick={() => handleTap('review', <MyReview item={reviewed} />)}
-        >
+        <li className={isActive === 'review' ? 'on' : ''} onClick={() => handleTap('review', <MyReview />)}>
           리뷰 관리
         </li>
         <li className={isActive === 'ask' ? 'on' : ''} onClick={() => handleTap('ask', <Ask />)}>
