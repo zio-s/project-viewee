@@ -20,11 +20,11 @@ const InfoSection = ({ changeContent, id }) => {
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
 
-  const isMovie = detail?.type === 'movie';
-  const isTV = detail?.type === 'tv'; 
+  const isMovie = !!detail?.original_title;  
+  const isTV = !!detail?.original_name; 
 
-  const { title, original_name,backdrop_path , poster_path, release_date, first_air_date, genres, credits, overview} = detail;
-  const contentTitle = detail.title || detail.name
+  const { title, original_name, original_title, backdrop_path, poster_path, release_date, first_air_date, genres, credits, overview} = detail;
+  const contentTitle = title || original_name || original_title
   const releaseDate = isMovie ?release_date : isTV ?first_air_date : first_air_date
   const genreList = Array.isArray(genres) ? genres : [genres]
   const genreText = genreList.map((genre)=>genre.name).join(',') || '장르 정보 없음'
