@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 import { StyledSwiper, StyledSwiperSlide, PlayButton } from '../style';
 import Button from '../../../ui/button/defaultButton';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
 
 const SwiperSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,7 +34,6 @@ const SwiperSection = () => {
           coverflowEffect: { rotate: 50, stretch: 300, depth: 500 },
         },
       }}
-      // pagination={{ clickable: true }}
       modules={[EffectCoverflow, Pagination]}
       className="mySwiper"
       onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
