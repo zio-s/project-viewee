@@ -45,22 +45,28 @@ export const InfoBox = styled.div`
 `;
 
 export const LoginBox = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   margin-top: 30px;
   ${mobileMore`
   margin-top: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding: 0px 70px;
   `}
 `;
 
 export const RequestBox = styled.div`
   display: flex;
-  justify-content: space-between;
   margin: 0 auto;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   ${mobileMore`
   padding: 0px 70px;`}
+  .iconBox {
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const CheckBoxArea = styled.div`
@@ -68,10 +74,25 @@ export const CheckBoxArea = styled.div`
   align-items: center; /* 체크박스와 텍스트 정렬 */
   color: var(--gray-40);
   font-size: var(--font-label-m-tablet);
+  gap: 10px;
+  padding: 5px 15px;
   ${mobileMore`
   gap: 12px; /* 간격 조정 */
+  padding: 5px 15px;
   font-size: var(--font-label-xl-mobile);
   `}
+`;
+
+export const AgreeBox = styled.div`
+  background-color: var(--gray-80);
+  padding: 5px 0;
+  ${mobileMore`
+  font-size: var(--font-label-s);
+  padding: 10px 0;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+`}
 `;
 
 export const ForgotPass = styled.div`
