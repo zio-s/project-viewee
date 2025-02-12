@@ -50,6 +50,18 @@ export const ChangeProfileWrap = styled.div`
         font-size: var(--font-content-xxl);
         .edit {
           cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 24px;
+            height: 24px;
+            filter: invert(98%) sepia(1%) saturate(76%) hue-rotate(309deg) brightness(116%) contrast(100%);
+            &:hover {
+              transition: all 0.5s ease;
+              filter: invert(56%) sepia(55%) saturate(3933%) hue-rotate(313deg) brightness(98%) contrast(92%);
+            }
+          }
         }
         .edit:hover {
           transition: all 0.5s ease;
