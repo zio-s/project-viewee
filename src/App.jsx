@@ -8,6 +8,8 @@ import CateGoryPage from './pages/category';
 import Login from './pages/auth/login';
 import ChangeProfile from './pages/mypage/changeprofile';
 import Detail from './pages/detail';
+import SignUp from './pages/auth/signup';
+import ModifyProfile from './pages/auth/modifyprofile';
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
             <Route path="/:category" element={<CateGoryPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/modifyprofile" element={<ModifyProfile />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/changeprofile" element={<ChangeProfile />} />
             <Route path="/detail" element={<Detail />} />
