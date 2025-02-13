@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 const DetailPageNav = ({ activeTab, changeContent }) => {
   const [hasEpisodes, setHasEpisodes] = useState(false);
+  const [currentTab, setCurrentTab] = useState(activeTab);
   const { detail, loading, error } = useSelector((state) => state.detailR);
 
   useEffect(() => {
@@ -20,10 +21,9 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
             `https://api.themoviedb.org/3/collection/${detail.belongs_to_collection.id}`,
             { params: { api_key: '89add566d52fc4fb04e06c4ff4a557b7', language: 'ko-KR' } }
           );
-          
           const hasValidParts = response.data.parts && response.data.parts.length > 0;
           setHasEpisodes(hasValidParts);
-        } catch (error) {
+        } catch {
           setHasEpisodes(false);
         }
       } else if (detail?.episodes?.length > 0 || detail?.seasons?.length > 0) {
@@ -37,16 +37,23 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
   }, [detail]);
 
   useEffect(() => {
-    if (!hasEpisodes && activeTab === 'episode') {
-      changeContent('recommend', <Recommended />);
+    if (currentTab === '') {
+      if (hasEpisodes) {
+        setCurrentTab('episode');
+        changeContent('episode', <Episode />);
+      } else {
+        setCurrentTab('recommend');
+        changeContent('recommend', <Recommended />);
+      }
     }
-  }, [hasEpisodes, activeTab, changeContent]);
+  }, [hasEpisodes, changeContent, detail, currentTab]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
 
   const handleTabClick = (tab, content) => {
+    setCurrentTab(tab);
     changeContent(tab, content);
   };
 
@@ -54,19 +61,22 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
     <TabMenu>
       {hasEpisodes && (
         <li
-          className={activeTab === 'episode' ? 'active' : ''}
-          onClick={() => handleTabClick('episode', <Episode detail={detail} />)}>
+          className={currentTab === 'episode' ? 'active' : ''}
+          onClick={() => handleTabClick('episode', <Episode detail={detail} />)}
+        >
           에피소드
         </li>
       )}
       <li
-        className={activeTab === 'recommend' ? 'active' : ''}
-        onClick={() => handleTabClick('recommend', <Recommended />)}>
+        className={currentTab === 'recommend' ? 'active' : ''}
+        onClick={() => handleTabClick('recommend', <Recommended />)}
+      >
         추천
       </li>
       <li
-        className={activeTab === 'detail' ? 'active' : ''}
-        onClick={() => handleTabClick('detail', <InfoSection />)}>
+        className={currentTab === 'detail' ? 'active' : ''}
+        onClick={() => handleTabClick('detail', <InfoSection />)}
+      >
         상세정보
       </li>
     </TabMenu>
