@@ -14,10 +14,14 @@ const LoginActions = () => (
     <RequestBox>
       <CheckBoxArea>
         <CheckBox size="small" />
+
         <label htmlFor="rememberMe">로그인 정보 저장</label>
       </CheckBoxArea>
       <ForgotPass>
-        비밀번호를 잊으셨나요? <Link to="#">비밀번호 찾기</Link>
+        비밀번호를 잊으셨나요?{' '}
+        <Link to="#" className="findPassword">
+          비밀번호 찾기
+        </Link>
       </ForgotPass>
     </RequestBox>
   </>

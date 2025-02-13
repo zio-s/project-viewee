@@ -82,7 +82,7 @@ const HeroSection = ({ changeContent, id }) => {
           리뷰
         </button>
       </div>
-      <div className="description" onClick={() => changeContent('detail', <InfoSection data={detail}/>)}>
+      <div className="description" onClick={() => changeContent('detail', <InfoSection data={detail} />)}>
         {overview}
       </div>
     </HeroSectionWrapper>
