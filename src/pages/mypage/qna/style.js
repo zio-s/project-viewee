@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { tabletMore } from '../../../styled/Mixin';
 
-export const ChangeProfileWrap = styled.div`
+export const QnAWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

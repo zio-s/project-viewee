@@ -1,10 +1,15 @@
 import { ProfileWrap } from './style';
 import Button from '../../../ui/button/defaultButton';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const Profile = () => {
   const { user } = useSelector((state) => state.authR);
   const { username, profileImg, isMembershiped, coupon } = user;
+  const navigate = useNavigate();
+  const onSubscribe = () => {
+    navigate('/subscribe');
+  };
   const couponNumber = coupon.filter((item) => item.used === true).length;
   return (
     <ProfileWrap>
@@ -28,8 +33,8 @@ const Profile = () => {
               </Button>
             </a>
           </div>
-          <Button variant="gray" size="small" className="membership">
-            {isMembershiped ? '뷰이 프리미엄 구독 중' : <a href="/subscribe">구독권 없음</a>}
+          <Button variant="gray" size="small" className="membership" onClick={onSubscribe}>
+            {isMembershiped ? '뷰이 프리미엄 구독 중' : '구독권 없음'}
           </Button>
         </div>
       </div>
