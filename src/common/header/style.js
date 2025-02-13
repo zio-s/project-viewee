@@ -160,7 +160,8 @@ export const SearchContainer = styled.div`
   z-index: 100;
   padding: 20px;
   transform: translateY(${(props) => (props.isOpen ? '0' : '-100%')});
-  transition: transform 0.3s ease-in-out;
+  opacity: ${(props) => (props.isOpen ? '1' : '0')};
+  transition: all 0.3s ease-in-out;
   .search-inner {
     max-width: 1200px;
     margin: 0 auto;
