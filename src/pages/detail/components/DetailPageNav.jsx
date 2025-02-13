@@ -1,33 +1,35 @@
-import { useState } from 'react';
-import EpisodeList from './EpisodeList';
-import ReviewSection from './ReviewSection';
-import InfoSection from './InfoSection';
+import React from 'react';
 import { TabMenu } from '../style';
+import Recommended from './Recommended';
+import Episode from './Episode';
+import InfoSection from './InfoSection';
 
-const DetailPageNav = ({ changeContent }) => {
-  const [isActive, setIsActive] = useState('episode'); 
+const DetailPageNav = ({ activeTab, changeContent, detail }) => {
+  // detail이 존재하고 시리즈 또는 에피소드가 있는지 확인
+  const hasEpisodesOrSeries = detail && (detail?.belongs_to_collection || detail?.episodes?.length > 0 || detail?.type === 'tv');
 
   const handleTabClick = (tab, content) => {
-    setIsActive(tab);
-    changeContent(content);
+    changeContent(tab, content);
   };
 
   return (
     <TabMenu>
+      {hasEpisodesOrSeries && (
+        <li
+          className={activeTab === 'episode' ? 'active' : ''}
+          onClick={() => handleTabClick('episode', <Episode />)}
+        >
+          에피소드
+        </li>
+      )}
       <li
-        className={isActive === 'episode' ? 'active' : ''}
-        onClick={() => handleTabClick('episode', <EpisodeList />)}
-      >
-        에피소드
-      </li>
-      <li
-        className={isActive === 'recommend' ? 'active' : ''}
-        onClick={() => handleTabClick('recommend', <div>추천 영화 섹션 (Swiper 사용 예정)</div>)}
+        className={activeTab === 'recommend' ? 'active' : ''}
+        onClick={() => handleTabClick('recommend', <Recommended />)}
       >
         추천
       </li>
       <li
-        className={isActive === 'detail' ? 'active' : ''}
+        className={activeTab === 'detail' ? 'active' : ''}
         onClick={() => handleTabClick('detail', <InfoSection />)}
       >
         상세정보

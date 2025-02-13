@@ -6,6 +6,7 @@ export const HeaderWrap = styled.header`
   position: relative;
   display: flex;
   height: 94px;
+  z-index: 9999;
   ${mobileMore`
     height: 72px;
     `}
@@ -16,6 +17,7 @@ export const HeaderWrap = styled.header`
     display: flex;
     flex-direction: column;
     align-items: normal;
+    z-index: 9999;
     ${mobileMore`
       flex-direction: row;
       gap: 50px;
@@ -114,6 +116,7 @@ export const TopMenu = styled.ul`
     width: 100%;
     justify-content: end;
     align-items: center;
+    z-index: 9999;
     ${mobileMore`
       top: 50%;
       right: 35px;
@@ -133,6 +136,81 @@ export const TopMenu = styled.ul`
         ${tabletMore`
           font-size: var(--font-heading-m);
         `}
+      }
+    }
+    button {
+      display: inline-block;
+      width: 48px;
+      height: 48px;
+      i {
+        height: 28px;
+        width: 28px;
+      }
+    }
+  }
+`;
+
+export const SearchContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #2b2a2a;
+  height: 50vh;
+  z-index: 100;
+  padding: 20px;
+  transform: translateY(${(props) => (props.isOpen ? '0' : '-100%')});
+  opacity: ${(props) => (props.isOpen ? '1' : '0')};
+  transition: all 0.3s ease-in-out;
+  .search-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 100px;
+
+    ${mobileMore`
+      padding-top: 80px;
+    `}
+  }
+
+  .search-input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 24px;
+    padding: 10px 0;
+    margin-bottom: 30px;
+
+    &:focus {
+      outline: none;
+      border-bottom-color: white;
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .popular-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+
+    .keyword {
+      display: inline-block;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
       }
     }
   }

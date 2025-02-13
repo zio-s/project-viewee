@@ -5,7 +5,7 @@ import ContentSwiper from './components/ContentSwiper';
 import MarqueeSection from './components/MarqueeSection';
 import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
-import Tag from '../../ui/tag';
+import Tag from '../../ui/tag/index';
 const Home = () => {
   return (
     <>
@@ -22,6 +22,7 @@ const Home = () => {
       <VisualWrap></VisualWrap>
       <MarqueeSection />
       <MarqueeSection2 />
+      {/* <Tag /> */}
     </>
   );
 };
