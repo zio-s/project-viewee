@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { CateGoryWrap } from './style';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useCallback } from 'react';
-import { getContent } from '../../store/modules/getThunk';
+import { getContent, searchContent } from '../../store/modules/getThunk';
 import CategoryList from './components/CategoryList';
 import CategoryFilter from './components/CategoryFilter';
 import { movieActions } from '../../store/modules/movieSlice';
@@ -14,7 +14,9 @@ import { kidsActions } from '../../store/modules/kidsSlice';
 const CateGoryPage = () => {
   const { category } = useParams();
   const dispatch = useDispatch();
-
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search');
+  const searchData = useSelector((state) => state.searchR);
   const categoryMap = {
     movie: {
       state: useSelector((state) => state.movieR),
@@ -51,7 +53,9 @@ const CateGoryPage = () => {
   const currentCategory = categoryMap[category];
 
   useEffect(() => {
-    if (currentCategory) {
+    if (searchQuery) {
+      dispatch(searchContent({ query: searchQuery }));
+    } else if (currentCategory) {
       dispatch(currentCategory.clearAction());
       dispatch(
         getContent({
@@ -62,10 +66,19 @@ const CateGoryPage = () => {
         })
       );
     }
-  }, [category]);
+  }, [category, searchQuery, dispatch]);
 
   const loadMoreContent = useCallback(() => {
-    if (
+    if (searchQuery) {
+      if (!searchData.loading && searchData.currentPage < searchData.totalPages) {
+        dispatch(
+          searchContent({
+            query: searchQuery,
+            page: searchData.currentPage + 1,
+          })
+        );
+      }
+    } else if (
       currentCategory &&
       !currentCategory.state.loading &&
       currentCategory.state.currentPage < currentCategory.state.totalPages
@@ -79,24 +92,32 @@ const CateGoryPage = () => {
         })
       );
     }
-  }, [currentCategory?.state.loading, currentCategory?.state.currentPage, currentCategory?.state.totalPages, category]);
+  }, [searchQuery, currentCategory, searchData, category]);
 
-  if (!currentCategory) return <div>Invalid category</div>;
-  if (currentCategory.state.error) return <div>Error: {currentCategory.state.error}</div>;
+  if (searchQuery) {
+    if (searchData.error) return <div>검색 중 오류가 발생했습니다..: {searchData.error}</div>;
+  } else {
+    if (!currentCategory) return <div>불러오는 데이터가 없습니다!.. </div>;
+    if (currentCategory.state.error) return <div>Error: {currentCategory.state.error}</div>;
+  }
 
   return (
     <CateGoryWrap>
       <>
         <div>
-          <h1>{category}</h1>
-          <CategoryFilter />
+          <h1>{searchQuery ? `검색 결과 : ${searchQuery}` : category}</h1>
+          {!searchQuery && <CategoryFilter />}
         </div>
         <CategoryList
-          data={currentCategory.state.data}
+          data={searchQuery ? searchData.searchData : currentCategory.state.data}
           category={category}
           onLoadMore={loadMoreContent}
-          hasMore={currentCategory.state.currentPage < currentCategory.state.totalPages}
-          isLoading={currentCategory.state.loading}
+          hasMore={
+            searchQuery
+              ? searchData.currentPage < searchData.totalPages
+              : currentCategory.state.currentPage < currentCategory.state.totalPages
+          }
+          isLoading={searchQuery ? searchData.loading : currentCategory.state.loading}
         />
       </>
     </CateGoryWrap>
