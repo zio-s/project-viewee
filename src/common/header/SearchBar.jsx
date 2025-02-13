@@ -8,30 +8,21 @@ import { useNavigate } from 'react-router';
 const SearchBar = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const modalRef = useRef();
+  const inputRef = useRef();
   const { searchData, isLoading, error } = useSelector((state) => state.searchR);
   const [text, setText] = useState('');
-  const onChangInput = useCallback(
-    (e) => {
-      const query = e.target.value;
-      setText(query);
-      const timer = setTimeout(() => {
-        if (query.trim()) {
-          dispatch(searchActions.setSearchQuery(query));
-          dispatch(searchContent({ query }));
-        } else {
-          dispatch(searchActions.clearSearch());
-        }
-      }, 300);
-      return () => clearTimeout(timer);
-    },
-    [dispatch]
-  );
-
+  const onChangeInput = (e) => {
+    setText(e.target.value);
+  };
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
   const onSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
-      navigate('/category');
+      navigate(`/category?search=${encodeURIComponent(text)}`);
       dispatch(searchActions.setSearchQuery(text));
       dispatch(searchContent({ query: text }));
       setIsOpen(false);
@@ -40,14 +31,15 @@ const SearchBar = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <SearchContainer isOpen={isOpen}>
-        <div className="search-inner" rel={modalRef}>
+        <div className="search-inner">
           <form onSubmit={onSubmit}>
             <input
+              ref={inputRef}
               type="text"
               value={text}
               placeholder="제목, 인물을 검색해주세요"
               className="search-input"
-              onChange={onChangInput}
+              onChange={onChangeInput}
             />
           </form>
           <div className="popular-keywords">
@@ -65,27 +57,7 @@ const SearchBar = ({ isOpen, setIsOpen }) => {
           </div>
 
           {isLoading && <div className="loading">검색 중...</div>}
-
           {error && <div className="error">검색 중 오류가 발생했습니다</div>}
-
-          {searchData.length > 0 && (
-            <div className="search-results">
-              {searchData.map((item) => (
-                <div key={item.id} className="search-result-item">
-                  {item.media_type === 'movie' && <h3>{item.title}</h3>}
-                  {item.media_type === 'tv' && <h3>{item.name}</h3>}
-                  {item.media_type === 'person' && (
-                    <>
-                      <h3>{item.name}</h3>
-                      {item.known_for && (
-                        <p>Known for: {item.known_for.map((work) => work.title || work.name).join(', ')}</p>
-                      )}
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </SearchContainer>
     </>
