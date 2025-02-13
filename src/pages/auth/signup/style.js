@@ -16,7 +16,7 @@ export const LogoSection = styled.div`
     display:block;
    margin-bottom: 45px;
    margin-top: 70px;
-   font-size: var(--font-content-m);
+   font-size: var(--font-content-l);
   `}
 `;
 
@@ -35,6 +35,9 @@ export const Form = styled.form`
 `;
 
 export const InfoBox = styled.div`
+  .inputBox input:focus {
+  border-color: var(--primary-50)
+}
   margin: 0 auto;
   margin-bottom: 20px;
   padding: 0px; 30px;
@@ -54,60 +57,49 @@ export const LoginBox = styled.div`
   `}
 `;
 
-export const RequestBox = styled.div`
-  display: flex;
-  margin: 0 auto;
-  margin-bottom: 10px;
+export const VowelWrap = styled.div`
+  width: 100%;
+  background: var(--gray-80);
+  padding: 20px 15px;
+  font-size: var(--font-label-s);
+  box-sizing: border-box;
   ${mobileMore`
-  padding: 0px 70px;`}
-  .iconBox {
-    width: 10px;
-    height: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
-export const CheckBoxArea = styled.div`
-  display: flex;
-  align-items: center; /* 체크박스와 텍스트 정렬 */
-  color: var(--gray-40);
-  font-size: var(--font-label-m-tablet);
-  gap: 10px;
-  padding: 5px 15px;
-  ${mobileMore`
-  gap: 12px; /* 간격 조정 */
-  padding: 5px 15px;
-  font-size: var(--font-label-xl-mobile);
+  max-width:460px;
+  width:100%;
+  margin:0 auto;
   `}
 `;
 
-export const AgreeBox = styled.div`
-  background-color: var(--gray-80);
-  padding: 5px 0;
+export const CheckItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
   ${mobileMore`
-  font-size: var(--font-label-s);
-  padding: 10px 0;
-  width: 100%;
-  max-width: 460px;
-  margin: 0 auto;
-`}
+  `}
+  .labelBox .iconBox {
+    width: 10px;
+    height: 10px;
+  }
 `;
 
-export const ForgotPass = styled.div`
+export const RequestBox = styled.div`
+  margin-top: 30px;
   display: flex;
-  align-items: center; /* 체크박스와 텍스트 정렬 */
-  color: var(--gray-40);
-  font-size: var(--font-label-m-tablet);
+  align-items: center;
+  margin-bottom: 10px;
   gap: 5px;
   ${mobileMore`
-  gap: 12px; /* 간격 조정 */
-  font-size: 14px;
-  `};
+  padding: 0px 70px;
+  margin-top:20px;
+  `}
+  .labelBox .iconBox {
+    width: 10px;
+    height: 10px;
+  }
 `;
 
-export const SimpleLogin = styled.div`
+export const SimpleSignup = styled.div`
   &::before,
   &::after {
     content: '';
@@ -124,6 +116,7 @@ export const SimpleLogin = styled.div`
   font-size: var(--font-label-xl-mobile);
   color: var(--gray-40);
   text-align: center;
+  margin-bottom: 30px;
 `;
 
 export const SnsButtonContainer = styled.div`

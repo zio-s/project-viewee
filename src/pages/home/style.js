@@ -97,7 +97,7 @@ export const SectionWrapper = styled.div`
 
 export const RatedSwiperContainer = styled.div`
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 export const RatedSwiperWrapper = styled.ul`
@@ -238,27 +238,100 @@ export const NewSwiperSlide = styled.li`
   }
 `;
 
-export const NewCustomButtonPrev = styled.div`
-  position: absolute;
-
+export const MainCustomButtonPrev = styled.div`
+  
+  img {
+    width:20px;
+    height:30px;
+    margin-left:20px;
+    ${mobileMore`
+    width:40px;
+    height:40px;
+    margin-left:50px;
+    `}
+    ${tabletMore`
+    width:50px;
+    height:50px;
+    margin-left:50px;
+    `}
+  }
   top: 50%;
-  left: 10px;
+  left: 0px;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  position: absolute;
   cursor: pointer;
   z-index: 10;
   }
+
+`;
+
+export const MainCustomButtonNext = styled.div`
+  img {
+    width: 20px;
+    height: 30px;
+    margin-right: 20px;
+    ${mobileMore`
+    width:40px;
+    height:40px;
+    margin-right:50px;
+    `} ${tabletMore`
+    width:50px;
+    height:50px;
+    margin-right:50px;
+    `};
+  }
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translateY(-50%);
+
+  cursor: pointer;
+  z-index: 10;
+`;
+
+export const NewCustomButtonPrev = styled.div`
+  
+  img {
+    width:20px;
+    height:30px;
+    background: rgb(0, 0, 0, 0.1);
+    ${mobileMore`
+    width:40px;
+    height:40px;
+    `}
+    ${tabletMore`
+    width:50px;
+    height:50px;
+    `}
+  }
+  top: 50%;
+  left: 0px;
+  transform: translateY(-50%);
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+  }
+
 `;
 
 export const NewCustomButtonNext = styled.div`
+  img {
+    width: 20px;
+    height: 30px;
+    background: rgb(0, 0, 0, 0.1);
+    ${mobileMore`
+    width:40px;
+    height:40px;
+    `} ${tabletMore`
+    width:50px;
+    height:50px;
+    `};
+  }
   position: absolute;
-  color: #fff;
   top: 50%;
-  right: 10px;
+  right: 0px;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+
   cursor: pointer;
   z-index: 10;
 `;
