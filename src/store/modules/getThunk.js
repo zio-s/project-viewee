@@ -123,7 +123,7 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
 //검색
 export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1 }) => {
   const searchUrl = `${BASE_URL}/search/multi`;
-
+  if (!query.trim()) return;
   try {
     const response = await axios.get(searchUrl, {
       params: {

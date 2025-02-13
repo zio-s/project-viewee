@@ -86,17 +86,19 @@ const CateGoryPage = () => {
 
   return (
     <CateGoryWrap>
-      <div>
-        <h1>{category}</h1>
-        <CategoryFilter />
-      </div>
-      <CategoryList
-        data={currentCategory.state.data}
-        category={category}
-        onLoadMore={loadMoreContent}
-        hasMore={currentCategory.state.currentPage < currentCategory.state.totalPages}
-        isLoading={currentCategory.state.loading}
-      />
+      <>
+        <div>
+          <h1>{category}</h1>
+          <CategoryFilter />
+        </div>
+        <CategoryList
+          data={currentCategory.state.data}
+          category={category}
+          onLoadMore={loadMoreContent}
+          hasMore={currentCategory.state.currentPage < currentCategory.state.totalPages}
+          isLoading={currentCategory.state.loading}
+        />
+      </>
     </CateGoryWrap>
   );
 };
