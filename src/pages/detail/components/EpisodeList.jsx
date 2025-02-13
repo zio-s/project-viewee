@@ -1,72 +1,123 @@
-import { useEffect, useState } from 'react'; 
-import { useSelector } from 'react-redux';   
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CardBox } from '../style';
-import axios from 'axios';
-
+import { getContentDetail, getEpisodeDetails } from '../../../store/modules/getThunk';
+import { useNavigate } from 'react-router';
 
 const EpisodeList = () => {
-  const { detail, loading, error } = useSelector((state) => state.detailR);
-  const [episodes, setEpisodes] = useState([]);
+  const { detail, loading, error, seasonDetails, episodeDetails, collection } = useSelector((state) => state.detailR);
+  const [selectedSeason, setSelectedSeason] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchEpisodes = async () => {
-      if (detail && detail.belongs_to_collection) {
-        try {
-          const response = await axios.get(
-            `https://api.themoviedb.org/3/collection/${detail.belongs_to_collection.id}`,
-            { params: { api_key: '89add566d52fc4fb04e06c4ff4a557b7', language: 'ko-KR' } }
-          );
-          console.log('response.data:', response.data);
-          setEpisodes(response.data.parts);
-        } catch (error) {
-          console.error('에피소드 데이터를 가져오는 중 오류 발생:', error.response || error);
-        }
+  const handleSeasonClick = (e, seasonNumber) => {
+    e.preventDefault();
+
+    const currentPosition = window.scrollY;
+
+    if (selectedSeason === seasonNumber) {
+      setSelectedSeason(null);
+    } else {
+      setSelectedSeason(seasonNumber);
+      if (!episodeDetails[seasonNumber]) {
+        dispatch(getEpisodeDetails({ tvId: detail.id, seasonNumber }));
       }
-    };
-  
-    fetchEpisodes();
-  }, [detail]);
+    }
+    setTimeout(() => {
+      window.scrollTo(0, currentPosition);
+    }, 10);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
-  
-  const converRuntime = (minutes) => {
-    if (!minutes || minutes === 0) return '시간 정보 없음'
 
-    const hours = Math.floor(minutes / 60)
-    const Minutes = minutes % 60
+  const converRuntime = (minutes) => {
+    if (!minutes || minutes === 0) return '시간 정보 없음';
+
+    const hours = Math.floor(minutes / 60);
+    const Minutes = minutes % 60;
 
     if (hours > 0) {
-      return `${hours}시간 ${Minutes}분`
+      return `${hours}시간 ${Minutes}분`;
     }
-    return `${Minutes}분`
-  }
-  
-
-  return (
-    <CardBox>
-      {episodes.length > 0 ? (
-        episodes.map((episode) => (
-          <div key={episode.id} className="episode-item">
-            <div className="pic">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${episode.poster_path}`}
-                alt={episode.title}
-              />
+    return `${Minutes}분`;
+  };
+  const handleMovieClick = (movieId) => {
+    dispatch(
+      getContentDetail({
+        type: 'movie',
+        id: movieId,
+      })
+    );
+    navigate(`/movie/${movieId}`);
+  };
+  if (detail.belongs_to_collection && collection) {
+    return (
+      <CardBox>
+        {collection.parts?.map((movie) => (
+          <div key={movie.id} className="episode-item">
+            <div className="pic" onClick={() => handleMovieClick(movie.id)}>
+              {movie.poster_path && (
+                <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+              )}
             </div>
             <div className="text-info">
-              <h2>{episode.title}</h2>
-              <h3>{episode.release_date}, {converRuntime(episode.runtime) || converRuntime(episode.episode_run_time)}</h3>
-              <p>{episode.overview}</p>
+              <h2>{movie.title}</h2>
+              <h3>
+                {movie.release_date}, {converRuntime(movie.runtime)}
+              </h3>
+              <p>{movie.overview}</p>
             </div>
           </div>
-        ))
-      ) : (
-        <div>에피소드 데이터가 없습니다.</div>
-      )}
-    </CardBox>
-  );
+        ))}
+      </CardBox>
+    );
+  }
+
+  // TV 시리즈인 경우
+  if (detail.seasons && seasonDetails) {
+    return (
+      <CardBox>
+        {seasonDetails.map((season) => (
+          <div key={season.id} className="episode-item">
+            <div
+              className="pic"
+              onClick={(e) => handleSeasonClick(e, season.season_number)}
+              style={{ cursor: 'pointer' }}
+            >
+              {season.poster_path && (
+                <img src={`https://image.tmdb.org/t/p/w500${season.poster_path}`} alt={season.name} />
+              )}
+            </div>
+            <div className="text-info">
+              <h2>{season.name}</h2>
+              <h3>
+                {season.air_date}, {season.episodes?.length}개 에피소드
+              </h3>
+              <p>{season.overview}</p>
+            </div>
+            <>
+              {selectedSeason === season.season_number && episodeDetails[season.season_number] && (
+                <div className="episodes-list">
+                  {episodeDetails[season.season_number].map((episode) => (
+                    <div key={episode.id} className="episode-detail">
+                      <h4>
+                        {episode.episode_number}. {episode.name}
+                      </h4>
+                      {episode.overview || '줄거리 정보가 없습니다.'}
+                      <img src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt={episode.name} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          </div>
+        ))}
+      </CardBox>
+    );
+  }
+  return <div>컬렉션 또는 시즌 데이터가 없습니다.</div>;
 };
- 
- export default EpisodeList;
+
+export default EpisodeList;
