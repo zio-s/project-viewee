@@ -6,7 +6,7 @@ const ItemList = ({ title, content, price, toggle }) => {
   return (
     <ItemListWrap>
       <div className="title">
-        <h3>{title}</h3>
+        <h3>{title} Plan</h3>
         <p>{content}</p>
       </div>
       <div className="priceper">

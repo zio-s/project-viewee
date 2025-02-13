@@ -70,6 +70,16 @@ export const MyPageContentWrap = styled.div`
       ${tabletMore`
       gap: 2rem;
       `}
+      .iconNext {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 2rem;
+          height: 2rem;
+          filter: invert(94%) sepia(0%) saturate(24%) hue-rotate(41deg) brightness(104%) contrast(106%);
+        }
+      }
     }
     ul {
       width: 100%;
