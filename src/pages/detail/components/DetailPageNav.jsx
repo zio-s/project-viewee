@@ -1,22 +1,27 @@
 import React from 'react';
-import InfoSection from './InfoSection';
 import { TabMenu } from '../style';
-import Recommended from "./Recommended";
+import Recommended from './Recommended';
 import Episode from './Episode';
+import InfoSection from './InfoSection';
 
-const DetailPageNav = ({ activeTab, changeContent }) => {
+const DetailPageNav = ({ activeTab, changeContent, detail }) => {
+  // detail이 존재하고 시리즈 또는 에피소드가 있는지 확인
+  const hasEpisodesOrSeries = detail && (detail?.belongs_to_collection || detail?.episodes?.length > 0 || detail?.type === 'tv');
+
   const handleTabClick = (tab, content) => {
-    changeContent(tab, content); 
+    changeContent(tab, content);
   };
 
   return (
     <TabMenu>
-      <li
-        className={activeTab === 'episode' ? 'active' : ''} 
-        onClick={() => handleTabClick('episode', <Episode />)}
-      >
-        에피소드
-      </li>
+      {hasEpisodesOrSeries && (
+        <li
+          className={activeTab === 'episode' ? 'active' : ''}
+          onClick={() => handleTabClick('episode', <Episode />)}
+        >
+          에피소드
+        </li>
+      )}
       <li
         className={activeTab === 'recommend' ? 'active' : ''}
         onClick={() => handleTabClick('recommend', <Recommended />)}

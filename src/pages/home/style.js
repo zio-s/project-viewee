@@ -105,7 +105,7 @@ export const RatedSwiperWrapper = styled.ul`
   padding: 0;
   list-style: none;
   margin-left: 20px;
-  width: 100%; // 전체 너비 100%로 설정하여 각 슬라이드를 수평으로 배치
+  width: 100%;
 `;
 
 export const RatedSwiperSlide = styled.li`
@@ -195,6 +195,7 @@ export const NewMoreLink = styled.a`
 
 export const NewSwiperContainer = styled.div`
   position: relative;
+  width: 100%;
   overflow: hidden;
 `;
 
@@ -203,12 +204,13 @@ export const NewSwiperWrapper = styled.ul`
   padding: 0;
   list-style: none;
   margin: 0;
-  width: 100%; // 전체 너비 100%로 설정하여 각 슬라이드를 수평으로 배치
+  width: 100%;
 `;
 
 export const NewSwiperSlide = styled.li`
   width: 100px;
   height: 150px;
+  flex-shrink: 0;
 
   ${mobileMore`
     width: 190px;
@@ -238,6 +240,7 @@ export const NewSwiperSlide = styled.li`
 
 export const NewCustomButtonPrev = styled.div`
   position: absolute;
+
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
@@ -245,15 +248,12 @@ export const NewCustomButtonPrev = styled.div`
   height: 40px;
   cursor: pointer;
   z-index: 10;
-
-  @media (max-width: 600px) {
-    width: 30px;
-    height: 30px;
   }
 `;
 
 export const NewCustomButtonNext = styled.div`
   position: absolute;
+  color: #fff;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
@@ -261,11 +261,6 @@ export const NewCustomButtonNext = styled.div`
   height: 40px;
   cursor: pointer;
   z-index: 10;
-
-  @media (max-width: 600px) {
-    width: 30px;
-    height: 30px;
-  }
 `;
 
 export const MarqueeWrapper = styled.ul`
