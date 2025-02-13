@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
-import Swiper from 'swiper';
-import 'swiper/swiper-bundle.css';
+import React, { useEffect, useState } from 'react';
+import { Swiper } from 'swiper';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import {
   NewCardsSectionTitle,
   NewMoreLink,
@@ -13,52 +16,79 @@ import {
 } from '../style';
 
 const NewSwiperSection = () => {
+  const [slidesPerView, setSlidesPerView] = useState(4);
+
   useEffect(() => {
-    // Swiper가 초기화될 때, DOM에 요소가 모두 렌더링된 이후에 실행되도록
-    const swiper = new Swiper('.new-card-carousel', {
-      slidesPerView: 3,
+    const calculateSlidesPerView = () => {
+      if (window.innerWidth >= 1024) return 5;
+      if (window.innerWidth >= 768) return 3;
+      if (window.innerWidth >= 480) return 2;
+      return 1;
+    };
+
+    const updateSlidesPerView = () => {
+      setSlidesPerView(calculateSlidesPerView());
+    };
+
+    updateSlidesPerView();
+    window.addEventListener('resize', updateSlidesPerView);
+
+    const swiper = new Swiper('.new-card-carousel1', {
+      modules: [Navigation],
+      slidesPerView: 'auto',
       spaceBetween: 20,
-      loop: true,
+      slidesPerGroup: slidesPerView,
+
       navigation: {
         nextEl: '.new-swiper-button-next',
         prevEl: '.new-swiper-button-prev',
+        enabled: true,
       },
       breakpoints: {
-        1024: { slidesPerView: 5 },
-        768: { slidesPerView: 4 },
-        480: { slidesPerView: 3 },
+        1024: {
+          slidesPerView: 5,
+          slidesPerGroup: 5,
+        },
+        768: {
+          slidesPerView: 4,
+          slidesPerGroup: 4,
+        },
+        480: {
+          slidesPerView: 3,
+          slidesPerGroup: 3,
+        },
       },
     });
 
-    // Swiper 인스턴스를 종료할 때 메모리 해제를 위해 반환 함수 사용
     return () => {
       swiper.destroy();
+      window.removeEventListener('resize', updateSlidesPerView);
     };
-  }, []);
+  }, [slidesPerView]);
 
   return (
     <NewSectionWrapper>
       <NewCardsSectionTitle>
-        요즘 다들 이거 봐요
+        title
         <NewMoreLink href="./page/nowplaying.html" className="more">
           더보기 <img src="./img/main/arrow-more.svg" className="arrow-more" alt="More" />
         </NewMoreLink>
       </NewCardsSectionTitle>
 
-      <NewSwiperContainer className="new-card-carousel">
+      <NewSwiperContainer className="new-card-carousel1">
         <NewSwiperWrapper className="swiper-wrapper">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
             <NewSwiperSlide key={num} className="swiper-slide">
-              <img src={`./img/main/movie${num}.jpg`} alt={`Movie ${num}`} />
+              <div>Slide {num}</div>
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>
 
         <NewCustomButtonPrev className="new-swiper-button-prev">
-          <img src="./img/main/swiper_previous.png" alt="이전으로" />
+          <img src="/icons/arrow/left.svg" alt="" />
         </NewCustomButtonPrev>
         <NewCustomButtonNext className="new-swiper-button-next">
-          <img src="./img/main/swiper_next.png" alt="다음으로" />
+          <img src="public/icons/arrow/right.svg" alt="" />
         </NewCustomButtonNext>
       </NewSwiperContainer>
     </NewSectionWrapper>

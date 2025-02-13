@@ -4,6 +4,14 @@ import Layout from './common/Layout';
 import NotFiles from './pages/notfile';
 import MyPage from './pages/mypage';
 import Home from './pages/home';
+import CateGoryPage from './pages/category';
+import Login from './pages/auth/login';
+import SignUp from './pages/auth/signup';
+import ModifyProfile from './pages/auth/modifyprofile';
+import ChangeProfile from './pages/mypage/changeprofile';
+import Detail from './pages/detail';
+import Coupon from './pages/mypage/coupon';
+import Subscribe from './pages/mypage/subscribe';
 
 const App = () => {
   return (
@@ -12,10 +20,18 @@ const App = () => {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/:category" element={<CateGoryPage />} />
+            <Route path="/:category/:id" element={<Detail />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/modifyprofile" element={<ModifyProfile />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/changeprofile" element={<ChangeProfile />} />
+            <Route path="/coupon" element={<Coupon />} />
+            <Route path="/subscribe" element={<Subscribe />} />
           </Route>
-
           <Route path="*" element={<NotFiles />} />
         </Routes>
       </BrowserRouter>

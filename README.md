@@ -124,7 +124,4 @@ src/
     └── PublicRoute.jsx
 ```
 
-````
-깃 연습입니다
-```;
-````
+test
