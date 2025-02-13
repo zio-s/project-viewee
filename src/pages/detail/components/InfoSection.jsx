@@ -10,7 +10,6 @@ const InfoSection = ({ changeContent, id }) => {
   const { state } = useLocation();
 
   useEffect(() => {
-  console.log(detail);  //정보 확인중
     if (id && state?.type && !detail) {
       dispatch(getContentDetail({ type: state?.type, id }));
     }
@@ -20,15 +19,30 @@ const InfoSection = ({ changeContent, id }) => {
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
 
-  const isMovie = !!detail?.original_title;  
-  const isTV = !!detail?.original_name; 
-  const { title, original_name, original_title, backdrop_path, poster_path, release_date, first_air_date, genres, credits, overview} = detail;
-  const contentTitle = title || original_name || original_title
-  const releaseDate = isMovie ?release_date : isTV ?first_air_date : first_air_date
-  const genreList = Array.isArray(genres) ? genres : [genres]
-  const genreText = genreList.map((genre)=>genre.name).join(',') || '장르 정보 없음'
-  const cast = credits?.cast.slice(0,6).map((actor)=>actor.name).join(',') || '출연진 정보 없음'
-  const director = credits?.crew.find((member)=>member.job || Writing === 'Director')?.name || '감독 정보 없음'
+  const isMovie = !!detail?.original_title;
+  const isTV = !!detail?.original_name;
+  const {
+    title,
+    original_name,
+    original_title,
+    backdrop_path,
+    poster_path,
+    release_date,
+    first_air_date,
+    genres,
+    credits,
+    overview,
+  } = detail;
+  const contentTitle = title || original_name || original_title;
+  const releaseDate = isMovie ? release_date : isTV ? first_air_date : first_air_date;
+  const genreList = Array.isArray(genres) ? genres : [genres];
+  const genreText = genreList.map((genre) => genre.name).join(',') || '장르 정보 없음';
+  const cast =
+    credits?.cast
+      .slice(0, 6)
+      .map((actor) => actor.name)
+      .join(',') || '출연진 정보 없음';
+  const director = credits?.crew.find((member) => member.job || Writing === 'Director')?.name || '감독 정보 없음';
   const imagePath = backdrop_path || poster_path;
 
   const getRating = () => {
@@ -60,8 +74,7 @@ const InfoSection = ({ changeContent, id }) => {
         <div className="info-wrapper">
           <h2>{contentTitle}</h2>
           <div className="movie-details">
-            
-          <div className="detail-row">
+            <div className="detail-row">
               <span className="label">개봉</span>
               <span className="value">{releaseDate}</span>
             </div>
