@@ -84,7 +84,7 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
     const response = await axios.get(url, {
       params: {
         ...baseOptions,
-        append_to_response: 'credits,videos,similar,recommendations',
+        append_to_response: 'credits,videos,similar,recommendations,release_dates,content_ratings',
       },
     });
 
