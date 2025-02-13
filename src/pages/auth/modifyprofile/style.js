@@ -4,9 +4,11 @@ import { mobileMore, tabletMore } from '../../../styled/Mixin';
 export const ModyWrap = styled.div`
   .inner {
     width: 100%;
+    max-width:390px;
     margin: 0 auto;
+    padding: 30px 20px;
+    font-size:var(--font-content-l-mobile);
     ${mobileMore`
-    font-size: 15px;
     max-width: 500px;
     padding: 70px 40px;
     font-size: var(--font-content-m-tablet);
@@ -27,10 +29,17 @@ export const ModyWrap = styled.div`
 
   .info_box {
     display: flex;
+    flex-direction:column;
+    gap:5px;
+    margin-bottom:20px;
+    ${mobileMore`
+    flex-direction:row;
     align-items: center;
     gap: 50px; /* span과 Input 사이의 간격 유지 */
     margin-bottom: 15px;
     justify-content: space-between;
+    `}
+
   }
 
   .label {
@@ -40,10 +49,20 @@ export const ModyWrap = styled.div`
   }
 
   .input_box {
+    box-sizing:border-box;
+    width:100%;
+    max-width:350px;
+    ${mobileMore`
+    max-width: 100%;
     flex: 1;
     width: 400px; /* 고정된 너비 설정 */
-    max-width: 400px; /* 최대 너비 제한 */
+
+    `}
   }
+
+  .input_box input:focus {
+  border-color: var(--primary-50)
+}
 
   .divider {
     width: 100%;

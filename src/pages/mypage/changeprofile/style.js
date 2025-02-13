@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { tabletMore } from '../../../styled/Mixin';
 
 export const ChangeProfileWrap = styled.div`
   display: flex;
@@ -7,9 +8,15 @@ export const ChangeProfileWrap = styled.div`
   align-items: center;
   padding: 9rem 3.35rem;
   transition: all 0.2s ease;
+  overflow: hidden;
   h2 {
-    font-size: var(--font-title-xs);
-    margin-bottom: 7rem;
+    font-size: var(--font-content-xxl-mobile);
+    font-weight: 700;
+    margin-bottom: 4rem;
+    ${tabletMore`    
+      font-size: var(--font-title-xs);
+      margin-bottom: 7rem;
+    `}
   }
   .userProfile {
     display: flex;
@@ -63,10 +70,12 @@ export const ChangeProfileWrap = styled.div`
             }
           }
         }
-        .edit:hover {
-          transition: all 0.5s ease;
-          color: var(--primary-50);
-          cursor: pointer;
+        @media (hover: hover) and (pointer: fine) {
+          .edit:hover {
+            transition: all 0.5s ease;
+            color: var(--primary-50);
+            cursor: pointer;
+          }
         }
       }
     }
@@ -75,6 +84,8 @@ export const ChangeProfileWrap = styled.div`
     .users {
       .editImg {
         position: relative;
+        width: 100%;
+        height: 100%;
         .ongo {
           display: none;
         }
@@ -100,52 +111,132 @@ export const ChangeProfileWrap = styled.div`
     .users {
       display: flex;
       flex-direction: column;
-      gap: 9rem;
+      gap: 7rem;
+      ${tabletMore`
+          gap: 9rem;
+      `}
       .editImg {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1rem;
+        ${tabletMore`
+          gap: 1.5rem;
+        `}
         input {
           display: none;
         }
         img {
-          width: 200px;
-          height: 200px;
+          width: 160px;
+          height: 160px;
           border-radius: 50%;
           object-fit: cover;
+          ${tabletMore`
+            width: 200px;
+            height: 200px;
+          `}
         }
         .imgChange {
           display: block;
           color: var(--primary-50);
-          font-size: var(--font-content-xxl);
+          font-size: var(--font-content-s);
+          ${tabletMore`
+            font-size: var(--font-content-xxl);
+          `}
         }
       }
       .editName {
         .nameChange {
           display: flex;
           flex-direction: column;
-          gap: 9rem;
+          gap: 6rem;
+          ${tabletMore`
+            gap: 9rem;
+          `}
           .input {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 2.3rem;
+            gap: 2rem;
+            font-size: var(--font-label-s);
+            ${tabletMore`
+              gap: 2.3rem;
+              font-size: var(--font-label-xxl);
+            `};
+            input {
+              width: 150px;
+              height: 34px;
+              ${tabletMore`
+                width: 295px;
+                height: 64px;
+                font-size: var(--font-label-xxl);
+              `};
+            }
+            ${tabletMore`
+              gap: 2.3rem;
+            `};
           }
           .edit {
             display: flex;
-            gap: 2.4rem;
+            gap: 3rem;
+            ${tabletMore`
+              gap: 2.4rem;
+            `};
             button {
-              width: 372px;
-              height: 91px;
+              width: 150px;
+              height: 36px;
               border-radius: 4.55rem;
-              font-size: var(--font-content-xxl);
+              font-size: var(--font-label-m);
+              ${tabletMore`
+                width: 372px;
+                height: 91px;
+                border-radius: 4.55rem;
+                font-size: var(--font-content-xxl);
+              `};
             }
           }
         }
       }
     }
   }
+  .swiperUser {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    .swiper-wrapper {
+      overflow: hidden;
+    }
+    .swiper-slide {
+      width: 160px !important;
+      border-radius: 50%;
+      background-color: transparent !important;
+      .connectedUsers {
+        width: 160px !important;
+        height: 160px !important;
+        border-radius: 50%;
+      }
+      .editName {
+        display: flex;
+        gap: 1rem;
+
+        .userName {
+          font-size: var(--font-content-s);
+        }
+        .edit {
+          img {
+            width: 16px;
+            height: 16px;
+            &:hover {
+            }
+          }
+        }
+      }
+    }
+  }
+
   /* Disabled State */
   &:disabled {
     opacity: 0.5;

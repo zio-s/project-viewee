@@ -9,7 +9,7 @@ const ModifyProfile = () => {
     <ModyWrap>
       <div className="modyTitle">회원정보 수정</div>
       <div className="inner">
-        <form id="content" classNae="contentm">
+        <form id="content" className="contentm">
           {[
             { label: '이름' },
             { label: '전화번호' },

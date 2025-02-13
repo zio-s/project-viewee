@@ -12,6 +12,7 @@ import ChangeProfile from './pages/mypage/changeprofile';
 import Detail from './pages/detail';
 import Coupon from './pages/mypage/coupon';
 import Subscribe from './pages/mypage/subscribe';
+import QnA from './pages/mypage/qna';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/changeprofile" element={<ChangeProfile />} />
             <Route path="/coupon" element={<Coupon />} />
             <Route path="/subscribe" element={<Subscribe />} />
+            <Route path="/qna" element={<QnA />} />
           </Route>
           <Route path="*" element={<NotFiles />} />
         </Routes>

@@ -21,8 +21,8 @@ const NewSwiperSection = () => {
   useEffect(() => {
     const calculateSlidesPerView = () => {
       if (window.innerWidth >= 1024) return 5;
-      if (window.innerWidth >= 768) return 3;
-      if (window.innerWidth >= 480) return 2;
+      if (window.innerWidth >= 768) return 4;
+      if (window.innerWidth >= 390) return 3;
       return 1;
     };
 
@@ -40,8 +40,8 @@ const NewSwiperSection = () => {
       slidesPerGroup: slidesPerView,
 
       navigation: {
-        nextEl: '.new-swiper-button-next',
-        prevEl: '.new-swiper-button-prev',
+        nextEl: '.main-swiper-button-next',
+        prevEl: '.main-swiper-button-prev',
         enabled: true,
       },
       breakpoints: {
@@ -53,7 +53,7 @@ const NewSwiperSection = () => {
           slidesPerView: 4,
           slidesPerGroup: 4,
         },
-        480: {
+        390: {
           slidesPerView: 3,
           slidesPerGroup: 3,
         },
