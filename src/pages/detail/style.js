@@ -34,45 +34,67 @@ export const MovieInfoSection = styled.div`
 `;
 
 export const CardBox = styled.div`
-  width: 50%;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  margin-bottom: 50px;
-  overflow: hidden;
-  padding: 20px 25px;
-  transition: all 0.3s ease;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  // 2개의 열로 구성
+  gap: 20px;
   padding: 20px;
 
-  &:hover {
-    transform: scale(1.05);
-    background-color: var(--primary-50);
-  }
-  .pic {
-    width: 50%;
-    img {
-      width: 340px;
-      height: 195px;
-    }
-  }
+  .episode-item {
+    display: flex;
+    flex-direction: column;  // 세로 방향으로 변경
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 200px;
+    height: 100%;  
+    
+    .pic {
+    width: 100%;
+    height: 300px; 
 
-  .text-info {
-    width: 50%;
-    h2 {
-      margin-bottom: 8px;
-      font-size: var(--font-content-l);
-    }
-    h3 {
-      color: var(--gray-60);
-      font-size: var(--font-content-s);
-    }
-    p {
-      color: var(--gray-60);
-      font-size: var(--font-content-s);
+      img {
+        width: 50%;
+        height: 100%;
+        object-fit: cover;
       }
+    }
+    
+    .text-info {
+      flex: 1;
+      padding: 20px;
+      color: #fff;
+      
+      h2 {
+        font-size: var(--font-content-l);
+        margin: 0 0 6px 0;
+      }
+      
+      h3 {
+        font-size: var(--font-content-l);
+        color: var(--gray-50);
+        margin: 0 0 15px 0;
+      }
+      
+      p {
+        font-size: var(--font-content-s);
+        color: var(--gray-50);
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;  // 화면이 작아지면 한 줄에 하나씩 표시
+    
+    .episode-item {
+      .pic {
+        height: 250px;
+      }
+    }
   }
 `;
-
 
 export const EpisodeWrap = styled.div`
   .EpisodeContainer {
