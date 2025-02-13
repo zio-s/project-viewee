@@ -9,6 +9,7 @@ import authR from './modules/authSlice';
 import pageR from './modules/pageSlice';
 import detailR from './modules/detailSlice';
 import couponR from './modules/couponSlice';
+import searchR from './modules/searchSlice';
 export const store = configureStore({
   reducer: {
     tmdbR,
@@ -21,5 +22,6 @@ export const store = configureStore({
     pageR,
     detailR,
     couponR,
+    searchR,
   },
 });

@@ -8,6 +8,8 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const baseOptions = {
   api_key: API_KEY,
   language: 'ko-KR',
+  include_adult: false,
+  certification: 'ALL,12,15',
 };
 
 const CATEGORY_CONFIG = {
@@ -119,20 +121,33 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
 });
 
 //검색
-export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1, type = 'multi' }) => {
-  const url = `${BASE_URL}/search/${type}`;
-
+export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1 }) => {
+  const searchUrl = `${BASE_URL}/search/multi`;
+  if (!query.trim()) return;
   try {
-    const response = await axios.get(url, {
+    const response = await axios.get(searchUrl, {
       params: {
         ...baseOptions,
         query,
         page,
+        include_adult: false,
       },
     });
 
+    const results = response.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+
+    const processedResults = results.map((item) => {
+      if (item.media_type === 'person') {
+        return {
+          ...item,
+          known_for: item.known_for?.filter((work) => work.media_type === 'movie' || work.media_type === 'tv'),
+        };
+      }
+      return item;
+    });
+
     return {
-      data: response.data.results,
+      data: processedResults,
       totalPages: response.data.total_pages,
       currentPage: response.data.page,
     };

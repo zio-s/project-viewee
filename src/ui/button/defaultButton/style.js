@@ -23,6 +23,10 @@ const variants = {
       background: var(--gray-70);
     }
   `,
+  search: css`
+    background: transparent;
+    color: var(--text-primary);
+  `,
 };
 
 const sizes = {
@@ -40,6 +44,12 @@ const sizes = {
     height: 52px;
     padding: 0 52px;
     font-size: 18px;
+  `,
+  search: css`
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    color: var(--gray-0);
   `,
 };
 
