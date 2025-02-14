@@ -212,20 +212,43 @@ export const getEpisodeDetails = createAsyncThunk('content/getEpisodeDetails', a
 });
 
 //검색
+const addSpaceToKorean = (query) => {
+  return query
+    .replace(/([가-힣]+)([A-Za-z0-9]+)/g, '$1 $2')
+    .replace(/([A-Za-z0-9]+)([가-힣]+)/g, '$1 $2')
+    .replace(/([가-힣])([가-힣]{2,})/g, '$1 $2');
+};
 export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1 }) => {
   const searchUrl = `${BASE_URL}/search/multi`;
   if (!query.trim()) return;
+  const modifiedQuery = addSpaceToKorean(query);
+
   try {
-    const response = await axios.get(searchUrl, {
+    const response1 = await axios.get(searchUrl, {
       params: {
         ...baseOptions,
         query,
         page,
         include_adult: false,
+        language: 'ko-KR',
       },
     });
 
-    const results = response.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+    let results = response1.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+
+    if (results.length === 0) {
+      const response2 = await axios.get(searchUrl, {
+        params: {
+          ...baseOptions,
+          query: modifiedQuery,
+          page,
+          include_adult: false,
+          language: 'ko-KR',
+        },
+      });
+
+      results = response2.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+    }
 
     const processedResults = results.map((item) => {
       if (item.media_type === 'person') {
@@ -239,8 +262,8 @@ export const searchContent = createAsyncThunk('content/searchContent', async ({ 
 
     return {
       data: processedResults,
-      totalPages: response.data.total_pages,
-      currentPage: response.data.page,
+      totalPages: response1.data.total_pages,
+      currentPage: response1.data.page,
     };
   } catch (error) {
     console.error('Search API Error:', error);

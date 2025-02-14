@@ -104,7 +104,7 @@ const CateGoryPage = () => {
   return (
     <CateGoryWrap>
       <>
-        <div>
+        <div className="category-header">
           <h1>{searchQuery ? `검색 결과 : ${searchQuery}` : category}</h1>
           {!searchQuery && <CategoryFilter />}
         </div>
