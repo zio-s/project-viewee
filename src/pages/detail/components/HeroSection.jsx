@@ -54,7 +54,7 @@ const HeroSection = ({ changeContent, id }) => {
     <HeroSectionWrapper>
       <h1>{title}</h1>
       <StyledButton $variant="primary" $size="large">
-        재생하기
+       미리보기
       </StyledButton>
       <div>
         {trailer ? (
