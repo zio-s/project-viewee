@@ -126,7 +126,6 @@ export const TopMenu = styled.ul`
       right: 50px;
     `}
     li {
-      margin-left: 25px;
       a {
         font-size: var(--font-heading-m-mobile);
         ${mobileMore`
@@ -168,7 +167,7 @@ export const SearchContainer = styled.div`
 export const SearchInner = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 100px;
+  padding-top: 6.25rem;
 
   @media (max-width: 768px) {
     padding-top: 80px;
@@ -180,17 +179,18 @@ export const SearchInner = styled.div`
 export const SearchForm = styled.form`
   position: relative;
   width: 100%;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 `;
 
 export const SearchInput = styled.input`
   width: 100%;
   height: 50px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  text-indent: 36px;
   border: none;
   color: white;
   font-size: 24px;
-  padding: 10px 40px 10px 0;
+  padding: 10px 0;
   transition: border-color 0.3s ease;
 
   &:focus {
@@ -208,14 +208,15 @@ export const SearchInput = styled.input`
 `;
 
 export const ClearButton = styled.button`
+  display: flex;
+  align-items: center;
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.5);
-  font-size: 20px;
+  font-size: 2.5rem;
   transition: color 0.3s ease;
-
   &:hover {
     color: white;
   }
