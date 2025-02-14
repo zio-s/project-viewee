@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import Ask from './Ask';
-import CustomerCenter from './CustomerCenter';
 import MyPageContent from './MypageContent/MyPageContent';
 import { MyReview } from './MyReview/MyReview';
 import { MyPageNavWrap } from './style';
@@ -18,6 +16,9 @@ const MyPageNav = ({ changeContent }) => {
   const onQnaPage = () => {
     navigate('/qna');
   };
+  const onCustomerPage = () => {
+    navigate('/support');
+  };
   return (
     <MyPageNavWrap>
       <ul>
@@ -34,12 +35,7 @@ const MyPageNav = ({ changeContent }) => {
             <li onClick={onQnaPage}>문의 페이지</li>
           </ul>
         </li>
-        <li
-          className={isActive === 'customercenter' ? 'on' : ''}
-          onClick={() => handleTap('customercenter', <CustomerCenter />)}
-        >
-          고객 센터
-        </li>
+        <li onClick={onCustomerPage}>고객 센터</li>
       </ul>
     </MyPageNavWrap>
   );

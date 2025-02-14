@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import SearchBar from './SearchBar';
 import Button from '../../ui/button/defaultButton';
 import { useState } from 'react';
+import UserDropdown from './components/UserDropdown';
 
 const Header = () => {
   const authed = useSelector((state) => state.authR);
@@ -43,19 +44,15 @@ const Header = () => {
             </i>
           </Button>
         </li>
+        <UserDropdown authed={authed} />
         {authed ? (
           <li>
-            <Link to="/logout">로그아웃</Link>
+            <Button variant="search" size="search"></Button>
           </li>
         ) : (
-          <>
-            <li>
-              <Link to="/join">회원가입</Link>
-            </li>
-            <li>
-              <Link to="/login">로그인</Link>
-            </li>
-          </>
+          <li>
+            <Link to="/login">로그인</Link>
+          </li>
         )}
       </TopMenu>
       <SearchBar isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />

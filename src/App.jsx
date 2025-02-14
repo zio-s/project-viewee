@@ -13,6 +13,7 @@ import Detail from './pages/detail';
 import Coupon from './pages/mypage/coupon';
 import Subscribe from './pages/mypage/subscribe';
 import QnA from './pages/mypage/qna';
+import CustomerCenter from './pages/mypage/customercenter';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/coupon" element={<Coupon />} />
             <Route path="/subscribe" element={<Subscribe />} />
             <Route path="/qna" element={<QnA />} />
+            <Route path="/support" element={<CustomerCenter />} />
           </Route>
           <Route path="*" element={<NotFiles />} />
         </Routes>
