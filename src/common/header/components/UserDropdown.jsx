@@ -10,11 +10,13 @@ import {
   ProfileSubtitle,
   ProfileTitle,
 } from './style';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../../store/modules/authSlice';
 
 const UserDropdown = ({ authed }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -25,6 +27,11 @@ const UserDropdown = ({ authed }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const logout = () => {
+    dispatch(authActions.logout());
+    setIsOpen(false);
+  };
 
   if (!authed) {
     return (
@@ -49,7 +56,7 @@ const UserDropdown = ({ authed }) => {
         <DropdownMenu>
           <ProfileSection>
             <ProfileTitle>프로필</ProfileTitle>
-            <ProfileSubtitle>프로필 전환</ProfileSubtitle>
+            <ProfileSubtitle to="/changeprofile">프로필 전환</ProfileSubtitle>
           </ProfileSection>
 
           <MenuItem to="/mypage" onClick={() => setIsOpen(false)}>
@@ -66,7 +73,7 @@ const UserDropdown = ({ authed }) => {
           </MenuItem>
 
           <Divider />
-          <MenuItem to="/" onClick={() => setIsOpen(false)}>
+          <MenuItem to="/" onClick={logout}>
             로그아웃
           </MenuItem>
         </DropdownMenu>

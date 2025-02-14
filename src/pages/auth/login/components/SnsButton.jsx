@@ -14,6 +14,10 @@ const socialStyles = {
     background-image: url('/images/facebook.png');
     background-size: 20px 20px;
   `,
+  kakao: css`
+    background-image: url('/icons/logo/kakao/color.svg');
+    background-size: 20px 20px;
+  `,
 };
 
 const StyledButton = styled.a`
@@ -34,8 +38,8 @@ const StyledButton = styled.a`
   }
 `;
 
-const SnsButton = ({ type, href }) => {
-  return <StyledButton type={type} href={href} target="_blank" rel="noopener noreferrer" />;
+const SnsButton = ({ type, href, ...props }) => {
+  return <StyledButton type={type} {...props} />;
 };
 
 export default SnsButton;
