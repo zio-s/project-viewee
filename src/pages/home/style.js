@@ -17,28 +17,36 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   width: 280px;
   height: 180px;
 
+  transition: all 0.4s ease-in-out;
+
   ${mobileMore`
     width: 560px;
     height: 360px;
+
   `}
 
   ${tabletMore`
     width: 1440px;
     height: 695px;
+
   `}
 
   img {
     display: block;
     width: 100%;
+    height: auto;
   }
-    // 기본적으로 슬라이드를 어둡게 처리
+
+  // 기본적으로 슬라이드를 어둡게 처리
   filter: brightness(0.6);
   opacity: 0.8;
 
   // 활성 슬라이드는 밝게 표시
   &.swiper-slide-active {
     filter: brightness(1);
-    opacity: 1;`;
+    opacity: 1;
+  }
+`;
 
 export const PlayButton = styled.div`
   button {
@@ -171,7 +179,7 @@ export const NewSectionWrapper = styled.section`
 
 export const NewCardsSectionTitle = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   align-items: center;
   font-size: 26px;
   font-weight: bold;
@@ -186,17 +194,25 @@ export const NewMoreLink = styled.a`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #000;
+  .moreIcon {
+    width: 15px;
+    height: 15px;
+    ${mobileMore`
+    width:18px;
+    height:18px;
+    `}
+    ${tabletMore`
 
-  .arrow-more {
-    margin-left: 5px;
+    width:20px;
+    height:20px;
+    `}
   }
 `;
 
 export const NewSwiperContainer = styled.div`
   position: relative;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 export const NewSwiperWrapper = styled.ul`
