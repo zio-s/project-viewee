@@ -10,6 +10,7 @@ import { dramaActions } from '../../store/modules/dramaSlice';
 import { aniActions } from '../../store/modules/aniSlice';
 import { comedyActions } from '../../store/modules/comedySlice';
 import { kidsActions } from '../../store/modules/kidsSlice';
+import NotFiles from '../notfile';
 
 const CateGoryPage = () => {
   const { category } = useParams();
@@ -49,9 +50,7 @@ const CateGoryPage = () => {
       clearAction: kidsActions.clearData,
     },
   };
-
   const currentCategory = categoryMap[category];
-
   useEffect(() => {
     if (searchQuery) {
       dispatch(searchContent({ query: searchQuery }));
@@ -97,7 +96,9 @@ const CateGoryPage = () => {
   if (searchQuery) {
     if (searchData.error) return <div>검색 중 오류가 발생했습니다..: {searchData.error}</div>;
   } else {
-    if (!currentCategory) return <div>불러오는 데이터가 없습니다!.. </div>;
+    if (!currentCategory) {
+      return <NotFiles />;
+    }
     if (currentCategory.state.error) return <div>Error: {currentCategory.state.error}</div>;
   }
 

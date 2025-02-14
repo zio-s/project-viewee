@@ -128,17 +128,14 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
 //컬렉션
 export const getCollection = createAsyncThunk('content/getCollection', async (collectionId) => {
   try {
-    // 1. 먼저 컬렉션 기본 정보를 가져옴
     const collectionResponse = await axios.get(`${BASE_URL}/collection/${collectionId}`, { params: baseOptions });
 
     const parts = collectionResponse.data.parts || [];
 
-    // 2. 각 영화의 상세 정보를 가져옴
     const detailedParts = await Promise.all(
       parts.map(async (part) => {
         const movieResponse = await axios.get(`${BASE_URL}/movie/${part.id}`, { params: baseOptions });
 
-        // 이미지 프리로드
         if (movieResponse.data.backdrop_path || movieResponse.data.poster_path) {
           const imageUrl = `https://image.tmdb.org/t/p/w500${
             movieResponse.data.backdrop_path || movieResponse.data.poster_path
