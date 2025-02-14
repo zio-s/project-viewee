@@ -47,6 +47,12 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
     }
   }, [hasEpisodes, detail]);
   
+  useEffect(() => {
+    if (activeTab === 'detail') {
+      setCurrentTab('detail');
+    }
+  }, [activeTab]);
+  
 
   const handleTabClick = (tab, content) => {
     setCurrentTab(tab);

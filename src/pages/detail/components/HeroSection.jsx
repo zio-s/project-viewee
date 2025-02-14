@@ -43,6 +43,13 @@ const HeroSection = ({ changeContent, id }) => {
     : '';
   const imagePath = backdrop_path || poster_path;
   const imageUrl = cachedImages[imagePath] || `https://image.tmdb.org/t/p/w1280${imagePath}`;
+
+  const 
+  truncateText  = (text, maxLength) =>{
+    if(!text) return '';
+    return text.length > maxLength ? `${text.slice(0, maxLength)}...더보기` : text;
+  }
+
   return (
     <HeroSectionWrapper>
       <h1>{title}</h1>
@@ -83,7 +90,7 @@ const HeroSection = ({ changeContent, id }) => {
         </button>
       </div>
       <div className="description" onClick={() => changeContent('detail', <InfoSection data={detail} />)}>
-        {overview}
+      {truncateText(overview, 95)}
       </div>
     </HeroSectionWrapper>
   );
