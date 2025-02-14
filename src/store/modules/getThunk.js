@@ -84,10 +84,9 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
     const response = await axios.get(url, {
       params: {
         ...baseOptions,
-        append_to_response: 'credits,videos,similar,recommendations',
+        append_to_response: 'credits,videos,similar,recommendations,release_dates,content_ratings',
       },
     });
-
     const data = response.data;
     const imageUrl = `https://image.tmdb.org/t/p/w1280${data.backdrop_path || data.poster_path}`;
 
@@ -109,7 +108,13 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
         data.videos?.results?.find((video) => video.type === 'Trailer') ||
         null,
     };
+    if (data.belongs_to_collection) {
+      dispatch(getCollection(data.belongs_to_collection.id));
+    }
 
+    if (type === 'tv' && data.seasons) {
+      dispatch(getSeasonDetails({ tvId: id, seasons: data.seasons }));
+    }
     return {
       ...data,
       videoData,
@@ -120,21 +125,127 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
   }
 });
 
+//컬렉션
+export const getCollection = createAsyncThunk('content/getCollection', async (collectionId) => {
+  try {
+    const collectionResponse = await axios.get(`${BASE_URL}/collection/${collectionId}`, { params: baseOptions });
+
+    const parts = collectionResponse.data.parts || [];
+
+    const detailedParts = await Promise.all(
+      parts.map(async (part) => {
+        const movieResponse = await axios.get(`${BASE_URL}/movie/${part.id}`, { params: baseOptions });
+
+        if (movieResponse.data.backdrop_path || movieResponse.data.poster_path) {
+          const imageUrl = `https://image.tmdb.org/t/p/w500${
+            movieResponse.data.backdrop_path || movieResponse.data.poster_path
+          }`;
+          try {
+            await preloadImage(imageUrl);
+          } catch (error) {
+            console.error('Collection movie image preload failed:', error);
+          }
+        }
+
+        return movieResponse.data;
+      })
+    );
+
+    return {
+      ...collectionResponse.data,
+      parts: detailedParts,
+    };
+  } catch (error) {
+    console.error('Collection API Error:', error);
+    throw error;
+  }
+});
+
+//시즌
+export const getSeasonDetails = createAsyncThunk('content/getSeasonDetails', async ({ tvId, seasons }) => {
+  try {
+    const seasonPromises = seasons.map(async (season) => {
+      const seasonResponse = await axios.get(`${BASE_URL}/tv/${tvId}/season/${season.season_number}`, {
+        params: baseOptions,
+      });
+      if (seasonResponse.data.poster_path) {
+        const imageUrl = `https://image.tmdb.org/t/p/w500${seasonResponse.data.poster_path}`;
+        try {
+          await preloadImage(imageUrl);
+        } catch (error) {
+          console.error('Season image preload failed:', error);
+        }
+      }
+      return seasonResponse.data;
+    });
+    const seasonDetails = await Promise.all(seasonPromises);
+    return seasonDetails;
+  } catch (error) {
+    console.error('Season Details API Error:', error);
+    throw error;
+  }
+});
+
+export const getEpisodeDetails = createAsyncThunk('content/getEpisodeDetails', async ({ tvId, seasonNumber }) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tv/${tvId}/season/${seasonNumber}`, {
+      params: {
+        ...baseOptions,
+      },
+    });
+    const episodes = response.data.episodes.map((episode) => ({
+      ...episode,
+      overview: episode.overview || '줄거리 정보가 없습니다.',
+    }));
+
+    return {
+      seasonNumber,
+      episodes,
+    };
+  } catch (error) {
+    console.error('Episode Details API Error:', error);
+    throw error;
+  }
+});
+
 //검색
+const addSpaceToKorean = (query) => {
+  return query
+    .replace(/([가-힣]+)([A-Za-z0-9]+)/g, '$1 $2')
+    .replace(/([A-Za-z0-9]+)([가-힣]+)/g, '$1 $2')
+    .replace(/([가-힣])([가-힣]{2,})/g, '$1 $2');
+};
 export const searchContent = createAsyncThunk('content/searchContent', async ({ query, page = 1 }) => {
   const searchUrl = `${BASE_URL}/search/multi`;
+  if (!query.trim()) return;
+  const modifiedQuery = addSpaceToKorean(query);
 
   try {
-    const response = await axios.get(searchUrl, {
+    const response1 = await axios.get(searchUrl, {
       params: {
         ...baseOptions,
         query,
         page,
         include_adult: false,
+        language: 'ko-KR',
       },
     });
 
-    const results = response.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+    let results = response1.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+
+    if (results.length === 0) {
+      const response2 = await axios.get(searchUrl, {
+        params: {
+          ...baseOptions,
+          query: modifiedQuery,
+          page,
+          include_adult: false,
+          language: 'ko-KR',
+        },
+      });
+
+      results = response2.data.results.filter((item) => ['movie', 'tv', 'person'].includes(item.media_type));
+    }
 
     const processedResults = results.map((item) => {
       if (item.media_type === 'person') {
@@ -148,8 +259,8 @@ export const searchContent = createAsyncThunk('content/searchContent', async ({ 
 
     return {
       data: processedResults,
-      totalPages: response.data.total_pages,
-      currentPage: response.data.page,
+      totalPages: response1.data.total_pages,
+      currentPage: response1.data.page,
     };
   } catch (error) {
     console.error('Search API Error:', error);

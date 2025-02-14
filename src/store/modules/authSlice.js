@@ -7,6 +7,7 @@ const initialState = {
       username: '김민지',
       email: 'test@example.com',
       password: '123456',
+      phone: '010-0000-0000',
       profileImg:
         'https://i.namu.wiki/i/khXs0TuOmkXJgKpC4ybkuB_A1h57NBKsbNz_TkVE1K1Dv5-wceOmrmYjUMWZjEEzUKrgMJERPlcVuK0BU7wjwv1x9R0gC4M6kB7RMurrTomL8sU6FiU-O3uhxh5312NXdOMG8cskBQKneF4wsZmXXg.webp',
       isMembershiped: true,
@@ -150,6 +151,7 @@ const initialState = {
     username: '김민지',
     email: 'test@example.com',
     password: '123456',
+    phone: '010-0000-0000',
     profileImg:
       'https://i.namu.wiki/i/khXs0TuOmkXJgKpC4ybkuB_A1h57NBKsbNz_TkVE1K1Dv5-wceOmrmYjUMWZjEEzUKrgMJERPlcVuK0BU7wjwv1x9R0gC4M6kB7RMurrTomL8sU6FiU-O3uhxh5312NXdOMG8cskBQKneF4wsZmXXg.webp',
     isMembershiped: false,

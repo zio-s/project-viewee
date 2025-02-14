@@ -1,32 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getContentDetail } from './getThunk';
+import { searchContent } from './getThunk';
 
 const initialState = {
-  searchData: null,
-  loading: false,
+  searchData: [],
+  totalPages: 0,
+  currentPage: 1,
+  isLoading: false,
   error: null,
+  searchQuery: '',
 };
 
 const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    clearDetail: (state) => {
-      state.detail = null;
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
+    clearSearch: (state) => {
+      state.searchData = [];
+      state.searchQuery = '';
+      state.currentPage = 1;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getContentDetail.pending, (state) => {
-        state.loading = true;
+      .addCase(searchContent.pending, (state) => {
+        state.isLoading = true;
         state.error = null;
       })
-      .addCase(getContentDetail.fulfilled, (state, action) => {
-        state.detail = action.payload;
-        state.loading = false;
+      .addCase(searchContent.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.searchData = action.payload.data;
+        state.totalPages = action.payload.totalPages;
+        state.currentPage = action.payload.currentPage;
       })
-      .addCase(getContentDetail.rejected, (state, action) => {
-        state.loading = false;
+      .addCase(searchContent.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.error.message;
       });
   },
