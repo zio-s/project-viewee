@@ -3,240 +3,188 @@ import { tabletMore } from '../../../styled/Mixin';
 
 export const QnAWrap = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 9rem 3.35rem;
-  transition: all 0.2s ease;
-  overflow: hidden;
-  h2 {
-    font-size: var(--font-content-xxl-mobile);
-    font-weight: 700;
-    margin-bottom: 4rem;
-    ${tabletMore`    
-      font-size: var(--font-title-xs);
-      margin-bottom: 7rem;
-    `}
-  }
-  .userProfile {
+  .contentWrap {
+    padding: 3.7rem 5rem;
+    max-width: 1440px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5rem;
-    .connected {
-      scale: 0.75;
-      filter: brightness(0.3);
-      transition: all 0.5s ease;
-    }
-    .users {
+    flex-wrap: wrap;
+    gap: 0 8rem;
+    margin-top: 16.4rem;
+    .info {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-      .editImg {
-        position: relative;
-        img {
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-        .ongo {
-          display: none;
-        }
-        &:hover {
-          cursor: pointer;
-        }
-      }
-      .editName {
-        display: flex;
-        gap: 2rem;
-        justify-content: center;
-        align-items: center;
-        font-size: var(--font-content-xxl);
-        .edit {
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          img {
-            width: 24px;
-            height: 24px;
-            filter: invert(98%) sepia(1%) saturate(76%) hue-rotate(309deg) brightness(116%) contrast(100%);
-            &:hover {
-              transition: all 0.5s ease;
-              filter: invert(56%) sepia(55%) saturate(3933%) hue-rotate(313deg) brightness(98%) contrast(92%);
-            }
-          }
-        }
-        @media (hover: hover) and (pointer: fine) {
-          .edit:hover {
-            transition: all 0.5s ease;
-            color: var(--primary-50);
-            cursor: pointer;
-          }
-        }
-      }
-    }
-  }
-  .nochange {
-    .users {
-      .editImg {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        .ongo {
-          display: none;
-        }
-        &:hover {
-          img {
-            transition: all 0.5s ease;
-            scale: 1.1;
-            filter: brightness(0.6);
-          }
-          .ongo {
-            transition: all 0.5s ease;
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-          }
-        }
-      }
-    }
-  }
-  .onChange {
-    .users {
-      display: flex;
-      flex-direction: column;
-      gap: 7rem;
-      ${tabletMore`
-          gap: 9rem;
-      `}
-      .editImg {
+      gap: 5rem;
+      .title {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        ${tabletMore`
-          gap: 1.5rem;
-        `}
-        input {
-          display: none;
+        gap: 1.4rem;
+        h2 {
+          width: 410px;
+          font-size: var(--font-title-m-tablet);
+          font-weight: 600;
         }
-        img {
-          width: 160px;
-          height: 160px;
-          border-radius: 50%;
-          object-fit: cover;
-          ${tabletMore`
-            width: 200px;
-            height: 200px;
-          `}
-        }
-        .imgChange {
-          display: block;
-          color: var(--primary-50);
-          font-size: var(--font-content-s);
-          ${tabletMore`
-            font-size: var(--font-content-xxl);
-          `}
+        p {
+          font-size: var(--font-content-m);
+          color: var(--gray-40);
         }
       }
-      .editName {
-        .nameChange {
+      img {
+        width: 743px;
+        height: 504px;
+        object-fit: cover;
+      }
+    }
+    .inputBox {
+      background-color: #0f0f0f;
+      padding: 5rem;
+      border: 1px solid var(--gray-80);
+      border-radius: 12px;
+      .submitQuestion {
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
+        font-size: var(--font-content-m);
+        .item {
           display: flex;
           flex-direction: column;
-          gap: 6rem;
-          ${tabletMore`
-            gap: 9rem;
-          `}
-          .input {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            font-size: var(--font-label-s);
-            ${tabletMore`
-              gap: 2.3rem;
-              font-size: var(--font-label-xxl);
-            `};
-            input {
-              width: 150px;
-              height: 34px;
-              ${tabletMore`
-                width: 295px;
-                height: 64px;
-                font-size: var(--font-label-xxl);
-              `};
-            }
-            ${tabletMore`
-              gap: 2.3rem;
-            `};
+          gap: 1.6rem;
+          input {
+            color: var(--gray-40);
+            background-color: var(--gray-90);
+            border: 1px solid var(--gray-80);
           }
-          .edit {
-            display: flex;
-            gap: 3rem;
-            ${tabletMore`
-              gap: 2.4rem;
-            `};
-            button {
-              width: 150px;
-              height: 36px;
-              border-radius: 4.55rem;
-              font-size: var(--font-label-m);
-              ${tabletMore`
-                width: 372px;
-                height: 91px;
-                border-radius: 4.55rem;
-                font-size: var(--font-content-xxl);
-              `};
-            }
+        }
+        .name {
+          input {
+            width: 485px;
+            height: 67px;
+          }
+        }
+        .question {
+          textarea {
+            width: 450px;
+            height: 125px;
+            color: var(--gray-40);
+            padding: 2rem;
+            resize: none;
+            font-size: var(--font-content-m);
+            background-color: var(--gray-90);
+            border: 1px solid var(--gray-80);
+            border-radius: 8px;
+          }
+        }
+        .itemSet {
+          display: flex;
+          gap: 5rem;
+          input {
+            width: 215px;
+            height: 67px;
           }
         }
       }
     }
-  }
-  .swiperUser {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    .swiper-wrapper {
-      overflow: hidden;
-    }
-    .swiper-slide {
-      width: 160px !important;
-      border-radius: 50%;
-      background-color: transparent !important;
-      .connectedUsers {
-        width: 160px !important;
-        height: 160px !important;
-        border-radius: 50%;
-      }
-      .editName {
-        display: flex;
+    .agree {
+      display: flex;
+      gap: 5rem;
+      .labelBox {
         gap: 1rem;
-
-        .userName {
-          font-size: var(--font-content-s);
+        .iconBox {
+          padding: 0.4rem;
         }
-        .edit {
-          img {
-            width: 16px;
-            height: 16px;
-            &:hover {
+      }
+    }
+    .faq {
+      margin-top: 15rem;
+      .title {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+        margin-bottom: 8rem;
+        h3 {
+          font-size: var(--font-content-xxxl);
+          font-weight: 600;
+        }
+        p {
+          font-size: var(--font-content-m);
+          color: var(--gray-40);
+        }
+      }
+      .faqList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0rem 8rem;
+        .faqItem {
+          width: 45%;
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          .faqItemWrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 3rem;
+            gap: 2.4rem;
+            box-sizing: border-box;
+            .no {
+              padding: 2rem;
+              font-size: var(--font-content-l);
             }
+            .itemContent {
+              width: 100%;
+              display: flex;
+              font-size: var(--font-content-l);
+              justify-content: space-between;
+              align-items: center;
+              .accordian {
+                display: flex;
+                position: relative;
+                width: 80%;
+                flex-direction: column;
+                text-wrap: wrap;
+                h4 {
+                  text-wrap: wrap;
+                }
+                p {
+                  height: 0px;
+                  overflow: hidden;
+                  font-size: var(--font-content-m);
+                  color: var(--gray-40);
+                }
+                .on {
+                  height: 100%;
+                  margin-top: 2rem;
+                  transition: all 0.2s linear;
+                }
+              }
+              .arrow {
+                width: 30px;
+                height: 30px;
+                img {
+                  width: 100%;
+                  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(280deg) brightness(111%) contrast(100%);
+                }
+              }
+            }
+          }
+          .border {
+            width: 100%;
+            border-bottom: 1px solid transparent;
+            border-image: linear-gradient(
+              to right,
+              rgba(240, 90, 126, 0) 0%,
+              rgba(240, 90, 126, 1) 17%,
+              rgba(240, 90, 126, 0) 100%
+            );
           }
         }
       }
     }
+    .banner {
+      margin-top: 15.7rem;
+    }
   }
-
   /* Disabled State */
   &:disabled {
     opacity: 0.5;
