@@ -14,48 +14,45 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
   useEffect(() => {
     const checkEpisodes = async () => {
       if (!detail) return;
-
+  
+      let validEpisodes = false;
+  
       if (detail?.belongs_to_collection) {
         try {
           const response = await axios.get(
             `https://api.themoviedb.org/3/collection/${detail.belongs_to_collection.id}`,
             { params: { api_key: '89add566d52fc4fb04e06c4ff4a557b7', language: 'ko-KR' } }
           );
-          const hasValidParts = response.data.parts && response.data.parts.length > 0;
-          setHasEpisodes(hasValidParts);
+          validEpisodes = response.data.parts && response.data.parts.length > 0;
         } catch {
-          setHasEpisodes(false);
+          validEpisodes = false;
         }
       } else if (detail?.episodes?.length > 0 || detail?.seasons?.length > 0) {
-        setHasEpisodes(true);
-      } else {
-        setHasEpisodes(false);
+        validEpisodes = true;
       }
+  
+      setHasEpisodes(validEpisodes);
     };
-
+  
     checkEpisodes();
   }, [detail]);
 
   useEffect(() => {
-    if (currentTab === '') {
-      if (hasEpisodes) {
-        setCurrentTab('episode');
-        changeContent('episode', <Episode />);
-      } else {
-        setCurrentTab('recommend');
-        changeContent('recommend', <Recommended />);
-      }
+    if (hasEpisodes) {
+      setCurrentTab('episode');
+      changeContent('episode', <Episode />);
+    } else {
+      setCurrentTab('recommend');
+      changeContent('recommend', <Recommended />);
     }
-  }, [hasEpisodes, changeContent, detail, currentTab]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!detail) return null;
+  }, [hasEpisodes, detail]);
+  
 
   const handleTabClick = (tab, content) => {
     setCurrentTab(tab);
     changeContent(tab, content);
   };
+  
 
   return (
     <TabMenu>
