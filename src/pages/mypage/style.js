@@ -8,7 +8,7 @@ export const MyPageWrap = styled.div`
   transition: all 0.2s ease;
   white-space: nowrap;
   ${tabletMore`
-        display: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: 3.7rem 5rem;
