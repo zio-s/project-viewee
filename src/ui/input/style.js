@@ -38,7 +38,9 @@ const sizes = {
   `,
 };
 
-export const StyledInput = styled.input.attrs({ type: 'text' })`
+export const StyledInput = styled.input.attrs((props) => ({
+  type: props.type || 'text',
+}))`
   apperance: none;
   align-items: center;
   justify-content: center;
