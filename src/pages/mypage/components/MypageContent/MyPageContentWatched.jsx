@@ -21,11 +21,15 @@ const MyPageContentWatched = () => {
   const { user } = useSelector((state) => state.authR);
   const { watched } = user;
   const isDeleteToggle = (id) => {
-    if (onDelete) {
-      setIsDelete((item) => [...item, id]);
-    } else {
-      return;
-    }
+    if (!onDelete) return;
+    setIsDelete((prev) => {
+      const isSelected = prev.includes(id);
+      if (isSelected) {
+        return prev.filter((item) => item !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
   };
   const deletedToggle = (index) => {
     if (onDelete && index.length !== 0) {
@@ -84,6 +88,13 @@ const MyPageContentWatched = () => {
           {currentPost.map((url, i) => (
             <li key={i} onClick={() => isDeleteToggle(url.id)}>
               <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
+              <svg
+                viewBox="0 0 100 100"
+                className={`check-mark ${isDelete.find((item) => item === url.id) ? 'check-active' : ''}`}
+              >
+                <circle cx="50" cy="50" r="40" className="check-circle" />
+                <path d="M20,50 L40,70 L80,30" fill="none" stroke="#F05A7E" strokeWidth="8" className="check-path" />
+              </svg>
             </li>
           ))}
         </ul>
