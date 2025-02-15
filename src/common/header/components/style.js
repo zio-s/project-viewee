@@ -82,11 +82,11 @@ export const Divider = styled.div`
 `;
 
 export const LoginLink = styled(Link)`
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   font-size: 14px;
 
   &:hover {
-    color: #000;
+    color: var(--gray-30);
   }
 `;
