@@ -12,7 +12,10 @@ const MyPageContent = ({ changeContent }) => {
       <section className="played">
         <div className="title" onClick={() => changeContent(<MyPageContentWatched />)}>
           <h2>시청중인 콘텐츠</h2>
-          <div className="iconNext">&gt;</div>
+          <div className="iconNext">
+            {' '}
+            <img src="/icons/arrow/right.svg" />
+          </div>
         </div>
         <ul>
           {watched.map((item) => (
@@ -25,7 +28,9 @@ const MyPageContent = ({ changeContent }) => {
       <section className="liked">
         <div className="title" onClick={() => changeContent(<MyPageContentLiked />)}>
           <h2>저장한 콘텐츠</h2>
-          <div className="iconNext">&gt;</div>
+          <div className="iconNext">
+            <img src="/icons/arrow/right.svg" />
+          </div>
         </div>
         <ul>
           {liked.map((item) => (
@@ -38,7 +43,10 @@ const MyPageContent = ({ changeContent }) => {
       <section className="downed">
         <div className="title" onClick={() => changeContent(<MyPageContentDownLoaded />)}>
           <h2>다운로드한 콘텐츠</h2>
-          <div className="iconNext">&gt;</div>
+          <div className="iconNext">
+            {' '}
+            <img src="/icons/arrow/right.svg" />
+          </div>
         </div>
         <ul>
           {downed.map((item) => (

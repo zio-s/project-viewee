@@ -5,6 +5,7 @@ import { MyPageWrap } from './style';
 import NotFiles from '../notfile';
 import { useState } from 'react';
 import MypageMain from './components/MypageContent/MypageMain';
+import Tag from '../../ui/tag';
 
 const MyPage = () => {
   const authed = useSelector((state) => state.authR);

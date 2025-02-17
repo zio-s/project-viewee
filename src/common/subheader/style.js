@@ -4,9 +4,11 @@ import { mobileMore, tabletMore } from '../../styled/Mixin';
 export const HeaderWrap = styled.header`
   position: relative;
   display: flex;
-  height: 94px;
-  ${mobileMore`
+  height: 54px;
+  margin-top: 5.4rem;
+  ${tabletMore`
     height: 72px;
+    margin-top: 0;
     `}
   .header_inner {
     width: 100%;
@@ -26,9 +28,27 @@ export const HeaderWrap = styled.header`
     `}
   }
   h1 {
-    width: 100px;
     padding: 1.2rem 1.5rem 0;
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    div {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      .icon {
+        width: 20px;
+        height: 20px;
+        filter: invert(94%) sepia(0%) saturate(24%) hue-rotate(41deg) brightness(104%) contrast(106%);
+        ${mobileMore`
+          display:none;
+        `}
+      }
+      .logo {
+        margin-left: 50%;
+      }
+    }
+
     ${mobileMore`
       width: 150px;
       padding: 1.4rem 3.5rem ;

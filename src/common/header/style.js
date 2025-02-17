@@ -106,7 +106,6 @@ export const NavWrap = styled.nav`
     }
   }
 `;
-
 export const TopMenu = styled.ul`
   &.top-menu {
     position: absolute;
@@ -127,7 +126,6 @@ export const TopMenu = styled.ul`
       right: 50px;
     `}
     li {
-      margin-left: 25px;
       a {
         font-size: var(--font-heading-m-mobile);
         ${mobileMore`
@@ -155,62 +153,131 @@ export const SearchContainer = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  background-color: #2b2a2a;
-  height: 50vh;
+  height: 100vh;
   z-index: 100;
-  padding: 20px;
-  transform: translateY(${(props) => (props.isOpen ? '0' : '-100%')});
-  transition: transform 0.3s ease-in-out;
-  .search-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 100px;
+  transform: translateY(${(props) => (props.$isOpen ? '0' : '-100%')});
+  opacity: ${(props) => (props.$isOpen ? '1' : '0')};
+  transition: all 0.3s ease-in-out;
+  .searchBg {
+    background-color: #2b2a2a;
+    padding: 6.25rem 3.125rem;
+  }
+`;
 
-    ${mobileMore`
-      padding-top: 80px;
-    `}
+export const SearchInner = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 6.25rem;
+
+  @media (max-width: 768px) {
+    padding-top: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+`;
+
+export const SearchForm = styled.form`
+  position: relative;
+  width: 100%;
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  text-indent: 36px;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 10px 0;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: white;
   }
 
-  .search-input {
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`;
+
+export const ClearButton = styled.button`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 2.5rem;
+  transition: color 0.3s ease;
+  &:hover {
     color: white;
-    font-size: 24px;
-    padding: 10px 0;
-    margin-bottom: 30px;
-
-    &:focus {
-      outline: none;
-      border-bottom-color: white;
-    }
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
   }
+`;
 
-  .popular-keywords {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
+export const LoadingText = styled.div`
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.7);
+`;
 
-    .keyword {
-      display: inline-block;
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+export const ErrorText = styled.div`
+  text-align: center;
+  padding: 20px;
+  color: #ff6b6b;
+`;
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-    }
+export const HistoryContainer = styled.div`
+  margin-top: 2rem;
+`;
+
+export const HistoryTitle = styled.h3`
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+`;
+
+export const KeywordsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+`;
+
+export const KeywordItem = styled.div`
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+`;
+
+export const KeywordText = styled.span`
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+`;
+
+export const DeleteButton = styled.button`
+  padding: 0.5rem 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: white;
   }
 `;
