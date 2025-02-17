@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  joinData: [
-    JSON.parse(localStorage.getItem('joinData')) || {
+  joinData: JSON.parse(localStorage.getItem('joinData')) || [
+    {
       id: 1,
       username: '김미선',
       userId: 'test@test.com',
