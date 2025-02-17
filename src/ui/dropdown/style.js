@@ -34,34 +34,27 @@ export const StyledDropDown = styled.div`
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
-      /* Size Styles */
-  ${({ $size }) => sizes[$size]};
+    /* Size Styles */
+    ${({ $size }) => sizes[$size]};
   }
-    .dropdown-list{
+  .dropdown-list {
     width: 100%;
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 120%;
-      padding-top: 10px;
-      background-color: var(--gray-90);
-      .list-item {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 120%;
+    padding-top: 10px;
+    background-color: var(--gray-90);
+    .list-item {
       height: 100%;
       padding: 5px;
       &:hover {
         background-color: var(--gray-80);
       }
-      }
     }
+  }
 
   select {
     color: var(--text-primary);
-  }
-  .icon {
-    position: absolute,
-    right: '8px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    pointerEvents: none
   }
 `;
