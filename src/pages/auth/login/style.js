@@ -1,6 +1,31 @@
 import styled from 'styled-components';
 import { mobileMore, tabletMore } from '../../../styled/Mixin';
 
+export const LoginFormWrap = styled.form`
+  ${mobileMore`
+   max-width: 600px;
+ `}
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 330px;
+  width: 100%;
+  padding: 7rem;
+  background: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  input {
+    width: 460px;
+    height: 70px;
+    margin-bottom: 3rem;
+    &:focus {
+      border: 1px solid var(--primary-50);
+    }
+  }
+`;
 export const Container = styled.div`
   ${mobileMore`
   display: flex;
@@ -27,13 +52,19 @@ export const VideoBackground = styled.video`
 export const LogoSection = styled.div`
   display: none;
   ${mobileMore` 
-    display:block;
-  margin-top:70px;
-   margin-bottom: 70px;
-   margin-left:190px;
-   font-size: var( --font-content-l);
-   text-align: left; 
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
     width: 100%;
+    margin-bottom: 4.5rem;
+    h3 {
+      font-size: var(--font-content-l);
+      font-weight: 500;
+    }
+    p{
+      font-size: var(--font-label-s);
+      color: var(--gray-50);
+    }
   `}
 `;
 
@@ -62,13 +93,12 @@ export const InfoBox = styled.div`
 `;
 
 export const LoginBox = styled.div`
-  margin-bottom: 10px;
-  margin-top: 30px;
-  ${mobileMore`
-  margin-top: 30px;
-  margin-bottom: 20px;
-  padding: 0px 70px;
-  `}
+  width: 100%;
+  height: 70px;
+  margin-bottom: 23px;
+  button {
+    height: 100%;
+  }
 `;
 
 export const RequestBox = styled.div`
@@ -77,7 +107,7 @@ export const RequestBox = styled.div`
   margin: 0 auto;
   margin-bottom: 40px;
   ${mobileMore`
-  padding: 0px 70px;`}
+  width: 100%;`}
 `;
 
 export const CheckBoxArea = styled.div`
@@ -98,6 +128,10 @@ export const CheckBoxArea = styled.div`
   gap: 12px; /* 간격 조정 */
   font-size: var(--font-label-xl-mobile);
   `}
+  img {
+    width: 10px;
+    height: 10px;
+  }
 `;
 
 export const ForgotPass = styled.div`
@@ -139,6 +173,9 @@ export const SnsButtonContainer = styled.div`
   justify-content: center;
   gap: 30px;
   margin-top: 20px;
+  img {
+    cursor: pointer;
+  }
 `;
 
 export const NotMember = styled.div`

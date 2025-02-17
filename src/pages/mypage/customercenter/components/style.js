@@ -51,6 +51,19 @@ export const CCContentWrap = styled.div`
           }
           .title {
             text-align: left;
+            display: flex;
+            gap: 7px;
+            .new {
+              border: 1px solid var(--primary-50);
+              border-radius: 5px;
+              color: var(--primary-50);
+              width: 45px;
+              height: 23px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: var(--font-label-s);
+            }
           }
           .data {
             color: var(--gray-60);

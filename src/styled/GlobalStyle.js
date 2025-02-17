@@ -6,7 +6,8 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
   :root {
     --background-color: #1c1c1e;
-
+    --perspective: 2000px;
+    
     /* Primary Colors (Pink) */
     --primary-10: rgb(254, 239, 242);  /* rgb(254, 239, 242) */
     --primary-20: rgb(253, 230, 236);  /* rgb(253, 230, 236) */
