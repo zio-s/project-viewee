@@ -12,26 +12,36 @@ export const StyledSwiper = styled(Swiper)`
 `;
 
 export const StyledSwiperSlide = styled(SwiperSlide)`
+  .SlideTextArea {
+    position: absolute;
+    bottom: 49px;
+    left: 16px;
+    font-size: var(--font-label-m-mobile);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    #score {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+  }
   background-position: center;
   background-size: cover;
 
-  /* ✅ Mobile (390px)에서 정확히 280x180 시작 */
   width: ${(props) => props.width || 'calc(280px + (280 * ((100vw - 390px) / (768 - 390))))'};
   height: ${(props) => props.height || 'calc(180px + (180 * ((100vw - 390px) / (768 - 390))))'};
 
-  /* ✅ 정확한 Tablet(768px) 크기 */
   @media (min-width: 768px) {
     width: 560px;
     height: 360px;
   }
 
-  /* ✅ Tablet (768px) → PC (1024px) 크기 확대 */
   @media (min-width: 769px) and (max-width: 1023px) {
-    width: calc(560px + (880 * ((100vw - 768px) / (1024 - 768)))); /* Tablet → PC 확대 */
-    height: calc(360px + (335 * ((100vw - 768px) / (1024 - 768)))); /* Tablet → PC 확대 */
+    width: calc(560px + (880 * ((100vw - 768px) / (1024 - 768))));
+    height: calc(360px + (335 * ((100vw - 768px) / (1024 - 768))));
   }
 
-  /* ✅ 정확한 PC(1024px 이상) 크기 */
   @media (min-width: 1024px) {
     width: 1440px;
     height: 695px;
@@ -408,6 +418,7 @@ export const HoverModalWrap = styled.div`
     .iconArea {
       display: flex;
       gap: 10px;
+      align-items: center;
       .button {
         width: 60px;
         height: 60px;
@@ -416,6 +427,20 @@ export const HoverModalWrap = styled.div`
         width: 60px;
         height: 60px;
         margin-left: auto;
+        background: transparent;
+        border: 1px solid var(--gray-60);
+      }
+      .steamedButton {
+        width: 60px;
+        height: 60px;
+
+        background: transparent;
+        border: 1px solid var(--gray-60);
+      }
+      .likeButton {
+        width: 60px;
+        height: 60px;
+
         background: transparent;
         border: 1px solid var(--gray-60);
       }
@@ -428,7 +453,13 @@ export const HoverModalWrap = styled.div`
       font-size: 16px;
       .age {
         border: 1px solid var(--gray-60);
+        background: #232323;
         padding: 4px 12px;
+      }
+      #starNumber {
+        display: flex;
+        align-items: center;
+        gap: 4px;
       }
     }
   }
