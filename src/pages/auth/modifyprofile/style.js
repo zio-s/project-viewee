@@ -108,5 +108,28 @@ export const ModyWrap = styled.div`
     gap: 30px;
     margin: 65px 0 90px 0;
   }
+
+  .genderLabel {
+    width:160px;
+  }
+
+  .genderForm {
+    ${mobileMore`
+     display:flex;
+    align-items:center;
+    gap:10px;
+    `}
+
+  
+  }
+
+  .genderButton {
+    background-color:transparent;
+    border: 1px solid var(--gray-60);
+  }
+
+  .genderButton:hover {
+    border-color: var(--primary-50);
+}
 \]
 `;

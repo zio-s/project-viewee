@@ -14,6 +14,7 @@ import Coupon from './pages/mypage/coupon';
 import Subscribe from './pages/mypage/subscribe';
 import QnA from './pages/mypage/qna';
 import CustomerCenter from './pages/mypage/customercenter';
+import LandingPage from './pages/landing';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/:category">

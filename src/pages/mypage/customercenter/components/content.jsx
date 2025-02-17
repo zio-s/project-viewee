@@ -30,12 +30,12 @@ const Content = ({ data, children, isFnQ }) => {
   const getYear = nowDate.getFullYear();
   const getMonth = nowDate.getMonth() + 1;
   const getDay = nowDate.getDate();
-  const contentData = currentPost.map((item) => item.date.split('-'));
+  const contentData = data.map((item) => item.date.split('-'));
+
   const isYear = contentData.map((item) => Number(getYear - item[0]) * 365);
   const isMonth = contentData.map((item) => (getMonth - item[1]) * 30);
   const isDay = contentData.map((item) => getDay - item[2]);
   const isNew = isYear.map((item, idx) => item + isMonth[idx] + isDay[idx]);
-
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(() => {
     const handleResize = () => {
@@ -69,6 +69,7 @@ const Content = ({ data, children, isFnQ }) => {
                   <tr key={index}>
                     <td className="tag">{item.tag}</td>
                     <td className="title">
+                      AD
                       <div className="titleName">{item.title}</div>{' '}
                       {isNew[index] <= 30 ? (
                         <div className="new on">{isMobile ? 'N' : 'NEW'}</div>

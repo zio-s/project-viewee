@@ -12,24 +12,42 @@ export const StyledSwiper = styled(Swiper)`
 `;
 
 export const StyledSwiperSlide = styled(SwiperSlide)`
+  .SlideTextArea {
+    position: absolute;
+    bottom: 49px;
+    left: 16px;
+    font-size: var(--font-label-m-mobile);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    #score {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+  }
   background-position: center;
   background-size: cover;
-  width: 280px;
-  height: 180px;
 
-  transition: all 0.4s ease-in-out;
+  width: ${(props) => props.width || 'calc(280px + (280 * ((100vw - 390px) / (768 - 390))))'};
+  height: ${(props) => props.height || 'calc(180px + (180 * ((100vw - 390px) / (768 - 390))))'};
 
-  ${mobileMore`
+  @media (min-width: 768px) {
     width: 560px;
     height: 360px;
+  }
 
-  `}
+  @media (min-width: 769px) and (max-width: 1023px) {
+    width: calc(560px + (880 * ((100vw - 768px) / (1024 - 768))));
+    height: calc(360px + (335 * ((100vw - 768px) / (1024 - 768))));
+  }
 
-  ${tabletMore`
+  @media (min-width: 1024px) {
     width: 1440px;
     height: 695px;
+  }
 
-  `}
+  transition: all 0.4s ease-in-out;
 
   img {
     display: block;
@@ -52,7 +70,7 @@ export const PlayButton = styled.div`
   button {
     width: 112px;
     height: 25px;
-    font-size: 10px;
+    font-size: 9px;
     position: absolute;
     bottom: 17.5px;
     left: 15px;
@@ -62,6 +80,7 @@ export const PlayButton = styled.div`
     width: 174px;
     height: 40px;
     position: absolute;
+    font-size: var(--font-content-m);
   bottom: 35px;
   left: 32px;
   z-index: 10;
@@ -91,7 +110,9 @@ export const VisualWrap = styled.div`
   margin-top: 60px;
   `};
 `;
-
+export const EventSectionWrapper = styled.div`
+  margin-top: -400px;
+`;
 export const SectionWrapper = styled.div`
   margin-bottom: 40px;
   ${mobileMore`
@@ -212,7 +233,7 @@ export const NewMoreLink = styled.a`
 export const NewSwiperContainer = styled.div`
   position: relative;
   width: 100%;
-  /* overflow: hidden; */
+  overflow: visible !important;
 `;
 
 export const NewSwiperWrapper = styled.ul`
@@ -241,6 +262,10 @@ export const NewSwiperSlide = styled.li`
   border-radius: 5px;
   transition: transform 0.3s ease;
 
+  &:hover {
+    z-index: 1001;
+  }
+
   img {
     width: 100%;
     height: auto;
@@ -256,7 +281,7 @@ export const NewSwiperSlide = styled.li`
 
 export const MainCustomButtonPrev = styled.div`
   
-  img {
+  svg {
     width:20px;
     height:30px;
     margin-left:20px;
@@ -282,7 +307,7 @@ export const MainCustomButtonPrev = styled.div`
 `;
 
 export const MainCustomButtonNext = styled.div`
-  img {
+  svg {
     width: 20px;
     height: 30px;
     margin-right: 20px;
@@ -375,4 +400,86 @@ export const MarqueeItem = styled.li`
     width: 400px;
     height: 230px;
   `}
+`;
+
+export const HoverModalWrap = styled.div`
+  background-color: #181818;
+  border-radius: 5px;
+  width: 378px;
+  height: 453px;
+  .videoArea {
+    width: 100%;
+    height: 256px;
+    background-color: var(--gray-40);
+  }
+  .infoArea {
+    padding: 15px;
+
+    .iconArea {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      .button {
+        width: 60px;
+        height: 60px;
+      }
+      .moreButton {
+        width: 60px;
+        height: 60px;
+        margin-left: auto;
+        background: transparent;
+        border: 1px solid var(--gray-60);
+      }
+      .steamedButton {
+        width: 60px;
+        height: 60px;
+
+        background: transparent;
+        border: 1px solid var(--gray-60);
+      }
+      .likeButton {
+        width: 60px;
+        height: 60px;
+
+        background: transparent;
+        border: 1px solid var(--gray-60);
+      }
+    }
+    .textArea {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      margin: 25px 0;
+      font-size: 16px;
+      .age {
+        border: 1px solid var(--gray-60);
+        background: #232323;
+        padding: 4px 12px;
+      }
+      #starNumber {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+`;
+
+export const HoverModalWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: auto;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+
+  &.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 `;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { InfoBox } from '../style';
 import Input from '../../../../ui/input';
 
