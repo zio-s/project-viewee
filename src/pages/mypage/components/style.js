@@ -1,6 +1,67 @@
 import styled from 'styled-components';
 import { tabletMore } from '../../../styled/Mixin';
 
+export const RequestListWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  button {
+    width: 130px;
+    height: 50px;
+  }
+  .nodata {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    font-size: var(--font-content-xxxl);
+    color: var(--gray-50);
+  }
+  .list {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    table {
+      width: 100%;
+      margin-bottom: 50px;
+      th,
+      td {
+        height: 30px;
+        padding: 2.8rem 5rem;
+        font-size: var(--font-content-l);
+        text-align: left;
+      }
+      tr {
+        border-bottom: 3px solid var(--gray-80);
+        .state {
+          color: var(--primary-50);
+        }
+      }
+      .tableTitle {
+        width: 100%;
+        background-color: var(--gray-80);
+        color: var(--text-primary);
+        border-bottom: 0px;
+        th {
+          text-align: center;
+        }
+        .titleList {
+          width: 80%;
+          text-align: left;
+        }
+      }
+    }
+  }
+  .banner {
+    margin-top: 100px;
+  }
+`;
+
 export const ProfileWrap = styled.div`
   display: flex;
   justify-content: space-between;
@@ -145,11 +206,11 @@ export const MyPageNavWrap = styled.div`
     li {
       cursor: pointer;
       position: relative;
+      display: flex;
+      justify-content: center;
       ul {
         position: absolute;
         top: 100%;
-        left: -50%;
-        transform: translateX(-10%);
         display: none;
         flex-direction: column;
         gap: 0;
