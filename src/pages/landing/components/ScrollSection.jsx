@@ -41,6 +41,11 @@ const GridAnimation = () => {
     const title = section.querySelector('h2');
     const button = section.querySelector('button');
 
+    gsap.set(button, {
+      opacity: 0,
+      y: 30,
+    });
+
     gridItems.forEach((item, index) => {
       let x, y;
 
@@ -79,7 +84,7 @@ const GridAnimation = () => {
     });
 
     timeline
-      .to([title, button], {
+      .to([title], {
         opacity: 0,
         y: -50,
         duration: 0.3,
@@ -109,6 +114,16 @@ const GridAnimation = () => {
           ease: 'none',
         },
         0
+      )
+      .to(
+        button,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+        },
+        '>-0.3'
       );
 
     timelineRef.current = timeline;
