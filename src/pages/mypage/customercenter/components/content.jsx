@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { CCContentWrap } from './style';
 import SubNav from './subNav';
-import Pagination from './pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageActions } from '../../../../store/modules/pageSlice';
+import Pagination from '../../../../ui/pagination';
 
 const Content = ({ data, children }) => {
   const [isActive, setIsActive] = useState('all');
@@ -25,6 +25,17 @@ const Content = ({ data, children }) => {
   }, [data]);
   dispatch(pageActions.addData(changeData));
   dispatch(pageActions.totalData());
+
+  const nowDate = new Date();
+  const getYear = nowDate.getFullYear();
+  const getMonth = nowDate.getMonth() + 1;
+  const getDay = nowDate.getDate();
+  const contentData = data.map((item) => item.date.split('-'));
+  const isYear = contentData.map((item) => Number(getYear - item[0]) * 365);
+  const isMonth = contentData.map((item) => (getMonth - item[1]) * 30);
+  const isDay = contentData.map((item) => getDay - item[2]);
+  const isNew = isYear.map((item, idx) => item + isMonth[idx] + isDay[idx]);
+
   return (
     <CCContentWrap>
       <div className="contentHeader">
@@ -45,7 +56,9 @@ const Content = ({ data, children }) => {
               ? currentPost.map((item, index) => (
                   <tr key={index}>
                     <td className="tag">{item.tag}</td>
-                    <td className="title">{item.title}</td>
+                    <td className="title">
+                      {item.title} {isNew[index] <= 30 ? <div className="new">NEW</div> : ''}
+                    </td>
                     <td className="data">{item.date}</td>
                   </tr>
                 ))
