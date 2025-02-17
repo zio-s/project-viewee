@@ -6,37 +6,27 @@ const SignUpForm = () => (
   <div>
     <InfoBox>
       <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="이름" />
+        <Input className="SignupInput" variant="gray" size="medium" fullWidth={true} placeholder="이름" />
       </div>
     </InfoBox>
     <InfoBox>
       <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="전화번호" />
+        <Input className="SignupInput" variant="gray" size="medium" fullWidth={true} placeholder="전화번호" />
       </div>
     </InfoBox>
     <InfoBox>
       <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="생년월일" />
+        <Input className="SignupInput" variant="gray" size="medium" fullWidth={true} placeholder="이메일" />
       </div>
     </InfoBox>
     <InfoBox>
       <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="성별" />
+        <Input className="SignupInput" variant="gray" size="medium" fullWidth={true} placeholder="Password" />
       </div>
     </InfoBox>
     <InfoBox>
       <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="이메일" />
-      </div>
-    </InfoBox>
-    <InfoBox>
-      <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="Password" />
-      </div>
-    </InfoBox>
-    <InfoBox>
-      <div className="inputBox">
-        <Input variant="gray" size="medium" fullWidth={true} placeholder="Check Password" />
+        <Input className="SignupInput" variant="gray" size="medium" fullWidth={true} placeholder="Check Password" />
       </div>
     </InfoBox>
   </div>
