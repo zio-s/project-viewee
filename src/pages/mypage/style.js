@@ -14,6 +14,7 @@ export const MyPageWrap = styled.div`
     padding: 3.7rem 5rem;
   `}
   .content {
+    width: 100%;
     max-width: 1440px;
   }
 

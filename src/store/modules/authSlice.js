@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   joinData: [
-    {
+    JSON.parse(localStorage.getItem('joinData')) || {
       id: 1,
       username: '김미선',
-      userId: 'test',
+      userId: 'test@test.com',
       password: '123456',
       phone: '010-0000-0000',
+      gender: 'female',
+      birth: '1997-03-27',
       profileImg: 'images/profileImg1.jpg',
       isMembershiped: false,
       coupon: [],
@@ -15,11 +17,12 @@ const initialState = {
       reviewed: [],
       downed: [],
       watched: [],
+      requested: [],
     },
   ],
   user: JSON.parse(localStorage.getItem('user')) || null,
-  prevUser: {},
-  connected: [[1]],
+  prevUser: JSON.parse(localStorage.getItem('prevUser')) || null,
+  connected: JSON.parse(localStorage.getItem('connected')) || [[1]],
   authed: localStorage.getItem('authed') === 'true',
 };
 
@@ -27,6 +30,37 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    signup: (state, action) => {
+      const { username, userId, password, phone, gender, birth } = action.payload;
+      const newId = state.joinData.length + 1;
+      const newUser = {
+        id: newId,
+        username: username,
+        userId: userId,
+        password: password,
+        phone: phone,
+        gender: gender,
+        birth: birth,
+        profileImg: 'images/defaultImg1.png',
+        isMembershiped: false,
+        coupon: [],
+        liked: [],
+        reviewed: [],
+        downed: [],
+        watched: [],
+        requested: [],
+      };
+      state.joinData.push(newUser);
+      state.user = newUser;
+      state.prevUser = newUser;
+      state.authed = true;
+      state.connected.push([newId]);
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('authed', 'true');
+      localStorage.setItem('connected', JSON.stringify(state.connected));
+      localStorage.setItem('prevUser', JSON.stringify(state.prevUser));
+    },
     login: (state, action) => {
       const { userId, password } = action.payload;
       const user = state.joinData.find((item) => item.userId === userId && item.password === password);
@@ -35,9 +69,10 @@ export const authSlice = createSlice({
       if (user) {
         state.user = user;
         state.authed = true;
+        state.prevUser = user;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('authed', 'true');
-        console.log(rememberId);
+        localStorage.setItem('prevUser', JSON.stringify(user));
         if (rememberId.checked) {
           localStorage.setItem('rememberId', userId);
         } else {
@@ -50,8 +85,10 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.authed = false;
+      state.prevUser = null;
       localStorage.removeItem('user');
       localStorage.removeItem('authed');
+      localStorage.removeItem('prevUser');
     },
     deleteLiked: (state, action) => {
       state.user.liked = state.user.liked.filter((item) => !action.payload.includes(item.id));
