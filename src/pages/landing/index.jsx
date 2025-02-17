@@ -1,3 +1,4 @@
+import CardSection from './components/CardSection';
 import Hero from './components/Hero';
 import ReviewSection from './components/ReviewSection';
 import ScrollSection from './components/ScrollSection';
@@ -7,8 +8,9 @@ const LandingPage = () => {
   return (
     <LandingWrap>
       <Hero />
-      <ReviewSection />
-      <ScrollSection />
+      <CardSection />
+      {/* <ReviewSection /> */}
+      {/* <ScrollSection /> */}
     </LandingWrap>
   );
 };
