@@ -3,6 +3,7 @@ import { ModyWrap } from './style';
 import InputField from './components/InputField';
 import AgreementSection from './components/AgreementSection';
 import ConfirmButtons from './components/ConfirmButtons';
+import Button from '../../../ui/button/defaultButton';
 
 const ModifyProfile = () => {
   return (
@@ -17,11 +18,19 @@ const ModifyProfile = () => {
             { label: '비밀번호' },
             { label: '비밀번호 확인' },
             { label: '생년월일' },
-            { label: '성별' },
           ].map((field, index) => (
             <InputField key={index} label={field.label} placeholder={field.placeholder} />
           ))}
+          <div className="genderForm">
+            <label className="label genderLabel">성별</label>
 
+            <Button variant="gray" fullWidth="true" className="genderButton input_box">
+              여성
+            </Button>
+            <Button variant="gray" fullWidth="true" className="genderButton input_box">
+              남성
+            </Button>
+          </div>
           <AgreementSection />
           <ConfirmButtons />
         </form>

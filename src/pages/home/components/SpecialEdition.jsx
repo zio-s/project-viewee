@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 
 const CardData = [
   {
-    bannerColor: 'var(--primary-50)',
+    bannerImage: '/images/banenrFigure1.png',
+    // BigBannerImage: '/images/banenrFigure1.png',
     logo: '/images/bannerLogo1.png',
     icon: '/images/bannerIcon1.png',
     item: '/images/bannerItem1.png',
@@ -12,7 +13,8 @@ const CardData = [
     boldText: '죽을 때 까지 숨길 것 \n숨기지 못한다면 죽일 것',
   },
   {
-    bannerColor: '#2563eb',
+    bannerImage: '/images/bannerFigure2.png',
+    // BigBannerImage: '/images/banenrFigure2.png',
     logo: '/images/bannerLogo2.png',
     icon: '/images/bannerIcon2.png',
     item: '/images/bannerItem2.png',
@@ -20,7 +22,8 @@ const CardData = [
     boldText: '나는 군인을 잡는\n군인이다',
   },
   {
-    bannerColor: 'var(--secondary-50',
+    bannerImage: '/images/bannerFigure3.png',
+    // BigBannerImage: '/images/banenrFigure3.png',
     logo: '/images/bannerLogo3.png',
     icon: '/images/bannerIcon3.png',
     item: '/images/bannerItem3.png',
@@ -32,13 +35,15 @@ const CardData = [
 const SpecialEdition = () => {
   return (
     <CardContainer>
+      <div className="backgroundActor"></div>
       <Card className="inner">
-        <Banner style={{ background: CardData[0].bannerColor }}>
+        <Banner bgImage={CardData[0].bannerImage}>
           <img src={CardData[0].logo} alt="" className="bannerLogo1" />
           <ActiveText className="activeText">
             <div className="">액션 & 범죄</div>
+            <div className="pointLine"></div>
 
-            <Link className="goToPlay" href="/login">
+            <Link className="goToPlay" to="/detail">
               <span>보러가기</span>
               <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_630_1220)">
@@ -69,12 +74,13 @@ const SpecialEdition = () => {
         </div>
       </Card>
       <Card className="inner">
-        <Banner style={{ background: CardData[1].bannerColor }}>
+        <Banner bgImage={CardData[1].bannerImage}>
           <img src={CardData[1].logo} alt="" className="bannerLogo2" />
           <ActiveText className="activeText">
             <div className="">액션 & 범죄</div>
+            <div className="pointLinePink"></div>
 
-            <Link className="goToPlay" href="/login">
+            <Link className="goToPlay" to="/detail">
               <span>보러가기</span>
               <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_630_1220)">
@@ -106,12 +112,12 @@ const SpecialEdition = () => {
       </Card>
 
       <Card className="inner">
-        <Banner style={{ background: CardData[2].bannerColor }}>
+        <Banner bgImage={CardData[2].bannerImage}>
           <img src={CardData[2].logo} alt="" className="bannerLogo3" />
           <ActiveText className="activeText">
             <div className="">액션 & 범죄</div>
-
-            <Link className="goToPlay" href="/login">
+            <div className="pointLineBlue"></div>
+            <Link className="goToPlay" to="/detail">
               <span>보러가기</span>
               <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_630_1220)">

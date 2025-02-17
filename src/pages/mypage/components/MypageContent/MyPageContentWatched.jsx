@@ -51,7 +51,6 @@ const MyPageContentWatched = () => {
     dispatch(pageActions.totalData());
   }, [watched]);
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
-  console.log(totalPage);
   const lastPost = currentPage * postsperPage;
   const currentPost = watched.slice(0, lastPost);
   const morePost = () => {

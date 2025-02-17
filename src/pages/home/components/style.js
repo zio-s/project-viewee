@@ -1,5 +1,46 @@
 import styled from 'styled-components';
 
+export const EditionbackWrapper = styled.div`
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  .textAreaTitle {
+    z-index: 10;
+    position: absolute;
+    top: 525px;
+    left: 0;
+    font-size: 96px;
+    font-weight: bold;
+  }
+  .textArea {
+    margin-left: 155px;
+    margin-top: 20px;
+    z-index: 10;
+    position: absolute;
+    top: 625px;
+    left: 0;
+    font-size: 64px;
+  }
+  .backgroundLine {
+    top: 141px;
+    right: -140px;
+    position: absolute;
+    background-image: url('/images/backgroundLine.png');
+    background-size: cover;
+    width: 1920px;
+    height: 1080px;
+  }
+  .backgroundActor {
+    position: absolute;
+    top: 483px;
+    right: 530px;
+    background-image: url('/images/actor.png');
+    background-size: cover;
+    width: 652px;
+    height: 877px;
+  }
+`;
+
 export const CardContainer = styled.div`
   .moreIcon {
     width: 15px;
@@ -27,7 +68,7 @@ export const Card = styled.div`
     z-index: 20;
     position: absolute;
     right: -30px;
-    top: 17px;
+    top: 38px;
     width: 213px;
     height: 88px;
   }
@@ -51,7 +92,7 @@ export const Card = styled.div`
     z-index: 20;
     position: absolute;
     right: 21px;
-    top: 24px;
+    top: 50px;
     width: 137px;
     height: 54px;
   }
@@ -75,7 +116,7 @@ export const Card = styled.div`
     z-index: 20;
     position: absolute;
     right: 4px;
-    top: 0px;
+    top: 25px;
     width: 174px;
     height: 98px;
   }
@@ -99,25 +140,26 @@ export const Card = styled.div`
 
 export const Banner = styled.div`
   position: absolute;
-  top: -116px;
+  top: -132px;
   right: 0px;
   color: white;
-  border-radius: 20px;
   padding: 0rem;
-  width: 205px;
-  height: 469px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 97%, 0% 35%);
   transition: height 0.5s ease-in-out, top 0.5s ease-in-out;
+  background-image: ${(props) => `url(${props.bgImage})`};
+  background-size: cover;
+  width:205px;
+  height:448px;
   &:hover,
   &:hover::after {
-    height: 650px; /* 세로 크기 조정 */
-    top: -297px; /* 위로 확장되도록 설정 */
+    height: 630px; 
+    top: -277px; 
   }
 
   &:after {
+    z-index:-1;
     content: '';
     position: absolute;
     top: -20px;
@@ -137,16 +179,43 @@ export const ActiveText = styled.div`
   font-size: var(--font-content-xxl-mobile);
   position: absolute;
   width: 160px;
-  top: 136px;
+  top: 140px;
   left: 25px;
   opacity: 0;
   transform: translateX(-30px);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  .pointLine {
+    position: absolute;
+    top: -11px;
+    left: -8px;
+    width: 170px;
+    height: 46px;
+    background-image: url(/images/pointLine.png);
+    background-size: cover;
+  }
+  .pointLinePink {
+    position: absolute;
+    top: -11px;
+    left: -8px;
+    width: 170px;
+    height: 46px;
+    background-image: url(/images/pointLine.png);
+    background-size: cover;
+  }
+  .pointLineBlue {
+    position: absolute;
+    top: -11px;
+    left: -8px;
+    width: 170px;
+    height: 46px;
+    background-image: url(/images/pointLinePink.png);
+    background-size: cover;
+  }
   .goToPlay {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 25px;
     img {
       width: 20px;
       height: 20px;

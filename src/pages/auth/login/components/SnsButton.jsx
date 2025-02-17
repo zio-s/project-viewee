@@ -38,8 +38,8 @@ const StyledButton = styled.a`
   }
 `;
 
-const SnsButton = ({ type, href, ...props }) => {
-  return <StyledButton type={type} {...props} />;
+const SnsButton = ({ type, href }) => {
+  return <StyledButton type={type} href={href} target="_blank" rel="noopener noreferrer" />;
 };
 
 export default SnsButton;

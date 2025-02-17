@@ -86,7 +86,7 @@ const QnA = () => {
               <div className="itemSet">
                 <div className="email item">
                   <p>Email</p>
-                  <Input type="text" variant="gray" value={user.email} />
+                  <Input type="text" variant="gray" value={user.userId} />
                 </div>
                 <div className="phone item">
                   <p>휴대폰 번호</p>

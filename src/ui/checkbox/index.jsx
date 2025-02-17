@@ -1,6 +1,7 @@
 import { StyledCheckBox } from './style';
 
 const CheckBox = ({
+  id,
   children,
   variant = 'primary',
   size = 'medium',
@@ -9,8 +10,8 @@ const CheckBox = ({
 }) => {
   return (
     <StyledCheckBox $variant={variant} $size={size}>
-      <input id="a" type="checkbox" {...props} />
-      <label htmlFor="a" className="labelBox">
+      <input id={id} type="checkbox" {...props} />
+      <label htmlFor={id} className="labelBox">
         <div className="labelBox">
           <div className="iconBox">{icon}</div>
           {children}
