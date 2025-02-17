@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pageActions } from '../../../../store/modules/pageSlice';
 import Pagination from '../../../../ui/pagination';
 
-const Content = ({ data, children }) => {
-  const [isActive, setIsActive] = useState('all');
+const Content = ({ data, children, isFnQ }) => {
+  const [isActive, setIsActive] = useState('전체');
   const [changeData, setChangeData] = useState(data);
   const dispatch = useDispatch();
   const handleClick = (item) => {
     setIsActive(item);
-    const tagData = item === 'all' ? data : data.filter((data) => data.tag === item);
+    const tagData = item === '전체' ? data : data.filter((data) => data.tag === item);
     setChangeData(tagData);
     dispatch(pageActions.currentPage(1));
   };
@@ -30,15 +30,27 @@ const Content = ({ data, children }) => {
   const getYear = nowDate.getFullYear();
   const getMonth = nowDate.getMonth() + 1;
   const getDay = nowDate.getDate();
-  const contentData = data.map((item) => item.date.split('-'));
+  const contentData = currentPost.map((item) => item.date.split('-'));
   const isYear = contentData.map((item) => Number(getYear - item[0]) * 365);
   const isMonth = contentData.map((item) => (getMonth - item[1]) * 30);
   const isDay = contentData.map((item) => getDay - item[2]);
   const isNew = isYear.map((item, idx) => item + isMonth[idx] + isDay[idx]);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <CCContentWrap>
-      <div className="contentHeader">
+      <div className={isFnQ ? 'fnq contentHeader' : 'contentHeader'}>
         <SubNav data={data} isActive={isActive} handleClick={handleClick} />
         {children}
       </div>
@@ -52,12 +64,17 @@ const Content = ({ data, children }) => {
             </tr>
           </thead>
           <tbody>
-            {isActive === 'all'
+            {isActive === '전체'
               ? currentPost.map((item, index) => (
                   <tr key={index}>
                     <td className="tag">{item.tag}</td>
                     <td className="title">
-                      {item.title} {isNew[index] <= 30 ? <div className="new">NEW</div> : ''}
+                      <div className="titleName">{item.title}</div>{' '}
+                      {isNew[index] <= 30 ? (
+                        <div className="new on">{isMobile ? 'N' : 'NEW'}</div>
+                      ) : (
+                        <div className="new"></div>
+                      )}
                     </td>
                     <td className="data">{item.date}</td>
                   </tr>
@@ -67,7 +84,15 @@ const Content = ({ data, children }) => {
                   .map((item, index) => (
                     <tr key={index}>
                       <td className="tag">{item.tag}</td>
-                      <td className="title">{item.title}</td>
+                      <td className="title">
+                        {' '}
+                        <div className="titleName">{item.title}</div>{' '}
+                        {isNew[index] <= 30 ? (
+                          <div className="new on">{isMobile ? 'N' : 'NEW'}</div>
+                        ) : (
+                          <div className="new"></div>
+                        )}
+                      </td>
                       <td className="data">{item.date}</td>
                     </tr>
                   ))}

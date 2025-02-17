@@ -19,7 +19,7 @@ const CustomerCenter = () => {
       {isActive === 'notice' ? (
         <CCNotice />
       ) : isActive === 'faq' ? (
-        <CCFnQ />
+        <CCFnQ isActive={isActive} />
       ) : isActive === 'qna' ? (
         <CCQnA />
       ) : isActive === 'terms' ? (
