@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { PaginationWrap } from './style';
-import { pageActions } from '../../../../store/modules/pageSlice';
-import { useState } from 'react';
+import { pageActions } from '../../store/modules/pageSlice';
 
-const Pagination = ({ data }) => {
+const Pagination = () => {
   const dispatch = useDispatch();
-  // dispatch(pageActions.addData(data));
   const { totalPage, currentPage } = useSelector((state) => state.pageR);
   const arr = [...Array(totalPage)];
   const onPrev = () => dispatch(pageActions.prevPage());

@@ -3,6 +3,7 @@ import MyPageContent from './MypageContent/MyPageContent';
 import { MyReview } from './MyReview/MyReview';
 import { MyPageNavWrap } from './style';
 import { useNavigate } from 'react-router';
+import { RequestList } from './RequestList';
 
 const MyPageNav = ({ changeContent }) => {
   const [isActive, setIsActive] = useState('content');
@@ -28,10 +29,10 @@ const MyPageNav = ({ changeContent }) => {
         <li className={isActive === 'review' ? 'on' : ''} onClick={() => handleTap('review', <MyReview />)}>
           리뷰 관리
         </li>
-        <li>
-          문의
+        <li className={isActive === 'requestList' ? 'on' : ''}>
+          {isActive === 'requestList' ? '문의 내역' : '문의'}
           <ul>
-            <li>문의 내역</li>
+            <li onClick={() => handleTap('requestList', <RequestList />)}>문의 내역</li>
             <li onClick={onQnaPage}>문의 페이지</li>
           </ul>
         </li>

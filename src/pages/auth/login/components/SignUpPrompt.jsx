@@ -6,7 +6,7 @@ const SignUpPrompt = () => {
   return (
     <NotMember>
       아직 회원이 아니신가요?{' '}
-      <Link to="#" className="signUpLink">
+      <Link to="/signup" className="signUpLink">
         회원가입
       </Link>
     </NotMember>
