@@ -32,14 +32,89 @@ export const MyPageContentLikedWrap = styled.div`
       display: flex;
       gap: 5rem 1.5rem;
       flex-wrap: wrap;
+      li {
+        position: relative;
+      }
       img {
         width: 272px;
         height: 386px;
         border-radius: 5px;
         cursor: pointer;
+        transition: filter 0.3s ease;
+
+        &.on {
+          filter: brightness(0.4);
+        }
       }
-      .on {
-        filter: brightness(0.4);
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        opacity: 0;
+        pointer-events: none;
+
+        .check-circle {
+          fill: none;
+          stroke: var(--primary-50);
+          stroke-width: 5;
+          stroke-dasharray: 351;
+          stroke-dashoffset: 351;
+          transform-origin: center;
+          transform: scale(0);
+        }
+
+        .check-path {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          transform-origin: center;
+          transform: scale(0);
+        }
+
+        &.check-active {
+          opacity: 1;
+
+          .check-circle {
+            animation: circle-draw 0.5s ease forwards, circle-scale 0.3s ease forwards;
+          }
+
+          .check-path {
+            animation: check-draw 0.5s ease 0.3s forwards, check-scale 0.3s ease 0.3s forwards;
+          }
+        }
+      }
+
+      @keyframes circle-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes circle-scale {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes check-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes check-scale {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(0.6);
+        }
       }
     }
   }
