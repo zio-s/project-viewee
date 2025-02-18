@@ -64,6 +64,14 @@ const QnA = () => {
     setFaq((prevFaq) => prevFaq.map((item) => (item.id === id ? { ...item, toggle: !item.toggle } : item)));
     console.log(faq[id - 1]);
   };
+  const Phone = user.phone.split('-');
+  const firstPhone = Phone[0];
+  const secondPhone = Phone[1];
+  const thirdPhone = Phone[2];
+
+  const email = user.userId.split('@');
+  const id = email[0];
+  const domain = email[1];
 
   return (
     <QnAWrap>
@@ -79,27 +87,83 @@ const QnA = () => {
           {user ? (
             <form className="submitQuestion">
               {' '}
-              <div className="name item">
-                <p>이름</p>
-                <Input type="text" variant="gray" value={user.username} />
-              </div>
-              <div className="itemSet">
-                <div className="email item">
-                  <p>Email</p>
+              <div className="itemWrap1">
+                <div className="name item">
+                  <p>이름</p>
+                  <Input type="text" variant="gray" value={user.username} />
+                </div>
+                <div className="id item">
+                  <p>아이디</p>
                   <Input type="text" variant="gray" value={user.userId} />
                 </div>
+              </div>
+              <div className="itemSet">
                 <div className="phone item">
                   <p>휴대폰 번호</p>
-                  <Input variant="gray" type="text" value={user.phone} />
+                  <div className="phoneInput">                  
+                    <Input variant="gray" type="text" value={firstPhone} />
+                    <Input variant="gray" type="text" value={secondPhone} />
+                    <Input variant="gray" type="text" value={thirdPhone} />
+                  </div>
                 </div>
+                <div className="email item">
+                  <p>Email</p>
+                  <div className="emailInput">
+                  <Input type="text" variant="gray" value={id} />
+                  @
+                  <Input type="text" variant="gray" value={domain} />
+                  </div>
+                </div>
+              </div>
+              <div className="category">
+                <p>문의 종류</p>
+                <form>
+                  <div>
+                    <input type="radio" id="site" name="questionType" value="site" defaultChecked />
+                    <label htmlFor="site">사이트 이용</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="login" name="questionType" value="login" />
+                    <label htmlFor="login">회원/로그인</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="disability" name="questionType" value="disability" />
+                    <label htmlFor="disability">장애신고</label>
+                  </div>
+
+                  <div>
+                    <input type="radio" id="refund" name="questionType" value="refund" />
+                    <label htmlFor="refund">환불/해지 신청</label>
+                  </div>
+
+                  <div>
+                    <input type="radio" id="content" name="questionType" value="content" />
+                    <label htmlFor="content">콘텐츠/채널</label>
+                  </div>
+
+                  <div>
+                    <input type="radio" id="usage" name="questionType" value="usage" />
+                    <label htmlFor="usage">이용 불편사항</label>
+                  </div>
+
+                  <div>
+                    <input type="radio" id="suggestion" name="questionType" value="suggestion" />
+                    <label htmlFor="suggestion">서비스 제안</label>
+                  </div>
+
+                  <div>
+                    <input type="radio" id="etc" name="questionType" value="etc" />
+                    <label htmlFor="etc">기타</label>
+                  </div>
+                </form>
               </div>
               <div className="question item">
                 <p>문의 내용</p>
                 <textarea type="text" placeholder="문의하실 내용을 적어주세요" />
               </div>
               <div className="agree">
-                <CheckBox>이용 약관 및 개인정보 보호정책에 동의합니다</CheckBox>
-                <Button type="submit">문의 하기</Button>{' '}
+                <CheckBox variant='primary' id="">개인정보 수집 및 이용 동의</CheckBox>
+                <Button type="submit">문의하기</Button>{' '}
               </div>
             </form>
           ) : (
