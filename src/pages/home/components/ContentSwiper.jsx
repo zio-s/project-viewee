@@ -20,6 +20,7 @@ import HoverModal from './HoverModal';
 const NewSwiperSection = () => {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [hoveredSlide, setHoveredSlide] = useState(null);
+  const [hoverTimeout, setHoverTimeout] = useState(null);
 
   useEffect(() => {
     const calculateSlidesPerView = () => {
@@ -67,7 +68,19 @@ const NewSwiperSection = () => {
       swiperInstance.destroy();
       window.removeEventListener('resize', updateSlidesPerView);
     };
-  }, [slidesPerView]); // ✅ slidesPerView가 바뀌면 Swiper 재초기화
+  }, [slidesPerView]);
+
+  const handleMouseEnter = (num) => {
+    const timeout = setTimeout(() => {
+      setHoveredSlide(num);
+    }, 500);
+    setHoverTimeout(timeout);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(hoverTimeout);
+    setHoveredSlide(null);
+  };
 
   return (
     <NewSectionWrapper>
@@ -96,8 +109,8 @@ const NewSwiperSection = () => {
             <NewSwiperSlide
               key={num}
               className="swiper-slide"
-              onMouseEnter={() => setHoveredSlide(num)}
-              onMouseLeave={() => setHoveredSlide(null)}
+              onMouseEnter={() => handleMouseEnter(num)}
+              onMouseLeave={handleMouseLeave}
             >
               <div>Slide {num}</div>
               {hoveredSlide === num && (
