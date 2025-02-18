@@ -135,6 +135,7 @@ time, mark, audio, video {
 }
   html{
   font-size: var(--font-size-root);
+  box-sizing: border-box;
   }
   body {
     font-size: 16px;

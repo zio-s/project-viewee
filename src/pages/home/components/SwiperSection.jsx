@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { StyledSwiper, StyledSwiperSlide, PlayButton, MainCustomButtonPrev, MainCustomButtonNext } from '../style';
 import Button from '../../../ui/button/defaultButton';
 import 'swiper/css';
@@ -16,6 +16,7 @@ const contentData = [
 
 const SwiperSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
   const [isTablet, setIsTablet] = useState(null);
   const [isMobile, setIsMobile] = useState(null);
 
@@ -44,6 +45,9 @@ const SwiperSection = () => {
       centeredSlides={true}
       slidesPerView={'auto'}
       spaceBetween={42}
+      autoplay={{ delay: 4000, disableOnInteraction: false }}
+      loop={true}
+      speen={1000}
       coverflowEffect={{
         modifier: 1,
         slideShadows: false,
@@ -67,9 +71,10 @@ const SwiperSection = () => {
         prevEl: '.new-swiper-button-prev',
         enabled: true,
       }}
-      modules={[EffectCoverflow, Pagination, Navigation]}
+      modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
       className="mySwiper"
-      onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+      onSwiper={(swiper) => setSwiperInstance(swiper)}
+      onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
     >
       {contentData.map((item, index) => (
         <StyledSwiperSlide key={item.id} className={index === activeIndex ? 'swiper-slide-active' : ''}>
@@ -106,7 +111,15 @@ const SwiperSection = () => {
                 <span>{item.time}</span>
               </div>
               <PlayButton>
-                <Button size="small">재생하기</Button>
+                <Button className="mainSwiperPlay" size="small">
+                  <svg className="playIcon" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M3.85811 26.5605C2.35142 27.4707 0.625 26.7488 0.625 25.1794V2.67301C0.625 1.13492 2.47699 0.475747 3.85811 1.29188L22.2838 12.2154C23.6022 13.0002 23.6336 14.8835 22.2838 15.6997L3.85811 26.5605Z"
+                      fill="white"
+                    />
+                  </svg>
+                  재생하기
+                </Button>
               </PlayButton>
             </>
           )}

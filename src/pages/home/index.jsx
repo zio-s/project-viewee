@@ -7,6 +7,7 @@ import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
 import SpeicialEditionBack from './components/SpeicialEditionBack';
+import TagSection from './components/TagSection';
 
 const Home = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
@@ -21,6 +22,9 @@ const Home = () => {
     <>
       <SwiperSection />
       <VisualWrap>
+        <SectionWrapper>
+          <TagSection />
+        </SectionWrapper>
         <SectionWrapper>
           <TopRated />
         </SectionWrapper>

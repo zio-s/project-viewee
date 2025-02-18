@@ -16,10 +16,22 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
     position: absolute;
     bottom: 49px;
     left: 16px;
-    font-size: var(--font-label-m-mobile);
     display: flex;
     gap: 5px;
     align-items: center;
+    font-size: var(--font-label-m-mobile);
+    ${mobileMore`
+    bottom: 92px;
+        left: 31px;
+    font-size: var( --font-label-m-tablet);
+    gap:8px;
+  `}
+    ${tabletMore`
+        bottom: 141px;
+        left: 61px;
+        font-size: var(--font-label-s);
+        gap: 10px;
+  `}
     #score {
       display: flex;
       align-items: center;
@@ -67,9 +79,31 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
 `;
 
 export const PlayButton = styled.div`
-  button {
-    width: 112px;
+  .playIcon {
+    width: 6px;
+    height: 6px;
+    ${mobileMore`
+    width:12px;
+    height:12px;
+    `}
+    ${tabletMore`
+    width:16px;
+    height:16px;
+    `}
+  }
+  .mainSwiperPlay {
+    width: 122px;
     height: 25px;
+    ${mobileMore`
+    width:224px;
+    height:50px;
+    `}
+    ${tabletMore`
+    width:309px;
+    height:59px;
+    `}
+  }
+  button {
     font-size: 9px;
     position: absolute;
     bottom: 17.5px;
@@ -77,8 +111,7 @@ export const PlayButton = styled.div`
     z-index: 10;
 
     ${mobileMore`
-    width: 174px;
-    height: 40px;
+
     position: absolute;
     font-size: var(--font-content-m);
   bottom: 35px;
@@ -87,8 +120,7 @@ export const PlayButton = styled.div`
   `}
 
     ${tabletMore`
-    width: 260px;
-    height: 55px;
+
     position: absolute;
   bottom: 71px;
   left: 60px;
@@ -110,6 +142,49 @@ export const VisualWrap = styled.div`
   margin-top: 60px;
   `};
 `;
+
+export const TagSectionWrapper = styled.div`
+  margin: 40px 0;
+  overflow: visible !important;
+  ${mobileMore`
+    margin: 50px 0;
+    `}
+  ${tabletMore`
+   margin: 75px 0;
+    `}
+  width: 100%;
+  .swiper {
+    width: 100%;
+    overflow: visible !important;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    overflow: visible !important;
+  }
+  .tagSlide {
+    border-color: #d9d9d9;
+    width: 79px;
+    height: 33px;
+    font-size: var(--font-content-m-mobile);
+    ${mobileMore`
+    width:105px;
+    height:45px;
+    font-size: var(--font-content-m-tablet)
+    `}
+    ${tabletMore`
+    width:125px;
+    height:50px;
+    font-size: var(--font-content-m)
+    `}
+  }
+`;
+
 export const EventSectionWrapper = styled.div`
   margin-top: -400px;
 `;
@@ -417,8 +492,9 @@ export const HoverModalWrap = styled.div`
 
     .iconArea {
       display: flex;
-      gap: 10px;
+      gap: 15px;
       align-items: center;
+      pointer-events: auto;
       .button {
         width: 60px;
         height: 60px;
@@ -433,6 +509,7 @@ export const HoverModalWrap = styled.div`
       .steamedButton {
         width: 60px;
         height: 60px;
+        font-size: 30px;
 
         background: transparent;
         border: 1px solid var(--gray-60);
@@ -447,7 +524,7 @@ export const HoverModalWrap = styled.div`
     }
     .textArea {
       display: flex;
-      gap: 40px;
+      gap: 30px;
       align-items: center;
       margin: 25px 0;
       font-size: 16px;
@@ -459,6 +536,7 @@ export const HoverModalWrap = styled.div`
       #starNumber {
         display: flex;
         align-items: center;
+
         gap: 4px;
       }
     }

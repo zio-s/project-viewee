@@ -1,38 +1,36 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from '@studio-freight/lenis';
 import { Container, GridItem, GridWrap, Section } from './style';
 import { useNavigate } from 'react-router';
+import {
+  setActiveSection,
+  setSectionComplete,
+  setSectionProgress,
+  setSectionInView,
+  setSectionPlaying,
+  selectSection,
+} from '../../../store/modules/gsapSlice';
+import Button from '../../../ui/button/defaultButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const GridAnimation = () => {
+const ScrollSection = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const containerRef = useRef(null);
   const sectionRef = useRef(null);
   const timelineRef = useRef(null);
+
+  const sectionState = useSelector(selectSection('scroll'));
 
   const onGo = () => {
     navigate('/');
   };
 
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: true,
-      normalizeWheel: true,
-    });
-
-    lenis.on('scroll', () => ScrollTrigger.update());
-
-    const scrollFn = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(scrollFn);
-    };
-    requestAnimationFrame(scrollFn);
-
     const section = sectionRef.current;
     if (!section) return;
 
@@ -42,7 +40,7 @@ const GridAnimation = () => {
     const button = section.querySelector('button');
 
     gsap.set(button, {
-      opacity: 0,
+      opacity: 1,
       y: 30,
     });
 
@@ -66,9 +64,9 @@ const GridAnimation = () => {
       gsap.set(item, {
         xPercent: x,
         yPercent: y,
-        z: gsap.utils.random(-2500, -1500),
-        rotateX: gsap.utils.random(-35, -25),
-        scale: gsap.utils.random(0.8, 1.1),
+        z: gsap.utils.random(-2000, -1500),
+        rotateX: gsap.utils.random(-25, 25),
+        scale: gsap.utils.random(0.8, 1),
         filter: 'brightness(55.7062%)',
       });
     });
@@ -76,33 +74,64 @@ const GridAnimation = () => {
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1,
-        pin: true,
+        start: 'top center',
+        end: '+=150%',
+        scrub: 2,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          dispatch(
+            setSectionProgress({
+              section: 'scroll',
+              progress: self.progress,
+            })
+          );
+        },
+        onEnter: () => {
+          dispatch(setSectionInView({ section: 'scroll', inView: true }));
+          dispatch(setActiveSection('scroll'));
+          dispatch(setSectionPlaying({ section: 'scroll', isPlaying: true }));
+        },
+        onLeave: () => {
+          dispatch(setSectionInView({ section: 'scroll', inView: false }));
+          dispatch(setSectionPlaying({ section: 'scroll', isPlaying: false }));
+        },
+        onEnterBack: () => {
+          dispatch(setSectionInView({ section: 'scroll', inView: true }));
+          dispatch(setActiveSection('scroll'));
+          dispatch(setSectionPlaying({ section: 'scroll', isPlaying: true }));
+        },
+        onLeaveBack: () => {
+          dispatch(setSectionInView({ section: 'scroll', inView: false }));
+          dispatch(setSectionPlaying({ section: 'scroll', isPlaying: false }));
+        },
+        onComplete: () => {
+          dispatch(setSectionComplete({ section: 'scroll', isComplete: true }));
+          dispatch(setSectionPlaying({ section: 'scroll', isPlaying: false }));
+        },
       },
     });
 
     timeline
-      .to([title], {
+      .to(title, {
         opacity: 0,
         y: -50,
-        duration: 0.3,
+        duration: 5,
       })
       .to(
         gridItems,
         {
-          xPercent: 0,
-          yPercent: 0,
-          z: 1000,
-          rotateX: -5,
+          duration: 4,
+          xPercent: 20,
+          yPercent: 50,
+          z: 2000,
+          rotateX: -2.5,
           scale: 1,
           filter: 'brightness(100%)',
           stagger: {
-            each: 0.02,
+            each: 0.05,
             from: 'random',
           },
-          ease: 'power1.out',
+          ease: 'expo.out',
         },
         0
       )
@@ -110,20 +139,12 @@ const GridAnimation = () => {
         gridWrap,
         {
           z: 2000,
-          rotateX: -10,
-          ease: 'none',
+          rotateX: -5,
+          yPercent: -55,
+          duration: 6,
+          ease: 'expo.out',
         },
         0
-      )
-      .to(
-        button,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: 'power2.out',
-        },
-        '>-0.3'
       );
 
     timelineRef.current = timeline;
@@ -132,25 +153,29 @@ const GridAnimation = () => {
       if (timelineRef.current) {
         timelineRef.current.kill();
       }
-      lenis.destroy();
+      dispatch(setSectionPlaying({ section: 'scroll', isPlaying: false }));
+      dispatch(setSectionComplete({ section: 'scroll', isComplete: false }));
+      dispatch(setSectionInView({ section: 'scroll', inView: false }));
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container ref={containerRef}>
-      <Section ref={sectionRef}>
-        <h2>새로올라온 작품을 보다 빠르게</h2>
-        <button onClick={onGo}>지금 보러라기</button>
-        <GridWrap>
-          {Array.from({ length: 32 }).map((_, i) => (
-            <GridItem key={i} data-grid-item>
-              <img src={`/images/mainPoster1.png`} alt={`Grid item ${i + 1}`} />
-            </GridItem>
-          ))}
-        </GridWrap>
-      </Section>
+      <div className="section-inner">
+        <Section ref={sectionRef}>
+          <h2>새로올라온 작품을 보다 빠르게</h2>
+          <button onClick={onGo}>지금 보러가기</button>
+          <GridWrap>
+            {Array.from({ length: 24 }).map((_, i) => (
+              <GridItem key={i} data-grid-item>
+                <img src={`/images/mainPoster1.png`} alt={`Grid item ${i + 1}`} />
+              </GridItem>
+            ))}
+          </GridWrap>
+        </Section>
+      </div>
     </Container>
   );
 };
 
-export default GridAnimation;
+export default ScrollSection;
