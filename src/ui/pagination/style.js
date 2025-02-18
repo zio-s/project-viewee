@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { tabletMore } from '../../styled/Mixin';
 
 export const PaginationWrap = styled.div`
   display: flex;
@@ -6,9 +7,13 @@ export const PaginationWrap = styled.div`
   gap: 3rem;
   button {
     img {
-      width: 24px;
-      height: 24px;
+      width: 16px;
+      height: 16px;
       filter: invert(58%) sepia(0%) saturate(30%) hue-rotate(208deg) brightness(99%) contrast(98%);
+      ${tabletMore`
+          width: 24px;
+          height: 24px;
+      `}
     }
     .active {
       filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
@@ -18,15 +23,20 @@ export const PaginationWrap = styled.div`
     display: flex;
     gap: 1rem;
     li {
-      font-size: var(--font-content-m);
       font-weight: 600;
       cursor: pointer;
-      width: 35px;
-      height: 35px;
+      width: 20px;
+      height: 20px;
       border-radius: 5px;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: var(--font-label-xs);
+      ${tabletMore`
+          width: 35px;
+          height: 35px;
+          font-size: var(--font-content-m);
+      `}
     }
     .on {
       background-color: var(--primary-50);

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { CCNavWrap } from './style';
 
 const CCNav = ({ isActive, changeTap }) => {
