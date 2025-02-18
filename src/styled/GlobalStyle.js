@@ -130,12 +130,12 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: var(--font-size-root);
-  box-sizing: border-box;
 	font: inherit;
 	vertical-align: baseline;
 }
   html{
   font-size: var(--font-size-root);
+  box-sizing: border-box;
   }
   body {
     font-size: 16px;
