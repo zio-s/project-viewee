@@ -1,17 +1,11 @@
 import styled from 'styled-components';
 
-export const HeroVideo = styled.section``;
-
-export const ReviewWrap = styled.section`
+export const Container = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
-`;
-
-export const Container = styled.div`
-  min-height: 300vh;
-  width: 100%;
-  background: #000;
+  .section-inner {
+    transform-style: preserve-3d;
+  }
 `;
 
 export const Section = styled.section`
@@ -19,15 +13,13 @@ export const Section = styled.section`
   --grid-width: 160%;
   --grid-columns: 8;
   --grid-gap: 1rem;
-
-  position: sticky;
-  top: 0;
+  position: absolute;
+  top: 0%;
   height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   perspective: var(--perspective);
 
   h2 {
@@ -48,9 +40,10 @@ export const Section = styled.section`
     z-index: 1;
     padding: 1rem 2rem;
     border: 1px solid white;
-    background: transparent;
+    background: rgba(80, 80, 80, 70);
+    border: 1px solid #1c1c1e;
     color: white;
-    font-size: 1.2rem;
+    font-size: 2rem;
     cursor: pointer;
     border-radius: 30px;
     transition: all 0.3s ease;
@@ -88,4 +81,50 @@ export const GridItem = styled.div`
     height: 100%;
     object-fit: contain;
   }
+`;
+
+export const ReviewWrapper = styled.div`
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+`;
+
+export const ReviewContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  position: relative;
+  z-index: 20;
+
+  @media screen and (max-width: 568px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const ReviewVideo = styled.div`
+  position: relative;
+  overflow: hidden;
+`;
+
+export const ReviewInner = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ReviewCard = styled.div`
+  perspective: 1000px;
+  padding-right: 10px;
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+
+  ${({ $isSticky, $isMobile }) =>
+    $isSticky &&
+    !$isMobile &&
+    `
+    position: sticky;
+    top: 20%;
+  `}
 `;
