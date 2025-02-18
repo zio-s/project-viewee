@@ -39,6 +39,27 @@ export const EditionbackWrapper = styled.div`
     width: 652px;
     height: 877px;
   }
+
+  .backgroundFigure1 {
+    position: absolute;
+    top: 538px;
+    left: -719px;
+    width: 874px;
+    height: 711px;
+    background-image: url(/images/bgFigure1.png);
+    background-size: cover;
+    rotate: 160deg;
+  }
+  .backgroundFigure2 {
+    position: absolute;
+    bottom: -1144px;
+    right: 133px;
+    width: 1051px;
+    height: 602px;
+    background-image: url(/images/bgFigure2.png);
+    background-size: cover;
+    rotate: 0deg;
+  }
 `;
 
 export const CardContainer = styled.div`
@@ -179,7 +200,7 @@ export const ActiveText = styled.div`
   font-size: var(--font-content-xxl-mobile);
   position: absolute;
   width: 160px;
-  top: 140px;
+  top: 160px;
   left: 25px;
   opacity: 0;
   transform: translateX(-30px);
