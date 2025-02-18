@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { CateGoryWrap } from './style';
+import { CateGoryWrap, SectionTitle } from './style';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { getContent, searchContent } from '../../store/modules/getThunk';
 import CategoryList from './components/CategoryList';
 import CategoryFilter from './components/CategoryFilter';
@@ -11,6 +11,7 @@ import { aniActions } from '../../store/modules/aniSlice';
 import { comedyActions } from '../../store/modules/comedySlice';
 import { kidsActions } from '../../store/modules/kidsSlice';
 import NotFiles from '../notfile';
+import PersonList from './components/person/PersonList';
 
 const CateGoryPage = () => {
   const { category } = useParams();
@@ -18,6 +19,7 @@ const CateGoryPage = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search');
   const searchData = useSelector((state) => state.searchR);
+  const [currentFilter, setCurrentFilter] = useState('popularity.desc');
   const categoryMap = {
     movie: {
       state: useSelector((state) => state.movieR),
@@ -66,7 +68,20 @@ const CateGoryPage = () => {
       );
     }
   }, [category, searchQuery, dispatch]);
-
+  const handleFilterChange = (filterParams) => {
+    if (currentCategory) {
+      dispatch(currentCategory.clearAction());
+      dispatch(
+        getContent({
+          type: currentCategory.type,
+          genre: currentCategory.genre,
+          page: 1,
+          category,
+          ...filterParams,
+        })
+      );
+    }
+  };
   const loadMoreContent = useCallback(() => {
     if (searchQuery) {
       if (!searchData.loading && searchData.currentPage < searchData.totalPages) {
@@ -107,10 +122,30 @@ const CateGoryPage = () => {
       <>
         <div className="category-header">
           <h1>{searchQuery ? `검색 결과 : ${searchQuery}` : category}</h1>
-          {!searchQuery && <CategoryFilter />}
+          {/* 필터 */}
+          {!searchQuery && <CategoryFilter category={category} onFilterChange={handleFilterChange} />}
         </div>
+
+        {/* 인물 검색 결과 */}
+        {searchQuery && searchData.searchData && searchData.searchData.some((item) => item.media_type === 'person') && (
+          <PersonList searchData={searchData.searchData} category={category} />
+        )}
+
+        {/* 관련 컨텐츠 섹션 */}
+        {searchQuery &&
+          searchData.searchData &&
+          searchData.searchData.some((item) => item.media_type === 'person') &&
+          searchData.searchData.some((item) => item.media_type !== 'person') && (
+            <SectionTitle>관련 컨텐츠</SectionTitle>
+          )}
+
+        {/* 카데고리 컨텐츠 목록 */}
         <CategoryList
-          data={searchQuery ? searchData.searchData : currentCategory.state.data}
+          data={
+            searchQuery
+              ? searchData.searchData.filter((item) => item.media_type !== 'person')
+              : currentCategory.state.data
+          }
           category={category}
           onLoadMore={loadMoreContent}
           hasMore={

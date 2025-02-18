@@ -6,7 +6,7 @@ export const LandingWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 200px;
   background-color: #1e1e1e;
   overflow: hidden;
   & > div {
