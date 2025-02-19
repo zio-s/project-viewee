@@ -15,7 +15,7 @@ export const RequestList = () => {
   const lastPost = currentPage * postsperPage;
   const firstPost = lastPost - postsperPage;
   const currentPost = item.slice(firstPost, lastPost);
-  console.log(currentPage, postsperPage, firstPost, lastPost);
+
   return (
     <RequestListWrap>
       <Button className="goqna" variant="ghost" onClick={() => navigate('/qna')}>
