@@ -3,83 +3,77 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   width: 100%;
-  .section-inner {
-    transform-style: preserve-3d;
-  }
-`;
-
-export const Section = styled.section`
-  --perspective: 2000px;
-  --grid-width: 160%;
-  --grid-columns: 8;
-  --grid-gap: 1rem;
-  position: absolute;
-  top: 0%;
   height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: var(--perspective);
-
+  --perspective: 1500px;
+  --grid-item-ratio: 1.5;
+  --grid-width: 105%;
+  --grid-height: auto;
+  --grid-gap: 1vw;
+  --grid-columns: 8;
+  --grid-inner-scale: 0.8;
+  margin-bottom: 100vh;
   h2 {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 5rem;
+    position: fixed;
     z-index: 1;
+    color: #fff;
+    font-size: 4rem;
     text-align: center;
   }
   button {
-    position: absolute;
-    left: 50%;
-    top: 55%;
-    transform: translate(-50%, -50%);
+    position: fixed;
     z-index: 1;
-    padding: 1rem 2rem;
-    border: 1px solid white;
-    background: rgba(80, 80, 80, 70);
-    border: 1px solid #1c1c1e;
-    color: white;
-    font-size: 2rem;
+    padding: 2.75rem 21.25rem;
+    border: none;
+    background: rgba(80, 80, 80, 0.7);
+    color: #fff;
+    border-radius: 50px;
     cursor: pointer;
-    border-radius: 30px;
-    transition: all 0.3s ease;
-
     &:hover {
-      background: white;
-      color: black;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #1c1c1e;
     }
   }
 `;
 
-export const GridWrap = styled.div`
+export const Section = styled.section`
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  width: 100%;
+  perspective: var(--perspective);
   position: relative;
+`;
+
+export const GridWrap = styled.div`
+  height: var(--grid-height);
   width: var(--grid-width);
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), 1fr);
   gap: var(--grid-gap);
   transform-style: preserve-3d;
-  will-change: transform;
 `;
 
 export const GridItem = styled.div`
-  position: relative;
+  aspect-ratio: var(--grid-item-ratio);
   width: 100%;
-  aspect-ratio: 16/9;
-  transform-style: preserve-3d;
-  will-change: transform;
-  border-radius: 4px;
+  height: auto;
   overflow: hidden;
-  transform-origin: 50% 0%;
-  filter: brightness(55.7062%);
+  position: relative;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0px 80px rgb(0 0 0 / 85%);
+  transform-style: preserve-3d;
 
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: calc(1 / var(--grid-inner-scale) * 100%);
+    height: calc(1 / var(--grid-inner-scale) * 100%);
+    object-fit: cover;
+    backface-visibility: hidden;
+  }
+  @media screen and (max-width: 767px) {
+    border-radius: 3px;
   }
 `;
 
