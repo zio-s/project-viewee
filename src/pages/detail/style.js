@@ -245,11 +245,14 @@ export const Actions = styled.div`
    
     &:hover {
       color: var(--primary-50);
-  }
+    }
   }
   
   svg {
   margin-bottom: 5px;
+    &:hover {
+      color: var(--primary-50);
+    }
   }
   }
 `;
