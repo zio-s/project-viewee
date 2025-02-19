@@ -14,6 +14,7 @@ const initialState = {
       isInView: false,
       progress: 0,
       isPlaying: false,
+      backgroundColor: 'transparent',
     },
     scroll: {
       isComplete: false,
@@ -44,6 +45,9 @@ const gsapSlice = createSlice({
   name: 'gsap',
   initialState,
   reducers: {
+    setBackgroundColor: (state, action) => {
+      state.backgroundColor = action.payload;
+    },
     // 섹션 완료 상태 설정
     setSectionComplete: (state, action) => {
       const { section, isComplete } = action.payload;
@@ -101,6 +105,7 @@ export const {
   updateViewport,
   resetSection,
   resetAllSections,
+  setBackgroundColor,
 } = gsapSlice.actions;
 
 // Selectors
@@ -120,4 +125,5 @@ export const selectViewport = (state) => state.gsapR.viewport;
 
 export const selectGlobalProgress = (state) => state.gsapR.globalProgress;
 
+export const selectBackgroundColor = (state) => state.gsapR.backgroundColor;
 export default gsapSlice.reducer;

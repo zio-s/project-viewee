@@ -1,58 +1,244 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FilterContainer } from '../style';
+import { useState, useEffect, useRef } from 'react';
+import { DrawerContent, DrawerOverlay, FilterButton } from './style';
 
-const CategoryFilter = ({ currentFilter, onFilterChange }) => {
+const CategoryFilter = ({ category, onFilterChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [activeFilters, setActiveFilters] = useState({
+    sortBy: 'popularity.desc',
+    year: null,
+    country: null,
+  });
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
 
-  const filters = {
-    latest: '최신순',
-    popular: '인기순',
-    rating: '평점순',
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  const filterOptions = {
+    movie: {
+      // 영화 카테고리
+      sorting: [
+        { value: 'popularity.desc', label: '인기순' },
+        { value: 'vote_average.desc', label: '평점순' },
+        { value: 'primary_release_date.desc', label: '최신순' },
+      ],
+      years: Array.from({ length: 10 }, (_, i) => {
+        const year = new Date().getFullYear() - i;
+        return { value: year, label: `${year}년` };
+      }),
+      countries: [
+        { value: 'KR', label: '한국' },
+        { value: 'US', label: '미국' },
+        { value: 'JP', label: '일본' },
+        { value: 'GB', label: '영국' },
+      ],
+    },
+    drama: {
+      // 드라마 카테고리
+      sorting: [
+        { value: 'popularity.desc', label: '인기순' },
+        { value: 'vote_average.desc', label: '평점순' },
+        { value: 'first_air_date.desc', label: '최신순' },
+      ],
+      status: [
+        { value: 'Returning', label: '방영중' },
+        { value: 'Ended', label: '방영완료' },
+      ],
+      countries: [
+        { value: 'KR', label: '한국' },
+        { value: 'US', label: '미국' },
+        { value: 'JP', label: '일본' },
+      ],
+    },
+    animation: {
+      // 애니메이션 카테고리
+      sorting: [
+        { value: 'popularity.desc', label: '인기순' },
+        { value: 'vote_average.desc', label: '평점순' },
+        { value: 'primary_release_date.desc', label: '최신순' },
+      ],
+      countries: [
+        { value: 'JP', label: '일본' },
+        { value: 'US', label: '미국' },
+        { value: 'KR', label: '한국' },
+      ],
+    },
+    kids: {
+      // 키즈 카테고리
+      sorting: [
+        { value: 'popularity.desc', label: '인기순' },
+        { value: 'first_air_date.desc', label: '최신순' },
+      ],
+      status: [
+        { value: 'Returning', label: '방영중' },
+        { value: 'Ended', label: '방영완료' },
+      ],
+    },
+    comedy: {
+      // 예능 카테고리
+      sorting: [
+        { value: 'popularity.desc', label: '인기순' },
+        { value: 'first_air_date.desc', label: '최신순' },
+      ],
+      status: [
+        { value: 'Returning', label: '방영중' },
+        { value: 'Ended', label: '방영완료' },
+      ],
+      countries: [
+        { value: 'KR', label: '한국' },
+        { value: 'US', label: '미국' },
+      ],
+    },
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
+  const currentOptions = filterOptions[category] || {};
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const handleFilterChange = (type, value) => {
+    setActiveFilters((prev) => ({
+      ...prev,
+      [type]: value === prev[type] ? null : value,
+    }));
+  };
 
-  const handleFilterClick = (filter) => {
-    onFilterChange(filter);
+  const getActiveFilterCount = () => {
+    return Object.values(activeFilters).filter((value) => value !== null).length;
+  };
+
+  const applyFilters = () => {
+    onFilterChange(activeFilters);
     setIsOpen(false);
   };
 
+  const resetFilters = () => {
+    setActiveFilters({
+      sortBy: 'popularity.desc',
+      year: null,
+      country: null,
+    });
+  };
+
   return (
-    <FilterContainer ref={dropdownRef}>
-      <button className={`dropdown-button ${isOpen ? 'active' : ''}`} onClick={() => setIsOpen(!isOpen)}>
-        {filters[currentFilter] || '필터'}
-        <svg width="28" height="28" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clipPath="url(#clip0_643_37718)">
-            <path
-              d="M25.6616 37.5109C26.1848 37.5109 26.7078 37.3017 27.0637 36.904L43.2607 20.3094C43.6164 19.9537 43.8257 19.4933 43.8257 18.9702C43.8257 17.882 43.0094 17.0449 41.9214 17.0449C41.3982 17.0449 40.9169 17.2542 40.561 17.589L24.5315 33.9743H26.7707L10.7411 17.589C10.4062 17.2542 9.92494 17.0449 9.38087 17.0449C8.29269 17.0449 7.47656 17.882 7.47656 18.9702C7.47656 19.4933 7.68583 19.9537 8.04157 20.3304L24.2386 36.904C24.6362 37.3017 25.1175 37.5109 25.6616 37.5109Z"
-              fill="white"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0_643_37718">
-              <rect width="36.3491" height="22.2866" fill="white" transform="translate(7.47656 15.2246)" />
-            </clipPath>
-          </defs>
-        </svg>
-      </button>
-      <div className={`dropdown-content ${isOpen ? 'show' : ''}`}>
-        {Object.entries(filters).map(([key, label]) => (
-          <button key={key} className={currentFilter === key ? 'active' : ''} onClick={() => handleFilterClick(key)}>
-            {label}
+    <>
+      <FilterButton onClick={() => setIsOpen(true)}>
+        필터
+        {getActiveFilterCount() > 0 && <span className="filter-count">{getActiveFilterCount()}</span>}
+      </FilterButton>
+
+      <DrawerOverlay isOpen={isOpen} onClick={() => setIsOpen(false)} />
+
+      <DrawerContent isOpen={isOpen}>
+        <div className="drawer-header">
+          <h2>필터</h2>
+          <button onClick={() => setIsOpen(false)}>
+            <svg width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M13.3359 37.9375L37.3334 13.9401"
+                stroke="black"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M37.3281 37.9375L13.3307 13.9401"
+                stroke="black"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
-        ))}
-      </div>
-    </FilterContainer>
+        </div>
+
+        <div className="drawer-body">
+          {/* 정렬 옵션 */}
+          {currentOptions.sorting && (
+            <div className="filter-section">
+              <h3>정렬</h3>
+              <div className="filter-options">
+                {currentOptions.sorting.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`filter-chip ${activeFilters.sortBy === option.value ? 'active' : ''}`}
+                    onClick={() => handleFilterChange('sortBy', option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 방영 상태 (드라마/예능/키즈) */}
+          {currentOptions.status && (
+            <div className="filter-section">
+              <h3>방영 상태</h3>
+              <div className="filter-options">
+                {currentOptions.status.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`filter-chip ${activeFilters.status === option.value ? 'active' : ''}`}
+                    onClick={() => handleFilterChange('status', option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 국가 */}
+          {currentOptions.countries && (
+            <div className="filter-section">
+              <h3>국가</h3>
+              <div className="filter-options">
+                {currentOptions.countries.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`filter-chip ${activeFilters.country === option.value ? 'active' : ''}`}
+                    onClick={() => handleFilterChange('country', option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 연도 (영화/애니메이션) */}
+          {currentOptions.years && (
+            <div className="filter-section">
+              <h3>제작 연도</h3>
+              <div className="filter-options">
+                {currentOptions.years.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`filter-chip ${activeFilters.year === option.value ? 'active' : ''}`}
+                    onClick={() => handleFilterChange('year', option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="drawer-footer">
+          <button className="reset" onClick={resetFilters}>
+            초기화
+          </button>
+          <button className="apply" onClick={applyFilters}>
+            적용하기
+          </button>
+        </div>
+      </DrawerContent>
+    </>
   );
 };
 
