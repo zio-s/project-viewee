@@ -5,7 +5,8 @@ const initialState = {
     {
       id: 1,
       username: '김미선',
-      userId: 'test@test.com',
+      userId: 'test',
+      userEmail: 'test@test.com',
       password: '123456',
       phone: '010-0000-0000',
       gender: 'female',
@@ -32,11 +33,13 @@ export const authSlice = createSlice({
   reducers: {
     signup: (state, action) => {
       const { username, userId, password, phone, gender, birth } = action.payload;
+      const splitEmail = userId.split('@')[0];
       const newId = state.joinData.length + 1;
       const newUser = {
         id: newId,
         username: username,
-        userId: userId,
+        userId: splitEmail,
+        userEmail: userId,
         password: password,
         phone: phone,
         gender: gender,
@@ -149,6 +152,22 @@ export const authSlice = createSlice({
       const id = action.payload;
       state.user.coupon = state.user.coupon.map((item) => (item.id === id ? { ...item, used: true } : item));
       state.user.isMembershiped = true;
+    },
+    addRequested: (state, action) => {
+      const { category, title, content } = action.payload;
+      const id = state.user.requested.length + 1;
+      const rState = '처리중';
+      const nowDate = new Date();
+      const date = `${nowDate.getFullYear()}-${
+        nowDate.getMonth() + 1 <= 9 ? '0' + nowDate.getDate() : nowDate.getDate()
+      }-${nowDate.getDate()} ${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`;
+      const requested = { id: id, category: category, title: title, state: rState, date: date, content: content };
+      state.joinData = state.joinData.map((item) => {
+        item.id === state.user.id ? item.requested.push(requested) : { item };
+      });
+      state.user.requested.push(requested);
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
   },
 });
