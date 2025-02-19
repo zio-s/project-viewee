@@ -41,37 +41,19 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   background-position: center;
   background-size: cover;
 
-<<<<<<< HEAD
-  /* ✅ Mobile (390px)에서 정확히 280x180 시작 */
   width: ${(props) => props.width || 'calc(280px + (280 * ((100vw - 390px) / (768 - 390))))'};
   height: ${(props) => props.height || 'calc(180px + (180 * ((100vw - 390px) / (768 - 390))))'};
 
-  /* ✅ 정확한 Tablet(768px) 크기 */
-=======
-  width: ${(props) => props.width || 'calc(280px + (280 * ((100vw - 390px) / (768 - 390))))'};
-  height: ${(props) => props.height || 'calc(180px + (180 * ((100vw - 390px) / (768 - 390))))'};
-
->>>>>>> develop
   @media (min-width: 768px) {
     width: 560px;
     height: 360px;
   }
 
-<<<<<<< HEAD
-  /* ✅ Tablet (768px) → PC (1024px) 크기 확대 */
-  @media (min-width: 769px) and (max-width: 1023px) {
-    width: calc(560px + (880 * ((100vw - 768px) / (1024 - 768)))); /* Tablet → PC 확대 */
-    height: calc(360px + (335 * ((100vw - 768px) / (1024 - 768)))); /* Tablet → PC 확대 */
-  }
-
-  /* ✅ 정확한 PC(1024px 이상) 크기 */
-=======
   @media (min-width: 769px) and (max-width: 1023px) {
     width: calc(560px + (880 * ((100vw - 768px) / (1024 - 768))));
     height: calc(360px + (335 * ((100vw - 768px) / (1024 - 768))));
   }
 
->>>>>>> develop
   @media (min-width: 1024px) {
     width: 1440px;
     height: 695px;
@@ -526,23 +508,16 @@ export const HoverModalWrap = styled.div`
     width: 100%;
     height: 256px;
     background-color: var(--gray-40);
+    border-radius: 10px 10px 0 0;
   }
   .infoArea {
     padding: 15px;
 
     .iconArea {
       display: flex;
-<<<<<<< HEAD
-      gap: 10px;
-<<<<<<< HEAD
-=======
-      align-items: center;
->>>>>>> develop
-=======
       gap: 15px;
       align-items: center;
       pointer-events: auto;
->>>>>>> develop
       .button {
         width: 60px;
         height: 60px;
@@ -554,8 +529,15 @@ export const HoverModalWrap = styled.div`
         background: transparent;
         border: 1px solid var(--gray-60);
       }
-<<<<<<< HEAD
-=======
+
+      .moreButton:hover,
+      .steamedButton:hover,
+      .likeButton:hover {
+        border-color: white;
+      }
+      .button:hover {
+        background: rgb(255, 255, 255, 0.1);
+      }
       .steamedButton {
         width: 60px;
         height: 60px;
@@ -571,7 +553,6 @@ export const HoverModalWrap = styled.div`
         background: transparent;
         border: 1px solid var(--gray-60);
       }
->>>>>>> develop
     }
     .textArea {
       display: flex;
@@ -581,10 +562,6 @@ export const HoverModalWrap = styled.div`
       font-size: 16px;
       .age {
         border: 1px solid var(--gray-60);
-<<<<<<< HEAD
-        padding: 4px 12px;
-      }
-=======
         background: #232323;
         padding: 4px 12px;
       }
@@ -594,7 +571,6 @@ export const HoverModalWrap = styled.div`
 
         gap: 4px;
       }
->>>>>>> develop
     }
   }
 `;
@@ -610,13 +586,12 @@ export const HoverModalWrapper = styled.article`
   z-index: 1000;
   display: flex;
   justify-content: center;
-  /* opacity: 0; */
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.5s ease-out, opacity 0.1s ease-out;
+  transform: translate(-50%, -60%) scale(0);
+  transition: transform 0.3s ease-out, opacity 0.1s ease-out;
   &.active {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -60%) scale(1);
   }
   
   `}
