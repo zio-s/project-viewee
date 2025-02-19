@@ -22,6 +22,7 @@ export const PaginationWrap = styled.div`
   ul {
     display: flex;
     gap: 1rem;
+    align-items: center;
     li {
       font-weight: 600;
       cursor: pointer;

@@ -141,7 +141,7 @@ export const ProfileWrap = styled.div`
         }
       }
       .membership {
-        cursor: default;
+        cursor: pointer;
         width: 130px;
         margin-top: 10px;
         &:hover {
