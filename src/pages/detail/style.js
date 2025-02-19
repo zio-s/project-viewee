@@ -1,3 +1,7 @@
+
+
+
+
 import styled from 'styled-components';
 import { StyledButton as OriginalStyledButton } from '../../common/button/style';
 
@@ -172,6 +176,12 @@ export const HeroSectionWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  .inner{
+  max-width: 1440px;
+  margin: 0 auto; 
+  padding: 0; 
+
+  }
 `;
 
 export const BackgroundContent = styled.div`
@@ -182,7 +192,7 @@ export const BackgroundContent = styled.div`
   height: 770px;
   overflow: hidden;
   
-  iframe, img {
+  iframe, img { 
     position: absolute;
     top: 0;
     left: 0;
@@ -193,23 +203,8 @@ export const BackgroundContent = styled.div`
   }
 `;
 
-export const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* 어두운 필터 */
-  z-index: 0;
-`;
-
 export const HeroContent = styled.div`
-  max-width: 1440px;
-  justify-content: center;     
-  margin: 0 auto; 
   position: absolute;
-  bottom: 0;
-  left: 0;
   z-index: 1;
   text-align: left;
 
@@ -232,7 +227,7 @@ export const HeroContent = styled.div`
 
 export const Actions = styled.div`
   display: flex;
-  justify-content: center;    
+  justify-content: center;
   align-items: center;
 
   div {
@@ -242,24 +237,31 @@ export const Actions = styled.div`
     text-align: center;
     margin-right: 20px;
     font-size: var(--font-content-s);
-   
+    transition: color 0.3s ease-in-out;
+
     &:hover {
       color: var(--primary-50);
+      transform: scale(1.2);
     }
-  }
-  
-  svg {
-  margin-bottom: 5px;
-    &:hover {
-      color: var(--primary-50);
+
+    svg {
+      margin-bottom: 5px;
+      color: white;
+      transition: transform 0.3s ease-in-out, color 0.2s ease-in-out, filter 0.3s ease-in-out;
+
+      &:hover {
+        color: var(--primary-50);
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 8px var(--primary-50));
+      }
     }
-  }
   }
 `;
 
 
+
 export const Container = styled.div`
-  width: 100%;
+  width: 100vw;
 `;
 
 
