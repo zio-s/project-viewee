@@ -508,6 +508,7 @@ export const HoverModalWrap = styled.div`
     width: 100%;
     height: 256px;
     background-color: var(--gray-40);
+    border-radius: 10px 10px 0 0;
   }
   .infoArea {
     padding: 15px;
@@ -527,6 +528,15 @@ export const HoverModalWrap = styled.div`
         margin-left: auto;
         background: transparent;
         border: 1px solid var(--gray-60);
+      }
+
+      .moreButton:hover,
+      .steamedButton:hover,
+      .likeButton:hover {
+        border-color: white;
+      }
+      .button:hover {
+        background: rgb(255, 255, 255, 0.1);
       }
       .steamedButton {
         width: 60px;
@@ -576,13 +586,12 @@ export const HoverModalWrapper = styled.article`
   z-index: 1000;
   display: flex;
   justify-content: center;
-  /* opacity: 0; */
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.5s ease-out, opacity 0.1s ease-out;
+  transform: translate(-50%, -60%) scale(0);
+  transition: transform 0.3s ease-out, opacity 0.1s ease-out;
   &.active {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -60%) scale(1);
   }
   
   `}

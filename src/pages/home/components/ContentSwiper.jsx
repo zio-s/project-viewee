@@ -87,21 +87,6 @@ const NewSwiperSection = () => {
   const handleMouseEnter = (num) => {
     const timeout = setTimeout(() => {
       setHoveredSlide(num);
-      // 화면의 왼쪽 끝인지 확인
-      if (index === 0) {
-        document.querySelector(`.hover-modal-${num}`).classList.add('left');
-        document.querySelector(`.hover-modal-${num}`).classList.remove('right');
-      }
-      // 화면의 오른쪽 끝인지 확인
-      else if (index === slides.length - 1) {
-        document.querySelector(`.hover-modal-${num}`).classList.add('right');
-        document.querySelector(`.hover-modal-${num}`).classList.remove('left');
-      }
-      // 기본 중앙 정렬
-      else {
-        document.querySelector(`.hover-modal-${num}`).classList.remove('left');
-        document.querySelector(`.hover-modal-${num}`).classList.remove('right');
-      }
     }, 500);
     setHoverTimeout(timeout);
   };
@@ -142,11 +127,9 @@ const NewSwiperSection = () => {
               onMouseLeave={handleMouseLeave}
             >
               <div>Slide {num}</div>
-              {hoveredSlide === num && (
-                <HoverModalWrapper className={hoveredSlide === num ? 'active' : ''}>
-                  <HoverModal />
-                </HoverModalWrapper>
-              )}
+              <HoverModalWrapper className={hoveredSlide === num ? 'active' : ''}>
+                <HoverModal />
+              </HoverModalWrapper>
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>
