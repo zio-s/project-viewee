@@ -38,7 +38,7 @@ const TagSection = () => {
         }}
       >
         {tags.map((tag, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} style={{ minWidth: 'auto', maxWidth: '100%' }}>
             <Tag className="tagSlide">{tag}</Tag>
           </SwiperSlide>
         ))}
