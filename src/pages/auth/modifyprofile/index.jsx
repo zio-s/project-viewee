@@ -18,19 +18,10 @@ const ModifyProfile = () => {
             { label: '비밀번호' },
             { label: '비밀번호 확인' },
             { label: '생년월일' },
+            { label: '성별', placeholder: '고정된 값' },
           ].map((field, index) => (
             <InputField key={index} label={field.label} placeholder={field.placeholder} />
           ))}
-          <div className="genderForm">
-            <label className="label genderLabel">성별</label>
-
-            <Button variant="gray" fullWidth="true" className="genderButton input_box">
-              여성
-            </Button>
-            <Button variant="gray" fullWidth="true" className="genderButton input_box">
-              남성
-            </Button>
-          </div>
           <AgreementSection />
           <ConfirmButtons />
         </form>
