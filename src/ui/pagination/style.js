@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { tabletMore } from '../../styled/Mixin';
+import { mobileMore, tabletMore } from '../../styled/Mixin';
 
 export const PaginationWrap = styled.div`
   display: flex;
@@ -10,9 +10,13 @@ export const PaginationWrap = styled.div`
       width: 16px;
       height: 16px;
       filter: invert(58%) sepia(0%) saturate(30%) hue-rotate(208deg) brightness(99%) contrast(98%);
+      ${mobileMore`
+        width: 20px;
+        height: 20px;
+      `}
       ${tabletMore`
-          width: 24px;
-          height: 24px;
+        width: 24px;
+        height: 24px;
       `}
     }
     .active {
@@ -33,6 +37,11 @@ export const PaginationWrap = styled.div`
       justify-content: center;
       align-items: center;
       font-size: var(--font-label-xs);
+      ${mobileMore`
+        width: 28px;
+        height: 28px;
+        font-size: var(--font-content-s);
+      `}
       ${tabletMore`
           width: 35px;
           height: 35px;

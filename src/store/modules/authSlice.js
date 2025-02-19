@@ -224,22 +224,6 @@ export const authSlice = createSlice({
       localStorage.setItem('joinData', JSON.stringify(state.joinData));
       localStorage.setItem('user', JSON.stringify(state.user));
     },
-    addRequested: (state, action) => {
-      const { category, title, content } = action.payload;
-      const id = state.user.requested.length + 1;
-      const rState = '처리중';
-      const nowDate = new Date();
-      const date = `${nowDate.getFullYear()}-${
-        nowDate.getMonth() + 1 <= 9 ? '0' + nowDate.getDate() : nowDate.getDate()
-      }-${nowDate.getDate()} ${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`;
-      const requested = { id: id, category: category, title: title, state: rState, date: date, content: content };
-      state.joinData = state.joinData.map((item) => {
-        item.id === state.user.id ? item.requested.push(requested) : { item };
-      });
-      state.user.requested.push(requested);
-      localStorage.setItem('joinData', JSON.stringify(state.joinData));
-      localStorage.setItem('user', JSON.stringify(state.user));
-    },
   },
 });
 

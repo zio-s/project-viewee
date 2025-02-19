@@ -42,7 +42,7 @@ export const RequestList = () => {
                   <td className="state">{item.state}</td>
                   <td>{item.category}</td>
                   <td className="titleList">{item.title}</td>
-                  <td>{item.date}</td>
+                  <td className="data">{item.date}</td>
                 </tr>
               ))}
             </tbody>
