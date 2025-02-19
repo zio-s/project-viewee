@@ -61,8 +61,6 @@ const Subscribe = () => {
   const toggle = () => {
     setPriceToggle(priceToggle === 'month' ? 'year' : 'month');
   };
-  console.log(verseToggle);
-
   return (
     <SubscribeWrap>
       <div className="contentWrapper">
