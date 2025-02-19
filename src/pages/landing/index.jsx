@@ -6,10 +6,12 @@ import CardSection from './components/card/CardSection';
 import Hero from './components/Hero';
 import ScrollSection from './components/ScrollSection';
 import { LandingWrap } from './style';
+import { useSelector } from 'react-redux';
+import { selectBackgroundColor } from '../../store/modules/gsapSlice';
 
 const LandingPage = () => {
   const lenisRef = useRef();
-
+  const backgroundColor = useSelector(selectBackgroundColor);
   useEffect(() => {
     lenisRef.current = new Lenis({
       duration: 2,
@@ -33,10 +35,15 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <LandingWrap>
-      <Hero />
+    <LandingWrap
+      style={{
+        backgroundColor: backgroundColor,
+        transition: 'background-color 0.3s ease',
+      }}
+    >
       <CardSection />
       <ScrollSection />
+      <Hero />
     </LandingWrap>
   );
 };

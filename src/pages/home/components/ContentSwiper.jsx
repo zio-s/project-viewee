@@ -39,9 +39,9 @@ const NewSwiperSection = () => {
 
     const swiperInstance = new Swiper('.new-card-carousel1', {
       modules: [Navigation],
-      slidesPerView: slidesPerView,
+      slidesPerView: 'auto',
       spaceBetween: 20,
-      slidesPerGroup: slidesPerView,
+      slidesPerGroup: 1,
 
       navigation: {
         nextEl: '.new-swiper-button-next',
@@ -49,17 +49,31 @@ const NewSwiperSection = () => {
       },
 
       breakpoints: {
-        1024: {
-          slidesPerView: 5,
+        1440: {
+          slidesPerView: 5.6,
           slidesPerGroup: 5,
+          spaceBetween: 15,
+        },
+        1024: {
+          slidesPerView: 4.2,
+          slidesPerGroup: 5,
+          spaceBetween: 15,
         },
         768: {
-          slidesPerView: 4,
-          slidesPerGroup: 4,
+          slidesPerView: 3.8,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
         },
         390: {
           slidesPerView: 3,
-          slidesPerGroup: 3,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
+        },
+
+        330: {
+          slidesPerView: 2.8,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
         },
       },
     });
@@ -113,11 +127,9 @@ const NewSwiperSection = () => {
               onMouseLeave={handleMouseLeave}
             >
               <div>Slide {num}</div>
-              {hoveredSlide === num && (
-                <HoverModalWrapper className={hoveredSlide !== null ? 'active' : ''}>
-                  <HoverModal />
-                </HoverModalWrapper>
-              )}
+              <HoverModalWrapper className={hoveredSlide === num ? 'active' : ''}>
+                <HoverModal />
+              </HoverModalWrapper>
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>

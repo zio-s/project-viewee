@@ -13,6 +13,7 @@ export const RequestList = () => {
   useEffect(() => {
     dispatch(pageActions.addData(item));
   }, []);
+
   return (
     <RequestListWrap>
       <Button className="goqna" variant="ghost" onClick={() => navigate('/qna')}>

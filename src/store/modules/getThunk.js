@@ -41,31 +41,109 @@ const CATEGORY_CONFIG = {
 };
 
 //컨텐츠 조회
-export const getContent = createAsyncThunk('content/getContent', async ({ category, page = 1 }) => {
-  const config = CATEGORY_CONFIG[category];
-  if (!config) throw new Error('불러온 데이터가 없습니다.');
+export const getContent = createAsyncThunk(
+  'content/getContent',
+  async ({ category, page = 1, sortBy = 'popularity.desc', filterOptions = {} }) => {
+    const config = CATEGORY_CONFIG[category];
+    if (!config) throw new Error('불러온 데이터가 없습니다.');
 
-  const url = `${BASE_URL}/${config.endpoint}`;
+    const url = `${BASE_URL}/${config.endpoint}`;
+    const currentDate = new Date();
+    const lastYear = new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)).toISOString().split('T')[0];
 
-  try {
-    const options = {
-      ...baseOptions,
-      page,
-      with_genres: config.genreId,
-    };
+    try {
+      const options = {
+        ...baseOptions,
+        page,
+        with_genres: config.genreId,
+        sort_by: sortBy,
+        include_adult: false,
+      };
 
-    const response = await axios.get(url, { params: options });
+      // 장르 필터링
+      if (filterOptions.genres?.length > 0) {
+        const allGenres = filterOptions.genres;
+        if (config.genreId) {
+          allGenres.push(config.genreId);
+        }
+        options.with_genres = allGenres.join(',');
+      }
 
-    return {
-      data: response.data.results,
-      totalPages: response.data.total_pages,
-      currentPage: response.data.page,
-    };
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
+      // 영화 필터
+      if (config.type === 'movie') {
+        options['vote_count.gte'] = 100;
+        options.with_original_language = filterOptions.language || null;
+
+        // 개봉 연도 필터
+        if (filterOptions.year) {
+          options.primary_release_year = filterOptions.year;
+        }
+
+        // 키워드 기반 필터링 (예: 액션씬, 로맨스, 범죄 등)
+        if (filterOptions.keywords?.length > 0) {
+          options.with_keywords = filterOptions.keywords.join(',');
+        }
+
+        // 런타임 필터
+        if (filterOptions.runtime) {
+          options['with_runtime.gte'] = filterOptions.runtime.min;
+          options['with_runtime.lte'] = filterOptions.runtime.max;
+        }
+      }
+
+      // TV 시리즈 필터
+      if (config.type === 'tv') {
+        options.with_status = filterOptions.status || 'Released';
+        options['vote_count.gte'] = 50;
+        options.with_original_language = filterOptions.language || null;
+
+        // 최신작 필터
+        if (filterOptions.onlyNew) {
+          options['air_date.gte'] = lastYear;
+        }
+
+        // 방송사/플랫폼 필터
+        if (filterOptions.networks?.length > 0) {
+          options.with_networks = filterOptions.networks.join(',');
+        }
+
+        // 시즌 수 필터
+        if (filterOptions.seasons) {
+          options['with_seasons.gte'] = filterOptions.seasons.min;
+          options['with_seasons.lte'] = filterOptions.seasons.max;
+        }
+      }
+
+      // 공통 필터
+      if (filterOptions.minRating) {
+        options['vote_average.gte'] = filterOptions.minRating;
+      }
+
+      if (filterOptions.maxRating) {
+        options['vote_average.lte'] = filterOptions.maxRating;
+      }
+
+      // 국가 필터
+      if (filterOptions.countries?.length > 0) {
+        options.with_origin_country = filterOptions.countries.join(',');
+      }
+
+      const response = await axios.get(url, { params: options });
+
+      // 추가 필터링이 필요한 경우
+      let filteredResults = response.data.results;
+
+      return {
+        data: filteredResults,
+        totalPages: response.data.total_pages,
+        currentPage: response.data.page,
+      };
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
+    }
   }
-});
+);
 
 //상세페이지
 const preloadImage = async (imageUrl) => {
