@@ -20,6 +20,7 @@ import HoverModal from './HoverModal';
 const NewSwiperSection = () => {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [hoveredSlide, setHoveredSlide] = useState(null);
+  const [hoverTimeout, setHoverTimeout] = useState(null);
 
   useEffect(() => {
     const calculateSlidesPerView = () => {
@@ -38,9 +39,9 @@ const NewSwiperSection = () => {
 
     const swiperInstance = new Swiper('.new-card-carousel1', {
       modules: [Navigation],
-      slidesPerView: slidesPerView,
+      slidesPerView: 'auto',
       spaceBetween: 20,
-      slidesPerGroup: slidesPerView,
+      slidesPerGroup: 1,
 
       navigation: {
         nextEl: '.new-swiper-button-next',
@@ -48,17 +49,31 @@ const NewSwiperSection = () => {
       },
 
       breakpoints: {
-        1024: {
-          slidesPerView: 5,
+        1440: {
+          slidesPerView: 5.6,
           slidesPerGroup: 5,
+          spaceBetween: 15,
+        },
+        1024: {
+          slidesPerView: 4.2,
+          slidesPerGroup: 5,
+          spaceBetween: 15,
         },
         768: {
-          slidesPerView: 4,
-          slidesPerGroup: 4,
+          slidesPerView: 3.8,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
         },
         390: {
           slidesPerView: 3,
-          slidesPerGroup: 3,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
+        },
+
+        330: {
+          slidesPerView: 2.8,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
         },
       },
     });
@@ -67,7 +82,34 @@ const NewSwiperSection = () => {
       swiperInstance.destroy();
       window.removeEventListener('resize', updateSlidesPerView);
     };
-  }, [slidesPerView]); // ✅ slidesPerView가 바뀌면 Swiper 재초기화
+  }, [slidesPerView]);
+
+  const handleMouseEnter = (num) => {
+    const timeout = setTimeout(() => {
+      setHoveredSlide(num);
+      // 화면의 왼쪽 끝인지 확인
+      if (index === 0) {
+        document.querySelector(`.hover-modal-${num}`).classList.add('left');
+        document.querySelector(`.hover-modal-${num}`).classList.remove('right');
+      }
+      // 화면의 오른쪽 끝인지 확인
+      else if (index === slides.length - 1) {
+        document.querySelector(`.hover-modal-${num}`).classList.add('right');
+        document.querySelector(`.hover-modal-${num}`).classList.remove('left');
+      }
+      // 기본 중앙 정렬
+      else {
+        document.querySelector(`.hover-modal-${num}`).classList.remove('left');
+        document.querySelector(`.hover-modal-${num}`).classList.remove('right');
+      }
+    }, 500);
+    setHoverTimeout(timeout);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(hoverTimeout);
+    setHoveredSlide(null);
+  };
 
   return (
     <NewSectionWrapper>
@@ -96,12 +138,12 @@ const NewSwiperSection = () => {
             <NewSwiperSlide
               key={num}
               className="swiper-slide"
-              onMouseEnter={() => setHoveredSlide(num)}
-              onMouseLeave={() => setHoveredSlide(null)}
+              onMouseEnter={() => handleMouseEnter(num)}
+              onMouseLeave={handleMouseLeave}
             >
               <div>Slide {num}</div>
               {hoveredSlide === num && (
-                <HoverModalWrapper className={hoveredSlide !== null ? 'active' : ''}>
+                <HoverModalWrapper className={hoveredSlide === num ? 'active' : ''}>
                   <HoverModal />
                 </HoverModalWrapper>
               )}

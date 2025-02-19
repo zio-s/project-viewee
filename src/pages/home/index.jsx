@@ -7,29 +7,25 @@ import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
 import SpeicialEditionBack from './components/SpeicialEditionBack';
+import TagSection from './components/TagSection';
 
 const Home = () => {
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
-
-  useEffect(() => {
-    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <>
       <SwiperSection />
       <VisualWrap>
         <SectionWrapper>
+          <TagSection />
+        </SectionWrapper>
+        <SectionWrapper>
           <TopRated />
         </SectionWrapper>
-        {isLargeScreen ? (
-          <EventSectionWrapper>
-            <SpeicialEditionBack />
-            <SpecialEdition />
-          </EventSectionWrapper>
-        ) : null}
+
+        <EventSectionWrapper>
+          <SpeicialEditionBack />
+          <SpecialEdition />
+        </EventSectionWrapper>
+
         <SectionWrapper>
           <ContentSwiper />
         </SectionWrapper>

@@ -10,6 +10,7 @@ import pageR from './modules/pageSlice';
 import detailR from './modules/detailSlice';
 import couponR from './modules/couponSlice';
 import searchR from './modules/searchSlice';
+import gsapR from './modules/gsapSlice';
 export const store = configureStore({
   reducer: {
     tmdbR,
@@ -23,5 +24,13 @@ export const store = configureStore({
     detailR,
     couponR,
     searchR,
+    gsapR,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['animation/setAnimationProgress', 'animation/setAnimationPlaying'],
+        ignoredPaths: ['animations.card', 'animations.scroll'],
+      },
+    }),
 });
