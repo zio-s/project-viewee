@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { VisualWrap, SectionWrapper, NewCardsSectionTitle, NewMoreLink, EventSectionWrapper } from './style';
 import SwiperSection from './components/SwiperSection';
 import ContentSwiper from './components/ContentSwiper';
@@ -8,8 +8,22 @@ import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
 import SpeicialEditionBack from './components/SpeicialEditionBack';
 import TagSection from './components/TagSection';
+import { useDispatch, useSelector } from 'react-redux';
+import { MainPageData } from '../../store/modules/getThunk';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { trending, hot, review, upcoming, nowPlaying, loading } = useSelector((state) => state.tmdbR);
+
+  useEffect(() => {
+    dispatch(MainPageData());
+    // window.scrollTo(0, 0);
+  }, [dispatch]);
+
+  // 컨텐츠 클릭 핸들러
+  // const handleContentClick = (content) => {
+  //   dispatch(addToContinueWatching(content));
+  // };
   return (
     <>
       <SwiperSection />
@@ -18,7 +32,7 @@ const Home = () => {
           <TagSection />
         </SectionWrapper>
         <SectionWrapper>
-          <TopRated />
+          <TopRated hotData={hot} />
         </SectionWrapper>
 
         <EventSectionWrapper>
@@ -27,7 +41,7 @@ const Home = () => {
         </EventSectionWrapper>
 
         <SectionWrapper>
-          <ContentSwiper />
+          <ContentSwiper reviewData={review} />
         </SectionWrapper>
         <NewCardsSectionTitle>
           지구에서 나만 안본 그 작품

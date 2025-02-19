@@ -38,6 +38,31 @@ const CATEGORY_CONFIG = {
     endpoint: 'discover/tv',
     genreId: 10762,
   },
+  trending: {
+    type: 'all',
+    endpoint: 'trending/all/week',
+    genreId: null,
+  },
+  hot: {
+    type: 'movie',
+    endpoint: 'discover/movie',
+    genreId: null,
+  },
+  nowPlaying: {
+    type: 'movie',
+    endpoint: 'movie/now_playing',
+    genreId: null,
+  },
+  upcoming: {
+    type: 'movie',
+    endpoint: 'movie/upcoming',
+    genreId: null,
+  },
+  all: {
+    type: 'movie',
+    endpoint: 'discover/movie',
+    genreId: null,
+  },
 };
 
 //컨텐츠 조회
@@ -58,6 +83,9 @@ export const getContent = createAsyncThunk(
         with_genres: config.genreId,
         sort_by: sortBy,
         include_adult: false,
+        'vote_count.gte': 200, // 최소 투표 수 증가
+        'vote_average.gte': 7.0, // 최소 평점 설정
+        with_original_language: 'ko',
       };
 
       // 장르 필터링
@@ -342,6 +370,61 @@ export const searchContent = createAsyncThunk('content/searchContent', async ({ 
     };
   } catch (error) {
     console.error('Search API Error:', error);
+    throw error;
+  }
+});
+
+//메인 에 넣어줄 데이터
+export const MainPageData = createAsyncThunk('tmdbR/MainPage', async () => {
+  try {
+    const [trendingResponse, topRatedResponse, nowPlayingResponse, upcomingResponse] = await Promise.all([
+      axios.get(`${BASE_URL}/trending/all/week`, {
+        params: {
+          ...baseOptions,
+          page: 1,
+        },
+      }),
+      axios.get(`${BASE_URL}/discover/movie`, {
+        params: {
+          ...baseOptions,
+          'vote_count.gte': 200,
+          with_origin_country: 'KR',
+          // certification_country: 'KR',
+          page: 1,
+        },
+      }),
+      axios.get(`${BASE_URL}/discover/tv`, {
+        params: {
+          ...baseOptions,
+          'vote_count.gte': 200, // 최소 리뷰 수 200개 이상
+          with_origin_country: 'KR',
+          // sort_by: 'vote_count.desc', // 리뷰 수 내림차순 정렬
+          page: 1,
+        },
+      }),
+      axios.get(`${BASE_URL}/movie/now_playing`, {
+        params: {
+          ...baseOptions,
+          page: 1,
+        },
+      }),
+      axios.get(`${BASE_URL}/movie/upcoming`, {
+        params: {
+          ...baseOptions,
+          page: 1,
+        },
+      }),
+    ]);
+
+    return {
+      trending: trendingResponse.data.results,
+      hot: topRatedResponse.data.results,
+      review: nowPlayingResponse.data.results,
+      upcoming: upcomingResponse.data.results,
+      nowPlaying: nowPlayingResponse.data.results,
+    };
+  } catch (error) {
+    console.error('Main page data fetch error:', error);
     throw error;
   }
 });
