@@ -1,8 +1,5 @@
 import React from 'react';
 import { HoverModalWrap, HoverModalWrapper } from '../style';
-<<<<<<< HEAD
-import PlayButton from '../../../ui/button/playButton';
-=======
 import { StyledPlayButton } from '../../../ui/button/playButton/style';
 
 const contentData = {
@@ -19,7 +16,6 @@ const PlayButton = ({ children, size = 'medium', fullWidth = false, icon, ...pro
     </StyledPlayButton>
   );
 };
->>>>>>> develop
 
 const HoverModal = () => {
   return (
@@ -27,18 +23,6 @@ const HoverModal = () => {
       <div className="videoArea"></div>
       <div className="infoArea">
         <div className="iconArea">
-<<<<<<< HEAD
-          <PlayButton className="button"></PlayButton>
-          <PlayButton className="button"></PlayButton>
-          <PlayButton className="button"></PlayButton>
-          <PlayButton className="moreButton"></PlayButton>
-        </div>
-        <div className="textArea">
-          <span className="age">all</span> <span>5.0</span> <span>드라마</span>
-        </div>
-        <div className="textArea">
-          <span>드라마</span> <span>드라마</span> <span>드라마</span>
-=======
           <PlayButton className="button">
             <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -102,7 +86,6 @@ const HoverModal = () => {
         </div>
         <div className="textArea">
           <span>{contentData.genres[0]}</span> <span>{contentData.genres[1]}</span> <span>{contentData.genres[2]}</span>
->>>>>>> develop
         </div>
       </div>
     </HoverModalWrap>
