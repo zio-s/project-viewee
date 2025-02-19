@@ -226,7 +226,17 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
       videoData,
     };
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('API Error:', {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      url: error.config?.url,
+      params: error.config?.params,
+    });
+
+    // 더 명확한 에러 메시지 제공
+    if (error.response?.status === 404) {
+      throw new Error(`Content not found: ${type}/${id}`);
+    }
     throw error;
   }
 });
@@ -377,28 +387,20 @@ export const searchContent = createAsyncThunk('content/searchContent', async ({ 
 //메인 에 넣어줄 데이터
 export const MainPageData = createAsyncThunk('tmdbR/MainPage', async () => {
   try {
-    const [trendingResponse, topRatedResponse, nowPlayingResponse, upcomingResponse] = await Promise.all([
-      axios.get(`${BASE_URL}/trending/all/week`, {
-        params: {
-          ...baseOptions,
-          page: 1,
-        },
-      }),
+    const [topRated, nowPlaying, upcoming] = await Promise.all([
       axios.get(`${BASE_URL}/discover/movie`, {
         params: {
           ...baseOptions,
           'vote_count.gte': 200,
           with_origin_country: 'KR',
-          // certification_country: 'KR',
           page: 1,
         },
       }),
       axios.get(`${BASE_URL}/discover/tv`, {
         params: {
           ...baseOptions,
-          'vote_count.gte': 200, // 최소 리뷰 수 200개 이상
+          'vote_count.gte': 200,
           with_origin_country: 'KR',
-          // sort_by: 'vote_count.desc', // 리뷰 수 내림차순 정렬
           page: 1,
         },
       }),
@@ -416,12 +418,44 @@ export const MainPageData = createAsyncThunk('tmdbR/MainPage', async () => {
       }),
     ]);
 
+    let koreanTrending = [];
+    let currentPage = 1;
+    const BATCH_SIZE = 3;
+
+    while (koreanTrending.length < 20) {
+      const pagePromises = [];
+      for (let i = 0; i < BATCH_SIZE; i++) {
+        const page = currentPage + i;
+        pagePromises.push(
+          axios.get(`${BASE_URL}/trending/all/week`, {
+            params: {
+              ...baseOptions,
+              page,
+            },
+          })
+        );
+      }
+
+      const responses = await Promise.all(pagePromises);
+      const newKoreanContent = responses.flatMap((response) =>
+        response.data.results.filter((item) => item.origin_country?.includes('KR') || item.original_language === 'ko')
+      );
+      if (responses.some((response) => response.data.results.length === 0)) {
+        break;
+      }
+      koreanTrending = [...koreanTrending, ...newKoreanContent];
+      currentPage += BATCH_SIZE;
+      if (responses[0].data.total_pages < currentPage) {
+        break;
+      }
+    }
+
     return {
-      trending: trendingResponse.data.results,
-      hot: topRatedResponse.data.results,
-      review: nowPlayingResponse.data.results,
-      upcoming: upcomingResponse.data.results,
-      nowPlaying: nowPlayingResponse.data.results,
+      trending: koreanTrending.slice(0, 20),
+      hot: topRated.data.results,
+      review: nowPlaying.data.results,
+      upcoming: upcoming.data.results,
+      nowPlaying: nowPlaying.data.results,
     };
   } catch (error) {
     console.error('Main page data fetch error:', error);

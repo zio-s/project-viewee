@@ -43,16 +43,25 @@ const TopRated = ({ hotData }) => {
     };
   }, []);
 
-  const getDetail = (contentId) => {
-    dispatch(
-      getContentDetail({
-        type: 'movie',
-        id: contentId,
-      })
-    );
+  const getDetail = (content) => {
+    const { id, media_type = 'movie' } = content;
+
+    if (['movie', 'tv'].includes(media_type)) {
+      dispatch(
+        getContentDetail({
+          type: media_type,
+          id: id,
+        })
+      );
+    }
   };
-  const onGo = (contentId) => {
-    navigate(`/movie/${contentId}`);
+  const onGo = (content) => {
+    console.log('Navigating with content:', content);
+    const mediaType = content.media_type;
+    if (!mediaType) {
+      console.warn('Missing media_type for navigation:', content);
+    }
+    navigate(`/${content.media_type || 'movie'}/${content.id}`);
   };
 
   return (
@@ -83,8 +92,8 @@ const TopRated = ({ hotData }) => {
               <RatedSwiperSlide
                 key={content.id}
                 className="swiper-slide"
-                onClick={() => onGo(content.id)}
-                onMouseEnter={() => getDetail(content.id)}
+                onClick={() => onGo(content)}
+                onMouseEnter={() => getDetail(content)}
               >
                 <img
                   src={`https://image.tmdb.org/t/p/w500${content.poster_path}`}

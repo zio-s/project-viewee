@@ -32,7 +32,7 @@ const Home = () => {
           <TagSection />
         </SectionWrapper>
         <SectionWrapper>
-          <TopRated hotData={hot} />
+          <TopRated hotData={trending} />
         </SectionWrapper>
 
         <EventSectionWrapper>
