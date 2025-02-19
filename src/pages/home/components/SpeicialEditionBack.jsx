@@ -8,6 +8,8 @@ const SpeicialEditionBack = () => {
       <div className="textArea">영화 드라마 예능 몰아보기</div>
       <div className="backgroundLine"></div>
       <div className="backgroundActor"></div>
+      <div className="backgroundFigure1"> </div>
+      <div className="backgroundFigure2"> </div>
     </EditionbackWrapper>
   );
 };
