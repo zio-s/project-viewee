@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { StyledButton as OriginalStyledButton } from '../../common/button/style';
 
 export const MovieInfoSection = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;     
+  margin: 0 auto; 
+
   .movie-content {
     display: flex;
     gap: 20px;
@@ -36,14 +41,20 @@ export const MovieInfoSection = styled.div`
 export const StyledButton = styled(OriginalStyledButton)`
   width: 350px;
   height: 60px; 
-  padding: 10px 20px; // 패딩
-  border-radius: 5px; // 테두리 반경
-  font-size: 1.2rem; // 글꼴 크기
+  font-size: var(--font-content-l);
+  margin: 0 20px 0 0;
 
-  // 추가 스타일을 여기에 추가
   &:hover {
   }
 `;
+
+export const Buttons = styled.div`
+  display : flex;
+  alignItems : center;
+  margin: 0 0 30px 0;
+
+`
+
 
 export const CardBox = styled.div`
   display: grid;
@@ -109,6 +120,10 @@ export const CardBox = styled.div`
 `;
 
 export const EpisodeWrap = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;    
+  margin: 0 auto; 
   .EpisodeContainer {
   display: block;
   padding : 0;
@@ -123,6 +138,10 @@ export const CustomButton = styled(StyledButton)`
 
 `;
 export const RecommendedWrapper = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto; 
   RecommendedContainer{
   }
 `
@@ -149,7 +168,7 @@ export const RecommendeddBox = styled.div`
 export const HeroSectionWrapper = styled.section`
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 770px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,7 +179,7 @@ export const BackgroundContent = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 770px;
   overflow: hidden;
   
   iframe, img {
@@ -186,82 +205,54 @@ export const Overlay = styled.div`
 
 export const HeroContent = styled.div`
   max-width: 1440px;
+  justify-content: center;     
+  margin: 0 auto; 
   position: absolute;
-  bottom: 5%;
-  left: 5%;
+  bottom: 0;
+  left: 0;
   z-index: 1;
-  color: white;
   text-align: left;
-  max-width: 600px;
-  padding: 20px;
 
   h1 {
     font-size: var(--font-title-s);
-    font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-size: var(--font-content-s);
+    margin-bottom: 30px;
   }
 
   .description {
-    margin-top: 15px;
-    font-size: 1.2rem;
+    margin-bottom : 50px;
+    font-size: var(--font-content-s);
     cursor: pointer;
   }
 `;
 
 export const Actions = styled.div`
-  margin-top: 20px;
   display: flex;
-  gap: 10px;
-
-  button {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-  }
-`;
-
-
-
-export const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
+  justify-content: center;    
   align-items: center;
-  z-index: 1000;
-  .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 50%;
-    max-height: 80%;
-    overflow-y: auto;
-    position: relative;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 20px;
+    font-size: var(--font-content-s);
+   
+    &:hover {
+      color: var(--primary-50);
   }
-  .close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: black;
-    cursor: pointer;
+  }
+  
+  svg {
+  margin-bottom: 5px;
+  }
   }
 `;
-
 
 
 export const Container = styled.div`
@@ -275,9 +266,10 @@ export const TabMenu = styled.ul`
   border-color: var(--gray-80);
   width: 100%;
   display: flex;
+  justify-content: flex-start;
+  margin: 0 auto; 
   list-style: none;
   padding: 0;
-  margin: 20px 0;
   li {
     margin-right: 20px;
     cursor: pointer;
@@ -300,15 +292,6 @@ export const TabContent = styled.div`
   color: #fff;
   border-radius: 5px;
   margin-top: 20px;
-`;
-
-export const PlayButton = styled.button`
-  padding: 10px 20px;
-  background-color: var(--primary-50);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 `;
 
 export const Description = styled.p`
