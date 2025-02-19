@@ -1,17 +1,11 @@
 import styled from 'styled-components';
 
-export const HeroVideo = styled.section``;
-
-export const ReviewWrap = styled.section`
+export const Container = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
-`;
-
-export const Container = styled.div`
-  min-height: 300vh;
-  width: 100%;
-  background: #000;
+  .section-inner {
+    transform-style: preserve-3d;
+  }
 `;
 
 export const Section = styled.section`
@@ -19,15 +13,13 @@ export const Section = styled.section`
   --grid-width: 160%;
   --grid-columns: 8;
   --grid-gap: 1rem;
-
-  position: sticky;
-  top: 0;
+  position: absolute;
+  top: 0%;
   height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   perspective: var(--perspective);
 
   h2 {
@@ -48,9 +40,10 @@ export const Section = styled.section`
     z-index: 1;
     padding: 1rem 2rem;
     border: 1px solid white;
-    background: transparent;
+    background: rgba(80, 80, 80, 70);
+    border: 1px solid #1c1c1e;
     color: white;
-    font-size: 1.2rem;
+    font-size: 2rem;
     cursor: pointer;
     border-radius: 30px;
     transition: all 0.3s ease;
@@ -134,44 +127,4 @@ export const ReviewCard = styled.div`
     position: sticky;
     top: 20%;
   `}
-`;
-
-export const CardItem = styled.div`
-  position: relative;
-  width: 183px;
-  height: 148px;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  cursor: pointer;
-
-  &.hover-active:hover {
-    transform: rotateY(180deg);
-  }
-
-  &.flipped {
-    transform: rotateY(180deg);
-  }
-`;
-
-export const CardSide = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-  border-radius: 8px;
-`;
-
-export const CardFront = styled(CardSide)`
-  background-color: #5cf;
-  color: white;
-`;
-
-export const CardBack = styled(CardSide)`
-  background-color: #3a9;
-  color: white;
-  transform: rotateY(180deg);
 `;

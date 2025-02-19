@@ -1,7 +1,5 @@
-import { HeroVideo } from './style';
-
 const Hero = () => {
-  return <HeroVideo></HeroVideo>;
+  return <></>;
 };
 
 export default Hero;
