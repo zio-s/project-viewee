@@ -10,34 +10,44 @@ export const MovieInfoSection = styled.div`
   display: flex;
   justify-content: center;     
   margin: 0 auto; 
+  padding : 50px 0;
 
   .movie-content {
     display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 30px;
   }
   .poster-wrapper {
     flex-shrink: 0;
-    width: 200px;
+    width: 490px;
+    height: 340px; 
     
     img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 5px;
     }
   }
   .info-wrapper {
     flex-grow: 1;
     h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: var(--font-lebel-l);
+      margin-bottom: 15px;
+    }
+    .overview{
+      font-size: var(--font-lebel-l);
+      margin-bottom: 40px;
     }
   }
+    
+
   .detail-row {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     .label {
-      width: 80px;
-      color: #888;
+      font-size: var(--font-lebel-l);
+      margin: 0 60px 0 0;
+    }
+    .value{
+      font-size: var(--font-lebel-l);
     }
   }
 `;
@@ -64,11 +74,12 @@ export const CardBox = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr); 
   gap: 25px;
+  padding : 50px 0;
 
   .episode-item {
     display: flex; 
-    flex-direction: column; /* 전체 아이템을 세로로 배치 */
-    border-radius: 8px;
+    flex-direction: column; 
+    border-radius: 5px;
     overflow: hidden;
     height: 100%;  
     
@@ -160,11 +171,14 @@ export const RecommendedWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto; 
+  padding : 50px 0;
   RecommendedContainer{
   }
 `
 
 export const RecommendeddBox = styled.div`
+  max-width: 1440px;
+  overflow: hidden; 
   h2 {
     font-size: var(--font-content-xxl);
     margin-bottom: 15px;
@@ -175,13 +189,15 @@ export const RecommendeddBox = styled.div`
     height: 380px;
     img {
       width: 100%;
+      height: 100%;
       display: block;
-    }
-    p {
-      font-size: 14px;
+      border-radius: 5px; 
+      overflow: hidden;
     }
   }
 `;
+
+
 
 export const HeroSectionWrapper = styled.section`
   position: relative;
@@ -281,22 +297,23 @@ export const Container = styled.div`
 
 export const TabMenu = styled.ul`
   max-width: 1440px;
+  height: 60px;
   border-bottom: solid 3px;
   border-color: var(--gray-80);
-  width: 100%;
   display: flex;
+  align-items: center;
   justify-content: flex-start;
   margin: 0 auto; 
-  list-style: none;
   padding: 0;
   li {
-    margin-right: 20px;
-    cursor: pointer;
-    padding: 10px 20px;
+    margin-right: 30px;
+    padding: 0 30px;
     border-radius: 5px;
     font-size: var(--font-content-m);
     &:hover {
         color: var(--hover-color);
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 8px var(--primary-50));
       }
 
     &.active {

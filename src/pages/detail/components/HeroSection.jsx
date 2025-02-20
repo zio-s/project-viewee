@@ -47,6 +47,13 @@ const HeroSection = ({ changeContent, id }) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...더보기` : text;
   };
 
+  const { release_date, runtime, genres, certification } = detail;
+  const releaseYear = release_date ? release_date.split("-")[0] : "미정";
+  const formattedRuntime = runtime ? `${runtime}분` : "미정";
+  const genreNames = genres?.map((genre) => genre.name).join(", ") || "미정";
+  const ageRating = certification || "미정";
+
+
   return (
     <HeroSectionWrapper>
       <BackgroundContent>
@@ -64,9 +71,10 @@ const HeroSection = ({ changeContent, id }) => {
       <div className = 'inner'>
         <HeroContent>
         <h1>{title}</h1>
-        <p> 
-          개봉년도 | 시간 | 액션 | 관람등극
-        </p >
+        <p>
+        {releaseYear} | {formattedRuntime} | {genreNames} | {ageRating}
+        </p>
+
         <Buttons>
         <StyledButton $variant="primary" $size="large">
           미리보기
