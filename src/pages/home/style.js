@@ -145,17 +145,21 @@ export const VisualWrap = styled.div`
 
 export const TagSectionWrapper = styled.div`
   margin: 40px 0;
-  overflow: visible !important;
+  overflow: hidden;
   ${mobileMore`
     margin: 50px 0;
     `}
   ${tabletMore`
    margin: 75px 0;
+   overflow:visible;
     `}
   width: 100%;
   .swiper {
     width: 100%;
     overflow: visible !important;
+    ${tabletMore`
+    overflow:visible;
+    `}
   }
 
   .swiper-slide {
@@ -186,7 +190,15 @@ export const TagSectionWrapper = styled.div`
 `;
 
 export const EventSectionWrapper = styled.div`
+  display: none;
+  ${mobileMore`
+  display:none;
+  `}
+
+  ${tabletMore`
   margin-top: -400px;
+   display:block;
+  `}
 `;
 export const SectionWrapper = styled.div`
   margin-bottom: 40px;
@@ -201,7 +213,10 @@ export const SectionWrapper = styled.div`
 
 export const RatedSwiperContainer = styled.div`
   position: relative;
-  /* overflow: hidden; */
+  overflow: hidden;
+  ${tabletMore`
+  overflow:visible;
+  `}
 `;
 
 export const RatedSwiperWrapper = styled.ul`
@@ -308,7 +323,14 @@ export const NewMoreLink = styled.a`
 export const NewSwiperContainer = styled.div`
   position: relative;
   width: 100%;
-  overflow: visible !important;
+  overflow: hidden;
+  ${mobileMore`
+   overflow: hidden;
+    `}
+  ${tabletMore`
+  overflow:visible;
+    max-width:1440px;
+    `}
 `;
 
 export const NewSwiperWrapper = styled.ul`
@@ -486,6 +508,7 @@ export const HoverModalWrap = styled.div`
     width: 100%;
     height: 256px;
     background-color: var(--gray-40);
+    border-radius: 10px 10px 0 0;
   }
   .infoArea {
     padding: 15px;
@@ -505,6 +528,15 @@ export const HoverModalWrap = styled.div`
         margin-left: auto;
         background: transparent;
         border: 1px solid var(--gray-60);
+      }
+
+      .moreButton:hover,
+      .steamedButton:hover,
+      .likeButton:hover {
+        border-color: white;
+      }
+      .button:hover {
+        background: rgb(255, 255, 255, 0.1);
       }
       .steamedButton {
         width: 60px;
@@ -543,21 +575,24 @@ export const HoverModalWrap = styled.div`
   }
 `;
 
-export const HoverModalWrapper = styled.div`
+export const HoverModalWrapper = styled.article`
+  display: none;
+  ${tabletMore`
+  opacity: 0;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
   width: auto;
   z-index: 1000;
   display: flex;
   justify-content: center;
-  opacity: 0;
   pointer-events: none;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-
+  transform: translate(-50%, -60%) scale(0);
+  transition: transform 0.3s ease-out, opacity 0.1s ease-out;
   &.active {
-    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
+    transform: translate(-50%, -60%) scale(1);
   }
+  
+  `}
 `;

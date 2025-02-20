@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { VisualWrap, SectionWrapper, NewCardsSectionTitle, NewMoreLink, EventSectionWrapper } from './style';
 import SwiperSection from './components/SwiperSection';
 import ContentSwiper from './components/ContentSwiper';
@@ -8,16 +8,22 @@ import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
 import SpeicialEditionBack from './components/SpeicialEditionBack';
 import TagSection from './components/TagSection';
+import { useDispatch, useSelector } from 'react-redux';
+import { MainPageData } from '../../store/modules/getThunk';
 
 const Home = () => {
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+  const dispatch = useDispatch();
+  const { trending, hot, review, upcoming, nowPlaying, loading } = useSelector((state) => state.tmdbR);
 
   useEffect(() => {
-    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    dispatch(MainPageData());
+    // window.scrollTo(0, 0);
+  }, [dispatch]);
 
+  // 컨텐츠 클릭 핸들러
+  // const handleContentClick = (content) => {
+  //   dispatch(addToContinueWatching(content));
+  // };
   return (
     <>
       <SwiperSection />
@@ -26,16 +32,16 @@ const Home = () => {
           <TagSection />
         </SectionWrapper>
         <SectionWrapper>
-          <TopRated />
+          <TopRated hotData={trending} />
         </SectionWrapper>
-        {isLargeScreen ? (
-          <EventSectionWrapper>
-            <SpeicialEditionBack />
-            <SpecialEdition />
-          </EventSectionWrapper>
-        ) : null}
+
+        <EventSectionWrapper>
+          <SpeicialEditionBack />
+          <SpecialEdition />
+        </EventSectionWrapper>
+
         <SectionWrapper>
-          <ContentSwiper />
+          <ContentSwiper reviewData={review} />
         </SectionWrapper>
         <NewCardsSectionTitle>
           지구에서 나만 안본 그 작품

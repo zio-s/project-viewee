@@ -17,7 +17,7 @@ import {
 } from '../style';
 import HoverModal from './HoverModal';
 
-const NewSwiperSection = () => {
+const NewSwiperSection = ({ reviewData }) => {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [hoveredSlide, setHoveredSlide] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
@@ -39,9 +39,9 @@ const NewSwiperSection = () => {
 
     const swiperInstance = new Swiper('.new-card-carousel1', {
       modules: [Navigation],
-      slidesPerView: slidesPerView,
+      slidesPerView: 'auto',
       spaceBetween: 20,
-      slidesPerGroup: slidesPerView,
+      slidesPerGroup: 1,
 
       navigation: {
         nextEl: '.new-swiper-button-next',
@@ -49,17 +49,31 @@ const NewSwiperSection = () => {
       },
 
       breakpoints: {
-        1024: {
-          slidesPerView: 5,
+        1440: {
+          slidesPerView: 5.6,
           slidesPerGroup: 5,
+          spaceBetween: 15,
+        },
+        1024: {
+          slidesPerView: 4.2,
+          slidesPerGroup: 5,
+          spaceBetween: 15,
         },
         768: {
-          slidesPerView: 4,
-          slidesPerGroup: 4,
+          slidesPerView: 3.8,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
         },
         390: {
           slidesPerView: 3,
-          slidesPerGroup: 3,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
+        },
+
+        330: {
+          slidesPerView: 2.8,
+          slidesPerGroup: 1,
+          spaceBetween: 10,
         },
       },
     });
@@ -85,7 +99,7 @@ const NewSwiperSection = () => {
   return (
     <NewSectionWrapper>
       <NewCardsSectionTitle>
-        title
+        댓글창 터졌다! 화제의 그 작품
         <NewMoreLink href="./page/nowplaying.html" className="more">
           <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_630_1220)">
@@ -105,19 +119,19 @@ const NewSwiperSection = () => {
 
       <NewSwiperContainer className="new-card-carousel1">
         <NewSwiperWrapper className="swiper-wrapper">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+          {reviewData.map((item, index) => (
             <NewSwiperSlide
-              key={num}
+              key={item.id}
               className="swiper-slide"
-              onMouseEnter={() => handleMouseEnter(num)}
+              onMouseEnter={() => handleMouseEnter(item.id)}
               onMouseLeave={handleMouseLeave}
             >
-              <div>Slide {num}</div>
-              {hoveredSlide === num && (
-                <HoverModalWrapper className={hoveredSlide !== null ? 'active' : ''}>
-                  <HoverModal />
-                </HoverModalWrapper>
-              )}
+              {/* 여기 스타일 및 레이아웃 조정 다시 해야 합니다! 일단 데이터가 어떻게 들어가는지 확인 하기위해 img 추가만 했습니다. */}
+              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+
+              <HoverModalWrapper className={hoveredSlide === item ? 'active' : ''}>
+                <HoverModal />
+              </HoverModalWrapper>
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>

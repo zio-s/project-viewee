@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HoverModalWrap, HoverModalWrapper } from '../style';
 import { StyledPlayButton } from '../../../ui/button/playButton/style';
+import { motion } from 'framer-motion';
 
 const contentData = {
   age: '15+',
@@ -14,6 +15,47 @@ const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, ico
     <StyledPlayButton $size={size} $fullWidth={fullWidth} onClick={onClick} {...props}>
       {children}
     </StyledPlayButton>
+  );
+};
+
+const LikeButton = ({ isLiked, onClick }) => {
+  return (
+    <PlayButton className="likeButton" onClick={onClick}>
+      <motion.svg
+        width="35"
+        height="35"
+        viewBox="0 0 51 51"
+        xmlns="http://www.w3.org/2000/svg"
+        initial={{ scale: 1 }}
+        animate={{
+          y: isLiked ? [-10, 0] : [0, -5, 0],
+          rotate: isLiked ? [0, -10, 10, -5, 5, 0] : 0,
+          scale: isLiked ? [1, 1.2, 1] : [1, 0.8, 1],
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+      >
+        <motion.path
+          d="M4.69549 24.0373C4.58964 22.82 5.54918 21.7734 6.77099 21.7734H10.7486C11.8993 21.7734 12.832 22.7061 12.832 23.8568V43.6484C12.832 44.7991 11.8993 45.7318 10.7486 45.7318H8.492C7.41136 45.7318 6.51011 44.9055 6.4165 43.829L4.69549 24.0373Z"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill={isLiked ? 'white' : 'none'}
+          animate={{ fill: isLiked ? 'white' : 'none' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+        <motion.path
+          d="M19.082 23.2052C19.082 22.3347 19.6231 21.5555 20.4105 21.1844C22.1277 20.3749 25.0538 18.7461 26.3737 16.5448C28.0748 13.7077 28.3957 8.58172 28.4479 7.40758C28.4552 7.24322 28.4505 7.07866 28.4731 6.91569C28.7551 4.88225 32.6803 7.25773 34.1862 9.7694C35.0035 11.1325 35.1083 12.9234 35.0223 14.3217C34.9304 15.8177 34.4917 17.2629 34.0614 18.6988L33.1445 21.7573H44.4538C45.8354 21.7573 46.8342 23.0774 46.4587 24.4069L40.8646 44.2147C40.6112 45.1121 39.7922 45.7318 38.8597 45.7318H21.1654C20.0147 45.7318 19.082 44.7991 19.082 43.6484V23.2052Z"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill={isLiked ? 'white' : 'none'}
+          animate={{ fill: isLiked ? 'white' : 'none' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+      </motion.svg>
+    </PlayButton>
   );
 };
 
@@ -37,30 +79,7 @@ const HoverModal = () => {
             </svg>
           </PlayButton>
           <PlayButton className="steamedButton">+</PlayButton>
-          <PlayButton className="likeButton" onClick={handleLikeClick}>
-            <svg
-              width="35"
-              height="35"
-              viewBox="0 0 51 51"
-              fill={isLiked ? 'white' : 'none'}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.69549 24.0373C4.58964 22.82 5.54918 21.7734 6.77099 21.7734H10.7486C11.8993 21.7734 12.832 22.7061 12.832 23.8568V43.6484C12.832 44.7991 11.8993 45.7318 10.7486 45.7318H8.492C7.41136 45.7318 6.51011 44.9055 6.4165 43.829L4.69549 24.0373Z"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M19.082 23.2052C19.082 22.3347 19.6231 21.5555 20.4105 21.1844C22.1277 20.3749 25.0538 18.7461 26.3737 16.5448C28.0748 13.7077 28.3957 8.58172 28.4479 7.40758C28.4552 7.24322 28.4505 7.07866 28.4731 6.91569C28.7551 4.88225 32.6803 7.25773 34.1862 9.7694C35.0035 11.1325 35.1083 12.9234 35.0223 14.3217C34.9304 15.8177 34.4917 17.2629 34.0614 18.6988L33.1445 21.7573H44.4538C45.8354 21.7573 46.8342 23.0774 46.4587 24.4069L40.8646 44.2147C40.6112 45.1121 39.7922 45.7318 38.8597 45.7318H21.1654C20.0147 45.7318 19.082 44.7991 19.082 43.6484V23.2052Z"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </PlayButton>
+          <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
           <PlayButton className="moreButton">
             <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_643_37718)">

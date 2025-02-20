@@ -22,6 +22,7 @@ export const QnAWrap = styled.div`
         display: flex;
         flex-direction: column;
         gap: 1.4rem;
+        align-items: flex-start;
         h2 {
           width: 410px;
           font-size: var(--font-title-m-tablet);
@@ -34,7 +35,7 @@ export const QnAWrap = styled.div`
       }
       img {
         width: 533px;
-        height: 679px;
+        height: 790px;
         object-fit: cover;
       }
     }
@@ -142,18 +143,30 @@ export const QnAWrap = styled.div`
           transform: translate(-50%, -50%);
           width: 12px;
           height: 12px;
-          background-color: #F05A7E;
+          background-color: #f05a7e;
           border-radius: 50%;
-          border: 1px solid #F05A7E; 
+          border: 1px solid #f05a7e;
         }
-        div{
+        div {
           display: flex;
           align-items: center;
           gap: 1.2rem;
-          label{
+          label {
             font-size: var(--font-content-m);
           }
         }
+      }
+    }
+    .title {
+      width: 100%;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      input {
+        height: 60px;
+        background-color: var(--gray-90);
+        border: 1px solid var(--gray-80);
+        flex: 1;
       }
     }
     .agree {

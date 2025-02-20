@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../ui/button/defaultButton';
 import Pagination from '../../../ui/pagination';
 import { RequestListWrap } from './style';
-import { useEffect } from 'react';
 import { pageActions } from '../../../store/modules/pageSlice';
 import { useNavigate } from 'react-router';
 
@@ -10,9 +9,13 @@ export const RequestList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const item = useSelector((state) => state.authR.user.requested);
-  useEffect(() => {
-    dispatch(pageActions.addData(item));
-  }, []);
+  dispatch(pageActions.addData(item));
+  dispatch(pageActions.totalData());
+  const { postsperPage, currentPage } = useSelector((state) => state.pageR);
+  const lastPost = currentPage * postsperPage;
+  const firstPost = lastPost - postsperPage;
+  const currentPost = item.slice(firstPost, lastPost);
+
   return (
     <RequestListWrap>
       <Button className="goqna" variant="ghost" onClick={() => navigate('/qna')}>
@@ -34,12 +37,12 @@ export const RequestList = () => {
                 <th className="titleList">제목</th>
                 <th>등록일</th>
               </tr>
-              {item.map((item) => (
+              {currentPost.map((item) => (
                 <tr key={item.id}>
                   <td className="state">{item.state}</td>
                   <td>{item.category}</td>
                   <td className="titleList">{item.title}</td>
-                  <td>{item.date}</td>
+                  <td className="data">{item.date}</td>
                 </tr>
               ))}
             </tbody>

@@ -27,6 +27,7 @@ import {
   setSectionComplete,
   setActiveSection,
   updateViewport,
+  setBackgroundColor,
 } from '../../../../store/modules/gsapSlice';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -86,7 +87,7 @@ const CardSection = () => {
         start: 'top top',
         end: '+=2000',
         scrub: 2,
-        pin: true,
+        // pin: true,
         // pinSpacing: true,
         anticipatePin: 1,
         id: 'cardSection',
@@ -102,19 +103,23 @@ const CardSection = () => {
           dispatch(setSectionInView({ section: 'card', inView: true }));
           dispatch(setActiveSection('card'));
           dispatch(setSectionPlaying({ section: 'card', isPlaying: true }));
+          dispatch(setBackgroundColor('white'));
         },
         onLeave: () => {
           dispatch(setSectionInView({ section: 'card', inView: false }));
           dispatch(setSectionPlaying({ section: 'card', isPlaying: false }));
+          dispatch(setBackgroundColor('transparent'));
         },
         onEnterBack: () => {
           dispatch(setSectionInView({ section: 'card', inView: true }));
           dispatch(setActiveSection('card'));
           dispatch(setSectionPlaying({ section: 'card', isPlaying: true }));
+          dispatch(setBackgroundColor('white'));
         },
         onLeaveBack: () => {
           dispatch(setSectionInView({ section: 'card', inView: false }));
           dispatch(setSectionPlaying({ section: 'card', isPlaying: false }));
+          dispatch(setBackgroundColor('transparent'));
         },
         onComplete: () => {
           dispatch(setSectionComplete({ section: 'card', isComplete: true }));
@@ -235,20 +240,56 @@ const CardSection = () => {
   }, [windowWidth]);
 
   const calculatePositions = (width) => {
-    const baseDistance = width < 768 ? 200 : width < 1024 ? 300 : width < 1440 ? 420 : 500;
+    // 화면 크기별 기본 거리 설정
+    const baseDistance =
+      width < 768
+        ? 140 // 모바일
+        : width < 1024
+        ? 300 // 태블릿
+        : width < 1440
+        ? 420 // 작은 데스크톱
+        : 500; // 큰 데스크톱
 
-    const verticalOffset = width < 768 ? 100 : width < 1024 ? 160 : 200;
+    // 화면 크기별 수직 오프셋 설정
+    const verticalOffset =
+      width < 768
+        ? 80 // 모바일
+        : width < 1024
+        ? 160 // 태블릿
+        : 200; // 데스크톱
 
+    // 모바일 레이아웃
     if (width < 768) {
       return [
-        { x: 0, y: verticalOffset },
-        { x: baseDistance / 2, y: -60 },
-        { x: -baseDistance / 2, y: -60 },
-        { x: baseDistance / 2, y: 180 },
-        { x: -baseDistance / 2, y: 180 },
+        { x: 0, y: 220 }, // 중앙 상단
+        { x: baseDistance * 0.85, y: -200 }, // 우측 상단
+        { x: -baseDistance * 0.85, y: -200 }, // 좌측 상단
+        { x: baseDistance * 0.85, y: 10 }, // 우측 하단
+        { x: -baseDistance * 0.85, y: 10 }, // 좌측 하단
+      ];
+    }
+    if (width < 640) {
+      return [
+        { x: 0, y: 220 }, // 중앙 상단
+        { x: baseDistance * 1.4, y: -120 }, // 우측 상단
+        { x: -baseDistance * 1.4, y: -120 }, // 좌측 상단
+        { x: baseDistance * 1.4, y: 10 }, // 우측 하단
+        { x: -baseDistance * 1.4, y: 10 }, // 좌측 하단
       ];
     }
 
+    // 태블릿 레이아웃
+    if (width < 1024) {
+      return [
+        { x: 0, y: 250 },
+        { x: baseDistance / 1.5, y: -210 },
+        { x: baseDistance / 1.5, y: 20 },
+        { x: -baseDistance / 1.5, y: -210 },
+        { x: -baseDistance / 1.5, y: 20 },
+      ];
+    }
+
+    // 데스크톱 레이아웃
     return [
       { x: 0, y: verticalOffset },
       { x: baseDistance / 1.2, y: -220 },

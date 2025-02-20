@@ -10,7 +10,7 @@ const Profile = () => {
   const onSubscribe = () => {
     navigate('/subscribe');
   };
-  const couponNumber = coupon.filter((item) => item.used === true).length;
+  const couponNumber = coupon.filter((item) => item.used === true).length + 1;
   return (
     <ProfileWrap>
       <div className="profile">
@@ -25,7 +25,9 @@ const Profile = () => {
               님!
             </h2>
             <div className="edit">
-              <img src="/icons/util/pencil.svg" />
+              <a href="/useredit">
+                <img src="/icons/util/pencil.svg" />
+              </a>
             </div>
             <a href="/changeProfile">
               <Button variant="gray" size="small">
