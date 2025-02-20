@@ -2,13 +2,20 @@ import styled, { css } from 'styled-components';
 import { tabletMore } from '../../../styled/Mixin';
 
 export const CustomerWrap = styled.div`
-  ${tabletMore`
-    padding: 5rem 24rem;
-    `}
+
   display: flex;
   flex-direction: column;
-
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s ease;
+  .wrap{
+    box-sizing: border-box;
+    ${tabletMore`
+    width: 100%;
+    padding: 5rem 5rem;
+    max-width: 1440px;
+    `}
+  }
   h2 {
     display: none;
     font-size: var(--font-content-xxl);

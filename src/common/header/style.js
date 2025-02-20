@@ -11,7 +11,6 @@ export const HeaderWrap = styled.header`
     height: 72px;
     `}
   .header_inner {
-    width: 100%;
     box-sizing: border-box;
     position: relative;
     display: flex;
@@ -41,6 +40,7 @@ export const HeaderWrap = styled.header`
       padding: 1.4rem 5rem ;
     `}
     a {
+      z-index: 10;
       img {
         width: 100%;
       }
@@ -114,8 +114,7 @@ export const TopMenu = styled.ul`
     display: flex;
     width: 100%;
     justify-content: end;
-    align-items: center;
-    z-index: 9999;
+    align-items: center;  
     ${mobileMore`
       top: 50%;
       right: 35px;
