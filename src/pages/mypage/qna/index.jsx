@@ -151,56 +151,6 @@ const QnA = () => {
                     <Input variant="gray" type="text" value={thirdPhone} />
                   </div>
                 </div>
-                <div className="email item">
-                  <p>Email</p>
-                  <div className="emailInput">
-                  <Input type="text" variant="gray" value={id} />
-                  @
-                  <Input type="text" variant="gray" value={domain} />
-                  </div>
-                </div>
-              </div>
-              <div className="category">
-                <p>문의 종류</p>
-                <form>
-                  <div>
-                    <input type="radio" id="site" name="questionType" value="site" defaultChecked />
-                    <label htmlFor="site">사이트 이용</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="login" name="questionType" value="login" />
-                    <label htmlFor="login">회원/로그인</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="disability" name="questionType" value="disability" />
-                    <label htmlFor="disability">장애신고</label>
-                  </div>
-
-                  <div>
-                    <input type="radio" id="refund" name="questionType" value="refund" />
-                    <label htmlFor="refund">환불/해지 신청</label>
-                  </div>
-
-                  <div>
-                    <input type="radio" id="content" name="questionType" value="content" />
-                    <label htmlFor="content">콘텐츠/채널</label>
-                  </div>
-
-                  <div>
-                    <input type="radio" id="usage" name="questionType" value="usage" />
-                    <label htmlFor="usage">이용 불편사항</label>
-                  </div>
-
-                  <div>
-                    <input type="radio" id="suggestion" name="questionType" value="suggestion" />
-                    <label htmlFor="suggestion">서비스 제안</label>
-                  </div>
-
-                  <div>
-                    <input type="radio" id="etc" name="questionType" value="etc" />
-                    <label htmlFor="etc">기타</label>
-                  </div>
-                </form>
               </div>
               <div className="category">
                 <p>문의 종류</p>
