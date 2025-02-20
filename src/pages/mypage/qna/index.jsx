@@ -73,7 +73,7 @@ const QnA = () => {
   const secondPhone = Phone[1];
   const thirdPhone = Phone[2];
 
-  const email = user.userId.split('@');
+  const email = user.userEmail.split('@');
   const id = email[0];
   const domain = email[1];
 
@@ -105,7 +105,7 @@ const QnA = () => {
       alert('개인정보 수집 및 이용에 동의하셔야 합니다.');
       return;
     } else {
-      const requested = { cateogry: category, title: title, content: content };
+      const requested = { category: category, title: title, content: content };
       dispatch(authActions.addRequested(requested));
       navigate('/mypage');
     }
@@ -138,17 +138,17 @@ const QnA = () => {
                 <div className="phone item">
                   <p>휴대폰 번호</p>
                   <div className="phoneInput">
+                    <div className="email item">
+                      <p>Email</p>
+                      <div className="emailInput">
+                        <Input type="text" variant="gray" value={id} />
+                        @
+                        <Input type="text" variant="gray" value={domain} />
+                      </div>
+                    </div>
                     <Input variant="gray" type="text" value={firstPhone} />
                     <Input variant="gray" type="text" value={secondPhone} />
                     <Input variant="gray" type="text" value={thirdPhone} />
-                  </div>
-                </div>
-                <div className="email item">
-                  <p>Email</p>
-                  <div className="emailInput">
-                    <Input type="text" variant="gray" value={id} />
-                    @
-                    <Input type="text" variant="gray" value={domain} />
                   </div>
                 </div>
               </div>
