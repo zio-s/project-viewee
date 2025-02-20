@@ -5,6 +5,7 @@ export const CouponWrap = styled.div`
   flex-direction: column;
   padding: 10rem 24rem;
   transition: all 0.2s ease;
+  max-width: 1440px;
   h2 {
     font-size: var(--font-content-xxxl);
   }

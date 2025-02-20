@@ -22,6 +22,7 @@ export const QnAWrap = styled.div`
         display: flex;
         flex-direction: column;
         gap: 1.4rem;
+        align-items: flex-start;
         h2 {
           width: 410px;
           font-size: var(--font-title-m-tablet);
@@ -34,7 +35,7 @@ export const QnAWrap = styled.div`
       }
       img {
         width: 533px;
-        height: 679px;
+        height: 790px;
         object-fit: cover;
       }
     }
@@ -50,43 +51,43 @@ export const QnAWrap = styled.div`
         flex-direction: column;
         gap: 5rem;
         font-size: var(--font-content-m);
-        .itemWrap1{
+        .itemWrap1 {
           display: flex;
           gap: 5rem;
-          .name{
-            flex:1;
+          .name {
+            flex: 1;
           }
-          .id{
-            flex:1;
+          .id {
+            flex: 1;
           }
         }
         .itemSet {
           display: flex;
           gap: 3rem;
-          .email{
+          .email {
             display: flex;
             gap: 1.5rem;
             .emailInput {
               display: flex;
               gap: 0.8rem;
-              align-items:center;
-              input{
+              align-items: center;
+              input {
                 width: 100%;
               }
             }
           }
-          .phone{
+          .phone {
             display: flex;
             gap: 1.5rem;
             .phoneInput {
               display: flex;
               gap: 0.8rem;
-              input{
+              input {
                 width: 100%;
               }
             }
           }
-        } 
+        }
         .item {
           display: flex;
           flex-direction: column;
@@ -117,43 +118,55 @@ export const QnAWrap = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      form{
+      form {
         display: flex;
         flex-wrap: wrap;
         gap: 2rem 5rem;
-        [type="radio"] {
+        [type='radio'] {
           position: relative;
           width: 20px;
           height: 20px;
           appearance: none;
           border: 1px solid white;
           border-radius: 50%;
-          accent-color: #F05A7E;
+          accent-color: #f05a7e;
           box-sizing: border-box;
         }
-        [type="radio"]:checked {
-          border-color: #F05A7E;
+        [type='radio']:checked {
+          border-color: #f05a7e;
         }
-        [type="radio"]:checked::before{
-          content:""; 
+        [type='radio']:checked::before {
+          content: '';
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
           width: 12px;
           height: 12px;
-          background-color: #F05A7E;
+          background-color: #f05a7e;
           border-radius: 50%;
-          border: 1px solid #F05A7E; 
+          border: 1px solid #f05a7e;
         }
-        div{
+        div {
           display: flex;
           align-items: center;
           gap: 1.2rem;
-          label{
+          label {
             font-size: var(--font-content-m);
           }
         }
+      }
+    }
+    .title {
+      width: 100%;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      input {
+        height: 60px;
+        background-color: var(--gray-90);
+        border: 1px solid var(--gray-80);
+        flex: 1;
       }
     }
     .agree {
@@ -167,11 +180,11 @@ export const QnAWrap = styled.div`
           padding: 0.4rem;
         }
       }
-      button{
-      width: 150px;
-      height: 60px;
-      font-size: var(--font-content-l);
-      height: 600;  
+      button {
+        width: 150px;
+        height: 60px;
+        font-size: var(--font-content-l);
+        height: 600;
       }
     }
     .faq {
