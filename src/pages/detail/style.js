@@ -62,55 +62,62 @@ export const Buttons = styled.div`
 
 export const CardBox = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);  // 2개의 열로 구성
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 25px;
 
   .episode-item {
-    display: flex;
-    flex-direction: column;  // 세로 방향으로 변경
+    display: flex; 
+    flex-direction: column; /* 전체 아이템을 세로로 배치 */
     border-radius: 8px;
     overflow: hidden;
-    min-height: 200px;
     height: 100%;  
     
+    .content {
+    display: flex;
+    align-items: center;
+    }
+
     .pic {
-    width: 100%;
-    height: 300px; 
+    width: 345px;
+    height: 195px; 
+    flex-shrink: 0;
 
       img {
-        width: 50%;
+        width: 100%;
         height: 100%;
         object-fit: cover;
       }
     }
     
     .text-info {
-      flex: 1;
-      padding: 20px;
-      color: #fff;
-      
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
       h2 {
         font-size: var(--font-content-l);
-        margin: 0 0 6px 0;
+        margin-bottom: 6px;
       }
-      
+
       h3 {
-        font-size: var(--font-content-l);
+        font-size: var(--font-content-m);
         color: var(--gray-50);
-        margin: 0 0 15px 0;
-      }
-      
-      p {
-        font-size: var(--font-content-s);
-        color: var(--gray-50);
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
       }
     }
+
+    p {
+    grid-area: paraagraph;
+    grid-column: 1/ span2 ;
+      font-size: var(--font-content-s);
+      color: var(--gray-50);
+      margin-top: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
+
   
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;  // 화면이 작아지면 한 줄에 하나씩 표시
@@ -118,6 +125,13 @@ export const CardBox = styled.div`
     .episode-item {
       .pic {
         height: 250px;
+        width: 145px;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
   }

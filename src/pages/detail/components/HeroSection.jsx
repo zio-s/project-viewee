@@ -110,4 +110,3 @@ const HeroSection = ({ changeContent, id }) => {
 };
 
 export default HeroSection;
-
