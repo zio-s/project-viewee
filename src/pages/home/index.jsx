@@ -3,7 +3,7 @@ import { VisualWrap, SectionWrapper, NewCardsSectionTitle, NewMoreLink, EventSec
 import SwiperSection from './components/SwiperSection';
 import ContentSwiper from './components/ContentSwiper';
 import MarqueeSection from './components/MarqueeSection';
-import MarqueeSection2 from './components/MarqueeSection2';
+import MarqueeSection2 from './components/MarqueeSection';
 import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
 import SpeicialEditionBack from './components/SpeicialEditionBack';
