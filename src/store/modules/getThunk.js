@@ -11,167 +11,209 @@ const baseOptions = {
   include_adult: false,
   certification: 'ALL,12,15',
 };
+const GENRES = {
+  ACTION: 28,
+  ADVENTURE: 12,
+  ANIMATION: 16,
+  COMEDY: 35,
+  CRIME: 80,
+  DOCUMENTARY: 99,
+  DRAMA: 18,
+  FAMILY: 10751,
+  FANTASY: 14,
+  HORROR: 27,
+  MYSTERY: 9648,
+  ROMANCE: 10749,
+  SCIFI: 878,
+  THRILLER: 53,
+  KIDS: 10762,
+  REALITY: 10764,
+  SOAP: 10766,
+  TALK: 10767,
+};
 
 const CATEGORY_CONFIG = {
   movie: {
     type: 'movie',
     endpoint: 'discover/movie',
-    genreId: null,
+    params: {
+      include_adult: false,
+      include_video: false,
+      sort_by: 'popularity.desc',
+      'vote_average.gte': 7.0,
+      'vote_count.gte': 100,
+      with_original_language: 'ko',
+      region: 'KR',
+    },
   },
   drama: {
     type: 'tv',
     endpoint: 'discover/tv',
-    genreId: 18,
+    params: {
+      with_genres: GENRES.DRAMA,
+      sort_by: 'popularity.desc',
+      'vote_average.gte': 5.0,
+      'vote_count.gte': 20,
+      with_original_language: 'ko',
+      origin_country: 'KR',
+    },
   },
   comedy: {
     type: 'tv',
     endpoint: 'discover/tv',
-    genreId: 35,
+    params: {
+      with_genres: GENRES.COMEDY,
+      sort_by: 'popularity.desc',
+      'vote_average.gte': 5.0,
+      'vote_count.gte': 20,
+      with_original_language: 'ko',
+      origin_country: 'KR',
+    },
   },
   animation: {
     type: 'movie',
     endpoint: 'discover/movie',
-    genreId: 16,
+    params: {
+      with_genres: GENRES.ANIMATION,
+      include_adult: false,
+      'vote_average.gte': 5.0,
+      'vote_count.gte': 20,
+      with_original_language: 'ko',
+      region: 'KR',
+      sort_by: 'release_date.desc',
+    },
   },
   kids: {
     type: 'tv',
     endpoint: 'discover/tv',
-    genreId: 10762,
-  },
-  trending: {
-    type: 'all',
-    endpoint: 'trending/all/week',
-    genreId: null,
-  },
-  hot: {
-    type: 'movie',
-    endpoint: 'discover/movie',
-    genreId: null,
-  },
-  nowPlaying: {
-    type: 'movie',
-    endpoint: 'movie/now_playing',
-    genreId: null,
-  },
-  upcoming: {
-    type: 'movie',
-    endpoint: 'movie/upcoming',
-    genreId: null,
-  },
-  all: {
-    type: 'movie',
-    endpoint: 'discover/movie',
-    genreId: null,
+    params: {
+      with_genres: `${GENRES.KIDS},${GENRES.FAMILY}`,
+      'vote_average.gte': 5.0,
+      'vote_count.gte': 10,
+      with_original_language: 'ko',
+      origin_country: 'KR',
+      sort_by: 'first_air_date.desc',
+    },
   },
 };
-
 //컨텐츠 조회
-export const getContent = createAsyncThunk(
-  'content/getContent',
-  async ({ category, page = 1, sortBy = 'popularity.desc', filterOptions = {} }) => {
-    const config = CATEGORY_CONFIG[category];
-    if (!config) throw new Error('불러온 데이터가 없습니다.');
+const removeDuplicatesById = (array) => {
+  const seen = new Set();
+  return array.filter((item) => {
+    if (seen.has(item.id)) {
+      return false;
+    }
+    seen.add(item.id);
+    return true;
+  });
+};
+export const getContent = createAsyncThunk('content/getContent', async ({ category, page = 1 }) => {
+  const config = CATEGORY_CONFIG[category];
+  if (!config) throw new Error('Invalid category');
 
-    const url = `${BASE_URL}/${config.endpoint}`;
-    const currentDate = new Date();
-    const lastYear = new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)).toISOString().split('T')[0];
-
-    try {
-      const options = {
+  try {
+    if (category === 'kids') {
+      const mainOptions = {
         ...baseOptions,
+        ...config.params,
         page,
-        with_genres: config.genreId,
-        sort_by: sortBy,
-        include_adult: false,
-        'vote_count.gte': 200, // 최소 투표 수 증가
-        'vote_average.gte': 7.0, // 최소 평점 설정
-        with_original_language: 'ko',
       };
 
-      // 장르 필터링
-      if (filterOptions.genres?.length > 0) {
-        const allGenres = filterOptions.genres;
-        if (config.genreId) {
-          allGenres.push(config.genreId);
+      const fallbackOptions = {
+        ...baseOptions,
+        with_genres: `${GENRES.ANIMATION},${GENRES.FAMILY}`,
+        'vote_average.gte': 5.0,
+        'vote_count.gte': 10,
+        origin_country: 'KR',
+        sort_by: 'first_air_date.desc',
+        page,
+      };
+
+      const [mainResponse, fallbackResponse] = await Promise.all([
+        axios.get(`${BASE_URL}/${config.endpoint}`, { params: mainOptions }),
+        axios.get(`${BASE_URL}/${config.endpoint}`, { params: fallbackOptions }),
+      ]);
+
+      const combinedResults = removeDuplicatesById([...mainResponse.data.results, ...fallbackResponse.data.results]);
+
+      return {
+        data: combinedResults,
+        totalPages: Math.max(mainResponse.data.total_pages, fallbackResponse.data.total_pages),
+        currentPage: page,
+      };
+    }
+
+    const options = {
+      ...baseOptions,
+      ...config.params,
+      page,
+    };
+    if (config.type === 'tv') {
+      const [primaryResponse, backupResponse] = await Promise.all([
+        axios.get(`${BASE_URL}/${config.endpoint}`, { params: options }),
+        axios.get(`${BASE_URL}/tv/top_rated`, {
+          params: {
+            ...baseOptions,
+            with_original_language: 'ko',
+            origin_country: 'KR',
+            page,
+          },
+        }),
+      ]);
+
+      const combinedResults = removeDuplicatesById([...primaryResponse.data.results, ...backupResponse.data.results]);
+
+      const filteredResults = combinedResults.filter((item) => {
+        if (category === 'drama') {
+          return item.genre_ids.includes(GENRES.DRAMA);
+        } else if (category === 'comedy') {
+          return item.genre_ids.includes(GENRES.COMEDY);
         }
-        options.with_genres = allGenres.join(',');
-      }
-
-      // 영화 필터
-      if (config.type === 'movie') {
-        options['vote_count.gte'] = 100;
-        options.with_original_language = filterOptions.language || null;
-
-        // 개봉 연도 필터
-        if (filterOptions.year) {
-          options.primary_release_year = filterOptions.year;
-        }
-
-        // 키워드 기반 필터링 (예: 액션씬, 로맨스, 범죄 등)
-        if (filterOptions.keywords?.length > 0) {
-          options.with_keywords = filterOptions.keywords.join(',');
-        }
-
-        // 런타임 필터
-        if (filterOptions.runtime) {
-          options['with_runtime.gte'] = filterOptions.runtime.min;
-          options['with_runtime.lte'] = filterOptions.runtime.max;
-        }
-      }
-
-      // TV 시리즈 필터
-      if (config.type === 'tv') {
-        options.with_status = filterOptions.status || 'Released';
-        options['vote_count.gte'] = 50;
-        options.with_original_language = filterOptions.language || null;
-
-        // 최신작 필터
-        if (filterOptions.onlyNew) {
-          options['air_date.gte'] = lastYear;
-        }
-
-        // 방송사/플랫폼 필터
-        if (filterOptions.networks?.length > 0) {
-          options.with_networks = filterOptions.networks.join(',');
-        }
-
-        // 시즌 수 필터
-        if (filterOptions.seasons) {
-          options['with_seasons.gte'] = filterOptions.seasons.min;
-          options['with_seasons.lte'] = filterOptions.seasons.max;
-        }
-      }
-
-      // 공통 필터
-      if (filterOptions.minRating) {
-        options['vote_average.gte'] = filterOptions.minRating;
-      }
-
-      if (filterOptions.maxRating) {
-        options['vote_average.lte'] = filterOptions.maxRating;
-      }
-
-      // 국가 필터
-      if (filterOptions.countries?.length > 0) {
-        options.with_origin_country = filterOptions.countries.join(',');
-      }
-
-      const response = await axios.get(url, { params: options });
-
-      // 추가 필터링이 필요한 경우
-      let filteredResults = response.data.results;
+        return true;
+      });
 
       return {
         data: filteredResults,
-        totalPages: response.data.total_pages,
-        currentPage: response.data.page,
+        totalPages: Math.max(primaryResponse.data.total_pages, backupResponse.data.total_pages),
+        currentPage: page,
       };
-    } catch (error) {
-      console.error('API Error:', error);
-      throw error;
     }
+
+    if (category === 'animation') {
+      const [primaryResponse, popularResponse] = await Promise.all([
+        axios.get(`${BASE_URL}/${config.endpoint}`, { params: options }),
+        axios.get(`${BASE_URL}/movie/popular`, {
+          params: {
+            ...baseOptions,
+            with_genres: GENRES.ANIMATION,
+            with_original_language: 'ko',
+            region: 'KR',
+            page,
+          },
+        }),
+      ]);
+
+      const combinedResults = removeDuplicatesById([...primaryResponse.data.results, ...popularResponse.data.results]);
+
+      const filteredResults = combinedResults.filter((item) => item.genre_ids.includes(GENRES.ANIMATION));
+
+      return {
+        data: filteredResults,
+        totalPages: Math.max(primaryResponse.data.total_pages, popularResponse.data.total_pages),
+        currentPage: page,
+      };
+    }
+    const response = await axios.get(`${BASE_URL}/${config.endpoint}`, { params: options });
+    return {
+      data: response.data.results,
+      totalPages: response.data.total_pages,
+      currentPage: page,
+    };
+  } catch (error) {
+    console.error('Content fetch error:', error);
+    throw error;
   }
-);
+});
 
 //상세페이지
 const preloadImage = async (imageUrl) => {
@@ -182,7 +224,6 @@ const preloadImage = async (imageUrl) => {
     img.onerror = reject;
   });
 };
-
 export const getContentDetail = createAsyncThunk('content/getContentDetail', async ({ type, id }, { dispatch }) => {
   const url = `${BASE_URL}/${type}/${id}`;
 
@@ -226,17 +267,7 @@ export const getContentDetail = createAsyncThunk('content/getContentDetail', asy
       videoData,
     };
   } catch (error) {
-    console.error('API Error:', {
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      url: error.config?.url,
-      params: error.config?.params,
-    });
-
-    // 더 명확한 에러 메시지 제공
-    if (error.response?.status === 404) {
-      throw new Error(`Content not found: ${type}/${id}`);
-    }
+    console.error('API Error:', error);
     throw error;
   }
 });
@@ -384,7 +415,98 @@ export const searchContent = createAsyncThunk('content/searchContent', async ({ 
   }
 });
 
-//메인 에 넣어줄 데이터
+//필터
+export const getFilteredContent = createAsyncThunk(
+  'content/getFilteredContent',
+  async ({ category, filterOptions, page = 1 }) => {
+    const config = CATEGORY_CONFIG[category];
+    if (!config) throw new Error('Invalid category');
+
+    try {
+      const options = {
+        ...baseOptions,
+        ...config.params,
+        page,
+      };
+
+      // 정렬 옵션 적용
+      if (filterOptions.sortBy) {
+        options.sort_by = filterOptions.sortBy;
+      }
+
+      // 장르 필터 적용
+      if (filterOptions.genres?.length > 0) {
+        const genreList = filterOptions.genres.join(',');
+        options.with_genres = config.params.with_genres ? `${config.params.with_genres},${genreList}` : genreList;
+      }
+
+      // 연도 필터 적용
+      if (filterOptions.year) {
+        if (config.type === 'movie') {
+          options.primary_release_year = filterOptions.year;
+        } else {
+          options.first_air_date_year = filterOptions.year;
+        }
+      }
+
+      // 국가 필터 적용
+      if (filterOptions.country) {
+        if (config.type === 'movie') {
+          options.region = filterOptions.country;
+        } else {
+          options.origin_country = filterOptions.country;
+        }
+      }
+
+      // 방송 상태 필터 (TV 시리즈)
+      if (filterOptions.status && config.type === 'tv') {
+        options.with_status = filterOptions.status;
+      }
+
+      // 방송사 필터 (TV 시리즈)
+      if (filterOptions.networks?.length > 0 && config.type === 'tv') {
+        options.with_networks = filterOptions.networks.join(',');
+      }
+
+      // 러닝타임 필터 (영화)
+      if (filterOptions.runtime && config.type === 'movie') {
+        options['with_runtime.gte'] = filterOptions.runtime.min;
+        options['with_runtime.lte'] = filterOptions.runtime.max;
+      }
+
+      // 시즌 수 필터 (TV 시리즈)
+      if (filterOptions.seasons && config.type === 'tv') {
+        options['with_seasons.gte'] = filterOptions.seasons.min;
+        options['with_seasons.lte'] = filterOptions.seasons.max;
+      }
+
+      // 평점 필터
+      if (filterOptions.ratings) {
+        options['vote_average.gte'] = filterOptions.ratings;
+      }
+
+      // 연령 등급 필터 (키즈)
+      if (filterOptions.ageRating && category === 'kids') {
+        options.certification = filterOptions.ageRating;
+      }
+
+      const response = await axios.get(`${BASE_URL}/${config.endpoint}`, {
+        params: options,
+      });
+
+      return {
+        data: response.data.results,
+        totalPages: response.data.total_pages,
+        currentPage: page,
+      };
+    } catch (error) {
+      console.error('Filter API Error:', error);
+      throw error;
+    }
+  }
+);
+
+//메인에 넣어줄 데이터
 export const MainPageData = createAsyncThunk('tmdbR/MainPage', async () => {
   try {
     const [topRated, nowPlaying, upcoming] = await Promise.all([

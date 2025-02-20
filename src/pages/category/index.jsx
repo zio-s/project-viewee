@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CateGoryWrap, SectionTitle } from './style';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useCallback, useState } from 'react';
-import { getContent, searchContent } from '../../store/modules/getThunk';
+import { getContent, getFilteredContent, searchContent } from '../../store/modules/getThunk';
 import CategoryList from './components/CategoryList';
 import CategoryFilter from './components/CategoryFilter';
 import { movieActions } from '../../store/modules/movieSlice';
@@ -19,7 +19,18 @@ const CateGoryPage = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search');
   const searchData = useSelector((state) => state.searchR);
-  const [currentFilter, setCurrentFilter] = useState('popularity.desc');
+  const [activeFilters, setActiveFilters] = useState({
+    sortBy: 'popularity.desc',
+    genres: [],
+    year: null,
+    country: null,
+    status: null,
+    networks: [],
+    runtime: null,
+    ratings: null,
+    seasons: null,
+    ageRating: null,
+  });
   const categoryMap = {
     movie: {
       state: useSelector((state) => state.movieR),
@@ -68,16 +79,18 @@ const CateGoryPage = () => {
       );
     }
   }, [category, searchQuery, dispatch]);
+
   const handleFilterChange = (filterParams) => {
     if (currentCategory) {
+      setActiveFilters(filterParams);
       dispatch(currentCategory.clearAction());
+
+      // getFilteredContent thunk 호출
       dispatch(
-        getContent({
-          type: currentCategory.type,
-          genre: currentCategory.genre,
-          page: 1,
+        getFilteredContent({
           category,
-          ...filterParams,
+          filterOptions: filterParams,
+          page: 1,
         })
       );
     }
@@ -97,17 +110,30 @@ const CateGoryPage = () => {
       !currentCategory.state.loading &&
       currentCategory.state.currentPage < currentCategory.state.totalPages
     ) {
+      // 필터가 적용된 상태에서 더 보기
       dispatch(
-        getContent({
-          type: currentCategory.type,
-          genre: currentCategory.genre,
-          page: currentCategory.state.currentPage + 1,
+        getFilteredContent({
           category,
+          filterOptions: activeFilters,
+          page: currentCategory.state.currentPage + 1,
         })
       );
     }
-  }, [searchQuery, currentCategory, searchData, category]);
-
+  }, [searchQuery, currentCategory, searchData, category, activeFilters]);
+  useEffect(() => {
+    setActiveFilters({
+      sortBy: 'popularity.desc',
+      genres: [],
+      year: null,
+      country: null,
+      status: null,
+      networks: [],
+      runtime: null,
+      ratings: null,
+      seasons: null,
+      ageRating: null,
+    });
+  }, [category]);
   if (searchQuery) {
     if (searchData.error) return <div>검색 중 오류가 발생했습니다..: {searchData.error}</div>;
   } else {
@@ -123,7 +149,9 @@ const CateGoryPage = () => {
         <div className="category-header">
           <h1>{searchQuery ? `검색 결과 : ${searchQuery}` : category}</h1>
           {/* 필터 */}
-          {!searchQuery && <CategoryFilter category={category} onFilterChange={handleFilterChange} />}
+          {!searchQuery && (
+            <CategoryFilter category={category} onFilterChange={handleFilterChange} activeFilters={activeFilters} />
+          )}
         </div>
 
         {/* 인물 검색 결과 */}
