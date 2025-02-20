@@ -1,13 +1,41 @@
 import styled from 'styled-components';
-import { tabletMore } from '../../../../styled/Mixin';
+import { mobileMore, tabletMore } from '../../../../styled/Mixin';
 
 export const MyPageContentLikedWrap = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 2rem;
+  .nodata {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    font-size: var(--font-content-m);
+    color: var(--gray-50);
+    margin-top: 4rem;
+    img {
+      width: 100px;
+      hieght: 100px;
+      ${mobileMore`
+        width: auto;
+        height: auto;
+      `}
+    }
+    ${mobileMore`
+        font-size: var(--font-content-xl);
+      `}
+    ${tabletMore`
+        font-size: var(--font-content-xxxl);
+      `}
+  }
+  ${mobileMore`
+    padding: 3rem;
+  `}
   ${tabletMore`
-      padding-top : 13.7rem;
-      font-size: var(--font-content-xxl);
-      gap: 5.5rem;
+    font-size: var(--font-content-xxl);
+    gap: 5.5rem;
   `}
   .header {
     display: flex;
@@ -125,8 +153,15 @@ export const MyPageContentWrap = styled.div`
   padding: 0 2rem;
   font-size: var(--font-label-xs);
   gap: 3rem;
+  ${mobileMore`
+    gap: 5rem;
+    font-size: var(--font-content-m);
+    padding: 0 3rem;
+    margin-top: 1.5rem;
+  `}
   ${tabletMore`
     padding-top : 1.5rem;
+    margin-top: 0rem;
     font-size: var(--font-content-xxl);
     gap: 7.5rem;
     padding: 0;
@@ -135,13 +170,19 @@ export const MyPageContentWrap = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    ${mobileMore`
+      gap: 1.5rem;
+    `}
     ${tabletMore`
       gap: 2rem;
-  `}
+    `}
     .title {
       display: flex;
       gap: 0.8rem;
       cursor: pointer;
+      ${mobileMore`
+        gap: 1rem;
+      `}
       ${tabletMore`
       gap: 2rem;
       `}
@@ -150,9 +191,17 @@ export const MyPageContentWrap = styled.div`
         justify-content: center;
         align-items: center;
         img {
-          width: 2rem;
-          height: 2rem;
+          width: 1rem;
+          height: 1rem;
           filter: invert(94%) sepia(0%) saturate(24%) hue-rotate(41deg) brightness(104%) contrast(106%);
+          ${mobileMore`
+            width: 1.5rem;
+            height: 1.5rem;
+          `}
+          ${tabletMore`
+            width: 2rem;
+            height: 2rem;
+          `}
         }
       }
     }
@@ -224,6 +273,9 @@ export const MyPageContentWrap = styled.div`
       margin-top: 0.1rem;
       color: var(--gray-60);
       font-size: var(--font-label-m-mobile);
+      ${mobileMore`
+        font-size: var(--font-label-m-tablet);
+      `}
       ${tabletMore`      
       margin-top: 0.3rem;
       font-size: var(--font-label-m);

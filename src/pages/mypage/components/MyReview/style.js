@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mobileMore, tabletMore } from '../../../../styled/Mixin';
 
 export const MyReviewWrap = styled.div`
   display: flex;
@@ -7,6 +8,22 @@ export const MyReviewWrap = styled.div`
   align-items: center;
   padding: 12rem 0;
   gap: 9rem;
+  .nodata {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    font-size: var(--font-content-m);
+    color: var(--gray-50);
+    ${mobileMore`
+        font-size: var(--font-content-xl);
+      `}
+    ${tabletMore`
+        font-size: var(--font-content-xxxl);
+      `}
+  }
   ul {
     display: flex;
     justify-content: flex-start;

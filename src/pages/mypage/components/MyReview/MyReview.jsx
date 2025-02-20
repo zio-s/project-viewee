@@ -40,32 +40,39 @@ export const MyReview = () => {
   };
   return (
     <MyReviewWrap>
-      <ul>
-        {currentPost.map((item) => (
-          <li key={item.id}>
-            <img src={item.img} alt={item.title} />
-            <div className="reviewItem">
-              <h2>{item.title}</h2>
-              <p className="rate">
-                {[...Array(5)].map((_, index) => (
-                  <span key={index} className={item.rate > index ? 'fill' : ''}>
-                    ★
-                  </span>
-                ))}
-              </p>
-              <p className="content">{item.content}</p>
-            </div>
-            <div className="button">
-              <Button variant="gray" onClick={() => deletedToggle(item.id)}>
-                삭제
-              </Button>
-              <Button variant="primary" onClick={() => editToggle(item.id)}>
-                수정
-              </Button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {reviewed.length === 0 ? (
+        <div className="nodata">
+          <img src="/images/nodata.png" alt="nodata" />
+          <p> 리뷰 내역이 없습니다.</p>
+        </div>
+      ) : (
+        <ul>
+          {currentPost.map((item) => (
+            <li key={item.id}>
+              <img src={item.img} alt={item.title} />
+              <div className="reviewItem">
+                <h2>{item.title}</h2>
+                <p className="rate">
+                  {[...Array(5)].map((_, index) => (
+                    <span key={index} className={item.rate > index ? 'fill' : ''}>
+                      ★
+                    </span>
+                  ))}
+                </p>
+                <p className="content">{item.content}</p>
+              </div>
+              <div className="button">
+                <Button variant="gray" onClick={() => deletedToggle(item.id)}>
+                  삭제
+                </Button>
+                <Button variant="primary" onClick={() => editToggle(item.id)}>
+                  수정
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
       {currentPage >= totalPage ? (
         ''
       ) : (
