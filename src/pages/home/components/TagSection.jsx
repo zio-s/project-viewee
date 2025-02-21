@@ -6,23 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 const TagSection = () => {
-  const tags = [
-    '태그1',
-    '태그2',
-    '태그3',
-    '태그4',
-    '태그5',
-    '태그6',
-    '태그7',
-    '태그8',
-    '태그9',
-    '태그10',
-    '태그11',
-    '태그₩12',
-    '태그13',
-    '태그14',
-    '태그15',
-  ];
+  const tags = ['태그1', '태그2', '태그3', '태그4', '태그5', '태그6', '태그7', '태그8'];
   return (
     <TagSectionWrapper>
       <Swiper

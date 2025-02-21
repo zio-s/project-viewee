@@ -67,8 +67,8 @@ const EpisodeList = () => {
               <h3>
                 {movie.release_date}, {converRuntime(movie.runtime)}
               </h3>
-              <p>{movie.overview}</p>
             </div>
+            <p>{movie.overview}</p>
           </div>
         ))}
       </CardBox>
