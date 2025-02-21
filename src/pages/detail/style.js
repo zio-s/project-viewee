@@ -1,7 +1,12 @@
 import styled from 'styled-components';
-import { StyledButton } from '../../common/button/style';
+import { StyledButton as OriginalStyledButton } from '../../common/button/style';
 
 export const MovieInfoSection = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;     
+  margin: 0 auto; 
+
   .movie-content {
     display: flex;
     gap: 20px;
@@ -32,6 +37,24 @@ export const MovieInfoSection = styled.div`
     }
   }
 `;
+
+export const StyledButton = styled(OriginalStyledButton)`
+  width: 350px;
+  height: 60px; 
+  font-size: var(--font-content-l);
+  margin: 0 20px 0 0;
+
+  &:hover {
+  }
+`;
+
+export const Buttons = styled.div`
+  display : flex;
+  alignItems : center;
+  margin: 0 0 30px 0;
+
+`
+
 
 export const CardBox = styled.div`
   display: grid;
@@ -97,6 +120,10 @@ export const CardBox = styled.div`
 `;
 
 export const EpisodeWrap = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;    
+  margin: 0 auto; 
   .EpisodeContainer {
   display: block;
   padding : 0;
@@ -111,6 +138,10 @@ export const CustomButton = styled(StyledButton)`
 
 `;
 export const RecommendedWrapper = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto; 
   RecommendedContainer{
   }
 `
@@ -134,108 +165,114 @@ export const RecommendeddBox = styled.div`
   }
 `;
 
-export const HeroSectionWrapper = styled.div`
-  padding: 20px;
-  color: #fff;
-  background: #1c1c1e;
+export const HeroSectionWrapper = styled.section`
+  position: relative;
+  width: 100%;
+  height: 770px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BackgroundContent = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 770px;
+  overflow: hidden;
+  
+  iframe, img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+`;
+
+export const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 어두운 필터 */
+  z-index: 0;
+`;
+
+export const HeroContent = styled.div`
+  max-width: 1440px;
+  justify-content: center;     
+  margin: 0 auto; 
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  text-align: left;
 
   h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: var(--font-title-s);
+    margin-bottom: 30px;
   }
 
-  .play-button {
-    padding: 10px 20px;
-    background-color: var(--primary-50);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-
-  .actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-
-    button {
-      padding: 8px 16px;
-      border: none;
-      background: #333;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-
-      &:hover {
-        background: var(--hover-color);
-      }
-    }
+  p {
+    font-size: var(--font-content-s);
+    margin-bottom: 30px;
   }
 
   .description {
-    font-size: 14px;
-    text-decoration: underline;
+    margin-bottom : 50px;
+    font-size: var(--font-content-s);
     cursor: pointer;
-    color: white; 
+  }
+`;
 
+export const Actions = styled.div`
+  display: flex;
+  justify-content: center;    
+  align-items: center;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 20px;
+    font-size: var(--font-content-s);
+   
     &:hover {
       color: var(--primary-50);
     }
   }
-`;
-
-
-export const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 50%;
-    max-height: 80%;
-    overflow-y: auto;
-    position: relative;
+  
+  svg {
+  margin-bottom: 5px;
+    &:hover {
+      color: var(--primary-50);
+    }
   }
-  .close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: black;
-    cursor: pointer;
   }
 `;
-
 
 
 export const Container = styled.div`
-  padding: 0 240px;
-  color: #fff;
-  background-color: background-color;
+  width: 100%;
 `;
 
 
 export const TabMenu = styled.ul`
+  max-width: 1440px;
   border-bottom: solid 3px;
   border-color: var(--gray-80);
   width: 100%;
   display: flex;
+  justify-content: flex-start;
+  margin: 0 auto; 
   list-style: none;
   padding: 0;
-  margin: 20px 0;
   li {
     margin-right: 20px;
     cursor: pointer;
@@ -258,15 +295,6 @@ export const TabContent = styled.div`
   color: #fff;
   border-radius: 5px;
   margin-top: 20px;
-`;
-
-export const PlayButton = styled.button`
-  padding: 10px 20px;
-  background-color: var(--primary-50);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 `;
 
 export const Description = styled.p`

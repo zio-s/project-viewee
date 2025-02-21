@@ -17,7 +17,7 @@ import {
 } from '../style';
 import HoverModal from './HoverModal';
 
-const NewSwiperSection = () => {
+const NewSwiperSection = ({ reviewData }) => {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [hoveredSlide, setHoveredSlide] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
@@ -87,21 +87,6 @@ const NewSwiperSection = () => {
   const handleMouseEnter = (num) => {
     const timeout = setTimeout(() => {
       setHoveredSlide(num);
-      // 화면의 왼쪽 끝인지 확인
-      if (index === 0) {
-        document.querySelector(`.hover-modal-${num}`).classList.add('left');
-        document.querySelector(`.hover-modal-${num}`).classList.remove('right');
-      }
-      // 화면의 오른쪽 끝인지 확인
-      else if (index === slides.length - 1) {
-        document.querySelector(`.hover-modal-${num}`).classList.add('right');
-        document.querySelector(`.hover-modal-${num}`).classList.remove('left');
-      }
-      // 기본 중앙 정렬
-      else {
-        document.querySelector(`.hover-modal-${num}`).classList.remove('left');
-        document.querySelector(`.hover-modal-${num}`).classList.remove('right');
-      }
     }, 500);
     setHoverTimeout(timeout);
   };
@@ -114,7 +99,7 @@ const NewSwiperSection = () => {
   return (
     <NewSectionWrapper>
       <NewCardsSectionTitle>
-        title
+        댓글창 터졌다! 화제의 그 작품
         <NewMoreLink href="./page/nowplaying.html" className="more">
           <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_630_1220)">
@@ -134,19 +119,19 @@ const NewSwiperSection = () => {
 
       <NewSwiperContainer className="new-card-carousel1">
         <NewSwiperWrapper className="swiper-wrapper">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+          {reviewData.map((item, index) => (
             <NewSwiperSlide
-              key={num}
+              key={item.id}
               className="swiper-slide"
-              onMouseEnter={() => handleMouseEnter(num)}
+              onMouseEnter={() => handleMouseEnter(item.id)}
               onMouseLeave={handleMouseLeave}
             >
-              <div>Slide {num}</div>
-              {hoveredSlide === num && (
-                <HoverModalWrapper className={hoveredSlide === num ? 'active' : ''}>
-                  <HoverModal />
-                </HoverModalWrapper>
-              )}
+              {/* 여기 스타일 및 레이아웃 조정 다시 해야 합니다! 일단 데이터가 어떻게 들어가는지 확인 하기위해 img 추가만 했습니다. */}
+              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+
+              <HoverModalWrapper className={hoveredSlide === item ? 'active' : ''}>
+                <HoverModal />
+              </HoverModalWrapper>
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>
