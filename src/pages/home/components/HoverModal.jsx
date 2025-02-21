@@ -71,33 +71,48 @@ const HoverModal = () => {
       <div className="infoArea">
         <div className="iconArea">
           <PlayButton className="button">
-            <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="24" height="24" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M3.85811 26.5605C2.35142 27.4707 0.625 26.7488 0.625 25.1794V2.67301C0.625 1.13492 2.47699 0.475747 3.85811 1.29188L22.2838 12.2154C23.6022 13.0002 23.6336 14.8835 22.2838 15.6997L3.85811 26.5605Z"
                 fill="white"
               />
             </svg>
           </PlayButton>
-          <PlayButton className="steamedButton">+</PlayButton>
-          <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
-          <PlayButton className="moreButton">
-            <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clipPath="url(#clip0_643_37718)">
+          <PlayButton className="steamedButton">
+            <svg width="20" height="20" viewBox="0 0 23 23" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_626_5076)">
                 <path
-                  d="M25.6616 37.5109C26.1848 37.5109 26.7078 37.3017 27.0637 36.904L43.2607 20.3094C43.6164 19.9537 43.8257 19.4933 43.8257 18.9702C43.8257 17.882 43.0094 17.0449 41.9214 17.0449C41.3982 17.0449 40.9169 17.2542 40.561 17.589L24.5315 33.9743H26.7707L10.7411 17.589C10.4062 17.2542 9.92494 17.0449 9.38087 17.0449C8.29269 17.0449 7.47656 17.882 7.47656 18.9702C7.47656 19.4933 7.68583 19.9537 8.04157 20.3304L24.2386 36.904C24.6362 37.3017 25.1175 37.5109 25.6616 37.5109Z"
+                  d="M0.667969 11.0491C0.667969 11.7054 1.21708 12.241 1.85993 12.241H10.5251V20.9063C10.5251 21.5491 11.0608 22.0982 11.7171 22.0982C12.3733 22.0982 12.9225 21.5491 12.9225 20.9063V12.241H21.5743C22.2171 12.241 22.7661 11.7054 22.7661 11.0491C22.7661 10.3929 22.2171 9.84375 21.5743 9.84375H12.9225V1.19197C12.9225 0.549107 12.3733 0 11.7171 0C11.0608 0 10.5251 0.549107 10.5251 1.19197V9.84375H1.85993C1.21708 9.84375 0.667969 10.3929 0.667969 11.0491Z"
                   fill="white"
                 />
               </g>
               <defs>
-                <clipPath id="clip0_643_37718">
-                  <rect width="36.3491" height="22.2866" fill="white" transform="translate(7.47656 15.2246)" />
+                <clipPath id="clip0_626_5076">
+                  <rect width="22.0982" height="22.1117" fill="white" transform="translate(0.667969)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </PlayButton>
+          <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
+          <PlayButton className="moreButton">
+            <svg width="30" height="30" viewBox="0 0 51 51" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_630_1220)">
+                <path
+                  d="M35.0831 26.2461C35.0831 25.7229 34.874 25.2416 34.4763 24.865L17.9026 8.62612C17.526 8.27037 17.0656 8.08203 16.5215 8.08203C15.4542 8.08203 14.6172 8.89816 14.6172 9.98633C14.6172 10.5095 14.8265 10.9908 15.1613 11.3465L30.3957 26.2461L15.1613 41.1456C14.8265 41.5013 14.6172 41.9619 14.6172 42.5058C14.6172 43.594 15.4542 44.4102 16.5215 44.4102C17.0656 44.4102 17.526 44.2219 17.9026 43.8451L34.4763 27.6272C34.874 27.2297 35.0831 26.7692 35.0831 26.2461Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_630_1220">
+                  <rect width="20.4659" height="36.3491" fill="white" transform="translate(14.6172 8.08203)" />
                 </clipPath>
               </defs>
             </svg>
           </PlayButton>
         </div>
         <div className="textArea">
-          <span className="age">{contentData.age}</span>{' '}
+          <span className="age">{contentData.age}</span>
+          <span className="dot"></span>
           <span id="starNumber">
             <svg width="20" height="20" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_632_1076)">
@@ -114,10 +129,13 @@ const HoverModal = () => {
             </svg>
             {contentData.rating}
           </span>
+          <span className="dot"></span>
           <span>에피소드{contentData.episodes}</span>
         </div>
         <div className="textArea">
-          <span>{contentData.genres[0]}</span> <span>{contentData.genres[1]}</span> <span>{contentData.genres[2]}</span>
+          <span>{contentData.genres[0]}</span> <span className="dot"></span>
+          <span>{contentData.genres[1]}</span>
+          <span className="dot"></span> <span>{contentData.genres[2]}</span>
         </div>
       </div>
     </HoverModalWrap>
