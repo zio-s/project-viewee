@@ -58,35 +58,45 @@ const MyPageContentDownLoaded = () => {
     <MyPageContentLikedWrap>
       <div className="header">
         <h2>다운 받은 콘텐츠</h2>
-        <div className="contentEdit">
-          {iseditOpen ? (
-            <>
-              <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
-                전체선택
+        {downed.length === 0 ? (
+          ''
+        ) : (
+          <div className="contentEdit">
+            {iseditOpen ? (
+              <>
+                <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
+                  전체선택
+                </Button>
+                <Button variant="gray" size="small" onClick={openToggle}>
+                  취소
+                </Button>
+                <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
+                  선택삭제
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" size="small" onClick={openToggle}>
+                수정하기
               </Button>
-              <Button variant="gray" size="small" onClick={openToggle}>
-                취소
-              </Button>
-              <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
-                선택삭제
-              </Button>
-            </>
-          ) : (
-            <Button variant="primary" size="small" onClick={openToggle}>
-              수정하기
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
-
       <div className="content">
-        <ul>
-          {currentPost.map((url, i) => (
-            <li key={i} onClick={() => isDeleteToggle(url.id)}>
-              <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
-            </li>
-          ))}
-        </ul>
+        {downed.length === 0 ? (
+          <div className="nodata">
+            <img src="/images/nodata.png" alt="nodata" />
+            <p> 리뷰 내역이 없습니다.</p>
+          </div>
+        ) : (
+          <ul>
+            {currentPost.map((url, i) => (
+              <li key={i} onClick={() => isDeleteToggle(url.id)}>
+                <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
+              </li>
+            ))}
+          </ul>
+        )}
         {currentPage >= totalPage ? (
           ''
         ) : (

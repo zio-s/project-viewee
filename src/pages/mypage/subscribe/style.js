@@ -47,6 +47,7 @@ export const SubscribeWrap = styled.div`
       flex-direction: column;
       width: 100%;
       ${tabletMore`
+        flex-direction: row;
         justify-content: space-between;
       `};
       .toggleButton {

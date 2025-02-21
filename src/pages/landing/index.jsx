@@ -6,45 +6,81 @@ import CardSection from './components/card/CardSection';
 import Hero from './components/Hero';
 import ScrollSection from './components/ScrollSection';
 import { LandingWrap } from './style';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectBackgroundColor } from '../../store/modules/gsapSlice';
+import { MainPageData } from '../../store/modules/getThunk';
+// import MarqueeSection from '../home/components/MarqueeSection';
+import Marquees from './components/marquee/Marquees';
+import CustomCursor from './components/CustomCursor';
 
 const LandingPage = () => {
+  const dispatch = useDispatch();
   const lenisRef = useRef();
+  const rafRef = useRef(null);
   const backgroundColor = useSelector(selectBackgroundColor);
+
+  useEffect(() => {
+    dispatch(MainPageData());
+  }, []);
+
   useEffect(() => {
     lenisRef.current = new Lenis({
-      duration: 2,
+      duration: 3,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       smooth: true,
       smoothTouch: false,
-      touchMultiplier: 2,
+      normalizeWheel: true,
+      smoothWheel: true,
     });
+    function raf(time) {
+      lenisRef.current?.raf(time);
+      rafRef.current = requestAnimationFrame(raf);
+    }
+
+    rafRef.current = requestAnimationFrame(raf);
+
     lenisRef.current.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-      lenisRef.current.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
+
     return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
       if (lenisRef.current) {
         lenisRef.current.destroy();
-        gsap.ticker.remove(lenisRef.current.raf);
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
     };
   }, []);
-
+  const scrollToTop = () => {
+    if (lenisRef.current) {
+      lenisRef.current.stop();
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      ScrollTrigger.update();
+      window.scrollTo({
+        top: 0,
+        behavior: 'instant',
+      });
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  };
   return (
-    <LandingWrap
-      style={{
-        backgroundColor: backgroundColor,
-        transition: 'background-color 0.3s ease',
-      }}
-    >
-      <CardSection />
-      <ScrollSection />
-      <Hero />
-    </LandingWrap>
+    <p>
+      <CustomCursor />
+      <LandingWrap
+        style={{
+          backgroundColor: backgroundColor,
+          transition: 'background-color 0.3s ease',
+        }}
+      >
+        <Marquees />
+        <CardSection />
+        <ScrollSection scrollToTop={scrollToTop} />
+        <Hero />
+      </LandingWrap>
+    </p>
   );
 };
 

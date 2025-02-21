@@ -3,7 +3,7 @@ import { mobileMore, tabletMore } from '../../../../styled/Mixin';
 
 export const Container = styled.div`
   width: 100%;
-  height: 200vh;
+  height: 100vh;
   position: relative;
   overflow: hidden;
 `;
@@ -11,11 +11,13 @@ export const Container = styled.div`
 export const CardsWrapper = styled.div`
   position: fixed;
   width: 100%;
-  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;
+  /* overflow: visible; */
 `;
 
 export const Card = styled.div`

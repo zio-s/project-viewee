@@ -278,7 +278,10 @@ export const Actions = styled.div`
     &:hover {
       color: var(--primary-50);
       transform: scale(1.2);
+<<<<<<< HEAD
       transition: transform 0.3s ease-in-out;
+=======
+>>>>>>> develop
     }
 
     svg {
@@ -290,7 +293,10 @@ export const Actions = styled.div`
         color: var(--primary-50);
         transform: scale(1.2);
         filter: drop-shadow(0 0 8px var(--primary-50));
+<<<<<<< HEAD
         transition: transform 0.3s ease-in-out;
+=======
+>>>>>>> develop
       }
     }
   }
@@ -322,7 +328,10 @@ export const TabMenu = styled.ul`
         color: var(--hover-color);
         transform: scale(1.2);
         filter: drop-shadow(0 0 8px var(--primary-50));
+<<<<<<< HEAD
         transition: transform 0.3s ease-in-out;
+=======
+>>>>>>> develop
       }
 
     &.active {

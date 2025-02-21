@@ -20,12 +20,14 @@ const Profile = () => {
             <h2>
               환영합니다{' '}
               <div className="userName">
-                <a href="/useredit">{username}</a>
+                <a href="/modifyprofile">{username}</a>
               </div>{' '}
               님!
             </h2>
             <div className="edit">
-              <img src="/icons/util/pencil.svg" />
+              <a href="/modifyprofile">
+                <img src="/icons/util/pencil.svg" />
+              </a>
             </div>
             <a href="/changeProfile">
               <Button variant="gray" size="small">

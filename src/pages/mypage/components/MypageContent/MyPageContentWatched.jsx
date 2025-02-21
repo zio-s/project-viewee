@@ -61,6 +61,9 @@ const MyPageContentWatched = () => {
     <MyPageContentLikedWrap>
       <div className="header">
         <h2>시청 콘텐츠</h2>
+        {watched.length === 0 ? (
+          ''
+        ) : (
         <div className="contentEdit">
           {iseditOpen ? (
             <>
@@ -80,9 +83,16 @@ const MyPageContentWatched = () => {
             </Button>
           )}
         </div>
+        )}
       </div>
 
       <div className="content">
+      {watched.length === 0 ? (
+          <div className="nodata">
+            <img src="/images/nodata.png" alt="nodata" />
+            <p> 리뷰 내역이 없습니다.</p>
+          </div>
+        ) : (
         <ul>
           {currentPost.map((url, i) => (
             <li key={i} onClick={() => isDeleteToggle(url.id)}>
@@ -97,6 +107,7 @@ const MyPageContentWatched = () => {
             </li>
           ))}
         </ul>
+        )}
         {currentPage >= totalPage ? (
           ''
         ) : (

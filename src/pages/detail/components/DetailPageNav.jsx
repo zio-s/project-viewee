@@ -41,10 +41,13 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
       changeContent('recommend', <Recommended/>); 
     }
   }, [hasEpisodes, changeContent, detail]);
+<<<<<<< HEAD
 
   useEffect(() => {
     setCurrentTab(activeTab);
   }, [activeTab]);
+=======
+>>>>>>> develop
 
   const handleTabClick = (tab, content) => {
     setCurrentTab(tab);
