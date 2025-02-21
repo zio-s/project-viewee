@@ -8,7 +8,7 @@ import { useState } from 'react';
 import UserDropdown from './components/UserDropdown';
 
 const Header = () => {
-  const { authed } = useSelector((state) => state.authR);
+  const { authed, user } = useSelector((state) => state.authR);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggleSearch = () => {
@@ -44,7 +44,7 @@ const Header = () => {
             </i>
           </Button>
         </li>
-        <UserDropdown authed={authed} />
+        <UserDropdown authed={authed} user={user} />
       </TopMenu>
       <SearchBar isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />
     </HeaderWrap>
