@@ -126,12 +126,10 @@ const NewSwiperSection = ({ reviewData }) => {
               onMouseEnter={() => handleMouseEnter(item.id)}
               onMouseLeave={handleMouseLeave}
             >
-              <div>Slide {num}</div>
-              <HoverModalWrapper className={hoveredSlide === num ? 'active' : ''}>
               {/* 여기 스타일 및 레이아웃 조정 다시 해야 합니다! 일단 데이터가 어떻게 들어가는지 확인 하기위해 img 추가만 했습니다. */}
               <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
-              <HoverModalWrapper className={hoveredSlide === item ? 'active' : ''}>
 
+              <HoverModalWrapper className={hoveredSlide === item ? 'active' : ''}>
                 <HoverModal />
               </HoverModalWrapper>
             </NewSwiperSlide>
