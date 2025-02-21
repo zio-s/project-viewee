@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { tabletMore } from '../../../styled/Mixin';
+import { mobileMore, tabletMore } from '../../../styled/Mixin';
 
 export const SubscribeWrap = styled.div`
   width: 100%;
@@ -8,13 +8,14 @@ export const SubscribeWrap = styled.div`
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
+  overflow: hidden;
   .contentWrapper {
     width: 100%;
     padding: 4.5rem 1.5rem;
     box-sizing: border-box;
     ${tabletMore`
       max-width: 1440px;
-      padding: 15rem 0.5rem 0;
+      padding: 15rem 5rem 0;
       margin-top: 0rem;
     `};
     .title {
@@ -90,13 +91,16 @@ export const SubscribeWrap = styled.div`
     }
     .subscribeList {
       ul {
+        width: 100%;
         display: flex;
-        gap: 2rem;
         flex-direction: column;
         margin-top: 4rem;
+        justify-content: space-between;
+        ${mobileMore`
+            flex-direction: row;
+            box-sizing: border-box; 
+          `}
         ${tabletMore`
-          gap: 3rem;
-          flex-direction: row;
           margin-top:0;
         `};
       }
@@ -187,9 +191,13 @@ export const SubscribeWrap = styled.div`
     }
     .banner {
       margin-top: 7rem;
+      box-sizing: border-box;
       ${tabletMore`
         margin-top: 16.7rem;
       `};
+      img {
+        width: 100%;
+      }
     }
   }
 
@@ -205,9 +213,16 @@ export const ItemListWrap = styled.li`
   padding: 2.4rem;
   border: 1px solid var(--gray-80);
   border-radius: 10px;
-  ${tabletMore`
-    padding: 5rem;
+
+  ${mobileMore`
+      width: 30%;
+    padding:2rem;
     border-radius: 12px;
+    box-sizing: border-box;
+  `}
+  ${tabletMore`
+    padding: 5rem; 
+    max-width: 460px;
   `};
   .title {
     display: flex;
@@ -260,16 +275,13 @@ export const ItemListWrap = styled.li`
   }
   .button {
     display: flex;
-    gap: 1.2rem;
-    ${tabletMore`
-      gap: 2rem;
-    `};
+    justify-content: space-between;
     button {
       width: 15rem;
       font-size: var(--font-label-s);
       height: 5rem;
+      width: 45%;
       ${tabletMore`
-        width: 17rem;
         height: 6.3rem;
         font-size: var(--font-content-m);
       `};
