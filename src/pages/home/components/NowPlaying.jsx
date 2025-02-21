@@ -13,15 +13,11 @@ import {
   NewCustomButtonPrev,
   NewCustomButtonNext,
   NewSectionWrapper,
-  HoverModalWrapper,
 } from '../style';
-import HoverModal from './HoverModal';
 
-const NewSwiperSection = ({ reviewData }) => {
+const NowPlaying = () => {
   const [slidesPerView, setSlidesPerView] = useState(4);
-  const [hoveredSlide, setHoveredSlide] = useState(null);
-  const [hoverTimeout, setHoverTimeout] = useState(null);
-  const swiperRef = useRef(null); // Swiper 인스턴스를 저장할 ref
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const calculateSlidesPerView = () => {
@@ -41,17 +37,15 @@ const NewSwiperSection = ({ reviewData }) => {
     // Swiper 중복 실행 방지
     if (swiperRef.current) return;
 
-    swiperRef.current = new Swiper('.new-card-carousel1', {
+    swiperRef.current = new Swiper('.new-card-carousel2', {
       modules: [Navigation],
       slidesPerView: 'auto',
       spaceBetween: 20,
       slidesPerGroup: 1,
-
       navigation: {
-        nextEl: '.new-swiper-button-next',
-        prevEl: '.new-swiper-button-prev',
+        nextEl: '.new-swiper-button-next2',
+        prevEl: '.new-swiper-button-prev2',
       },
-
       breakpoints: {
         1440: { slidesPerView: 5.6, slidesPerGroup: 5, spaceBetween: 15 },
         1024: { slidesPerView: 4.2, slidesPerGroup: 5, spaceBetween: 15 },
@@ -66,23 +60,11 @@ const NewSwiperSection = ({ reviewData }) => {
     };
   }, []);
 
-  const handleMouseEnter = (num) => {
-    const timeout = setTimeout(() => {
-      setHoveredSlide(num);
-    }, 500);
-    setHoverTimeout(timeout);
-  };
-
-  const handleMouseLeave = () => {
-    clearTimeout(hoverTimeout);
-    setHoveredSlide(null);
-  };
-
   return (
     <NewSectionWrapper>
       <NewCardsSectionTitle>
-        댓글창 터졌다! 화제의 그 작품
-        <NewMoreLink href="./page/nowplaying.html" className="more">
+        시청하다 멈췄어요
+        <NewMoreLink href="./page/anotherpage.html" className="more">
           <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_630_1220)">
               <path
@@ -99,29 +81,20 @@ const NewSwiperSection = ({ reviewData }) => {
         </NewMoreLink>
       </NewCardsSectionTitle>
 
-      <NewSwiperContainer className="new-card-carousel1">
+      <NewSwiperContainer className="new-card-carousel2">
         <NewSwiperWrapper className="swiper-wrapper">
-          {reviewData.map((item, index) => (
-            <NewSwiperSlide
-              key={item.id}
-              className="swiper-slide"
-              onMouseEnter={() => handleMouseEnter(item.id)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
-
-              <HoverModalWrapper className={hoveredSlide === item.id ? 'active' : ''}>
-                <HoverModal />
-              </HoverModalWrapper>
+          {[...Array(10)].map((_, index) => (
+            <NewSwiperSlide key={index} className="swiper-slide">
+              <img src={`https://via.placeholder.com/150?text=Item+${index + 1}`} alt={`Placeholder ${index + 1}`} />
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>
 
-        <NewCustomButtonPrev className="new-swiper-button-prev"></NewCustomButtonPrev>
-        <NewCustomButtonNext className="new-swiper-button-next"></NewCustomButtonNext>
+        <NewCustomButtonPrev className="new-swiper-button-prev2"></NewCustomButtonPrev>
+        <NewCustomButtonNext className="new-swiper-button-next2"></NewCustomButtonNext>
       </NewSwiperContainer>
     </NewSectionWrapper>
   );
 };
 
-export default NewSwiperSection;
+export default NowPlaying;
