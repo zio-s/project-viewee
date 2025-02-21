@@ -1,11 +1,5 @@
-import { useDispatch } from 'react-redux';
 import LoginForm from './components/LoginForm';
-import SignUpPrompt from './components/SignUpPrompt';
-import SocialLogin from './components/SocialLogin';
-import { Container, Form, LogoSection, VideoBackground } from './style';
-import { useNavigate } from 'react-router';
-import { useState } from 'react';
-import { authActions } from '../../../store/modules/authSlice';
+import { Container, VideoBackground } from './style';
 
 const Login = () => {
   return (

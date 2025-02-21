@@ -5,7 +5,7 @@ import Content from './content';
 import { CCNoitcetWrap } from './style';
 
 const CCNotice = () => {
-  const [noticeList, setNoticeList] = useState([
+  const prevList = [
     {
       id: 1,
       tag: '서비스공지',
@@ -149,20 +149,25 @@ const CCNotice = () => {
       content: '멤버십 혜택이 더욱 확대되었습니다. 프리미엄 구독자를 위한 특별 콘텐츠와 할인 혜택을 지금 확인하세요!',
       date: '2025-01-05',
     },
-  ]);
+  ];
+  const [noticeList, setNoticeList] = useState(prevList);
   const [search, setSearch] = useState('');
   const changeInput = (e) => {
     setSearch(e.target.value);
   };
   const submit = (e) => {
     e.preventDefault();
-    const value = noticeList.filter((item) => item.title.includes(search) || item.content.includes(search));
+    if (!search.trim()) return;
+    const value = prevList.filter((item) => item.title.includes(search) || item.content.includes(search));
     setNoticeList(value);
   };
-
+  const resetSearch = () => {
+    setSearch('');
+    setNoticeList(prevList);
+  };
   return (
     <CCNoitcetWrap>
-      <Content data={noticeList}>
+      <Content data={noticeList} search={search} setSearch={setSearch} resetSearch={resetSearch} prevData={prevList}>
         <form onSubmit={submit}>
           <Input placeholder="궁금하신 점을 입력해주세요" variant="gray" value={search} onChange={changeInput} />
           <Button type="submit">검색</Button>

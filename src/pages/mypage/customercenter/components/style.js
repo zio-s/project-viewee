@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { tabletMore } from '../../../../styled/Mixin';
+import { mobileMore, tabletMore } from '../../../../styled/Mixin';
 
 export const CCTermsWrap = styled.div`
   margin-top: 37px;
@@ -283,6 +283,7 @@ export const CCContentWrap = styled.div`
               align-items: center;
               font-size: var(--font-label-s);
               flex-shrink: 0;
+              margin-left: 5px;
               ${tabletMore`
                 font-size: var(--font-content-m);
                 width: 45px;
@@ -325,8 +326,16 @@ export const CCNavWrap = styled.ul`
   margin-top: 2.6rem;
   flex-wrap: wrap;
   width: 100vw;
+  justify-content: center;
+  ${mobileMore`
+    margin-top: 2.6rem;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    flex-wrap: nowrap;
+    `}
   ${tabletMore`
-      width: 100%;
       margin-top: 8rem;
       border-radius: 5px;
       overflow: hidden;
@@ -341,6 +350,11 @@ export const CCNavWrap = styled.ul`
     padding: 0.7rem 0;
     min-width: 130px;
     font-size: var(--font-label-s);
+    ${mobileMore`
+    height: 40px;
+    font-size: var(--font-content-s);
+    width: 25%;
+    `}
     ${tabletMore`
     height: 50px;
     font-size: var(--font-content-m);

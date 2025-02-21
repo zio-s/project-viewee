@@ -118,7 +118,7 @@ export const QnAWrap = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      form {
+      .form {
         display: flex;
         flex-wrap: wrap;
         gap: 2rem 5rem;
@@ -220,7 +220,6 @@ export const QnAWrap = styled.div`
             gap: 2.4rem;
             box-sizing: border-box;
             .no {
-              padding: 2rem;
               font-size: var(--font-content-l);
             }
             .itemContent {
@@ -228,7 +227,7 @@ export const QnAWrap = styled.div`
               display: flex;
               font-size: var(--font-content-l);
               justify-content: space-between;
-              align-items: center;
+              align-items: flex-start;
               .accordian {
                 display: flex;
                 position: relative;
