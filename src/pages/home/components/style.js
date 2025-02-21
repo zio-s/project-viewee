@@ -39,6 +39,26 @@ export const EditionbackWrapper = styled.div`
     width: 652px;
     height: 877px;
   }
+  .backgroundActor2 {
+    position: absolute;
+    top: 483px;
+    right: 530px;
+    background-image: url('/images/actor2.png');
+    background-size: cover;
+    width: 652px;
+    height: 877px;
+  }
+
+  .backgroundParticle {
+    z-index: 1000;
+    top: 467px;
+    right: 327px;
+    position: absolute;
+    background-image: url(/images/backgroundParticle.png);
+    background-size: cover;
+    width: 989px;
+    height: 739px;
+  }
 
   .backgroundParticle {
     z-index: 1000;
@@ -104,6 +124,14 @@ export const Card = styled.div`
     width: 213px;
     height: 88px;
   }
+  .banner2Logo1 {
+    z-index: 20;
+    position: absolute;
+    right: -13px;
+    top: 51px;
+    width: 230px;
+    height: 64px;
+  }
   .bannerItem1 {
     position: absolute;
     top: -49px;
@@ -112,11 +140,20 @@ export const Card = styled.div`
     height: 260px;
     z-index: 10;
   }
+  .banner2Item1 {
+    position: absolute;
+    top: -3px;
+    left: 93px;
+    z-index: 10;
+  }
   .textArea {
     .bannerIcon1 {
       width: 40px;
       height: 40px;
       margin-bottom: 5px;
+    }
+    .banner2Icon1 {
+      margin-bottom: 7px;
     }
     margin-top: 165px;
   }
@@ -128,6 +165,14 @@ export const Card = styled.div`
     width: 137px;
     height: 54px;
   }
+  .banner2Logo2 {
+    z-index: 20;
+    position: absolute;
+    right: 27px;
+    top: 55px;
+    width: 150px;
+    height: 60px;
+  }
   .bannerItem2 {
     position: absolute;
     top: 20px;
@@ -136,11 +181,20 @@ export const Card = styled.div`
     height: 169px;
     z-index: 10;
   }
+  .banner2Item2 {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    z-index: 10;
+  }
   .textArea {
     .bannerIcon2 {
       width: 40px;
       height: 40px;
       margin-bottom: 5px;
+    }
+    .banner2Icon2 {
+      margin-bottom: 7px;
     }
     margin-top: 165px;
   }
@@ -152,6 +206,12 @@ export const Card = styled.div`
     width: 174px;
     height: 98px;
   }
+  .banner2Logo3 {
+    z-index: 20;
+    position: absolute;
+    right: 27px;
+    top: 44px;
+  }
   .bannerItem3 {
     position: absolute;
     top: -32px;
@@ -160,11 +220,20 @@ export const Card = styled.div`
     height: 262px;
     z-index: 10;
   }
+  .banner2Item3 {
+    position: absolute;
+    top: 8px;
+    left: 64px;
+    z-index: 10;
+  }
   .textArea {
     .bannerIcon3 {
       width: 32px;
       height: 42px;
       margin-bottom: 5px;
+    }
+    .banner2Icon3 {
+      margin-bottom: 7px;
     }
     margin-top: 165px;
   }
