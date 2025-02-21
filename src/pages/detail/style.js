@@ -79,7 +79,6 @@ export const CardBox = styled.div`
   .episode-item {
     display: flex; 
     flex-direction: column; 
-    border-radius: 5px;
     overflow: hidden;
     height: 100%;  
     
@@ -97,6 +96,7 @@ export const CardBox = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 5px;
       }
     }
     
