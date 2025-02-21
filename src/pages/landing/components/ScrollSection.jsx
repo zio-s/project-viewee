@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Container, GridItem, GridWrap, Section } from './style';
+import { Container, GridImg, GridItem, GridWrap, Section } from './style';
 import { useNavigate } from 'react-router';
 import {
   setActiveSection,
@@ -43,13 +43,26 @@ const ScrollSection = () => {
     const title = container.querySelector('h2');
     const button = container.querySelector('button');
 
-    section.style.setProperty('--grid-width', '105%');
+    section.style.setProperty('--grid-width', '50%');
     section.style.setProperty('--grid-columns', '8');
     section.style.setProperty('--perspective', '1500px');
     section.style.setProperty('--grid-inner-scale', '0.8');
-    gridItems.forEach((item) => {
+
+    const radius = 100;
+    const totalItems = gridItems.length;
+    gridItems.forEach((item, index) => {
+      const angle = (index / totalItems) * Math.PI * 5;
+
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      const z = gsap.utils.random(-200, 200);
+
       gsap.set(item, {
-        transformOrigin: '50% 0%',
+        transformOrigin: '50% 50%',
+        x,
+        y,
+        z,
       });
     });
 
@@ -59,7 +72,7 @@ const ScrollSection = () => {
       top: '50%',
       xPercent: -50,
       yPercent: -50,
-      zIndex: 10,
+      zIndex: 1000,
       opacity: 0,
       y: 30,
     });
@@ -71,7 +84,7 @@ const ScrollSection = () => {
       top: '50%',
       xPercent: -50,
       yPercent: -50,
-      zIndex: 10,
+      zIndex: 1000,
       opacity: 0,
       y: 30,
     });
@@ -79,7 +92,7 @@ const ScrollSection = () => {
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top center',
+        start: 'top bottom',
         end: 'bottom top-=10%',
         scrub: 2,
         anticipatePin: 1,
@@ -131,10 +144,14 @@ const ScrollSection = () => {
       .to(
         gridItems,
         {
-          xPercent: () => gsap.utils.random(-150, 150),
-          yPercent: () => gsap.utils.random(-300, 300),
-          rotationX: 0,
-          // filter: 'brightness(150%)',
+          xPercent: (index) => {
+            const angle = (index / totalItems) * Math.PI * 2;
+            return Math.cos(angle) * 100;
+          },
+          yPercent: (index) => {
+            const angle = (index / totalItems) * Math.PI * 2;
+            return Math.sin(angle) * 100;
+          },
           stagger: {
             amount: 1,
             from: 'random',
@@ -155,7 +172,7 @@ const ScrollSection = () => {
         {
           z: 2000,
           rotationX: -35,
-          scale: 0.9,
+          scale: 1,
           duration: 4,
           ease: 'power2.inOut',
         },
@@ -194,14 +211,15 @@ const ScrollSection = () => {
           <GridWrap>
             {Array.from({ length: 24 }).map((_, i) => (
               <GridItem key={i} data-grid-item>
-                <img src={`/images/mainPoster1.png`} alt={`Grid item ${i + 1}`} />
+                {/* <img src={`/images/mainPoster1.png`} alt={`Grid item ${i + 1}`} /> */}
+                <GridImg $imageIndex={(i % 5) + 1} />
               </GridItem>
             ))}
           </GridWrap>
         </Section>
+        <div className="overlay"></div>
       </div>
       <button onClick={() => onGo()}>지금 보러가기</button>
-      <Link to={'/'}>gogogo</Link>
     </Container>
   );
 };

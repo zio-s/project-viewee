@@ -130,7 +130,12 @@ const SearchBar = ({ isOpen, setIsOpen, searchIconRef }) => {
               />
               <ClearButton type="button" onClick={() => setText('')}>
                 {text ? (
-                  'x'
+                  <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M2.45156 27.6496L0.351562 25.5496L11.9016 13.9996L0.351562 2.44961L2.45156 0.349609L14.0016 11.8996L25.5516 0.349609L27.6516 2.44961L16.1016 13.9996L27.6516 25.5496L25.5516 27.6496L14.0016 16.0996L2.45156 27.6496Z"
+                      fill="white"
+                    />
+                  </svg>
                 ) : (
                   <svg width="28" height="28" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_622_4047)">

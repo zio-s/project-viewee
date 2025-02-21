@@ -3,54 +3,44 @@ import { TabMenu } from '../style';
 import Recommended from './Recommended';
 import Episode from './Episode';
 import InfoSection from './InfoSection';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCollection } from '../../../store/modules/getThunk'; 
 
 const DetailPageNav = ({ activeTab, changeContent }) => {
   const [hasEpisodes, setHasEpisodes] = useState(false);
   const [currentTab, setCurrentTab] = useState(activeTab);
-  const { detail, loading, error } = useSelector((state) => state.detailR);
+  const dispatch = useDispatch();
+  const { detail, collection, loading, error } = useSelector((state) => state.detailR);
 
   useEffect(() => {
-    const checkEpisodes = async () => {
-      if (!detail) return;
-
-      if (detail?.belongs_to_collection) {
-        try {
-          const response = await axios.get(
-            `https://api.themoviedb.org/3/collection/${detail.belongs_to_collection.id}`,
-            { params: { api_key: '89add566d52fc4fb04e06c4ff4a557b7', language: 'ko-KR' } }
-          );
-          const hasValidParts = response.data.parts && response.data.parts.length > 0;
-          setHasEpisodes(hasValidParts);
-        } catch {
-          setHasEpisodes(false);
-        }
-      } else if (detail?.episodes?.length > 0 || detail?.seasons?.length > 0) {
-        setHasEpisodes(true);
-      } else {
-        setHasEpisodes(false);
-      }
+    if (!detail || !detail.belongs_to_collection) return;
+  
+    const fetchCollection = async () => {
+      await dispatch(getCollection(detail.belongs_to_collection.id));  
     };
-
-    checkEpisodes();
-  }, [detail]);
+  
+    fetchCollection();
+  }, [dispatch, detail]);
 
   useEffect(() => {
-    if (currentTab === '') {
-      if (hasEpisodes) {
-        setCurrentTab('episode');
-        changeContent('episode', <Episode />);
-      } else {
-        setCurrentTab('recommend');
-        changeContent('recommend', <Recommended />);
-      }
+    if (collection && collection.parts && collection.parts.length > 0) {
+      setHasEpisodes(true);
+    } else if (detail?.episodes?.length > 0 || detail?.seasons?.length > 0) {
+      setHasEpisodes(true);
+    } else {
+      setHasEpisodes(false);
     }
-  }, [hasEpisodes, changeContent, detail, currentTab]);
+  }, [collection, detail]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!detail) return null;
+  useEffect(() => {
+    if (hasEpisodes) {
+      setCurrentTab('episode');
+      changeContent('episode', <Episode/>); 
+    } else {
+      setCurrentTab('recommend');
+      changeContent('recommend', <Recommended/>); 
+    }
+  }, [hasEpisodes, changeContent, detail]);
 
   const handleTabClick = (tab, content) => {
     setCurrentTab(tab);
@@ -62,14 +52,14 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
       {hasEpisodes && (
         <li
           className={currentTab === 'episode' ? 'active' : ''}
-          onClick={() => handleTabClick('episode', <Episode detail={detail} />)}
+          onClick={() => handleTabClick('episode', <Episode/>)}
         >
           에피소드
         </li>
       )}
       <li
         className={currentTab === 'recommend' ? 'active' : ''}
-        onClick={() => handleTabClick('recommend', <Recommended />)}
+        onClick={() => handleTabClick('recommend', <Recommended/>)} 
       >
         추천
       </li>

@@ -1,46 +1,179 @@
 import styled, { css } from 'styled-components';
 import { tabletMore } from '../../../../styled/Mixin';
 
+export const CCTermsWrap = styled.div`
+  margin-top: 37px;
+  .title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: var(--gray-40);
+    h2 {
+      font-size: var(--font-content-xxxl);
+      font-weight: 700;
+    }
+    p {
+      font-size: var(--font-content-s);
+    }
+  }
+  .termsContent {
+    margin-top: 20px;
+    background-color: #252525;
+    padding: 4rem;
+    font-size: var(--font-content-m);
+    color: var(--gray-30);
+    ol {
+      li {
+        list-style-type: number;
+        margin-left: 3rem;
+      }
+    }
+    ul {
+      li {
+        list-style-type: disc;
+      }
+    }
+  }
+`;
+export const CCQnAvWrap = styled.div`
+  width: 100%;
+  background-color: #252525;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1.8rem;
+  box-sizing: border-box;
+  ${tabletMore`
+    padding: 6rem 0;
+    gap: 3rem;
+    margin-top: 36px;
+  `}
+  .contact {
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+    img {
+      width: 16px;
+      height: 16px;
+      filter: invert(50%) sepia(19%) saturate(3087%) hue-rotate(308deg) brightness(98%) contrast(92%);
+      ${tabletMore`
+        width: 44px;
+        height: 44px;
+      `}
+    }
+    a {
+      display: block;
+      font-weight: 500;
+      font-size: var(--font-content-xl);
+      width: 120px;
+      flex-shrink: 0;
+      color: var(--primary-50);
+      ${tabletMore`
+        font-weight: 600;
+        font-size: var(--font-content-xxxl);
+        width: 185px;
+      `}
+    }
+    p {
+      font-size: var(--font-label-xs);
+      color: var(--gray-40);
+      ${tabletMore`
+        font-size: var(--font-content-s);
+      `}
+    }
+  }
+  .desc {
+    font-size: var(--font-label-xs);
+    color: var(--gray-40);
+    margin-bottom: 1rem;
+    ${tabletMore`
+      font-size: var(--font-content-m);
+      margin-bottom: 1.5rem;
+    `}
+  }
+  button {
+    width: 140px;
+    height: 50px;
+    font-size: var(--font-content-m);
+    ${tabletMore`
+      width: 240px;
+      height: 50px;
+    `}
+  }
+`;
+
 export const CCFnQWrap = styled.div`
   .search {
     width: 100%;
-    margin: 36px 0;
+    margin: 15px 0;
     background-color: #252525;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4rem;
-    padding: 4.5rem 0;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    ${tabletMore`
+      margin: 36px 0;
+      gap: 4rem;
+      padding: 4.5rem 0;
+    `}
     h2 {
-      font-size: var(--font-content-xxl-tablet);
+      display: block;
+      font-size: var(--font-content-l);
+      margin-top: 4px;
+      ${tabletMore`
+        font-size: var(--font-content-xxl-tablet);
+      `}
     }
     form {
       display: flex;
-      gap: 2.5rem;
+      ${tabletMore`
+        gap: 2.5rem;
+      `}
       input {
-        width: 557px;
-        height: 60px;
+        width: 360px;
+        height: 37px;
         background-color: var(--gray-80);
         border: none;
+        font-size: var(--font-label-xs);
+        ${tabletMore`
+          width: 557px;
+          height: 60px;
+        `}
       }
       button {
-        height: 60px;
-        width: 119px;
+        display: none;
+        ${tabletMore`
+          display: block;
+          width: 119px;
+          height: 60px;
+        `}
       }
     }
     .example {
       display: flex;
-      gap: 2.7rem;
-      margin-bottom: 1.5rem;
+      ${tabletMore`
+        gap: 2.7rem;
+        margin-bottom: 1.5rem;
+      `}
       h3 {
-        font-size: var(--font-content-l);
-        color: var(--gray-50);
+        display: none;
+        ${tabletMore`
+          display: block;
+          font-size: var(--font-content-l);
+          color: var(--gray-50);
+      `}
       }
       .tagList {
         display: flex;
         gap: 1rem;
         button {
+          font-size: var(--font-label-xs);
+          width: 101px;
           height: 24px;
         }
       }

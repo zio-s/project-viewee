@@ -11,15 +11,18 @@ export const QnAWrap = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 0 8rem;
-    margin-top: 16.4rem;
+    margin-top: 4.3rem;
     .info {
       display: flex;
       flex-direction: column;
       gap: 5rem;
+      width: 37%;
+      height: 944px;
       .title {
         display: flex;
         flex-direction: column;
         gap: 1.4rem;
+        align-items: flex-start;
         h2 {
           width: 410px;
           font-size: var(--font-title-m-tablet);
@@ -31,40 +34,74 @@ export const QnAWrap = styled.div`
         }
       }
       img {
-        width: 743px;
-        height: 504px;
+        width: 533px;
+        height: 790px;
         object-fit: cover;
       }
     }
     .inputBox {
       background-color: #0f0f0f;
       padding: 5rem;
-      border: 1px solid var(--gray-80);
+      border: 1px solid #262626;
       border-radius: 12px;
+      width: 50%;
+      height: 100%;
       .submitQuestion {
         display: flex;
         flex-direction: column;
         gap: 5rem;
         font-size: var(--font-content-m);
+        .itemWrap1 {
+          display: flex;
+          gap: 5rem;
+          .name {
+            flex: 1;
+          }
+          .id {
+            flex: 1;
+          }
+        }
+        .itemSet {
+          display: flex;
+          gap: 3rem;
+          .email {
+            display: flex;
+            gap: 1.5rem;
+            .emailInput {
+              display: flex;
+              gap: 0.8rem;
+              align-items: center;
+              input {
+                width: 100%;
+              }
+            }
+          }
+          .phone {
+            display: flex;
+            gap: 1.5rem;
+            .phoneInput {
+              display: flex;
+              gap: 0.8rem;
+              input {
+                width: 100%;
+              }
+            }
+          }
+        }
         .item {
           display: flex;
           flex-direction: column;
           gap: 1.6rem;
           input {
+            height: 60px;
             color: var(--gray-40);
             background-color: var(--gray-90);
             border: 1px solid var(--gray-80);
           }
         }
-        .name {
-          input {
-            width: 485px;
-            height: 67px;
-          }
-        }
         .question {
+          width: 100%;
           textarea {
-            width: 450px;
             height: 125px;
             color: var(--gray-40);
             padding: 2rem;
@@ -75,24 +112,79 @@ export const QnAWrap = styled.div`
             border-radius: 8px;
           }
         }
-        .itemSet {
+      }
+    }
+    .category {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem 5rem;
+        [type='radio'] {
+          position: relative;
+          width: 20px;
+          height: 20px;
+          appearance: none;
+          border: 1px solid white;
+          border-radius: 50%;
+          accent-color: #f05a7e;
+          box-sizing: border-box;
+        }
+        [type='radio']:checked {
+          border-color: #f05a7e;
+        }
+        [type='radio']:checked::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 12px;
+          height: 12px;
+          background-color: #f05a7e;
+          border-radius: 50%;
+          border: 1px solid #f05a7e;
+        }
+        div {
           display: flex;
-          gap: 5rem;
-          input {
-            width: 215px;
-            height: 67px;
+          align-items: center;
+          gap: 1.2rem;
+          label {
+            font-size: var(--font-content-m);
           }
         }
+      }
+    }
+    .title {
+      width: 100%;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      input {
+        height: 60px;
+        background-color: var(--gray-90);
+        border: 1px solid var(--gray-80);
+        flex: 1;
       }
     }
     .agree {
       display: flex;
       gap: 5rem;
+      color: var(--gray-50);
+      justify-content: space-between;
       .labelBox {
         gap: 1rem;
         .iconBox {
           padding: 0.4rem;
         }
+      }
+      button {
+        width: 150px;
+        height: 60px;
+        font-size: var(--font-content-l);
+        height: 600;
       }
     }
     .faq {
@@ -170,8 +262,8 @@ export const QnAWrap = styled.div`
           }
           .border {
             width: 100%;
-            border-bottom: 1px solid transparent;
-            border-image: linear-gradient(
+            height: 1px;
+            background: linear-gradient(
               to right,
               rgba(240, 90, 126, 0) 0%,
               rgba(240, 90, 126, 1) 17%,

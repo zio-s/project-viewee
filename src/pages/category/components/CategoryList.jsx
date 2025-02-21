@@ -10,11 +10,13 @@ const CategoryList = ({ data, category, onLoadMore, hasMore, isLoading }) => {
 
   const handleItemClick = useCallback(
     (item) => {
-      navigate(`/${category}/${item.id}`, {
-        state: { type: item.first_air_date ? 'tv' : 'movie' },
+      const mediaType = item.media_type || (item.first_air_date ? 'tv' : 'movie');
+
+      navigate(`/${mediaType}/${item.id}`, {
+        state: { type: mediaType },
       });
     },
-    [category, navigate]
+    [navigate]
   );
 
   const handleObserver = useCallback(

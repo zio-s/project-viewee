@@ -1,11 +1,15 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { QnAWrap } from './style';
 import Input from '../../../ui/input';
 import CheckBox from '../../../ui/checkbox';
 import Button from '../../../ui/button/defaultButton';
 import { useState } from 'react';
+import { authActions } from '../../../store/modules/authSlice';
+import { useNavigate } from 'react-router';
 
 const QnA = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [faq, setFaq] = useState([
     {
       id: 1,
@@ -64,7 +68,48 @@ const QnA = () => {
     setFaq((prevFaq) => prevFaq.map((item) => (item.id === id ? { ...item, toggle: !item.toggle } : item)));
     console.log(faq[id - 1]);
   };
+  const Phone = user.phone.split('-');
+  const firstPhone = Phone[0];
+  const secondPhone = Phone[1];
+  const thirdPhone = Phone[2];
 
+  const email = user.userEmail.split('@');
+  const id = email[0];
+  const domain = email[1];
+  console.log(id)
+
+  const [category, setCategory] = useState('사이트 이용');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [isAgree, setIsAgree] = useState(false);
+
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  const onChangeCategory = (e) => {
+    setCategory(e.target.value);
+  };
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
+  const onChangeAgree = (e) => {
+    setIsAgree(e.target.checked);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (title.trim() === '' || content.trim() === '') {
+      alert('제목과 내용을 모두 입력하세요.');
+      return;
+    } else if (!isAgree) {
+      alert('개인정보 수집 및 이용에 동의하셔야 합니다.');
+      return;
+    } else {
+      const requested = { category: category, title: title, content: content };
+      dispatch(authActions.addRequested(requested));
+      navigate('/mypage');
+    }
+  };
   return (
     <QnAWrap>
       <div className="contentWrap">
@@ -77,29 +122,147 @@ const QnA = () => {
         </div>
         <div className="inputBox">
           {user ? (
-            <form className="submitQuestion">
+            <form className="submitQuestion" onSubmit={onSubmit}>
               {' '}
-              <div className="name item">
-                <p>이름</p>
-                <Input type="text" variant="gray" value={user.username} />
+              <div className="itemWrap1">
+                <div className="name item">
+                  <p>이름</p>
+                  <Input type="text" variant="gray" value={user.username} />
+                </div>
+                <div className="id item">
+                  <p>아이디</p>
+                  <Input type="text" variant="gray" value={user.userId} />
+                </div>
               </div>
               <div className="itemSet">
                 <div className="email item">
                   <p>Email</p>
-                  <Input type="text" variant="gray" value={user.userId} />
-                </div>
+                  <div className="emailInput">
+                    <Input type="text" variant="gray" value={id} />
+                    @
+                    <Input type="text" variant="gray" value={domain} />
+                  </div>
+                  </div>
                 <div className="phone item">
                   <p>휴대폰 번호</p>
-                  <Input variant="gray" type="text" value={user.phone} />
+                  <div className="phoneInput">
+
+                    <Input variant="gray" type="text" value={firstPhone} />
+                    <Input variant="gray" type="text" value={secondPhone} />
+                    <Input variant="gray" type="text" value={thirdPhone} />
+                  </div>
                 </div>
+              </div>
+              <div className="category">
+                <p>문의 종류</p>
+                <form>
+                  <div>
+                    <input
+                      type="radio"
+                      id="site"
+                      name="questionType"
+                      value="사이트 이용"
+                      onChange={onChangeCategory}
+                      defaultChecked
+                    />
+                    <label htmlFor="site">사이트 이용</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="login"
+                      name="questionType"
+                      onChange={onChangeCategory}
+                      value="회원/로그인"
+                    />
+                    <label htmlFor="login">회원/로그인</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="disability"
+                      onChange={onChangeCategory}
+                      name="questionType"
+                      value="장애신고"
+                    />
+                    <label htmlFor="disability">장애신고</label>
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      id="refund"
+                      name="questionType"
+                      value="환불/해지 신청"
+                      onChange={onChangeCategory}
+                    />
+                    <label htmlFor="refund">환불/해지 신청</label>
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      id="content"
+                      name="questionType"
+                      value="콘텐츠/채널"
+                      onChange={onChangeCategory}
+                    />
+                    <label htmlFor="content">콘텐츠/채널</label>
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      id="usage"
+                      name="questionType"
+                      value="이용 불편사항"
+                      onChange={onChangeCategory}
+                    />
+                    <label htmlFor="usage">이용 불편사항</label>
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      id="suggestion"
+                      name="questionType"
+                      value="서비스 제안"
+                      onChange={onChangeCategory}
+                    />
+                    <label htmlFor="suggestion">서비스 제안</label>
+                  </div>
+
+                  <div>
+                    <input type="radio" id="etc" name="questionType" value="기타" onChange={onChangeCategory} />
+                    <label htmlFor="etc">기타</label>
+                  </div>
+                </form>
+              </div>
+              <div className="title">
+                <p>문의 제목</p>
+                <Input
+                  type="text"
+                  placeholder="문의사항 제목"
+                  variant="gray"
+                  name="title"
+                  value={title}
+                  onChange={onChangeTitle}
+                />
               </div>
               <div className="question item">
                 <p>문의 내용</p>
-                <textarea type="text" placeholder="문의하실 내용을 적어주세요" />
+                <textarea
+                  type="text"
+                  placeholder="문의하실 내용을 적어주세요"
+                  value={content}
+                  onChange={onChangeContent}
+                />
               </div>
               <div className="agree">
-                <CheckBox>이용 약관 및 개인정보 보호정책에 동의합니다</CheckBox>
-                <Button type="submit">문의 하기</Button>{' '}
+                <CheckBox variant="primary" id="agree" onChange={onChangeAgree}>
+                  개인정보 수집 및 이용 동의
+                </CheckBox>
+                <Button type="submit">문의하기</Button>{' '}
               </div>
             </form>
           ) : (

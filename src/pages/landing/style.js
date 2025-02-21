@@ -9,11 +9,11 @@ export const LandingWrap = styled.div`
   gap: 200px;
   background-color: #1e1e1e;
   overflow: hidden;
-  & > div {
+  /* & > div {
     min-height: 100vh;
     position: relative;
     z-index: 1;
-  }
+  } */
   & > div:not(:last-child) {
     margin-bottom: 100vh;
   }

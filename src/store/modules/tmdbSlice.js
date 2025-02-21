@@ -1,59 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getContent } from './getThunk';
-
+import { MainPageData } from './getThunk';
 const initialState = {
-  movies: {
-    data: [],
-    currentPage: 1,
-    totalPages: 1,
-  },
-  tvShows: {
-    data: [],
-    currentPage: 1,
-    totalPages: 1,
-  },
+  trending: [],
+  hot: [],
+  review: [],
+  upcoming: [],
+  nowPlaying: [],
   loading: false,
   error: null,
 };
 
-export const contentSlice = createSlice({
-  name: 'content',
+const tmdbRSlice = createSlice({
+  name: 'tmdbR',
   initialState,
-  reducers: {
-    setPage: (state, action) => {
-      const { contentType, page } = action.payload;
-      if (contentType === 'movie') {
-        state.movies.currentPage = page;
-      } else {
-        state.tvShows.currentPage = page;
-      }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getContent.pending, (state) => {
+      .addCase(MainPageData.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
-      .addCase(getContent.fulfilled, (state, action) => {
-        const { type, data, currentPage, totalPages } = action.payload;
-        const contentState = type === 'movie' ? state.movies : state.tvShows;
-        contentState.data = data;
-
-        contentState.currentPage = currentPage;
-        contentState.totalPages = totalPages;
-        state.loading = false;
-        state.loading = false;
-        state.currentPage = currentPage;
-        state.totalPages = totalPages;
+      .addCase(MainPageData.fulfilled, (state, action) => {
+        state.trending = action.payload.trending;
+        state.hot = action.payload.hot;
+        state.upcoming = action.payload.upcoming;
+        state.nowPlaying = action.payload.nowPlaying;
+        state.review = action.payload.review;
         state.loading = false;
       })
-      .addCase(getContent.rejected, (state, action) => {
+      .addCase(MainPageData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.error;
       });
   },
 });
 
-export const tmdbActions = contentSlice.actions;
-export default contentSlice.reducer;
+export const { addToRecentlyViewed, addToContinueWatching } = tmdbRSlice.actions;
+export default tmdbRSlice.reducer;
