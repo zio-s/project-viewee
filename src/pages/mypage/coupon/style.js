@@ -3,9 +3,14 @@ import styled, { css } from 'styled-components';
 export const CouponWrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10rem 24rem;
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s ease;
-  max-width: 1440px;
+
+  .wrap{
+    padding: 10rem 5rem;
+    max-width: 1440px;
+  }
   h2 {
     font-size: var(--font-content-xxxl);
   }

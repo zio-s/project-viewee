@@ -14,6 +14,7 @@ const CustomerCenter = () => {
   };
   return (
     <CustomerWrap>
+      <div className='wrap'>
       <h2>고객센터</h2>
       <CCNav isActive={isActive} changeTap={changeTap} />
       {isActive === 'notice' ? (
@@ -27,6 +28,7 @@ const CustomerCenter = () => {
       ) : (
         <NotFiles />
       )}
+      </div>
     </CustomerWrap>
   );
 };
