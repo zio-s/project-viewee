@@ -151,7 +151,7 @@ export const TagSectionWrapper = styled.div`
     `}
   ${tabletMore`
    margin: 75px 0;
-   overflow:visible;
+   overflow:visible
     `}
   width: 100%;
   .swiper {
@@ -486,6 +486,10 @@ export const MarqueeWrapper2 = styled.ul`
 `;
 
 export const MarqueeItem = styled.li`
+  img {
+    width: 100%;
+    height: 100%;
+  }
   width: 160px;
   height: 80px;
   background: #333333;
@@ -523,11 +527,21 @@ export const HoverModalWrap = styled.div`
         height: 60px;
       }
       .moreButton {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
         margin-left: auto;
         background: transparent;
         border: 1px solid var(--gray-60);
+        color: white;
+      }
+
+      .moreButton:hover,
+      .steamedButton:hover,
+      .likeButton:hover {
+        border-color: white;
+      }
+      .button:hover {
+        background: var(--primary-60);
       }
 
       .moreButton:hover,
@@ -556,7 +570,7 @@ export const HoverModalWrap = styled.div`
     }
     .textArea {
       display: flex;
-      gap: 30px;
+      gap: 10px;
       align-items: center;
       margin: 25px 0;
       font-size: 16px;
@@ -570,6 +584,12 @@ export const HoverModalWrap = styled.div`
         align-items: center;
 
         gap: 4px;
+      }
+      .dot {
+        width: 4px;
+        height: 4px;
+        background: #5a5a5a;
+        border-radius: 20px;
       }
     }
   }

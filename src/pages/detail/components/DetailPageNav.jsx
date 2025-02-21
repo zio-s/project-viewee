@@ -35,12 +35,12 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
   useEffect(() => {
     if (hasEpisodes) {
       setCurrentTab('episode');
-      changeContent('episode', <Episode />);
+      changeContent('episode', <Episode/>); 
     } else {
       setCurrentTab('recommend');
-      changeContent('recommend', <Recommended />);
+      changeContent('recommend', <Recommended/>); 
     }
-  }, [hasEpisodes, changeContent]);
+  }, [hasEpisodes, changeContent, detail]);
 
   const handleTabClick = (tab, content) => {
     setCurrentTab(tab);
@@ -52,14 +52,14 @@ const DetailPageNav = ({ activeTab, changeContent }) => {
       {hasEpisodes && (
         <li
           className={currentTab === 'episode' ? 'active' : ''}
-          onClick={() => handleTabClick('episode', <Episode detail={detail} />)}
+          onClick={() => handleTabClick('episode', <Episode/>)}
         >
           에피소드
         </li>
       )}
       <li
         className={currentTab === 'recommend' ? 'active' : ''}
-        onClick={() => handleTabClick('recommend', <Recommended />)}
+        onClick={() => handleTabClick('recommend', <Recommended/>)} 
       >
         추천
       </li>

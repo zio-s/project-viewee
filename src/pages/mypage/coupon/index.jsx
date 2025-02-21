@@ -42,6 +42,7 @@ const Coupon = () => {
   };
   return (
     <CouponWrap>
+      <div className='wrap'>
       <h2>나의 할인 쿠폰</h2>
       <div className="content">
         <form className="inputCoupon" onSubmit={onsubmit}>
@@ -92,6 +93,7 @@ const Coupon = () => {
             <li>쿠폰은 상업적 용도로 사용하거나 매매하실 수 없습니다.</li>
           </ul>
         </div>
+      </div>
       </div>
     </CouponWrap>
   );

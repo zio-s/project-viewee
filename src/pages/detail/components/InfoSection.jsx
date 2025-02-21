@@ -73,6 +73,7 @@ const InfoSection = ({ changeContent, id }) => {
         </div>
         <div className="info-wrapper">
           <h2>{contentTitle}</h2>
+          <span className='overview'>{overview}</span>
           <div className="movie-details">
             <div className="detail-row">
               <span className="label">개봉</span>
@@ -93,10 +94,6 @@ const InfoSection = ({ changeContent, id }) => {
             <div className="detail-row">
               <span className="label">등급</span>
               <span className="value">{getRating()}</span>
-            </div>
-            <div className="detail-row">
-              <span className="label">개요</span>
-              <span className="value">{overview}</span>
             </div>
           </div>
           <div className="navigation-icons"></div>

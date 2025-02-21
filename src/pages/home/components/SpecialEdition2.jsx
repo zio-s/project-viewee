@@ -6,38 +6,38 @@ import { motion } from 'framer-motion';
 const CardData = [
   {
     bannerImage: '/images/banenrFigure1.png',
-    logo: '/images/bannerLogo1.png',
-    icon: '/images/bannerIcon1.png',
-    item: '/images/bannerItem1.png',
-    text: '길복순',
-    boldText: '죽을 때 까지 숨길 것 \n숨기지 못한다면 죽일 것',
+    logo: '/images/banner2Logo1.png',
+    icon: '/images/banner2Icon1.png',
+    item: '/images/banner2Item1.png',
+    text: '너의 결혼식',
+    boldText: '이 사람이구나 느낌이 오는 시간이 3초래',
   },
   {
     bannerImage: '/images/bannerFigure2.png',
-    logo: '/images/bannerLogo2.png',
-    icon: '/images/bannerIcon2.png',
-    item: '/images/bannerItem2.png',
-    text: 'D.P.',
-    boldText: '나는 군인을 잡는\n군인이다',
+    logo: '/images/banner2Logo2.png',
+    icon: '/images/banner2Icon2.png',
+    item: '/images/banner2Item1.png',
+    text: '정신병동에도 아침이 와요',
+    boldText: `안녕하세요! '다시' 좋은 아침입니다!`,
   },
   {
     bannerImage: '/images/bannerFigure3.png',
-    logo: '/images/bannerLogo3.png',
-    icon: '/images/bannerIcon3.png',
-    item: '/images/bannerItem3.png',
-    text: '유퀴즈온더블럭',
-    boldText: '구교환의 \n구며들 수밖에 없는 모먼트',
+    logo: '/images/banner2Logo3.png',
+    icon: '/images/banner2Icon3.png',
+    item: '/images/banner2Item3.png',
+    text: '나영석의 와글와글',
+    boldText: `MBTI 'I'들만 모인 오후의 티타임`,
   },
 ];
 
-const SpecialEdition = () => {
+const SpecialEdition2 = () => {
   return (
     <CardContainer>
       {CardData.map((data, index) => (
         <Card className="inner" key={index}>
           <motion.div className="bannerWrapper" whileHover="hover">
             <Banner bgImage={data.bannerImage} className="banner">
-              <img src={data.logo} alt="" className={`bannerLogo${index + 1}`} />
+              <img src={data.logo} alt="" className={`banner2Logo${index + 1}`} />
               <ActiveText className="activeText">
                 <div className="">액션 & 범죄</div>
                 <div
@@ -67,7 +67,7 @@ const SpecialEdition = () => {
             <motion.img
               src={data.item}
               alt=""
-              className={`bannerItem${index + 1}`}
+              className={`banner2Item${index + 1}`}
               variants={{
                 hover: {
                   y: [-5, -10, -5],
@@ -79,7 +79,7 @@ const SpecialEdition = () => {
 
           <div className="textArea">
             <div>
-              <img src={data.icon} alt="" className={`bannerIcon${index + 1}`} />
+              <img src={data.icon} alt="" className={`banner2Icon${index + 1}`} />
             </div>
             <Text>{data.text}</Text>
             <BoldText>{data.boldText}</BoldText>
@@ -90,4 +90,4 @@ const SpecialEdition = () => {
   );
 };
 
-export default SpecialEdition;
+export default SpecialEdition2;

@@ -76,12 +76,12 @@ const QnA = () => {
   const email = user.userEmail.split('@');
   const id = email[0];
   const domain = email[1];
+  console.log(id)
 
   const [category, setCategory] = useState('사이트 이용');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isAgree, setIsAgree] = useState(false);
-  console.log(isAgree);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -135,17 +135,18 @@ const QnA = () => {
                 </div>
               </div>
               <div className="itemSet">
+                <div className="email item">
+                  <p>Email</p>
+                  <div className="emailInput">
+                    <Input type="text" variant="gray" value={id} />
+                    @
+                    <Input type="text" variant="gray" value={domain} />
+                  </div>
+                  </div>
                 <div className="phone item">
                   <p>휴대폰 번호</p>
                   <div className="phoneInput">
-                    <div className="email item">
-                      <p>Email</p>
-                      <div className="emailInput">
-                        <Input type="text" variant="gray" value={id} />
-                        @
-                        <Input type="text" variant="gray" value={domain} />
-                      </div>
-                    </div>
+
                     <Input variant="gray" type="text" value={firstPhone} />
                     <Input variant="gray" type="text" value={secondPhone} />
                     <Input variant="gray" type="text" value={thirdPhone} />
