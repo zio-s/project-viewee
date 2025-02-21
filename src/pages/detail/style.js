@@ -10,6 +10,7 @@ export const MovieInfoSection = styled.div`
 
   .movie-content {
     display: flex;
+    flex-shrink: 0;
     gap: 30px;
   }
   .poster-wrapper {
@@ -20,6 +21,7 @@ export const MovieInfoSection = styled.div`
       width: 100%;
       height: 100%; 
       border-radius: 5px;
+      object-fit: cover;
     }
   }
   .info-wrapper {
@@ -31,6 +33,7 @@ export const MovieInfoSection = styled.div`
     .overview{
       font-size: var(--font-lebel-l);
       margin-bottom: 40px;
+      display: block;
     }
   }
     
@@ -77,6 +80,8 @@ export const CardBox = styled.div`
     flex-direction: column; 
     overflow: hidden;
     height: 100%;  
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
     
     .content {
     display: flex;
@@ -87,12 +92,12 @@ export const CardBox = styled.div`
     width: 345px;
     height: 195px; 
     flex-shrink: 0;
+    border-radius: 5px;
 
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        border-radius: 5px;
+        object-fit: cover; 
       }
     }
     
@@ -124,6 +129,38 @@ export const CardBox = styled.div`
       overflow: hidden;
     }
   }
+
+.episodes-list {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.swiper-slide{
+  width: 200px;
+}
+.episode-detail {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  h4{
+
+  }
+  p{
+
+  }
+}
+
+.episode-detail img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.episode-detail:hover {
+  transform: scale(1.05);
+}
+
+
 
   
   @media (max-width: 1024px) {
@@ -204,6 +241,7 @@ export const HeroSectionWrapper = styled.section`
   justify-content: center;
   .inner{
   max-width: 1440px;
+  height: 100%;
   margin: 0 auto; 
   padding: 0; 
 
@@ -233,6 +271,7 @@ export const HeroContent = styled.div`
   position: absolute;
   z-index: 1;
   text-align: left;
+  bottom: 50px;
 
   h1 {
     font-size: var(--font-title-s);
@@ -248,12 +287,6 @@ export const HeroContent = styled.div`
     margin-bottom : 30px;
     font-size: var(--font-content-s);
     cursor: pointer;
-    text-decoration: underline;
-    &:hover{
-      transform: scale(1.1);
-      transition: transform 0.3s ease-in-out;
-    }
-
   }
 `;
 
@@ -272,23 +305,17 @@ export const Actions = styled.div`
     transition: color 0.3s ease-in-out;
 
     &:hover {
-      color: var(--primary-50);
-      transform: scale(1.2);
+      color: var(--hover-color);
       transition: transform 0.3s ease-in-out;
-    }
-
-    svg {
+      transform: scale(1.2);
+      
+      svg {
       margin-bottom: 5px;
-      color: white;
-      transition: transform 0.3s ease-in-out, color 0.2s ease-in-out, filter 0.3s ease-in-out;
-
-      &:hover {
-        color: var(--primary-50);
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 8px var(--primary-50));
-        transition: transform 0.3s ease-in-out;
-      }
+      color: var(--hover-color);
     }
+    }
+
+    
   }
 `;
 
@@ -314,16 +341,14 @@ export const TabMenu = styled.ul`
     padding: 0 30px;
     border-radius: 5px;
     font-size: var(--font-content-m);
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
     &:hover {
         color: var(--hover-color);
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 8px var(--primary-50));
-        transition: transform 0.3s ease-in-out;
+        
       }
 
     &.active {
         color: var(--hover-color);
-        transition: transform 0.3s ease-in-out;
     }
   }
 `;
