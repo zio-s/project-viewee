@@ -5,7 +5,8 @@ const initialState = {
     {
       id: 1,
       username: '김미선',
-      userId: 'test@test.com',
+      userId: 'test',
+      userEmail: 'test@test.com',
       password: '123456',
       phone: '010-0000-0000',
       gender: 'female',
@@ -32,11 +33,13 @@ export const authSlice = createSlice({
   reducers: {
     signup: (state, action) => {
       const { username, userId, password, phone, gender, birth } = action.payload;
+      const splitEmail = userId.split('@')[0];
       const newId = state.joinData.length + 1;
       const newUser = {
         id: newId,
         username: username,
-        userId: userId,
+        userId: splitEmail,
+        userEmail: userId,
         password: password,
         phone: phone,
         gender: gender,
@@ -107,10 +110,35 @@ export const authSlice = createSlice({
     },
     changeUserImg: (state, action) => {
       state.user.profileImg = action.payload;
+      state.joinData = state.joinData.map((item) => {
+        if (item.id === state.user.id) {
+          return {
+            ...item,
+            profileImg: action.payload,
+          };
+        }
+        return item;
+      });
+      state.prevUser = state.user;
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('prevUser', JSON.stringify(state.prevUser));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
     },
     changeUserName: (state, action) => {
-      const changeName = action.payload;
-      state.joinData.find((item) => item.id === state.user.id).username = changeName;
+      state.user.username = action.payload;
+      state.joinData = state.joinData.map((item) => {
+        if (item.id === state.user.id) {
+          return {
+            ...item,
+            username: action.payload,
+          };
+        }
+        return item;
+      });
+      state.prevUser = state.user;
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('prevUser', JSON.stringify(state.prevUser));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
     },
     changeReviewRate: (state, action) => {
       const { id, index } = action.payload;
@@ -144,11 +172,57 @@ export const authSlice = createSlice({
     },
     couponAdd: (state, action) => {
       state.user.coupon.push(action.payload);
+      state.joinData = state.joinData.map((item) => {
+        if (item.id === state.user.id) {
+          return {
+            ...item,
+            coupon: [...item.coupon, action.payload],
+          };
+        }
+        return item;
+      });
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
     couponUse: (state, action) => {
       const id = action.payload;
       state.user.coupon = state.user.coupon.map((item) => (item.id === id ? { ...item, used: true } : item));
       state.user.isMembershiped = true;
+      state.joinData = state.joinData.map((item) => {
+        if (item.id === state.user.id) {
+          return {
+            ...item,
+            isMembershiped: true,
+            coupon: item.coupon.filter((item) => item.id !== id),
+          };
+        }
+        return item;
+      });
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
+    addRequested: (state, action) => {
+      const { category, title, content } = action.payload;
+      const id = state.user.requested.length + 1;
+      const rState = '처리중';
+      const nowDate = new Date();
+      const date = `${nowDate.getFullYear()}-${
+        nowDate.getMonth() + 1 <= 9 ? '0' + nowDate.getMonth() : nowDate.getMonth()
+      }-${nowDate.getDate()}`;
+      const requested = { id: id, category: category, title: title, state: rState, date: date, content: content };
+      state.joinData = state.joinData.map((item) => {
+        if (item.id === state.user.id) {
+          return {
+            ...item,
+            requested: [...item.requested, requested],
+          };
+        }
+        return item;
+      });
+
+      state.user.requested.push(requested);
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
   },
 });

@@ -13,10 +13,11 @@ import {
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../../store/modules/authSlice';
 
-const UserDropdown = ({ authed }) => {
+const UserDropdown = ({ authed, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -55,25 +56,58 @@ const UserDropdown = ({ authed }) => {
       {isOpen && (
         <DropdownMenu>
           <ProfileSection>
-            <ProfileTitle>프로필</ProfileTitle>
+            <ProfileTitle>
+              {user.profileImg && <img src={`${user.profileImg}`} />}
+              {user.username ? <span>{user.username}</span> : <span>프로필</span>}
+            </ProfileTitle>
             <ProfileSubtitle to="/changeprofile">프로필 전환</ProfileSubtitle>
           </ProfileSection>
 
           <MenuItem to="/mypage" onClick={() => setIsOpen(false)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
+                fill="currentColor"
+              />
+            </svg>
             마이페이지
           </MenuItem>
           <MenuItem to="/subscribe" onClick={() => setIsOpen(false)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 4H4C2.89 4 2.01 4.89 2.01 6L2 18C2 19.11 2.89 20 4 20H20C21.11 20 22 19.11 22 18V6C22 4.89 21.11 4 20 4ZM20 18H4V12H20V18ZM20 8H4V6H20V8Z"
+                fill="currentColor"
+              />
+            </svg>
             이용권
           </MenuItem>
           <MenuItem to="/coupon" onClick={() => setIsOpen(false)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.42L11.59 21.42C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.77 11.94 21.41 11.58ZM5.5 7C4.67 7 4 6.33 4 5.5C4 4.67 4.67 4 5.5 4C6.33 4 7 4.67 7 5.5C7 6.33 6.33 7 5.5 7Z"
+                fill="currentColor"
+              />
+            </svg>
             쿠폰함
           </MenuItem>
           <MenuItem to="/support" onClick={() => setIsOpen(false)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 19H11V17H13V19ZM15.07 11.25L14.17 12.17C13.45 12.9 13 13.5 13 15H11V14.5C11 13.4 11.45 12.4 12.17 11.67L13.41 10.41C13.78 10.05 14 9.55 14 9C14 7.9 13.1 7 12 7C10.9 7 10 7.9 10 9H8C8 6.79 9.79 5 12 5C14.21 5 16 6.79 16 9C16 9.88 15.64 10.68 15.07 11.25Z"
+                fill="currentColor"
+              />
+            </svg>
             고객센터
           </MenuItem>
 
           <Divider />
           <MenuItem to="/" onClick={logout}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M17 7L15.59 8.41L18.17 11H8V13H18.17L15.59 15.58L17 17L22 12L17 7ZM4 5H12V3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H12V19H4V5Z"
+                fill="currentColor"
+              />
+            </svg>
             로그아웃
           </MenuItem>
         </DropdownMenu>

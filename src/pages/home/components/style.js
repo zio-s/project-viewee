@@ -60,6 +60,17 @@ export const EditionbackWrapper = styled.div`
     height: 739px;
   }
 
+  .backgroundParticle {
+    z-index: 1000;
+    top: 467px;
+    right: 327px;
+    position: absolute;
+    background-image: url(/images/backgroundParticle.png);
+    background-size: cover;
+    width: 989px;
+    height: 739px;
+  }
+
   .backgroundFigure1 {
     position: absolute;
     top: 538px;

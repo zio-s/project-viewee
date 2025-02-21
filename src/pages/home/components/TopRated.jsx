@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
 import {
@@ -12,8 +12,14 @@ import {
   NewSectionWrapper,
   SlideNumber,
 } from '../style';
+import { GiConsoleController } from 'react-icons/gi';
+import { useNavigate } from 'react-router';
+import { getContentDetail } from '../../../store/modules/getThunk';
+import { useDispatch } from 'react-redux';
 
-const TopRated = () => {
+const TopRated = ({ hotData }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     // Swiper가 초기화될 때, DOM에 요소가 모두 렌더링된 이후에 실행되도록
     const swiper = new Swiper('.new-card-carousel2', {
@@ -36,6 +42,27 @@ const TopRated = () => {
       swiper.destroy();
     };
   }, []);
+
+  const getDetail = (content) => {
+    const { id, media_type = 'movie' } = content;
+
+    if (['movie', 'tv'].includes(media_type)) {
+      dispatch(
+        getContentDetail({
+          type: media_type,
+          id: id,
+        })
+      );
+    }
+  };
+  const onGo = (content) => {
+    console.log('Navigating with content:', content);
+    const mediaType = content.media_type;
+    if (!mediaType) {
+      console.warn('Missing media_type for navigation:', content);
+    }
+    navigate(`/${content.media_type || 'movie'}/${content.id}`);
+  };
 
   return (
     <>
@@ -61,11 +88,19 @@ const TopRated = () => {
 
         <RatedSwiperContainer className="new-card-carousel2">
           <RatedSwiperWrapper className="swiper-wrapper">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-              <RatedSwiperSlide key={num} className="swiper-slide">
-                {/* <img src={`./img/main/movie${num}.jpg`} alt={`Movie ${num}`} /> */}
+            {hotData.slice(0, 8).map((content, index) => (
+              <RatedSwiperSlide
+                key={content.id}
+                className="swiper-slide"
+                onClick={() => onGo(content)}
+                onMouseEnter={() => getDetail(content)}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${content.poster_path}`}
+                  alt={content.title || content.name}
+                />
                 <SlideNumber>
-                  <img src={`/images/rank${num}.png`} alt={`1`} />
+                  <img src={`/images/rank${index + 1}.png`} alt={`Rank ${index + 1}`} />
                 </SlideNumber>
               </RatedSwiperSlide>
             ))}

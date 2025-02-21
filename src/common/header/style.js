@@ -11,7 +11,6 @@ export const HeaderWrap = styled.header`
     height: 72px;
     `}
   .header_inner {
-    width: 100%;
     box-sizing: border-box;
     position: relative;
     display: flex;
@@ -41,6 +40,7 @@ export const HeaderWrap = styled.header`
       padding: 1.4rem 5rem ;
     `}
     a {
+      z-index: 10;
       img {
         width: 100%;
       }
@@ -114,8 +114,7 @@ export const TopMenu = styled.ul`
     display: flex;
     width: 100%;
     justify-content: end;
-    align-items: center;
-    z-index: 9999;
+    align-items: center;  
     ${mobileMore`
       top: 50%;
       right: 35px;
@@ -158,22 +157,38 @@ export const SearchContainer = styled.div`
   transform: translateY(${(props) => (props.$isOpen ? '0' : '-100%')});
   opacity: ${(props) => (props.$isOpen ? '1' : '0')};
   transition: all 0.3s ease-in-out;
+
   .searchBg {
-    background-color: #2b2a2a;
-    padding: 6.25rem 3.125rem;
+    background-color: var(--background-secondary);
+    padding: var(--p-mobile);
+
+    ${mobileMore`
+      padding: 3.125rem;
+    `}
+
+    ${tabletMore`
+      padding: 6.25rem 3.125rem;
+    `}
   }
 `;
 
 export const SearchInner = styled.div`
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding-top: 6.25rem;
+  padding-top: 94px;
 
-  @media (max-width: 768px) {
+  ${mobileMore`
     padding-top: 80px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+    padding-left: var(--p-tablet);
+    padding-right: var(--p-tablet);
+  `}
+
+  ${tabletMore`
+    max-width: var(--layout);
+    padding-top: 6.25rem;
+    padding-left: 0;
+    padding-right: 0;
+  `}
 `;
 
 export const SearchForm = styled.form`
@@ -183,28 +198,34 @@ export const SearchForm = styled.form`
 
 export const SearchInput = styled.input`
   width: 100%;
-  height: 50px;
+  height: 40px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 30px;
   text-indent: 36px;
   border: none;
-  color: white;
-  font-size: 24px;
+  color: var(--text-primary);
+  font-size: var(--font-content-l-mobile);
   padding: 10px 0;
   transition: border-color 0.3s ease;
 
   &:focus {
     outline: none;
-    border-bottom-color: white;
+    border-bottom-color: var(--text-primary);
   }
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
   }
 
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
+  ${mobileMore`
+    height: 45px;
+    font-size: var(--font-content-l);
+  `}
+
+  ${tabletMore`
+    height: 50px;
+    font-size: var(--font-content-xl);
+  `}
 `;
 
 export const ClearButton = styled.button`
@@ -214,12 +235,21 @@ export const ClearButton = styled.button`
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 2.5rem;
+  color: var(--text-secondary);
+  font-size: var(--font-content-xl);
   transition: color 0.3s ease;
+
   &:hover {
-    color: white;
+    color: var(--text-primary);
   }
+
+  ${mobileMore`
+    font-size: var(--font-content-xxl);
+  `}
+
+  ${tabletMore`
+    font-size: var(--font-content-xxxl);
+  `}
 `;
 
 export const LoadingText = styled.div`
@@ -240,44 +270,91 @@ export const HistoryContainer = styled.div`
 
 export const HistoryTitle = styled.h3`
   color: rgba(255, 255, 255, 0.7);
-  font-size: 1.125rem;
+  font-size: 1.4rem;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 `;
 
 export const KeywordsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.375rem;
+  justify-content: center;
+
+  ${mobileMore`
+    gap: 0.5rem;
+  `}
+
+  ${tabletMore`
+    gap: 0.75rem;
+    justify-content: flex-start;
+  `}
 `;
 
 export const KeywordItem = styled.div`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border-radius: 12px;
+  gap: 0.625rem;
+  padding: 0.375rem 1rem;
   transition: background 0.3s ease;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
   }
+
+  ${mobileMore`
+    padding: 0.5rem 1.2rem;
+    gap: 0.75rem;
+    border-radius: 16px;
+  `}
+
+  ${tabletMore`
+    padding: 0.5625rem 1.4rem;
+    gap: 1rem;
+    border-radius: 20px;
+  `}
 `;
 
 export const KeywordText = styled.span`
-  display: inline-block;
-  padding: 0.5rem 1rem;
+  display: flex;
+  padding: 0.5rem 0.5rem;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
+
+  ${mobileMore`
+    font-size: 1.6rem;
+    padding: 0.375rem 0.75rem;
+  `}
+
+  ${tabletMore`
+    font-size: 1.8rem;
+    padding: 0.5rem 0.875rem;
+  `}
 `;
 
 export const DeleteButton = styled.button`
-  padding: 0.5rem 1rem;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 0.875rem;
+  font-size: 1.6rem;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
 
   &:hover {
     color: white;
+    path {
+      fill: var(--hover-color);
+    }
   }
+
+  ${mobileMore`
+    font-size: 1.8rem;
+  `}
+
+  ${tabletMore`
+    font-size: 2rem;
+  `}
 `;
