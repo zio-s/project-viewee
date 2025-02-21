@@ -249,9 +249,15 @@ export const HeroContent = styled.div`
   }
 
   .description {
-    margin-bottom : 50px;
+    margin-bottom : 30px;
     font-size: var(--font-content-s);
     cursor: pointer;
+    text-decoration: underline;
+    &:hover{
+      transform: scale(1.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
   }
 `;
 
@@ -272,6 +278,7 @@ export const Actions = styled.div`
     &:hover {
       color: var(--primary-50);
       transform: scale(1.2);
+      transition: transform 0.3s ease-in-out;
     }
 
     svg {
@@ -283,6 +290,7 @@ export const Actions = styled.div`
         color: var(--primary-50);
         transform: scale(1.2);
         filter: drop-shadow(0 0 8px var(--primary-50));
+        transition: transform 0.3s ease-in-out;
       }
     }
   }
@@ -314,10 +322,12 @@ export const TabMenu = styled.ul`
         color: var(--hover-color);
         transform: scale(1.2);
         filter: drop-shadow(0 0 8px var(--primary-50));
+        transition: transform 0.3s ease-in-out;
       }
 
     &.active {
         color: var(--hover-color);
+        transition: transform 0.3s ease-in-out;
     }
   }
 `;
@@ -328,11 +338,4 @@ export const TabContent = styled.div`
   color: #fff;
   border-radius: 5px;
   margin-top: 20px;
-`;
-
-export const Description = styled.p`
-  margin-top: 20px;
-  cursor: pointer;
-  text-decoration: underline;
-  color: var(--primary-50);
 `;
