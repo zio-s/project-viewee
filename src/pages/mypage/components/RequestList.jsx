@@ -4,13 +4,17 @@ import Pagination from '../../../ui/pagination';
 import { RequestListWrap } from './style';
 import { pageActions } from '../../../store/modules/pageSlice';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 export const RequestList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const item = useSelector((state) => state.authR.user.requested);
-  dispatch(pageActions.addData(item));
-  dispatch(pageActions.totalData());
+  useEffect(() => {
+    dispatch(pageActions.addData(item));
+    dispatch(pageActions.totalData());
+  }, [dispatch]);
+
   const { postsperPage, currentPage } = useSelector((state) => state.pageR);
   const lastPost = currentPage * postsperPage;
   const firstPost = lastPost - postsperPage;
@@ -42,7 +46,7 @@ export const RequestList = () => {
                   <td className="state">{item.state}</td>
                   <td>{item.category}</td>
                   <td className="titleList">{item.title}</td>
-                  <td className="data">{item.date}</td>
+                  <td className="date">{item.date}</td>
                 </tr>
               ))}
             </tbody>

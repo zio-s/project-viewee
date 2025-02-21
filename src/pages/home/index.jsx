@@ -10,6 +10,9 @@ import SpeicialEditionBack from './components/SpeicialEditionBack';
 import TagSection from './components/TagSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { MainPageData } from '../../store/modules/getThunk';
+import NowPlaying from './components/NowPlaying';
+import AnotherSwiperSection from './components/NowPlaying';
+import Recommend from './components/Recommend';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -41,7 +44,7 @@ const Home = () => {
         </EventSectionWrapper>
 
         <SectionWrapper>
-          <ContentSwiper reviewData={review} />
+          <NowPlaying />
         </SectionWrapper>
         <NewCardsSectionTitle>
           지구에서 나만 안본 그 작품
@@ -65,6 +68,15 @@ const Home = () => {
 
       <MarqueeSection />
       <MarqueeSection2 />
+      <VisualWrap>
+        <SectionWrapper>
+          <ContentSwiper reviewData={review} />
+        </SectionWrapper>
+
+        <SectionWrapper>
+          <Recommend />
+        </SectionWrapper>
+      </VisualWrap>
     </>
   );
 };

@@ -9,7 +9,7 @@ const Layout = () => {
   const [path, setPath] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    if (location.pathname === '/changeProfile') {
+    if (location.pathname === '/changeprofile') {
       setPath(false);
     } else {
       setPath(true);

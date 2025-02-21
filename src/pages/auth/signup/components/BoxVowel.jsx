@@ -12,7 +12,7 @@ const BoxVowel = ({ itemChecked, handleCheckedItem }) => {
               id={`item${item.id}`}
               name={`item${item.id}`}
               checked={item.checked}
-              onClick={() => handleCheckedItem(item.id)}
+              onChange={() => handleCheckedItem(item.id)}
             />
           </div>
           <label htmlFor={`item${item.id}`}>{item.title}</label>
