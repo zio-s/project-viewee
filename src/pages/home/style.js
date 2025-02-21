@@ -130,7 +130,7 @@ export const PlayButton = styled.div`
 `;
 
 export const VisualWrap = styled.div`
-  margin: 40px 15px;
+  margin: 40px 15px 0 15px;
 
   ${mobileMore`
   margin: 50px 30px;

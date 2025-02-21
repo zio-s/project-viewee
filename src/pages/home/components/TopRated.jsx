@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
 import {
@@ -12,7 +12,6 @@ import {
   NewSectionWrapper,
   SlideNumber,
 } from '../style';
-import { GiConsoleController } from 'react-icons/gi';
 import { useNavigate } from 'react-router';
 import { getContentDetail } from '../../../store/modules/getThunk';
 import { useDispatch } from 'react-redux';
@@ -20,12 +19,15 @@ import { useDispatch } from 'react-redux';
 const TopRated = ({ hotData }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const swiperRef = useRef(null); // Swiper 인스턴스를 저장할 ref
+
   useEffect(() => {
-    // Swiper가 초기화될 때, DOM에 요소가 모두 렌더링된 이후에 실행되도록
-    const swiper = new Swiper('.new-card-carousel2', {
+    // Swiper가 이미 생성되었는지 확인 (중복 생성 방지)
+    if (swiperRef.current) return;
+
+    swiperRef.current = new Swiper('.new-card-carousel2', {
       slidesPerView: 'auto',
       spaceBetween: 30,
-
       navigation: {
         nextEl: '.new-swiper-button-next',
         prevEl: '.new-swiper-button-prev',
@@ -36,31 +38,16 @@ const TopRated = ({ hotData }) => {
         390: { slidesPerView: 'auto' },
       },
     });
-
-    // Swiper 인스턴스를 종료할 때 메모리 해제를 위해 반환 함수 사용
-    return () => {
-      swiper.destroy();
-    };
-  }, []);
+  }, []); // `destroy()` 없이 유지됨
 
   const getDetail = (content) => {
     const { id, media_type = 'movie' } = content;
-
     if (['movie', 'tv'].includes(media_type)) {
-      dispatch(
-        getContentDetail({
-          type: media_type,
-          id: id,
-        })
-      );
+      dispatch(getContentDetail({ type: media_type, id: id }));
     }
   };
+
   const onGo = (content) => {
-    console.log('Navigating with content:', content);
-    const mediaType = content.media_type;
-    if (!mediaType) {
-      console.warn('Missing media_type for navigation:', content);
-    }
     navigate(`/${content.media_type || 'movie'}/${content.id}`);
   };
 
@@ -77,11 +64,6 @@ const TopRated = ({ hotData }) => {
                   fill="white"
                 />
               </g>
-              <defs>
-                <clipPath id="clip0_630_1220">
-                  <rect width="20.4659" height="36.3491" fill="white" transform="translate(14.6172 8.08203)" />
-                </clipPath>
-              </defs>
             </svg>
           </NewMoreLink>
         </NewCardsSectionTitle>
@@ -106,12 +88,8 @@ const TopRated = ({ hotData }) => {
             ))}
           </RatedSwiperWrapper>
 
-          <NewCustomButtonPrev className="new-swiper-button-prev">
-            {/* <img src="./img/main/swiper_previous.png" alt="이전으로" /> */}
-          </NewCustomButtonPrev>
-          <NewCustomButtonNext className="new-swiper-button-next">
-            {/* <img src="./img/main/swiper_next.png" alt="다음으로" /> */}
-          </NewCustomButtonNext>
+          <NewCustomButtonPrev className="new-swiper-button-prev"></NewCustomButtonPrev>
+          <NewCustomButtonNext className="new-swiper-button-next"></NewCustomButtonNext>
         </RatedSwiperContainer>
       </NewSectionWrapper>
     </>
