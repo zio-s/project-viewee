@@ -155,17 +155,28 @@ const CCNotice = ({ isActive }) => {
   };
   const submit = (e) => {
     e.preventDefault();
+    if (!search.trim()) return;
     const value = prevList.filter((item) => item.title.includes(search) || item.content.includes(search));
     setFaqList(value);
+  };
+  const resetSearch = () => {
+    setSearch('');
+    setFaqList(prevList);
   };
   const tagClick = (title) => {
     const value = prevList.filter((item) => item.title.includes(title) || item.content.includes(title));
     setFaqList(value);
   };
-
   return (
     <CCFnQWrap>
-      <Content data={faqList} isFnQ={isActive}>
+      <Content
+        data={faqList}
+        isFnQ={isActive}
+        search={search}
+        setSearch={setSearch}
+        prevData={prevList}
+        resetSearch={resetSearch}
+      >
         <div className="search">
           <h2>무엇이 궁금하신가요?</h2>
           <form onSubmit={submit}>

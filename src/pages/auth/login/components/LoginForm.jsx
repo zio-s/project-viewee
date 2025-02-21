@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { CheckBoxArea, ForgotPass, InfoBox, LoginBox, LoginFormWrap, LogoSection, RequestBox } from '../style';
+import { useEffect, useState } from 'react';
+import { CheckBoxArea, ForgotPass, LoginBox, LoginFormWrap, LogoSection, RequestBox } from '../style';
 import Input from '../../../../ui/input';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../../store/modules/authSlice';
@@ -72,7 +72,7 @@ const LoginForm = () => {
       </LoginBox>
       <RequestBox>
         <CheckBoxArea>
-          <CheckBox size="small" className="rememberMe" checked={isRemember} onClick={handleRemember} />
+          <CheckBox size="small" id="rememberMe" checked={isRemember} onChange={handleRemember} />
           <label htmlFor="rememberMe">로그인 정보 저장</label>
         </CheckBoxArea>
         <ForgotPass>

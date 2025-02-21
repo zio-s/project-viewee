@@ -67,7 +67,7 @@ export const authSlice = createSlice({
     login: (state, action) => {
       const { userId, password } = action.payload;
       const user = state.joinData.find((item) => item.userId === userId && item.password === password);
-      const rememberId = document.getElementsByClassName('rememberMe')[0];
+      const rememberId = document.getElementById('rememberMe');
 
       if (user) {
         state.user = user;
