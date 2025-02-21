@@ -42,7 +42,7 @@ export const DropdownMenu = styled.div`
 `;
 
 export const ProfileSection = styled.div`
-  padding: 12px 16px;
+  padding: 12px 20px;
   border-bottom: 1px solid var(--gray-70);
   display: flex;
   justify-content: space-between;
@@ -51,12 +51,21 @@ export const ProfileSection = styled.div`
 export const ProfileTitle = styled.div`
   font-size: 1.6rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
 `;
 
 export const ProfileSubtitle = styled(Link)`
-  color: #fff;
+  color: var(--gray-40);
   margin-top: 2px;
   font-size: 1.2rem !important;
+
   cursor: pointer;
   &:hover {
     color: var(--hover-color);
@@ -64,14 +73,24 @@ export const ProfileSubtitle = styled(Link)`
 `;
 
 export const MenuItem = styled(Link)`
-  display: block;
-  padding: 12px 16px;
-  color: #fff;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  font-size: var(--font-content-m);
+  color: var(--gray-30);
+  transition: color 0.3s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    path {
+      fill: currentColor;
+    }
+  }
 
   &:hover {
-    background-color: var(--gray-80);
+    color: var(--hover-color);
   }
 `;
 

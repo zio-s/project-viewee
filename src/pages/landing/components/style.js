@@ -6,12 +6,26 @@ export const Container = styled.div`
   height: 100vh;
   --perspective: 1500px;
   --grid-item-ratio: 1.5;
-  --grid-width: 105%;
+  --grid-width: 100%;
   --grid-height: auto;
   --grid-gap: 1vw;
   --grid-columns: 8;
   --grid-inner-scale: 0.8;
-  margin-bottom: 100vh;
+  /* margin-bottom: 100vh; */
+  .section-inner {
+    position: relative;
+    height: 100vh;
+    z-index: 999;
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      bottom: 0%;
+      background: linear-gradient(0deg, rgba(28, 28, 30, 1) 30%, rgba(28, 28, 30, 0) 100%);
+      z-index: 999;
+    }
+  }
+
   h2 {
     position: fixed;
     z-index: 1;
@@ -21,7 +35,7 @@ export const Container = styled.div`
   }
   button {
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     padding: 2.75rem 21.25rem;
     border: none;
     background: rgba(80, 80, 80, 0.7);
@@ -63,18 +77,25 @@ export const GridItem = styled.div`
   border-radius: 8px;
   display: grid;
   place-items: center;
-  box-shadow: 0 0px 80px rgb(0 0 0 / 85%);
   transform-style: preserve-3d;
+  /* box-shadow: 0 0px 80px rgb(0 0 0 / 85%); */
 
   img {
     width: calc(1 / var(--grid-inner-scale) * 100%);
     height: calc(1 / var(--grid-inner-scale) * 100%);
     object-fit: cover;
-    backface-visibility: hidden;
   }
   @media screen and (max-width: 767px) {
     border-radius: 3px;
   }
+`;
+
+export const GridImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: ${(props) => `url(/images/mainPoster${props.$imageIndex}.png)`};
+  background-size: cover;
+  background-position: center;
 `;
 
 export const ReviewWrapper = styled.div`
