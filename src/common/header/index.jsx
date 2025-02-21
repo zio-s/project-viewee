@@ -18,7 +18,7 @@ const Header = () => {
     <HeaderWrap>
       <div className="header_inner">
         <h1>
-          <Link to="/">
+          <Link to="/home">
             <img src="/images/logo.png" alt="" />
           </Link>
         </h1>
