@@ -130,7 +130,7 @@ export const PlayButton = styled.div`
 `;
 
 export const VisualWrap = styled.div`
-  margin: 40px 15px;
+  margin: 40px 15px 0 15px;
 
   ${mobileMore`
   margin: 50px 30px;
@@ -542,6 +542,8 @@ export const HoverModalWrap = styled.div`
       }
       .button:hover {
         background: var(--primary-60);
+<<<<<<< HEAD
+=======
       }
 
       .moreButton:hover,
@@ -551,6 +553,7 @@ export const HoverModalWrap = styled.div`
       }
       .button:hover {
         background: rgb(255, 255, 255, 0.1);
+>>>>>>> a83a5a46affb991354281ec9537f254583428d8e
       }
       .steamedButton {
         width: 60px;
