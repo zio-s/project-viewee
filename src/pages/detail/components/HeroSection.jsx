@@ -51,7 +51,24 @@ const HeroSection = ({ changeContent, id }) => {
   const releaseYear = release_date ? release_date.split("-")[0] : "미정";
   const formattedRuntime = runtime ? `${runtime}분` : "미정";
   const genreNames = genres?.map((genre) => genre.name).join(", ") || "미정";
-  const ageRating = certification || "미정";
+  const getRating = () => {
+    const releaseDates = detail?.release_dates?.results;
+    if (!releaseDates) return '등급 정보 없음';
+    const koreanRelease = releaseDates.find((item) => item.iso_3166_1 === 'KR');
+    const certification = koreanRelease?.release_dates[0]?.certification;
+    const ratingMap = {
+      ALL: '전체 관람가',
+      12: '12세 관람가',
+      15: '15세 관람가',
+      18: '청소년 관람불가',
+      G: '전체 관람가',
+      PG: '12세 관람가',
+      'PG-13': '15세 관람가',
+      R: '청소년 관람불가',
+      'NC-17': '청소년 관람불가',
+    };
+    return ratingMap[certification] || '등급 정보 없음';
+  };
 
 
   return (
@@ -72,7 +89,7 @@ const HeroSection = ({ changeContent, id }) => {
         <HeroContent>
         <h1>{title}</h1>
         <p>
-        {releaseYear} | {formattedRuntime} | {genreNames} | {ageRating}
+        {releaseYear} | {formattedRuntime} | {genreNames} | {getRating()}
         </p>
 
         <Buttons>

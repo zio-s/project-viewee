@@ -1,14 +1,10 @@
 
-
-
-
 import styled from 'styled-components';
 import { StyledButton as OriginalStyledButton } from '../../common/button/style';
 
 export const MovieInfoSection = styled.div`
   max-width: 1440px;
   display: flex;
-  justify-content: center;     
   margin: 0 auto; 
   padding : 50px 0;
 
@@ -17,12 +13,12 @@ export const MovieInfoSection = styled.div`
     gap: 30px;
   }
   .poster-wrapper {
-    flex-shrink: 0;
-    width: 490px;
-    height: 340px; 
+    width: 340px;
+    height: 490px; 
     
     img {
       width: 100%;
+      height: 100%; 
       border-radius: 5px;
     }
   }
@@ -278,10 +274,7 @@ export const Actions = styled.div`
     &:hover {
       color: var(--primary-50);
       transform: scale(1.2);
-<<<<<<< HEAD
       transition: transform 0.3s ease-in-out;
-=======
->>>>>>> develop
     }
 
     svg {
@@ -293,10 +286,7 @@ export const Actions = styled.div`
         color: var(--primary-50);
         transform: scale(1.2);
         filter: drop-shadow(0 0 8px var(--primary-50));
-<<<<<<< HEAD
         transition: transform 0.3s ease-in-out;
-=======
->>>>>>> develop
       }
     }
   }
@@ -328,10 +318,7 @@ export const TabMenu = styled.ul`
         color: var(--hover-color);
         transform: scale(1.2);
         filter: drop-shadow(0 0 8px var(--primary-50));
-<<<<<<< HEAD
         transition: transform 0.3s ease-in-out;
-=======
->>>>>>> develop
       }
 
     &.active {
