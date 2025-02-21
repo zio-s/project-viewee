@@ -84,8 +84,8 @@ const CardSection = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: 'top top',
-        end: '+=100%',
+        start: 'top center',
+        end: '+=1000',
         scrub: 2,
         // pin: true,
         // pinSpacing: true,

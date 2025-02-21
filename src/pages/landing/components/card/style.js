@@ -6,6 +6,7 @@ export const Container = styled.div`
   height: 100vh;
   position: relative;
   overflow: hidden;
+  margin-bottom: 100vh;
 `;
 
 export const CardsWrapper = styled.div`
@@ -17,6 +18,7 @@ export const CardsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   /* overflow: visible; */
 `;
 
