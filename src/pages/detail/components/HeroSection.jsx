@@ -107,9 +107,11 @@ const HeroSection = ({ changeContent, id }) => {
           </div>
         </Actions>
         </Buttons>
-        <div className="description" onClick={() => changeContent("detail", <InfoSection data={detail} />)}>
-          {truncateText(overview, 95)}
-        </div>
+        <div className="description" onClick={() => {
+  changeContent("detail", <InfoSection data={detail} />);
+}}>
+  {truncateText(overview, 95)}
+</div>
       </HeroContent>
 </div>
       
