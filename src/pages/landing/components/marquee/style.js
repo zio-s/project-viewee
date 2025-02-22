@@ -6,6 +6,7 @@ export const MarqueeContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   padding-top: 200px;
+  margin-bottom: 100vh;
   ul {
     display: flex;
     gap: 10px;

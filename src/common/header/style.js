@@ -1,44 +1,68 @@
 import styled from 'styled-components';
 import { mobileMore, tabletMore } from '../../styled/Mixin';
 
+export const HeaderSpacing = styled.div`
+  height: 94px;
+
+  ${mobileMore`
+    height: 72px;
+  `}
+`;
+
 export const HeaderWrap = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  position: relative;
+  background-color: var(--background-primary);
   display: flex;
   height: 94px;
   z-index: 9999;
+  transition: transform 0.3s ease;
+  transform: translateY(${(props) => (props.$isVisible ? '0' : '-100%')});
+
   ${mobileMore`
     height: 72px;
-    `}
+  `}
+
   .header_inner {
     box-sizing: border-box;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: normal;
+    width: 100%;
+    max-width: var(--layout);
+    margin: 0 auto;
     z-index: 9999;
     ${mobileMore`
       flex-direction: row;
       gap: 50px;
       align-items: center;
       flex-shrink: 0;
+      padding: 0;
     `}
     ${tabletMore`
       gap: 60px;
-    `}
+    `};
   }
+
   h1 {
     width: 100px;
     padding: 1.2rem 1.5rem 0;
     margin-bottom: 0.5rem;
+
     ${mobileMore`
       width: 150px;
-      padding: 1.4rem 3.5rem ;
+      padding: 1.4rem 3.5rem;
       margin-bottom: 0;
     `}
+
     ${tabletMore`
-      padding: 1.4rem 5rem ;
+      padding: 1.4rem 5rem;
     `}
+    
     a {
       z-index: 10;
       img {
@@ -46,7 +70,70 @@ export const HeaderWrap = styled.header`
       }
     }
   }
-  .login {
+`;
+
+export const TopMenu = styled.ul`
+  &.top-menu {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(0%);
+    z-index: 9999;
+    @media (max-width: 530px) {
+      top: 5px;
+      transform: translateY(0);
+      right: 0rem;
+    }
+    ${mobileMore`
+      right: 3.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    `}
+
+    ${tabletMore`
+      right: 5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    `}
+
+    li {
+      position: relative;
+      z-index: 1;
+
+      a {
+        font-size: var(--font-heading-m-mobile);
+        display: block;
+
+        ${mobileMore`
+          font-size: var(--font-heading-m-tablet);
+        `}
+        ${tabletMore`
+          font-size: var(--font-heading-m);
+        `}
+      }
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+
+      i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 28px;
+        width: 28px;
+      }
+    }
   }
 `;
 
@@ -57,31 +144,39 @@ export const NavWrap = styled.nav`
     height: 47px;
     display: flex;
     align-items: center;
+
     ul {
       width: 100%;
       display: flex;
       justify-content: space-between;
       padding: 1.5rem 2.75rem;
+
       ${mobileMore`
         padding: 0;
         margin-bottom: 0;
         gap: 30px;
         justify-content: flex-start;
-    `}
+      `}
+
       ${tabletMore`
         gap: 50px;
-    `}
+      `}
+
       li {
         align-items: center;
+        position: relative;
+
         a {
           display: block;
           width: 100%;
           font-size: var(--font-heading-m-mobile);
           font-weight: 500;
           transition: 0.3s;
+
           ${mobileMore`
             font-size: var(--font-heading-m-tablet);
           `}
+
           ${tabletMore`
             font-size: var(--font-heading-m);
           `}
@@ -90,6 +185,7 @@ export const NavWrap = styled.nav`
             color: var(--hover-color);
           }
         }
+
         &:last-child span {
           font-size: 16px;
           border-radius: 50%;
@@ -102,46 +198,6 @@ export const NavWrap = styled.nav`
           text-align: center;
           line-height: 20px;
         }
-      }
-    }
-  }
-`;
-export const TopMenu = styled.ul`
-  &.top-menu {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
-    width: 100%;
-    justify-content: end;
-    align-items: center;  
-    ${mobileMore`
-      top: 50%;
-      right: 35px;
-      transform: translateY(-50%);
-    `}
-    ${tabletMore`
-      width: auto;
-      right: 50px;
-    `}
-    li {
-      a {
-        font-size: var(--font-heading-m-mobile);
-        ${mobileMore`
-          font-size: var(--font-heading-m-tablet);
-        `}
-        ${tabletMore`
-          font-size: var(--font-heading-m);
-        `}
-      }
-    }
-    button {
-      display: inline-block;
-      width: 48px;
-      height: 48px;
-      i {
-        height: 28px;
-        width: 28px;
       }
     }
   }

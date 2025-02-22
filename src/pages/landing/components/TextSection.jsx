@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { Container, ViewContainer } from './style';
+import { SectionContainer, ViewContainer } from './style';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const TextSection = () => {
   const sectionRef = useRef(null);
@@ -9,43 +9,44 @@ const TextSection = () => {
   const textRightRef = useRef(null);
   const eyeLeftRef = useRef(null);
   const eyeRightRef = useRef(null);
+  const innerRef = useRef(null);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // 눈 움직임 관련 코드는 그대로 유지
-    const handleMouseMove = (e) => {
-      // ... 기존 마우스 이벤트 코드 ...
-    };
+    // 메인 타임라인 생성
+    const mainTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top top', // 섹션이 화면 상단에 닿으면 시작
+        end: '+=100%', // 뷰포트 높이만큼 스크롤
+        pin: true, // 섹션 고정
+        pinSpacing: true, // 핀 간격 유지
+        scrub: 2, // 스크롤 스크럽 효과
+        markers: true, // 개발용 마커
+      },
+    });
 
-    // 스크롤 기반 텍스트 색상 변화 애니메이션
+    // 텍스트 요소 애니메이션
     const textElements = [textLeftRef.current, textRightRef.current];
 
-    textElements.forEach((element) => {
+    textElements.forEach((element, index) => {
       if (!element) return;
 
-      // 초기 스타일 설정
+      // 초기 상태 설정
       gsap.set(element, {
         color: 'var(--primary-10)',
         textShadow: 'none',
         opacity: 0,
+        yPercent: 50, // 약간 아래에서 시작
       });
 
-      // 스크롤 애니메이션
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top center',
-            end: 'center center',
-            scrub: 1,
-            markers: false, // 개발 시에만 true로 설정
-            onEnter: () => {
-              element.classList.add('text-flicker-in-glow');
-            },
-          },
-        })
-        .to(element, {
+      // 텍스트 애니메이션 추가
+      mainTimeline.to(
+        element,
+        {
           opacity: 1,
+          yPercent: 0,
           color: 'var(--primary-50)',
           textShadow: `
           0 0 30px var(--primary-30),
@@ -54,16 +55,14 @@ const TextSection = () => {
           0 0 100px var(--primary-20)
         `,
           duration: 1,
-        });
+          onStart: () => element.classList.add('text-flicker-in-glow'),
+          onReverseComplete: () => element.classList.remove('text-flicker-in-glow'),
+        },
+        index * 0.2
+      ); // 약간의 시차를 두고 애니메이션
     });
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
-  useEffect(() => {
+    // 눈 움직임 이벤트 핸들러
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
       const eyes = [eyeLeftRef.current, eyeRightRef.current];
@@ -76,14 +75,11 @@ const TextSection = () => {
         const eyeCenterY = eyeRect.top + eyeRect.height / 2;
 
         const angle = Math.atan2(clientY - eyeCenterY, clientX - eyeCenterX);
-
         const distance = Math.min(Math.hypot(clientX - eyeCenterX, clientY - eyeCenterY), eyeRect.width * 0.35);
 
-        // Calculate new position
         const moveX = Math.cos(angle) * distance;
         const moveY = Math.sin(angle) * distance;
 
-        // Animate eye movement
         gsap.to(eye.children[0], {
           x: moveX,
           y: moveY,
@@ -97,13 +93,14 @@ const TextSection = () => {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   return (
-    <Container>
+    <SectionContainer>
       <ViewContainer ref={sectionRef}>
-        <div className="inner">
+        <div className="inner" ref={innerRef}>
           <h1>당신이 찾던 미래의 콘텐츠 플랫폼</h1>
           <div className="content">
             <div className="text-l">
@@ -125,7 +122,7 @@ const TextSection = () => {
           </div>
         </div>
       </ViewContainer>
-    </Container>
+    </SectionContainer>
   );
 };
 
