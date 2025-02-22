@@ -74,7 +74,7 @@ const Home = () => {
         </SectionWrapper>
 
         <SectionWrapper>
-          <Recommend />
+          <Recommend nowPlaying={nowPlaying} />
         </SectionWrapper>
       </VisualWrap>
     </>
