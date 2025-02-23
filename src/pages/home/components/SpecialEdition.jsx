@@ -71,7 +71,7 @@ const SpecialEdition = () => {
               variants={{
                 hover: {
                   y: [-5, -10, -5],
-                  transition: { duration: 0.7, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' },
+                  transition: { duration: 1.2, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' },
                 },
               }}
             />

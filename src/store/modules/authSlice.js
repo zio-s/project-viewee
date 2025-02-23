@@ -224,6 +224,23 @@ export const authSlice = createSlice({
       localStorage.setItem('joinData', JSON.stringify(state.joinData));
       localStorage.setItem('user', JSON.stringify(state.user));
     },
+    toggleLike: (state, action) => {
+      if (!state.user) return;
+      const content = action.payload;
+      const existingIndex = state.user.liked.findIndex((item) => item.id === content.id);
+
+      if (existingIndex >= 0) {
+        state.user.liked = state.user.liked.filter((item) => item.id !== content.id);
+      } else {
+        state.user.liked.push(content);
+      }
+
+      state.joinData = state.joinData.map((item) =>
+        item.id === state.user.id ? { ...item, liked: state.user.liked } : item
+      );
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
   },
 });
 

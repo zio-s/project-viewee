@@ -542,18 +542,6 @@ export const HoverModalWrap = styled.div`
       }
       .button:hover {
         background: var(--primary-60);
-<<<<<<< HEAD
-=======
-      }
-
-      .moreButton:hover,
-      .steamedButton:hover,
-      .likeButton:hover {
-        border-color: white;
-      }
-      .button:hover {
-        background: rgb(255, 255, 255, 0.1);
->>>>>>> a83a5a46affb991354281ec9537f254583428d8e
       }
       .steamedButton {
         width: 60px;

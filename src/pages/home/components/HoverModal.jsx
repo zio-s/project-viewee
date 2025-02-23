@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { HoverModalWrap, HoverModalWrapper } from '../style';
 import { StyledPlayButton } from '../../../ui/button/playButton/style';
 import { motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
 
 const contentData = {
   age: '15+',
@@ -19,6 +20,15 @@ const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, ico
 };
 
 const LikeButton = ({ isLiked, onClick }) => {
+  // const dispatch = useDispatch();
+  // const likedContents = useSelector((state) => state.auth.user?.liked || []);
+
+  // const isLiked = likedContents.some((item) => item.id === content.id);
+
+  // const handleLike = () => {
+  //   dispatch(authActions.toggleLike(content));
+  // };
+
   return (
     <PlayButton className="likeButton" onClick={onClick}>
       <motion.svg
