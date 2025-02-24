@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import GlobalStyle from './styled/GlobalStyle';
 import Layout from './common/Layout';
 import NotFiles from './pages/notfile';
@@ -19,11 +19,13 @@ import { useEffect } from 'react';
 
 const App = () => {
   useEffect(() => {
-    const hasVisited = localStorage.getItem('hasVisited');
+    if (window.location.pathname === '/') {
+      const hasVisited = localStorage.getItem('hasVisited');
+      if (!hasVisited) {
+        localStorage.setItem('hasVisited', 'true');
 
-    if (!hasVisited && window.location.pathname === '/') {
-      localStorage.setItem('hasVisited', 'true');
-      window.location.href = '/landing';
+        window.location.href = '/landing';
+      }
     }
   }, []);
   return (
@@ -31,8 +33,8 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/" element={<Layout />}>
-            <Route path="/landing" element={<LandingPage />} />
             <Route index element={<Home />} />
             <Route path="/:category">
               <Route index element={<CateGoryPage />} />
