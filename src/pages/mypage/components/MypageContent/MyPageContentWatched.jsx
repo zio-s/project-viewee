@@ -21,11 +21,15 @@ const MyPageContentWatched = () => {
   const { user } = useSelector((state) => state.authR);
   const { watched } = user;
   const isDeleteToggle = (id) => {
-    if (onDelete) {
-      setIsDelete((item) => [...item, id]);
-    } else {
-      return;
-    }
+    if (!onDelete) return;
+    setIsDelete((prev) => {
+      const isSelected = prev.includes(id);
+      if (isSelected) {
+        return prev.filter((item) => item !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
   };
   const deletedToggle = (index) => {
     if (onDelete && index.length !== 0) {
@@ -47,7 +51,6 @@ const MyPageContentWatched = () => {
     dispatch(pageActions.totalData());
   }, [watched]);
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
-  console.log(totalPage);
   const lastPost = currentPage * postsperPage;
   const currentPost = watched.slice(0, lastPost);
   const morePost = () => {
@@ -58,35 +61,53 @@ const MyPageContentWatched = () => {
     <MyPageContentLikedWrap>
       <div className="header">
         <h2>시청 콘텐츠</h2>
-        <div className="contentEdit">
-          {iseditOpen ? (
-            <>
-              <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
-                전체선택
+        {watched.length === 0 ? (
+          ''
+        ) : (
+          <div className="contentEdit">
+            {iseditOpen ? (
+              <>
+                <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
+                  전체선택
+                </Button>
+                <Button variant="gray" size="small" onClick={openToggle}>
+                  취소
+                </Button>
+                <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
+                  선택삭제
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" size="small" onClick={openToggle}>
+                수정하기
               </Button>
-              <Button variant="gray" size="small" onClick={openToggle}>
-                취소
-              </Button>
-              <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
-                선택삭제
-              </Button>
-            </>
-          ) : (
-            <Button variant="primary" size="small" onClick={openToggle}>
-              수정하기
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="content">
-        <ul>
-          {currentPost.map((url, i) => (
-            <li key={i} onClick={() => isDeleteToggle(url.id)}>
-              <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
-            </li>
-          ))}
-        </ul>
+        {watched.length === 0 ? (
+          <div className="nodata">
+            <img src="/images/nodata.png" alt="nodata" />
+            <p> 시청 콘텐츠가 없습니다.</p>
+          </div>
+        ) : (
+          <ul>
+            {currentPost.map((url, i) => (
+              <li key={i} onClick={() => isDeleteToggle(url.id)}>
+                <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
+                <svg
+                  viewBox="0 0 100 100"
+                  className={`check-mark ${isDelete.find((item) => item === url.id) ? 'check-active' : ''}`}
+                >
+                  <circle cx="50" cy="50" r="40" className="check-circle" />
+                  <path d="M20,50 L40,70 L80,30" fill="none" stroke="#F05A7E" strokeWidth="8" className="check-path" />
+                </svg>
+              </li>
+            ))}
+          </ul>
+        )}
         {currentPage >= totalPage ? (
           ''
         ) : (

@@ -57,35 +57,56 @@ const MyPageContentLiked = () => {
     <MyPageContentLikedWrap>
       <div className="header">
         <h2>나의 관심 콘텐츠</h2>
-        <div className="contentEdit">
-          {iseditOpen ? (
-            <>
-              <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
-                전체선택
+        {liked.length === 0 ? (
+          ''
+        ) : (
+          <div className="contentEdit">
+            {iseditOpen ? (
+              <>
+                <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
+                  전체선택
+                </Button>
+                <Button variant="gray" size="small" onClick={openToggle}>
+                  취소
+                </Button>
+                <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
+                  선택삭제
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" size="small" onClick={openToggle}>
+                수정하기
               </Button>
-              <Button variant="gray" size="small" onClick={openToggle}>
-                취소
-              </Button>
-              <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
-                선택삭제
-              </Button>
-            </>
-          ) : (
-            <Button variant="primary" size="small" onClick={openToggle}>
-              수정하기
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
-
       <div className="content">
-        <ul>
-          {currentPost.map((url, i) => (
-            <li key={i} onClick={() => isDeleteToggle(url.id)}>
-              <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
-            </li>
-          ))}
-        </ul>
+        {liked.length === 0 ? (
+          <div className="nodata">
+            <img src="/images/nodata.png" alt="nodata" />
+            <p> 관심 콘텐츠가 없습니다.</p>
+          </div>
+        ) : (
+          <ul>
+            {liked.map((content, i) => {
+              const imageUrl =
+                content.img ||
+                (content.poster_path ? `https://image.tmdb.org/t/p/w500${content.poster_path}` : '') ||
+                (content.backdrop_path ? `https://image.tmdb.org/t/p/w500${content.backdrop_path}` : '');
+
+              return (
+                <li key={i}>
+                  {imageUrl ? (
+                    <img src={imageUrl} alt={content.title || content.name || '콘텐츠 이미지'} />
+                  ) : (
+                    <div className="no-image">이미지 없음</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
         {currentPage >= totalPage ? (
           ''
         ) : (

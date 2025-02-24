@@ -4,6 +4,7 @@ const checked = {
   primary: css`
     color: var(--primary-50);
     border: 1px solid var(--primary-50);
+    filter: invert(47%) sepia(43%) saturate(997%) hue-rotate(299deg) brightness(98%) contrast(91%);
   `,
   filled: css`
     background: var(--primary-50);
@@ -72,6 +73,11 @@ export const StyledCheckBox = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      img {
+        width: 15px;
+        height: 15px;
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(280deg) brightness(111%) contrast(100%);
+      }
       /* Disabled State */
       &:disabled {
         opacity: 0.5;

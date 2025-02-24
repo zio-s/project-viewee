@@ -14,6 +14,10 @@ const socialStyles = {
     background-image: url('/images/facebook.png');
     background-size: 20px 20px;
   `,
+  kakao: css`
+    background-image: url('/icons/logo/kakao/color.svg');
+    background-size: 20px 20px;
+  `,
 };
 
 const StyledButton = styled.a`

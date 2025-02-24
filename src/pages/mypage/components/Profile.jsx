@@ -1,11 +1,16 @@
 import { ProfileWrap } from './style';
 import Button from '../../../ui/button/defaultButton';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const Profile = () => {
   const { user } = useSelector((state) => state.authR);
   const { username, profileImg, isMembershiped, coupon } = user;
-  const couponNumber = coupon.filter((item) => item.used === true).length;
+  const navigate = useNavigate();
+  const onSubscribe = () => {
+    navigate('/subscribe');
+  };
+  const couponNumber = coupon.filter((item) => item.used === false).length;
   return (
     <ProfileWrap>
       <div className="profile">
@@ -15,21 +20,23 @@ const Profile = () => {
             <h2>
               환영합니다{' '}
               <div className="userName">
-                <a href="/useredit">{username}</a>
+                <a href="/modifyprofile">{username}</a>
               </div>{' '}
               님!
             </h2>
             <div className="edit">
-              <img src="/icons/util/pencil.svg" />
+              <a href="/modifyprofile">
+                <img src="/icons/util/pencil.svg" />
+              </a>
             </div>
-            <a href="/changeProfile">
+            <a href="/changeprofile">
               <Button variant="gray" size="small">
                 프로필 전환
               </Button>
             </a>
           </div>
-          <Button variant="gray" size="small" className="membership">
-            {isMembershiped ? '뷰이 프리미엄 구독 중' : <a href="/subscribe">구독권 없음</a>}
+          <Button variant="gray" size="small" className="membership" onClick={onSubscribe}>
+            {isMembershiped ? '뷰이 프리미엄 구독 중' : '구독권 없음'}
           </Button>
         </div>
       </div>
@@ -42,7 +49,7 @@ const Profile = () => {
             <div className="coupon">보유중인 쿠폰 {couponNumber}</div>
           </div>
         </a>
-        <a href="/useredit">
+        <a href="/modifyprofile">
           <div className="userEdit">회원정보 수정</div>
         </a>
       </div>

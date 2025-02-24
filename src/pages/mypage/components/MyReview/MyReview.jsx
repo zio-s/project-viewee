@@ -5,16 +5,14 @@ import { authActions } from '../../../../store/modules/authSlice';
 import { useEffect, useState } from 'react';
 import { pageActions } from '../../../../store/modules/pageSlice';
 import { MyReviewPopUp } from './MyReviewPopup';
-import { GiConsoleController } from 'react-icons/gi';
-
 export const MyReview = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authR);
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
   const { reviewed } = user;
-  const [nowReviewed, setNowRevied] = useState(reviewed);
+  const [nowReviewed, setNowReviewed] = useState(reviewed);
   useEffect(() => {
-    setNowRevied(reviewed);
+    setNowReviewed(reviewed);
   }, [user]);
   useEffect(() => {
     dispatch(pageActions.addData(reviewed));
@@ -25,7 +23,9 @@ export const MyReview = () => {
       dispatch(authActions.deleteReviewed(id));
     }
   };
-  dispatch(pageActions.changePostsPerPage(8));
+  useEffect(() => {
+    dispatch(pageActions.changePostsPerPage(8));
+  }, [dispatch]);
   const lastPost = currentPage * postsperPage;
   const currentPost = nowReviewed.slice(0, lastPost);
   const morePost = () => {
@@ -40,32 +40,39 @@ export const MyReview = () => {
   };
   return (
     <MyReviewWrap>
-      <ul>
-        {currentPost.map((item) => (
-          <li key={item.id}>
-            <img src={item.img} alt={item.title} />
-            <div className="reviewItem">
-              <h2>{item.title}</h2>
-              <p className="rate">
-                {[...Array(5)].map((_, index) => (
-                  <span key={index} className={item.rate > index ? 'fill' : ''}>
-                    ★
-                  </span>
-                ))}
-              </p>
-              <p className="content">{item.content}</p>
-            </div>
-            <div className="button">
-              <Button variant="gray" onClick={() => deletedToggle(item.id)}>
-                삭제
-              </Button>
-              <Button variant="primary" onClick={() => editToggle(item.id)}>
-                수정
-              </Button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {reviewed.length === 0 ? (
+        <div className="nodata">
+          <img src="/images/nodata.png" alt="nodata" />
+          <p> 리뷰 내역이 없습니다.</p>
+        </div>
+      ) : (
+        <ul>
+          {currentPost.map((item) => (
+            <li key={item.id}>
+              <img src={item.img} alt={item.title} />
+              <div className="reviewItem">
+                <h2>{item.title}</h2>
+                <p className="rate">
+                  {[...Array(5)].map((_, index) => (
+                    <span key={index} className={item.rate > index ? 'fill' : ''}>
+                      ★
+                    </span>
+                  ))}
+                </p>
+                <p className="content">{item.content}</p>
+              </div>
+              <div className="button">
+                <Button variant="gray" onClick={() => deletedToggle(item.id)}>
+                  삭제
+                </Button>
+                <Button variant="primary" onClick={() => editToggle(item.id)}>
+                  수정
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
       {currentPage >= totalPage ? (
         ''
       ) : (

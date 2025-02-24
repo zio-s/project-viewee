@@ -1,35 +1,89 @@
 import styled, { css } from 'styled-components';
+import { mobileMore, tabletMore } from '../../../styled/Mixin';
 
 export const CouponWrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10rem 24rem;
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s ease;
+  .wrap {
+    padding: 5rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    ${mobileMore`
+        padding: 5rem 3rem;
+      `}
+    ${tabletMore`
+      padding: 10rem 5rem;
+      max-width: 1440px;
+    `}
+  }
   h2 {
-    font-size: var(--font-content-xxxl);
+    font-size: var(--font-content-xl);
+    font-weight: bold;
+    ${mobileMore`
+      font-size: var(--font-content-xxl);
+    `}
+    ${tabletMore`
+      font-size: var(--font-content-xxxl);
+    `}
   }
   .content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 3.5rem;
+    margin-top: 2rem;
+    ${mobileMore`
+      margin-top: 3.5rem;
+    `}
     .inputCoupon {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 2rem;
+      ${mobileMore`
+        gap: 3rem;
+      `}
+      ${tabletMore`
+        flex-direction: row;
+        gap: 2rem;
+      `}
       input {
-        width: 436px;
-        height: 64px;
+        width: 350px;
+        height: 50px;
+        ${mobileMore`
+          width: 400px;
+          height: 55px;
+        `}
+        ${tabletMore`
+          width: 436px;
+          height: 64px;
+        `}
       }
       button {
-        width: 144px;
-        height: 64px;
-        font-size: var(--font-content-l);
+        width: 100px;
+        height: 50px;
+        font-size: var(--font-label-s);
+        ${mobileMore`
+          width: 120px;
+          height: 55px;
+          font-size: var(--font-content-m);
+        `}
+        ${tabletMore`
+          width: 144px;
+          height: 64px;
+          font-size: var(--font-content-l);
+        `}
       }
     }
     .couponList {
       width: 80%;
-      margin: 10rem 0;
+      margin: 5rem 0;
+      ${tabletMore`
+        margin: 10rem 0;
+      `}
       ul {
         display: flex;
         flex-direction: column;
@@ -54,7 +108,13 @@ export const CouponWrap = styled.div`
             gap: 1rem;
             flex-direction: column;
             .title {
-              font-size: var(--font-content-xl);
+              font-size: var(--font-content-m);
+              ${mobileMore`
+                font-size: var(--font-content-l);
+              `}
+              ${tabletMore`
+                font-size: var(--font-content-xl);
+              `}
             }
             .dday {
               color: var(--gray-40);
@@ -80,7 +140,10 @@ export const CouponWrap = styled.div`
         margin-top: 1.5rem;
         margin-left: 2.3rem;
         color: var(--gray-60);
-        font-size: var(--font-content-s);
+        font-size: var(--font-label-s);
+        ${mobileMore`
+          font-size: var(--font-content-s);
+        `}
         li {
           list-style-type: disc;
         }

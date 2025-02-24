@@ -6,7 +6,8 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
   :root {
     --background-color: #1c1c1e;
-
+    --perspective: 2000px;
+    
     /* Primary Colors (Pink) */
     --primary-10: rgb(254, 239, 242);  /* rgb(254, 239, 242) */
     --primary-20: rgb(253, 230, 236);  /* rgb(253, 230, 236) */
@@ -134,6 +135,7 @@ time, mark, audio, video {
 }
   html{
   font-size: var(--font-size-root);
+  box-sizing: border-box;
   }
   body {
     font-size: 16px;
@@ -187,9 +189,6 @@ time, mark, audio, video {
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;

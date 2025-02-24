@@ -1,12 +1,19 @@
 import { StyledCheckBox } from './style';
 
-const CheckBox = ({ children, variant = 'primary', size = 'medium', icon }) => {
+const CheckBox = ({
+  id,
+  children,
+  variant = 'primary',
+  size = 'medium',
+  icon = <img src="/icons/util/check.svg" />,
+  ...props
+}) => {
   return (
     <StyledCheckBox $variant={variant} $size={size}>
-      <input id="a" type="checkbox" />
-      <label htmlFor="a" className="labelBox">
+      <input id={id} type="checkbox" {...props} />
+      <label htmlFor={id} className="labelBox">
         <div className="labelBox">
-          <div className="iconBox">v{icon}</div>
+          <div className="iconBox">{icon}</div>
           {children}
           {/* <Checked /> */}
         </div>

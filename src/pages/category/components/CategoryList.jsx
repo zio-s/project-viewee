@@ -1,19 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { CateGoryBox, CateGoryItem } from './style';
+import { ItemCard, ListContainer, LoadingSpinner } from './style';
 import { useEffect, useRef, useCallback } from 'react';
 
 const CategoryList = ({ data, category, onLoadMore, hasMore, isLoading }) => {
   const navigate = useNavigate();
   const loadingRef = useRef(null);
+  const observerRef = useRef(null);
   const bgurl = `https://image.tmdb.org/t/p/w500/`;
 
   const handleItemClick = useCallback(
     (item) => {
-      navigate(`/${category}/${item.id}`, {
-        state: { type: item.first_air_date ? 'tv' : 'movie' },
+      const mediaType = item.media_type || (item.first_air_date ? 'tv' : 'movie');
+
+      navigate(`/${mediaType}/${item.id}`, {
+        state: { type: mediaType },
       });
     },
-    [category, navigate]
+    [navigate]
   );
 
   const handleObserver = useCallback(
@@ -45,15 +48,33 @@ const CategoryList = ({ data, category, onLoadMore, hasMore, isLoading }) => {
   }, [handleObserver]);
 
   return (
-    <CateGoryBox>
-      {data?.map((item) => (
-        <CateGoryItem key={item.id} onClick={() => handleItemClick(item)}>
-          <img src={`${bgurl}${item.poster_path}`} alt={item.title || item.name} loading="lazy" />
-        </CateGoryItem>
-      ))}
-      {hasMore && <div ref={loadingRef} style={{ height: '20px' }} />}
-      {isLoading && <div>Loading more...</div>}
-    </CateGoryBox>
+    <>
+      <ListContainer ref={observerRef}>
+        {data?.map((item) => (
+          <div onClick={() => handleItemClick(item)} key={item.id} style={{ textDecoration: 'none' }}>
+            <ItemCard>
+              <div className="poster-wrap">
+                <img src={`${bgurl}${item.poster_path}`} alt={item.title || item.name} loading="lazy" />
+                <div className="item-info">
+                  <h3>{item.title || item.name}</h3>
+                  <div className="item-meta">
+                    <span>{item.release_date?.split('-')[0] || item.first_air_date?.split('-')[0]}</span>
+                    <span className="rating">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0L9.79611 6.20389L16 8L9.79611 9.79611L8 16L6.20389 9.79611L0 8L6.20389 6.20389L8 0Z" />
+                      </svg>
+                      {item.vote_average?.toFixed(1)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ItemCard>
+          </div>
+        ))}
+      </ListContainer>
+      {isLoading && <LoadingSpinner>콘텐츠를 불러오는 중...</LoadingSpinner>}
+      <div ref={loadingRef} style={{ height: '1px' }} />
+    </>
   );
 };
 

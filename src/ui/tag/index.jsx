@@ -1,13 +1,11 @@
 import { StyledTag, TagWrapper } from './style';
 
-const Tag = ({ item, size = 'medium', fullWidth = false, icon, ...props }) => {
+const Tag = ({ children, size = 'medium', fullWidth = false, icon, ...props }) => {
   return (
     <TagWrapper>
-      {item.map((item, index) => (
-        <StyledTag key={index} $size={size} $fullWidth={fullWidth} {...props}>
-          #{item}{' '}
-        </StyledTag>
-      ))}
+      <StyledTag $size={size} $fullWidth={fullWidth} {...props}>
+        #{children}{' '}
+      </StyledTag>
     </TagWrapper>
   );
 };

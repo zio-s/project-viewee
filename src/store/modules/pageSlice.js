@@ -25,6 +25,11 @@ export const pageSlice = createSlice({
         state.currentPage++;
       }
     },
+    prevPage: (state, action) => {
+      if (state.currentPage > 1) {
+        state.currentPage--;
+      }
+    },
     currentPage: (state, action) => {
       state.currentPage = action.payload;
     },

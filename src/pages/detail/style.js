@@ -1,80 +1,281 @@
+
 import styled from 'styled-components';
-import { StyledButton } from '../../common/button/style';
+import { StyledButton as OriginalStyledButton } from '../../common/button/style';
+import { StyledInput as OriginalStyledInput } from '../../ui/input/style';
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; 
+`;
+
+export const ModalContent = styled.div`
+  background: var(--background-color);
+  width: 800px;
+  height: 80vh;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  overflow-y: auto;
+    h2{
+      font-size: var(--font-content-xxxl);
+      text-align: center;
+      margin-bottom: 10px; 
+    }
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  fill: |;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
+export const StarContainer = styled.div`
+  font-size: 24px;
+  text-align: center;
+`;
+
+export const ReviewInput = styled(OriginalStyledInput)`
+  width: 100%; 
+  padding: 20px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  margin: 20px 0; 
+
+  &:focus {
+    border-color: var(--primary-50); 
+    outline: none; 
+  }
+`;
+
+export const SubmitButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #f05a7e;
+  color: white;
+  border: none;
+  cursor: pointer;
+`;
+
+export const ReviewList = styled.div`
+  margin-top: 20px;
+`;
+
+export const ReviewItem = styled.li`
+  border-bottom: 1px solidvar(--gary-60); // 테두리
+  border-radius: 8px; // 모서리 둥글기
+  padding: 10px 15px; // 패딩
+  margin: 10px 0; // 여백
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자
+
+  display: flex; // Flexbox로 위치 조정
+  flex-direction: column; // 세로 방향으로 배치
+  align-items: flex-start; // 좌측 정렬
+`;
+
+
+
 
 export const MovieInfoSection = styled.div`
+  max-width: 1440px;
+  display: flex;
+  margin: 0 auto; 
+  padding : 50px 0;
+
   .movie-content {
+    max-width: 1440px;
     display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
+    flex-shrink: 0;
+    gap: 30px;
   }
   .poster-wrapper {
+    width: 340px;
+    height: 490px; 
     flex-shrink: 0;
-    width: 200px;
     
     img {
       width: 100%;
-      border-radius: 8px;
+      height: 100%; 
+      border-radius: 5px;
+      object-fit: cover;
     }
   }
   .info-wrapper {
     flex-grow: 1;
     h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: var(--font-lebel-l);
+      margin-bottom: 15px;
+    }
+    .overview{
+      font-size: var(--font-lebel-l);
+      margin-bottom: 40px;
+      display: block;
     }
   }
+    
+
   .detail-row {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     .label {
-      width: 80px;
-      color: #888;
+      font-size: var(--font-lebel-l);
+      margin: 0 60px 0 0;
+    }
+    .value{
+      font-size: var(--font-lebel-l);
     }
   }
 `;
 
-export const CardBox = styled.div`
-  width: 50%;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  margin-bottom: 50px;
-  overflow: hidden;
-  padding: 20px 25px;
-  transition: all 0.3s ease;
-  padding: 20px;
+export const StyledButton = styled(OriginalStyledButton)`
+  width: 350px;
+  height: 60px; 
+  font-size: var(--font-content-l);
+  margin: 0 20px 0 0;
 
   &:hover {
-    transform: scale(1.05);
-    background-color: var(--primary-50);
-  }
-  .pic {
-    width: 50%;
-    img {
-      width: 340px;
-      height: 195px;
-    }
-  }
-
-  .text-info {
-    width: 50%;
-    h2 {
-      margin-bottom: 8px;
-      font-size: var(--font-content-l);
-    }
-    h3 {
-      color: var(--gray-60);
-      font-size: var(--font-content-s);
-    }
-    p {
-      color: var(--gray-60);
-      font-size: var(--font-content-s);
-      }
   }
 `;
 
+export const Buttons = styled.div`
+  display : flex;
+  alignItems : center;
+  margin: 0 0 30px 0;
+
+`
+
+
+export const CardBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 25px;
+  padding : 50px 0;
+
+  .episode-item {
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden;
+    height: 100%;  
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    
+    .content {
+    display: flex;
+    align-items: center;
+    }
+
+    .pic {
+    width: 345px;
+    height: 195px; 
+    flex-shrink: 0;
+    border-radius: 5px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+      }
+    }
+    
+    .text-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      h2 {
+        font-size: var(--font-content-l);
+        margin-bottom: 6px;
+      }
+
+      h3 {
+        font-size: var(--font-content-m);
+        color: var(--gray-50);
+      }
+    }
+
+    p {
+    grid-area: paraagraph;
+    grid-column: 1/ span2 ;
+      font-size: var(--font-content-s);
+      color: var(--gray-50);
+      margin-top: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+.episodes-list {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.swiper-slide{
+  width: 200px;
+}
+.episode-detail {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  h4{
+
+  }
+  p{
+
+  }
+}
+
+.episode-detail img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.episode-detail:hover {
+  transform: scale(1.05);
+}
+
+
+
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;  // 화면이 작아지면 한 줄에 하나씩 표시
+    
+    .episode-item {
+      .pic {
+        height: 250px;
+        width: 145px;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+`;
 
 export const EpisodeWrap = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;    
+  margin: 0 auto; 
   .EpisodeContainer {
   display: block;
   padding : 0;
@@ -89,11 +290,19 @@ export const CustomButton = styled(StyledButton)`
 
 `;
 export const RecommendedWrapper = styled.div`
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto; 
+  padding : 50px 0;
   RecommendedContainer{
   }
 `
 
 export const RecommendeddBox = styled.div`
+  max-width: 1440px;
+  overflow: hidden; 
+  margin-bottom: 75px;
   h2 {
     font-size: var(--font-content-xxl);
     margin-bottom: 15px;
@@ -104,124 +313,129 @@ export const RecommendeddBox = styled.div`
     height: 380px;
     img {
       width: 100%;
+      height: 100%;
       display: block;
-    }
-    p {
-      font-size: 14px;
+      border-radius: 5px; 
+      overflow: hidden;
     }
   }
 `;
 
-export const HeroSectionWrapper = styled.div`
-  padding: 20px;
-  color: #fff;
-  background: #1c1c1e;
+
+
+export const HeroSectionWrapper = styled.section`
+  position: relative;
+  width: 100%;
+  height: 770px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .inner{
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto; 
+  padding: 0; 
+
+  }
+`;
+
+export const BackgroundContent = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 770px;
+  overflow: hidden;
+  
+  iframe, img { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+`;
+
+export const HeroContent = styled.div`
+  position: absolute;
+  z-index: 1;
+  text-align: left;
+  bottom: 50px;
 
   h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: var(--font-title-s);
+    margin-bottom: 30px;
   }
 
-  .play-button {
-    padding: 10px 20px;
-    background-color: var(--primary-50);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-
-  .actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-
-    button {
-      padding: 8px 16px;
-      border: none;
-      background: #333;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-
-      &:hover {
-        background: var(--hover-color);
-      }
-    }
+  p {
+    font-size: var(--font-content-s);
+    margin-bottom: 30px;
   }
 
   .description {
-    font-size: 14px;
-    text-decoration: underline;
+    margin-bottom : 30px;
+    font-size: var(--font-content-s);
     cursor: pointer;
-    color: white; 
-
-    &:hover {
-      color: var(--primary-50);
-    }
   }
 `;
 
-
-export const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+export const Actions = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 50%;
-    max-height: 80%;
-    overflow-y: auto;
-    position: relative;
-  }
-  .close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: black;
-    cursor: pointer;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 20px;
+    font-size: var(--font-content-s);
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: var(--hover-color);
+      transition: transform 0.3s ease-in-out;
+      transform: scale(1.2);
+      
+      svg {
+      margin-bottom: 5px;
+      color: var(--hover-color);
+    }
+    }
+
+    
   }
 `;
 
 
 
 export const Container = styled.div`
-  padding: 0 240px;
-  color: #fff;
-  background-color: background-color;
+  width: 100vw;
 `;
 
 
 export const TabMenu = styled.ul`
+  max-width: 1440px;
+  height: 60px;
   border-bottom: solid 3px;
   border-color: var(--gray-80);
-  width: 100%;
   display: flex;
-  list-style: none;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 auto; 
   padding: 0;
-  margin: 20px 0;
   li {
-    margin-right: 20px;
-    cursor: pointer;
-    padding: 10px 20px;
+    margin-right: 30px;
+    padding: 0 30px;
     border-radius: 5px;
     font-size: var(--font-content-m);
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
     &:hover {
         color: var(--hover-color);
+        
       }
 
     &.active {
@@ -236,20 +450,4 @@ export const TabContent = styled.div`
   color: #fff;
   border-radius: 5px;
   margin-top: 20px;
-`;
-
-export const PlayButton = styled.button`
-  padding: 10px 20px;
-  background-color: var(--primary-50);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-export const Description = styled.p`
-  margin-top: 20px;
-  cursor: pointer;
-  text-decoration: underline;
-  color: var(--primary-50);
 `;

@@ -1,13 +1,41 @@
 import styled from 'styled-components';
-import { tabletMore } from '../../../../styled/Mixin';
+import { mobileMore, tabletMore } from '../../../../styled/Mixin';
 
 export const MyPageContentLikedWrap = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 2rem;
+  .nodata {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    font-size: var(--font-content-m);
+    color: var(--gray-50);
+    margin-top: 4rem;
+    img {
+      width: 100px;
+      hieght: 100px;
+      ${mobileMore`
+        width: auto;
+        height: auto;
+      `}
+    }
+    ${mobileMore`
+        font-size: var(--font-content-xl);
+      `}
+    ${tabletMore`
+        font-size: var(--font-content-xxxl);
+      `}
+  }
+  ${mobileMore`
+    padding: 3rem;
+  `}
   ${tabletMore`
-      padding-top : 13.7rem;
-      font-size: var(--font-content-xxl);
-      gap: 5.5rem;
+    font-size: var(--font-content-xxl);
+    gap: 5.5rem;
   `}
   .header {
     display: flex;
@@ -32,14 +60,89 @@ export const MyPageContentLikedWrap = styled.div`
       display: flex;
       gap: 5rem 1.5rem;
       flex-wrap: wrap;
+      li {
+        position: relative;
+      }
       img {
         width: 272px;
         height: 386px;
         border-radius: 5px;
         cursor: pointer;
+        transition: filter 0.3s ease;
+
+        &.on {
+          filter: brightness(0.4);
+        }
       }
-      .on {
-        filter: brightness(0.4);
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        opacity: 0;
+        pointer-events: none;
+
+        .check-circle {
+          fill: none;
+          stroke: var(--primary-50);
+          stroke-width: 5;
+          stroke-dasharray: 351;
+          stroke-dashoffset: 351;
+          transform-origin: center;
+          transform: scale(0);
+        }
+
+        .check-path {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          transform-origin: center;
+          transform: scale(0);
+        }
+
+        &.check-active {
+          opacity: 1;
+
+          .check-circle {
+            animation: circle-draw 0.5s ease forwards, circle-scale 0.3s ease forwards;
+          }
+
+          .check-path {
+            animation: check-draw 0.5s ease 0.3s forwards, check-scale 0.3s ease 0.3s forwards;
+          }
+        }
+      }
+
+      @keyframes circle-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes circle-scale {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes check-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes check-scale {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(0.6);
+        }
       }
     }
   }
@@ -50,8 +153,15 @@ export const MyPageContentWrap = styled.div`
   padding: 0 2rem;
   font-size: var(--font-label-xs);
   gap: 3rem;
+  ${mobileMore`
+    gap: 5rem;
+    font-size: var(--font-content-m);
+    padding: 0 3rem;
+    margin-top: 1.5rem;
+  `}
   ${tabletMore`
     padding-top : 1.5rem;
+    margin-top: 0rem;
     font-size: var(--font-content-xxl);
     gap: 7.5rem;
     padding: 0;
@@ -60,16 +170,40 @@ export const MyPageContentWrap = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    ${mobileMore`
+      gap: 1.5rem;
+    `}
     ${tabletMore`
       gap: 2rem;
-  `}
+    `}
     .title {
       display: flex;
       gap: 0.8rem;
       cursor: pointer;
+      ${mobileMore`
+        gap: 1rem;
+      `}
       ${tabletMore`
       gap: 2rem;
       `}
+      .iconNext {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 1rem;
+          height: 1rem;
+          filter: invert(94%) sepia(0%) saturate(24%) hue-rotate(41deg) brightness(104%) contrast(106%);
+          ${mobileMore`
+            width: 1.5rem;
+            height: 1.5rem;
+          `}
+          ${tabletMore`
+            width: 2rem;
+            height: 2rem;
+          `}
+        }
+      }
     }
     ul {
       width: 100%;
@@ -139,6 +273,9 @@ export const MyPageContentWrap = styled.div`
       margin-top: 0.1rem;
       color: var(--gray-60);
       font-size: var(--font-label-m-mobile);
+      ${mobileMore`
+        font-size: var(--font-label-m-tablet);
+      `}
       ${tabletMore`      
       margin-top: 0.3rem;
       font-size: var(--font-label-m);
