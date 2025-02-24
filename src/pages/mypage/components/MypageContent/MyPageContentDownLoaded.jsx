@@ -10,64 +10,49 @@ const MyPageContentDownLoaded = () => {
   const [iseditOpen, setIsEditOpen] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const [isDelete, setIsDelete] = useState([]);
-  const openToggle = () => {
-    if (downed.length !== 0) {
-      setIsEditOpen(!iseditOpen);
-      setOnDelete(!onDelete);
-    } else {
-      alert('다운로드한 콘텐츠가 없습니다.');
-    }
-  };
+
   const { user } = useSelector((state) => state.authR);
-  const { downed } = user;
+  const downed = user?.downloaded || [];
+
   const isDeleteToggle = (id) => {
     if (onDelete) {
-      setIsDelete((item) => [...item, id]);
-    } else {
-      return;
+      setIsDelete((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
     }
   };
+
   const deletedToggle = (index) => {
     if (onDelete && index.length !== 0) {
-      if (confirm('삭제하시겠습니까?') === true) {
+      if (confirm('삭제하시겠습니까?')) {
         dispatch(authActions.deleteDowned(index));
         setIsEditOpen(false);
-      } else {
         setIsDelete([]);
       }
-    } else if (index.length == 0) {
-      alert('선택된 항목이 없습니다.');
     } else {
-      alert('오류! 새로고침 후 다시 시도하세요.');
+      alert(index.length === 0 ? '선택된 항목이 없습니다.' : '오류! 새로고침 후 다시 시도하세요.');
     }
   };
-  const allLikedId = downed.map((item) => item.id);
+
   useEffect(() => {
     dispatch(pageActions.addData(downed));
     dispatch(pageActions.totalData());
   }, [downed]);
+
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
-  console.log(totalPage);
   const lastPost = currentPage * postsperPage;
   const currentPost = downed.slice(0, lastPost);
-  const morePost = () => {
-    dispatch(pageActions.nextPage());
-  };
 
   return (
     <MyPageContentLikedWrap>
       <div className="header">
         <h2>다운 받은 콘텐츠</h2>
-        {downed.length === 0 ? (
-          ''
-        ) : (
+        {downed.length > 0 && (
           <div className="contentEdit">
             {iseditOpen ? (
               <>
-                <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
+                <Button variant="gray" size="small" onClick={() => deletedToggle(downed.map((item) => item.id))}>
                   전체선택
                 </Button>
-                <Button variant="gray" size="small" onClick={openToggle}>
+                <Button variant="gray" size="small" onClick={() => setIsEditOpen(false)}>
                   취소
                 </Button>
                 <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
@@ -75,32 +60,46 @@ const MyPageContentDownLoaded = () => {
                 </Button>
               </>
             ) : (
-              <Button variant="primary" size="small" onClick={openToggle}>
+              <Button variant="primary" size="small" onClick={() => setIsEditOpen(true)}>
                 수정하기
               </Button>
             )}
           </div>
         )}
       </div>
+
       <div className="content">
         {downed.length === 0 ? (
           <div className="nodata">
             <img src="/images/nodata.png" alt="nodata" />
-            <p> 리뷰 내역이 없습니다.</p>
+            <p>다운로드한 콘텐츠가 없습니다.</p>
           </div>
         ) : (
           <ul>
-            {currentPost.map((url, i) => (
-              <li key={i} onClick={() => isDeleteToggle(url.id)}>
-                <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
-              </li>
-            ))}
+            {currentPost.map((content, i) => {
+              const imageUrl =
+                content.img ||
+                (content.poster_path ? `https://image.tmdb.org/t/p/w500${content.poster_path}` : '') ||
+                (content.backdrop_path ? `https://image.tmdb.org/t/p/w500${content.backdrop_path}` : '');
+
+              return (
+                <li key={content.id || i} onClick={() => isDeleteToggle(content.id)}>
+                  {imageUrl ? (
+                    <img
+                      src={imageUrl}
+                      alt={content.title || content.name || '다운로드 콘텐츠'}
+                      className={isDelete.includes(content.id) ? 'on' : ''}
+                    />
+                  ) : (
+                    <div className="no-image">이미지 없음</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
-        {currentPage >= totalPage ? (
-          ''
-        ) : (
-          <Button variant="gray" size="large" onClick={() => morePost()}>
+        {currentPage < totalPage && (
+          <Button variant="gray" size="large" onClick={() => dispatch(pageActions.nextPage())}>
             더보기
           </Button>
         )}
