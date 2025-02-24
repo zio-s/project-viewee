@@ -12,22 +12,15 @@ const HeroSection = ({ changeContent, id }) => {
   const { detail, loading, error, cachedImages } = useSelector((state) => state.detailR);
   const { state } = useLocation();
   const [reviews, setReviews] = useState([]); 
-
-  
   const [isReviewSectionOpen, setIsReviewSectionOpen] = useState(false);
 
   const openReviewSection = () => setIsReviewSectionOpen(true);
   const closeReviewSection = () => setIsReviewSectionOpen(false);
-<<<<<<< HEAD
 
   useEffect(() => {
-    const storedReviews = JSON.parse(localStorage.getItem("reviews"));
-    if (storedReviews) {
-      setReviews(storedReviews);
-    }
+    const storedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    setReviews(storedReviews);
   }, []);
-=======
->>>>>>> develop
 
   useEffect(() => {
     if (id && state?.type) {
@@ -41,7 +34,7 @@ const HeroSection = ({ changeContent, id }) => {
   const handleAddReview = (newReview) => {
     const updatedReviews = [...reviews, newReview];
     setReviews(updatedReviews);
-    localStorage.setItem("reviews", JSON.stringify(updatedReviews)); 
+    localStorage.setItem("reviews", JSON.stringify(updatedReviews));
   };
 
   if (loading) return <div>Loading...</div>;
@@ -70,10 +63,11 @@ const HeroSection = ({ changeContent, id }) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...더보기` : text;
   };
 
-  const { release_date, runtime, genres, certification } = detail;
+  const { release_date, runtime, genres } = detail;
   const releaseYear = release_date ? release_date.split("-")[0] : "미정";
   const formattedRuntime = runtime ? `${runtime}분` : "미정";
   const genreNames = genres?.map((genre) => genre.name).join(", ") || "미정";
+
   const getRating = () => {
     const releaseDates = detail?.release_dates?.results;
     if (!releaseDates) return '등급 정보 없음';
@@ -92,8 +86,12 @@ const HeroSection = ({ changeContent, id }) => {
     };
     return ratingMap[certification] || '등급 정보 없음';
   };
-
-
+  
+  const currentMovieId = id; 
+  const filteredReviews = reviews.filter(review => review.movieId === currentMovieId);
+  const videoUrl = `https://www.youtube.com/embed/${trailer?.key}?autoplay=1&rel=0`;
+  const VideoPreview = ({ trailer }) => {
+    const [isOpen, setIsOpen] = useState(false);
   return (
     <HeroSectionWrapper>
       <BackgroundContent>
@@ -116,7 +114,7 @@ const HeroSection = ({ changeContent, id }) => {
         </p>
 
         <Buttons>
-        <StyledButton $variant="primary" $size="large">
+        <StyledButton $variant="primary" $size="large" onClick={() => setIsOpen(true)}> 
           미리보기
         </StyledButton> 
         <Actions>
@@ -153,33 +151,33 @@ const HeroSection = ({ changeContent, id }) => {
 </div>
       </HeroContent>
 </div>
-{isReviewSectionOpen && (
-<<<<<<< HEAD
-          <ReviewSection
-          isOpen={isReviewSectionOpen}
-          onClose={closeReviewSection}
-          reviews={reviews} 
-          onSubmit={(newReview) => {
-            console.log("리뷰 제출:", newReview);
-            setReviews((prevReviews) => [...prevReviews, newReview]); 
-          }} 
-          setReviews={setReviews} 
-        />
-      )}
-=======
+    {isReviewSectionOpen && (
         <ReviewSection
         isOpen={isReviewSectionOpen}
         onClose={closeReviewSection}
-        reviews={reviews} // 로컬 리뷰 상태 전달
-        onSubmit={(newReview) => {
-            console.log("리뷰 제출:", newReview); // 리뷰 제출 로그
-        }} 
-        setReviews={setReviews} // setReviews를 ReviewSection에 전달
-    />
-)}
->>>>>>> develop
+        reviews={filteredReviews}
+        onSubmit={handleAddReview} 
+        setReviews={setReviews}
+        />
+      )}
+      {isOpen && (
+        <ModalOverlay onClick={() => setIsOpen(false)}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <CloseButton onClick={() => setIsOpen(false)}>×</CloseButton>
+            <iframe
+              width="100%"
+              height="100%"
+              src={videoUrl}
+              title="YouTube Video"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            ></iframe>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </HeroSectionWrapper>
   );
 };
-
+}
 export default HeroSection;

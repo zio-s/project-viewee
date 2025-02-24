@@ -76,22 +76,13 @@ export const ReviewList = styled.div`
 `;
 
 export const ReviewItem = styled.li`
-<<<<<<< HEAD
   border-bottom: 1px solid var(--gray-60); // 테두리
   padding: 10px 15px; // 패딩
   margin: 10px 0; // 여백
-=======
-  border-bottom: 1px solidvar(--gary-60); // 테두리
-  border-radius: 8px; // 모서리 둥글기
-  padding: 10px 15px; // 패딩
-  margin: 10px 0; // 여백
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자
->>>>>>> develop
 
   display: flex; // Flexbox로 위치 조정
   flex-direction: column; // 세로 방향으로 배치
   align-items: flex-start; // 좌측 정렬
-<<<<<<< HEAD
 
   &:hover {
     background-color: var(--gray-80); // 호버 시 배경색 변화
@@ -124,16 +115,7 @@ export const ReviewItem = styled.li`
     display: flex; // Flexbox로 정렬
     align-items: center; // 가운데 정렬
   }
-=======
->>>>>>> develop
 `;
-
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
 
 export const MovieInfoSection = styled.div`
   max-width: 1440px;
@@ -223,16 +205,22 @@ export const CardBox = styled.div`
     align-items: center;
     }
 
+    .title {
+      display: flex;
+      align-items: center;
+      }
+
     .pic {
+    display: flex;
     width: 345px;
     height: 195px; 
     flex-shrink: 0;
-    border-radius: 5px;
 
       img {
         width: 100%;
         height: 100%;
         object-fit: cover; 
+        border-radius: 5px;
       }
     }
     
@@ -240,6 +228,7 @@ export const CardBox = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      margin-left: 20px;
 
       h2 {
         font-size: var(--font-content-l);
@@ -270,26 +259,29 @@ export const CardBox = styled.div`
   width: 100%;
 }
 
-.swiper-slide{
-  width: 200px;
-}
 .episode-detail {
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-  transition: transform 0.3s ease-in-out;
-  h4{
+  background: #222;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: var(--font-content-m);
+  color: var(--gray-50);
 
+  img {
+    display: block; /* ✅ 인라인 요소 특성을 제거하고 블록 요소로 변경 */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px; /* ✅ 아래 여백 추가 */
   }
-  p{
 
+  h4 {
+    font-size: var(--font-content-m);
+    color: var(--gray-20);
+    margin-bottom: 10px;
   }
 }
 
-.episode-detail img {
-  width: 100%;
-  border-radius: 6px;
-}
+
 
 .episode-detail:hover {
   transform: scale(1.05);
@@ -318,7 +310,6 @@ export const CardBox = styled.div`
 
 export const EpisodeWrap = styled.div`
   max-width: 1440px;
-  display: flex;
   justify-content: center;    
   margin: 0 auto; 
   .EpisodeContainer {
