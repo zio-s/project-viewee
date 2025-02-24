@@ -75,12 +75,20 @@ export const ReviewList = styled.div`
   margin-top: 20px;
 `;
 
-export const ReviewItem = styled.div`
-  background: #333;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
+export const ReviewItem = styled.li`
+  border-bottom: 1px solidvar(--gary-60); // 테두리
+  border-radius: 8px; // 모서리 둥글기
+  padding: 10px 15px; // 패딩
+  margin: 10px 0; // 여백
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자
+
+  display: flex; // Flexbox로 위치 조정
+  flex-direction: column; // 세로 방향으로 배치
+  align-items: flex-start; // 좌측 정렬
 `;
+
+
+
 
 export const MovieInfoSection = styled.div`
   max-width: 1440px;
