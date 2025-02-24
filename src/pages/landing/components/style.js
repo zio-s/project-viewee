@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 300vh;
   --perspective: 1500px;
   --grid-item-ratio: 1.5;
   --grid-width: 100%;

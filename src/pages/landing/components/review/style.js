@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ReviewContainer = styled.section`
   position: relative;
   width: 100%;
-  min-height: 200vh;
+  min-height: 500vh;
 `;
 
 export const ReviewWrapper = styled.div`
@@ -16,12 +16,6 @@ export const ReviewWrapper = styled.div`
     width: 100%;
     height: 100vh;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 150px;
-    background-color: var(--background);
   }
 
   .bg-item {
@@ -35,22 +29,54 @@ export const ReviewWrapper = styled.div`
     video {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* 비디오가 컨테이너를 꽉 채우도록 설정 */
+      object-fit: cover;
       position: absolute;
       top: 0;
       left: 0;
     }
 
     .text-box {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 15%;
+      transform: translateY(-50%);
       z-index: 2;
-      color: white; /* 텍스트가 비디오 위에 잘 보이도록 색상 설정 */
-      text-align: center;
-      padding: 2rem;
+      color: white;
 
       h1 {
         font-size: 3rem;
         margin: 0;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .text-container {
+        position: relative;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        perspective: 1000px;
+        min-width: 100px;
+        justify-content: center;
+      }
+
+      .highlight-text {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgb(255, 107, 107);
+        transform-style: preserve-3d;
+        opacity: 0;
+        pointer-events: none;
+        white-space: nowrap;
+        will-change: transform, opacity;
+
+        &.active {
+          opacity: 1;
+          pointer-events: auto;
+        }
       }
     }
   }
