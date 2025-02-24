@@ -11,6 +11,9 @@ const HeroSection = ({ changeContent, id }) => {
   const dispatch = useDispatch();
   const { detail, loading, error, cachedImages } = useSelector((state) => state.detailR);
   const { state } = useLocation();
+  const [reviews, setReviews] = useState([]); 
+
+  
   const [isReviewSectionOpen, setIsReviewSectionOpen] = useState(false);
 
   const openReviewSection = () => setIsReviewSectionOpen(true);
@@ -135,16 +138,15 @@ const HeroSection = ({ changeContent, id }) => {
       </HeroContent>
 </div>
 {isReviewSectionOpen && (
-  <ReviewSection
-    isOpen={isReviewSectionOpen}
-    onClose={closeReviewSection}
-    reviews={detail.reviews || []} // 실제 리뷰 데이터를 넘기세요
-    onSubmit={(newReview) => {
-      // 제출 핸들러 구현
-      console.log("리뷰 제출:", newReview);
-      // 여기서 리뷰를 상태에 추가하는 로직을 구현하세요
-    }}
-  />
+        <ReviewSection
+        isOpen={isReviewSectionOpen}
+        onClose={closeReviewSection}
+        reviews={reviews} // 로컬 리뷰 상태 전달
+        onSubmit={(newReview) => {
+            console.log("리뷰 제출:", newReview); // 리뷰 제출 로그
+        }} 
+        setReviews={setReviews} // setReviews를 ReviewSection에 전달
+    />
 )}
     </HeroSectionWrapper>
   );

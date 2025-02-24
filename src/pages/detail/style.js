@@ -89,6 +89,7 @@ export const MovieInfoSection = styled.div`
   padding : 50px 0;
 
   .movie-content {
+    max-width: 1440px;
     display: flex;
     flex-shrink: 0;
     gap: 30px;
@@ -96,6 +97,7 @@ export const MovieInfoSection = styled.div`
   .poster-wrapper {
     width: 340px;
     height: 490px; 
+    flex-shrink: 0;
     
     img {
       width: 100%;
@@ -292,6 +294,7 @@ export const RecommendedWrapper = styled.div`
 export const RecommendeddBox = styled.div`
   max-width: 1440px;
   overflow: hidden; 
+  margin-bottom: 75px;
   h2 {
     font-size: var(--font-content-xxl);
     margin-bottom: 15px;

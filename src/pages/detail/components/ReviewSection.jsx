@@ -1,23 +1,28 @@
-// ReviewSection.js
 import React, { useState } from "react";
 import { ModalOverlay, ModalContent, CloseButton, StarContainer, SubmitButton, ReviewList, ReviewItem, ReviewInput } from "../style";
 
-const ReviewSection = ({ isOpen, onClose, reviews, onSubmit }) => {
+const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews  }) => {
   const [selectedStars, setSelectedStars] = useState(0);
   const [reviewText, setReviewText] = useState("");
+
 
   const handleStarClick = (index) => {
     setSelectedStars(index + 1); 
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (reviewText) {
-      const currentDate = new Date().toLocaleString();
-      onSubmit({ stars: selectedStars, text: reviewText, date: currentDate });
-      setReviewText(""); 
-      setSelectedStars(0); 
+        const currentDate = new Date().toLocaleString();
+        const newReview = { stars: selectedStars, text: reviewText, date: currentDate };
+
+        onSubmit(newReview); 
+        setReviewText(""); 
+        setSelectedStars(0); 
+
+        setReviews((prevReviews) => [...prevReviews, newReview]);
     }
-  };
+};
 
   if (!isOpen) return null;
 
@@ -59,7 +64,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit }) => {
           value={reviewText} 
           onChange={(e) => setReviewText(e.target.value)} 
         />
-        <SubmitButton onClick={handleSubmit}>등록</SubmitButton>
+        <SubmitButton onClick={handleSubmit} type="submit">등록</SubmitButton>
         <ReviewList>
           {reviews.map((review, index) => (
             <ReviewItem key={index}>
