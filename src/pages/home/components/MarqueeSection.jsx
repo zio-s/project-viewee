@@ -4,16 +4,16 @@ import { MarqueeItem, MarqueeWrapper } from '../style';
 import { Link } from 'react-router';
 
 const MarqueePoster = [
-  { id: 1, src: '/images/MarqueePoster1.png', num: '273234' },
-  { id: 2, src: '/images/MarqueePoster2.png', num: '508883' },
-  { id: 3, src: '/images/MarqueePoster3.png', num: '129236' },
-  { id: 4, src: '/images/MarqueePoster4.png', num: '214999' },
-  { id: 5, src: '/images/MarqueePoster5.png', num: '76662' },
-  { id: 6, src: '/images/MarqueePoster6.png', num: '124157' },
-  { id: 7, src: '/images/MarqueePoster7.png', num: '12429' },
-  { id: 8, src: '/images/MarqueePoster8.png', num: '94796' },
-  { id: 9, src: '/images/MarqueePoster9.png', num: '919207' },
-  { id: 10, src: '/images/MarqueePoster10.png', num: '241454' },
+  { id: 1, src: '/images/MarqueePoster1.png', num: '/tv/273234' },
+  { id: 2, src: '/images/MarqueePoster2.png', num: '/movie/508883' },
+  { id: 3, src: '/images/MarqueePoster3.png', num: '/tv/129236' },
+  { id: 4, src: '/images/MarqueePoster4.png', num: '/tv/214999' },
+  { id: 5, src: '/images/MarqueePoster5.png', num: '/tv/76662' },
+  { id: 6, src: '/images/MarqueePoster6.png', num: '/movie/124157' },
+  { id: 7, src: '/images/MarqueePoster7.png', num: '/movie/12429' },
+  { id: 8, src: '/images/MarqueePoster8.png', num: '/tv/94796' },
+  { id: 9, src: '/images/MarqueePoster9.png', num: '/movie/919207' },
+  { id: 10, src: '/images/MarqueePoster10.png', num: '/tv/2414544' },
 ];
 
 const MarqueeSection = () => {
@@ -22,7 +22,7 @@ const MarqueeSection = () => {
       <MarqueeWrapper>
         {MarqueePoster.map((poster) => (
           <MarqueeItem key={poster.id}>
-            <Link to={`/tv/${poster.num}`}>
+            <Link to={`${poster.num}`}>
               <img src={poster.src} alt={`Movie Poster ${poster.id}`} />
             </Link>
           </MarqueeItem>

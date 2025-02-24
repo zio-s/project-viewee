@@ -19,6 +19,7 @@ import HoverModal from './HoverModal';
 import { getContentDetail } from '../../../store/modules/getThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailActions } from '../../../store/modules/detailSlice';
+import { useNavigate } from 'react-router';
 
 const NewSwiperSection = ({ reviewData }) => {
   const [slidesPerView, setSlidesPerView] = useState(4);
@@ -26,6 +27,7 @@ const NewSwiperSection = ({ reviewData }) => {
   const [hoverTimeout, setHoverTimeout] = useState(null);
   const swiperRef = useRef(null); // Swiper 인스턴스를 저장할 ref
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const contentDetail = useSelector((state) => state.detailR);
 
   useEffect(() => {
@@ -96,6 +98,10 @@ const NewSwiperSection = ({ reviewData }) => {
     dispatch(detailActions.clearDetail());
   };
 
+  const onGo = (content) => {
+    navigate(`/${content.media_type || 'movie'}/${content.id}`);
+  };
+
   return (
     <NewSectionWrapper>
       <NewCardsSectionTitle>
@@ -119,17 +125,18 @@ const NewSwiperSection = ({ reviewData }) => {
 
       <NewSwiperContainer className="new-card-carousel1">
         <NewSwiperWrapper className="swiper-wrapper">
-          {reviewData.map((item, index) => (
+          {reviewData.map((content, index) => (
             <NewSwiperSlide
-              key={item.id}
+              key={content.id}
               className="swiper-slide"
-              onMouseEnter={() => handleMouseEnter(item)}
+              onMouseEnter={() => handleMouseEnter(content)}
               onMouseLeave={handleMouseLeave}
+              onClick={() => onGo(content)}
             >
-              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+              <img src={`https://image.tmdb.org/t/p/w500${content.poster_path}`} alt="" />
 
-              <HoverModalWrapper className={hoveredSlide === item.id ? 'active' : ''}>
-                <HoverModal reviewData={item} detailData={hoveredSlide === item.id ? contentDetail : null} />
+              <HoverModalWrapper className={hoveredSlide === content.id ? 'active' : ''}>
+                <HoverModal reviewData={content} detailData={hoveredSlide === content.id ? contentDetail : null} />
               </HoverModalWrapper>
             </NewSwiperSlide>
           ))}
