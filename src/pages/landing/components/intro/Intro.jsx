@@ -1,4 +1,3 @@
-// Intro.jsx
 import { useEffect, useRef } from 'react';
 import { IntroContainer, IntroWrapper } from './style';
 import gsap from 'gsap';
