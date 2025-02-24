@@ -31,8 +31,8 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/landing" element={<LandingPage />} />
           <Route path="/" element={<Layout />}>
+            <Route path="/landing" element={<LandingPage />} />
             <Route index element={<Home />} />
             <Route path="/:category">
               <Route index element={<CateGoryPage />} />
