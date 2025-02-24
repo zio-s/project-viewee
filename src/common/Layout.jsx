@@ -1,11 +1,11 @@
 import { Outlet, useLocation } from 'react-router-dom';
 
-import Footer from './footer/footer';
 import Header from './header';
 import { useEffect, useState } from 'react';
 import SubHeader from './subheader';
 import ScrollToTopButton from '../ui/button/topButton/ScrollToTopButton';
 import { Wrap } from './style';
+import Footer from './footer/Footer';
 
 const Layout = () => {
   const [path, setPath] = useState(false);
