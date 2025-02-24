@@ -26,7 +26,7 @@ const ScrollSection = () => {
   const sectionState = useSelector(selectSection('scroll'));
 
   const onGo = () => {
-    navigate('/');
+    navigate('/home');
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
@@ -92,7 +92,7 @@ const ScrollSection = () => {
       scrollTrigger: {
         trigger: section,
         start: 'top center',
-        end: 'bottom bottom-=10%',
+        end: '+=200%',
         scrub: 2,
         anticipatePin: 1,
         onUpdate: (self) => {
@@ -163,14 +163,13 @@ const ScrollSection = () => {
       .fromTo(
         gridWrap,
         {
-          z: 200,
-          rotationX: -15,
+          z: 100,
+          rotationX: 0,
           scale: 0.8,
-          delay: 2,
         },
         {
-          z: 1500,
-          rotationX: -35,
+          z: 2000,
+          rotationX: -55,
           scale: 1,
           duration: 4,
           ease: 'power2.inOut',
