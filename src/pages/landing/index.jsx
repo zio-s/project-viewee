@@ -12,6 +12,7 @@ import { MainPageData } from '../../store/modules/getThunk';
 import Marquees from './components/marquee/Marquees';
 import CustomCursor from './components/CustomCursor';
 import TextSection from './components/TextSection';
+import ReviewSection from './components/review/ReviewSection';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const LandingPage = () => {
         <Hero />
         <Marquees />
         <TextSection />
+        <ReviewSection />
         <CardSection />
         <ScrollSection scrollToTop={scrollToTop} />
       </LandingWrap>

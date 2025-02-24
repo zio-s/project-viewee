@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-  --perspective: 2500px;
+  --perspective: 1500px;
   --grid-item-ratio: 1.5;
   --grid-width: 100%;
   --grid-height: auto;
@@ -98,27 +98,32 @@ export const GridImg = styled.div`
   background-position: center;
 `;
 
+export const SectionContainer = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 200vh;
+`;
 export const ViewContainer = styled.section`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
   .inner {
-    width: 100vw;
-    position: absolute;
     width: 100%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    height: 100vh;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 150px;
+    background-color: var(--background);
   }
 
   h1 {
     font-size: 90px;
   }
+
   .content {
     display: flex;
     flex-shrink: 0;
@@ -130,20 +135,25 @@ export const ViewContainer = styled.section`
     .text-l {
       span {
         font-size: 60px;
+        opacity: 0;
       }
     }
+
     .text-r {
       text-align: right;
       span {
         font-size: 60px;
+        opacity: 0;
       }
     }
+
     .view {
       .img-box {
         width: 200px;
         height: 248px;
         position: relative;
-        background: url('/public/images/v.png') center/contain no-repeat;
+        background: url('/images/v.png') center/contain no-repeat;
+
         .eye-l {
           position: absolute;
           width: 30px;
@@ -153,11 +163,13 @@ export const ViewContainer = styled.section`
           left: 7%;
           top: -13%;
           background: url('/images/eye-1.png') no-repeat;
+
           .eye-bl {
             position: absolute;
             top: 10px;
           }
         }
+
         .eye-r {
           position: absolute;
           width: 30px;
@@ -167,6 +179,7 @@ export const ViewContainer = styled.section`
           right: 7%;
           top: -13%;
           background: url('/images/eye-1.png') no-repeat;
+
           .eye-br {
             position: absolute;
             top: 10px;
@@ -191,7 +204,6 @@ export const ViewContainer = styled.section`
     0% {
       opacity: 0;
     }
-    // ... 중간 키프레임들 ...
     65.1% {
       opacity: 1;
       text-shadow: 0 0 30px var(--primary-30), 0 0 60px var(--primary-40), 0 0 100px var(--primary-20);
@@ -200,7 +212,6 @@ export const ViewContainer = styled.section`
       opacity: 1;
       text-shadow: 0 0 30px var(--primary-30), 0 0 60px var(--primary-40), 0 0 100px var(--primary-20);
     }
-    // ... 중간 키프레임들 ...
     100% {
       opacity: 1;
       text-shadow: 0 0 30px var(--primary-30), 0 0 60px var(--primary-40), 0 0 110px var(--primary-30),
@@ -208,7 +219,6 @@ export const ViewContainer = styled.section`
     }
   }
 
-  // 반응형 스타일 적용
   @media screen and (max-width: 1024px) {
     .text-l span,
     .text-r span {
