@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CardBox } from '../style';
 import { getContentDetail, getEpisodeDetails } from '../../../store/modules/getThunk';
 import { useNavigate } from 'react-router';
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css"; 
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 const EpisodeList = () => {
   const { detail, loading, error, seasonDetails, episodeDetails, collection } = useSelector((state) => state.detailR);
@@ -17,6 +13,8 @@ const EpisodeList = () => {
   const handleSeasonClick = (e, seasonNumber) => {
     e.preventDefault();
 
+    const currentPosition = window.scrollY;
+
     if (selectedSeason === seasonNumber) {
       setSelectedSeason(null);
     } else {
@@ -25,24 +23,61 @@ const EpisodeList = () => {
         dispatch(getEpisodeDetails({ tvId: detail.id, seasonNumber }));
       }
     }
+    setTimeout(() => {
+      window.scrollTo(0, currentPosition);
+    }, 10);
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
 
+  const converRuntime = (minutes) => {
+    if (!minutes || minutes === 0) return '시간 정보 없음';
+
+    const hours = Math.floor(minutes / 60);
+    const Minutes = minutes % 60;
+
+    if (hours > 0) {
+      return `${hours}시간 ${Minutes}분`;
+    }
+    return `${Minutes}분`;
+  };
+
   const handleMovieClick = (movieId) => {
     dispatch(getContentDetail({ type: 'movie', id: movieId }));
     navigate(`/movie/${movieId}`);
   };
 
+  if (detail.belongs_to_collection && collection) {
+    return (
+      <CardBox>
+        {collection.parts?.map((movie) => (
+          <div key={movie.id} className="episode-item">
+            <div className="pic" onClick={() => handleMovieClick(movie.id)}>
+              {movie.poster_path && (
+                <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+              )}
+            </div>
+            <h2>{movie.title}</h2>
+            <h3>
+              {movie.release_date}, {converRuntime(movie.runtime)}
+            </h3>
+            <p>{movie.overview}</p>
+          </div>
+        ))}
+      </CardBox>
+    );
+  }
+
+  // TV 시리즈인 경우
   if (detail.seasons && seasonDetails) {
     return (
       <CardBox>
         {seasonDetails.map((season) => (
           <div
             key={season.id}
-            className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`}
+            className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`} // ✅ active 클래스 추가
           >
             <div
               className="pic"
@@ -60,31 +95,21 @@ const EpisodeList = () => {
               </h3>
               <p>{season.overview}</p>
             </div>
-
-            {selectedSeason === season.season_number && episodeDetails[season.season_number] && (
-              <div className="episodes-list">
-                <Swiper
-                  spaceBetween={10}
-                  slidesPerView={8}
-                  navigation
-                  pagination={{ clickable: true }}
-                >
+            <>
+              {selectedSeason === season.season_number && episodeDetails[season.season_number] && (
+                <div className="episodes-list">
                   {episodeDetails[season.season_number].map((episode) => (
-                    <SwiperSlide key={episode.id}>
-                      <div className="episode-detail">
-                        <h4>
-                          {episode.episode_number}. {episode.name}
-                        </h4>
-                        <p>{episode.overview || '줄거리 정보가 없습니다.'}</p>
-                        {episode.still_path && (
-                          <img src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt={episode.name} />
-                        )}
-                      </div>
-                    </SwiperSlide>
+                    <div key={episode.id} className="episode-detail">
+                      <h4>
+                        {episode.episode_number}. {episode.name}
+                      </h4>
+                      {episode.overview || '줄거리 정보가 없습니다.'}
+                      <img src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt={episode.name} />
+                    </div>
                   ))}
-                </Swiper>
-              </div>
-            )}
+                </div>
+              )}
+            </>
           </div>
         ))}
       </CardBox>

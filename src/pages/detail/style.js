@@ -1,6 +1,86 @@
 
 import styled from 'styled-components';
 import { StyledButton as OriginalStyledButton } from '../../common/button/style';
+import { StyledInput as OriginalStyledInput } from '../../ui/input/style';
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; 
+`;
+
+export const ModalContent = styled.div`
+  background: var(--background-color);
+  width: 800px;
+  height: 80vh;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  overflow-y: auto;
+    h2{
+      font-size: var(--font-content-xxxl);
+      text-align: center;
+      margin-bottom: 10px; 
+    }
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  fill: |;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
+export const StarContainer = styled.div`
+  font-size: 24px;
+  text-align: center;
+`;
+
+export const ReviewInput = styled(OriginalStyledInput)`
+  width: 100%; 
+  padding: 20px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  margin: 20px 0; 
+
+  &:focus {
+    border-color: var(--primary-50); 
+    outline: none; 
+  }
+`;
+
+export const SubmitButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #f05a7e;
+  color: white;
+  border: none;
+  cursor: pointer;
+`;
+
+export const ReviewList = styled.div`
+  margin-top: 20px;
+`;
+
+export const ReviewItem = styled.div`
+  background: #333;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+`;
 
 export const MovieInfoSection = styled.div`
   max-width: 1440px;
