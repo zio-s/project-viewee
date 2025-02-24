@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import GlobalStyle from './styled/GlobalStyle';
 import Layout from './common/Layout';
 import NotFiles from './pages/notfile';
@@ -15,8 +15,24 @@ import Subscribe from './pages/mypage/subscribe';
 import QnA from './pages/mypage/qna';
 import CustomerCenter from './pages/mypage/customercenter';
 import LandingPage from './pages/landing';
+import { useEffect } from 'react';
 
 const App = () => {
+  const RedirectHandler = () => {
+    const hasVisited = localStorage.getItem('hasVisited');
+
+    useEffect(() => {
+      if (!hasVisited) {
+        localStorage.setItem('hasVisited', 'true');
+      }
+    }, []);
+
+    if (!hasVisited) {
+      return <Navigate to="/landing" replace />;
+    }
+
+    return null;
+  };
   return (
     <>
       <BrowserRouter>
@@ -24,7 +40,15 @@ const App = () => {
         <Routes>
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route
+              index
+              element={
+                <>
+                  <RedirectHandler />
+                  <Home />
+                </>
+              }
+            />
             <Route path="/:category">
               <Route index element={<CateGoryPage />} />
               <Route path=":id" element={<Detail />} />

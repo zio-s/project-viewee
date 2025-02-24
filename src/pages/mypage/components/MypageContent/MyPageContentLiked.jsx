@@ -85,7 +85,7 @@ const MyPageContentLiked = () => {
         {liked.length === 0 ? (
           <div className="nodata">
             <img src="/images/nodata.png" alt="nodata" />
-            <p> 리뷰 내역이 없습니다.</p>
+            <p> 관심 콘텐츠가 없습니다.</p>
           </div>
         ) : (
           <ul>

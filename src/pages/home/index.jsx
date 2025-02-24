@@ -26,6 +26,12 @@ const Home = () => {
     // window.scrollTo(0, 0);
   }, [dispatch]);
 
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  const handleSelectGenre = (genreId) => {
+    setSelectedGenre(genreId);
+  };
+
   // 컨텐츠 클릭 핸들러
   // const handleContentClick = (content) => {
   //   dispatch(addToContinueWatching(content));

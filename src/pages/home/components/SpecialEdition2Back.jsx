@@ -22,9 +22,9 @@ const SpecialEdition2Back = () => {
       <motion.div
         className="backgroundActor2"
         initial={{ scale: 1.0 }}
-        whileInView={{ scale: 1.1 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.5 }}
+        whileInView={{ scale: 1.2 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.7 }}
       ></motion.div>
 
       <motion.div
@@ -40,7 +40,7 @@ const SpecialEdition2Back = () => {
         initial={{ y: 50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.4 }}
       ></motion.div>
     </EditionbackWrapper>
   );
