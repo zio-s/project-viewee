@@ -5,25 +5,31 @@ import { useEffect } from 'react';
 
 const images = [
   {
-    url: '/images/roll-img1.jpg',
+    url: '/images/MarqueePoster1.png',
   },
   {
-    url: '/images/roll-img2.jpg',
+    url: '/images/MarqueePoster2.png',
   },
   {
-    url: '/images/roll-img3.jpg',
+    url: '/images/MarqueePoster3.png',
   },
   {
-    url: '/images/roll-img4.jpg',
+    url: '/images/MarqueePoster4.png',
   },
   {
-    url: '/images/roll-img5.jpg',
+    url: '/images/MarqueePoster5.png',
   },
   {
-    url: '/images/roll-img6.jpg',
+    url: '/images/MarqueePoster6.png',
   },
   {
-    url: '/images/roll-img7.jpg',
+    url: '/images/MarqueePoster7.png',
+  },
+  {
+    url: '/images/MarqueePoster8.png',
+  },
+  {
+    url: '/images/MarqueePoster9.png',
   },
 ];
 
