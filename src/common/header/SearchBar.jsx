@@ -16,13 +16,15 @@ const SearchBar = ({ isOpen, setIsOpen, searchIconRef }) => {
   const containerRef = useRef();
   const { searchData, isLoading, error } = useSelector((state) => state.searchR);
   const [text, setText] = useState('');
+
+  const DEFAULT_SEARCH_HISTORY = ['유재석', '범죄도시4', '박보영'];
   const [searchHistory, setSearchHistory] = useState(() => {
     try {
       const savedHistory = localStorage.getItem(SEARCH_HISTORY_KEY);
-      return savedHistory ? JSON.parse(savedHistory) : [];
+      return savedHistory ? JSON.parse(savedHistory) : DEFAULT_SEARCH_HISTORY;
     } catch (error) {
       console.error('저장된 검색기록이 없습니다.', error);
-      return [];
+      return DEFAULT_SEARCH_HISTORY;
     }
   });
 
