@@ -17,7 +17,7 @@ const SearchBar = ({ isOpen, setIsOpen, searchIconRef }) => {
   const { searchData, isLoading, error } = useSelector((state) => state.searchR);
   const [text, setText] = useState('');
 
-  const DEFAULT_SEARCH_HISTORY = ['유재석', '범죄도시4', '박보영'];
+  const DEFAULT_SEARCH_HISTORY = ['유재석', '유퀴즈', '박보영'];
   const [searchHistory, setSearchHistory] = useState(() => {
     try {
       const savedHistory = localStorage.getItem(SEARCH_HISTORY_KEY);
