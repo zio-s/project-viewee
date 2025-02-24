@@ -43,15 +43,12 @@ const EpisodeList = () => {
     }
     return `${Minutes}분`;
   };
+
   const handleMovieClick = (movieId) => {
-    dispatch(
-      getContentDetail({
-        type: 'movie',
-        id: movieId,
-      })
-    );
+    dispatch(getContentDetail({ type: 'movie', id: movieId }));
     navigate(`/movie/${movieId}`);
   };
+
   if (detail.belongs_to_collection && collection) {
     return (
       <CardBox>
@@ -62,11 +59,11 @@ const EpisodeList = () => {
                 <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
               )}
             </div>
-            <div className="text-info">
-              <h2>{movie.title}</h2>
-              <h3>
-                {movie.release_date}, {converRuntime(movie.runtime)}
-              </h3>
+            <div>
+            <h2>{movie.title}</h2>
+            <h3>
+              {movie.release_date}, {converRuntime(movie.runtime)}
+            </h3>
             </div>
             <p>{movie.overview}</p>
           </div>
@@ -80,7 +77,10 @@ const EpisodeList = () => {
     return (
       <CardBox>
         {seasonDetails.map((season) => (
-          <div key={season.id} className="episode-item">
+          <div
+            key={season.id}
+            className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`} // ✅ active 클래스 추가
+          >
             <div
               className="pic"
               onClick={(e) => handleSeasonClick(e, season.season_number)}
@@ -95,8 +95,8 @@ const EpisodeList = () => {
               <h3>
                 {season.air_date}, {season.episodes?.length}개 에피소드
               </h3>
-              <p>{season.overview}</p>
             </div>
+            <p>{season.overview}</p>
             <>
               {selectedSeason === season.season_number && episodeDetails[season.season_number] && (
                 <div className="episodes-list">

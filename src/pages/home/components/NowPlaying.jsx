@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { detailActions } from '../../../store/modules/detailSlice';
 import { getContentDetail } from '../../../store/modules/getThunk';
 import HoverModal from './HoverModal';
+import { useNavigate } from 'react-router';
 
 const NowPlaying = ({ nowPlaying }) => {
   const [slidesPerView, setSlidesPerView] = useState(4);
@@ -26,6 +27,7 @@ const NowPlaying = ({ nowPlaying }) => {
   const [hoverTimeout, setHoverTimeout] = useState(null);
   const swiperRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const contentDetail = useSelector((state) => state.detailR);
 
   useEffect(() => {
@@ -92,6 +94,9 @@ const NowPlaying = ({ nowPlaying }) => {
     setHoveredSlide(null);
     dispatch(detailActions.clearDetail());
   };
+  const onGo = (content) => {
+    navigate(`/${content.media_type || 'movie'}/${content.id}`);
+  };
 
   return (
     <NewSectionWrapper>
@@ -116,16 +121,17 @@ const NowPlaying = ({ nowPlaying }) => {
 
       <NewSwiperContainer className="new-card-carousel2">
         <NewSwiperWrapper className="swiper-wrapper">
-          {nowPlaying.map((item, index) => (
+          {nowPlaying.map((content, index) => (
             <NewSwiperSlide
-              key={item.id}
+              key={content.id}
               className="swiper-slide"
-              onMouseEnter={() => handleMouseEnter(item)}
+              onMouseEnter={() => handleMouseEnter(content)}
               onMouseLeave={handleMouseLeave}
+              onClick={() => onGo(content)}
             >
-              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
-              <HoverModalWrapper className={hoveredSlide === item.id ? 'active' : ''}>
-                <HoverModal reviewData={item} detailData={hoveredSlide === item.id ? contentDetail : null} />
+              <img src={`https://image.tmdb.org/t/p/w500${content.poster_path}`} alt="" />
+              <HoverModalWrapper className={hoveredSlide === content.id ? 'active' : ''}>
+                <HoverModal reviewData={content} detailData={hoveredSlide === content.id ? contentDetail : null} />
               </HoverModalWrapper>
             </NewSwiperSlide>
           ))}

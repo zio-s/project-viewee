@@ -17,27 +17,56 @@ const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, ico
 const DownloadButton = ({ content }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth?.user) || null;
+  const [isDownloaded, setIsDownloaded] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setIsDownloaded(user.downloaded?.some((item) => item.id === content?.id) || false);
+    }
+  }, [user, content]); // Redux 상태 변경 시, 다시 체크하도록 의존성 추가
 
   if (!content) {
     console.warn('🚨 DownloadButton: content 데이터가 없습니다.');
     return null;
   }
 
-  const isDownloaded = user?.downloaded?.some((item) => item.id === content?.id) || false;
-
-  const handleDownloadClick = () => {
+  const handleDownloadClick = (event) => {
+    event.stopPropagation();
     console.log('✅ 다운로드 토글 실행됨:', content);
     dispatch(authActions.toggleDownloaded(content));
+    setIsDownloaded((prev) => !prev); // 로컬 상태 업데이트로 즉각 반응
   };
 
   return (
     <PlayButton className="steamedButton" onClick={handleDownloadClick}>
-      <svg width="20" height="20" viewBox="0 0 23 23" fill="white" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M0.667969 11.0491C0.667969 11.7054 1.21708 12.241 1.85993 12.241H10.5251V20.9063C10.5251 21.5491 11.0608 22.0982 11.7171 22.0982C12.3733 22.0982 12.9225 21.5491 12.9225 20.9063V12.241H21.5743C22.2171 12.241 22.7661 11.7054 22.7661 11.0491C22.7661 10.3929 22.2171 9.84375 21.5743 9.84375H12.9225V1.19197C12.9225 0.549107 12.3733 0 11.7171 0C11.0608 0 10.5251 0.549107 10.5251 1.19197V9.84375H1.85993C1.21708 9.84375 0.667969 10.3929 0.667969 11.0491Z"
-          fill="white"
-        />
-      </svg>
+      <motion.svg
+        width="20"
+        height="20"
+        viewBox="0 0 23 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        initial={{ scale: 1 }}
+        animate={{ scale: isDownloaded ? 1.2 : 1 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+      >
+        {isDownloaded ? (
+          <motion.path
+            d="M2 10L9 17L21 3"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        ) : (
+          <motion.path
+            d="M0.667969 11.0491C0.667969 11.7054 1.21708 12.241 1.85993 12.241H10.5251V20.9063C10.5251 21.5491 11.0608 22.0982 11.7171 22.0982C12.3733 22.0982 12.9225 21.5491 12.9225 20.9063V12.241H21.5743C22.2171 12.241 22.7661 11.7054 22.7661 11.0491C22.7661 10.3929 22.2171 9.84375 21.5743 9.84375H12.9225V1.19197C12.9225 0.549107 12.3733 0 11.7171 0C11.0608 0 10.5251 0.549107 10.5251 1.19197V9.84375H1.85993C1.21708 9.84375 0.667969 10.3929 0.667969 11.0491Z"
+            fill="white"
+          />
+        )}
+      </motion.svg>
     </PlayButton>
   );
 };

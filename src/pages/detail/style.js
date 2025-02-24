@@ -1,29 +1,117 @@
 
-
-
-
 import styled from 'styled-components';
 import { StyledButton as OriginalStyledButton } from '../../common/button/style';
+import { StyledInput as OriginalStyledInput } from '../../ui/input/style';
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; 
+`;
+
+export const ModalContent = styled.div`
+  background: var(--background-color);
+  width: 800px;
+  height: 80vh;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  overflow-y: auto;
+    h2{
+      font-size: var(--font-content-xxxl);
+      text-align: center;
+      margin-bottom: 10px; 
+    }
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  fill: |;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
+export const StarContainer = styled.div`
+  font-size: 24px;
+  text-align: center;
+`;
+
+export const ReviewInput = styled(OriginalStyledInput)`
+  width: 100%; 
+  padding: 20px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  margin: 20px 0; 
+
+  &:focus {
+    border-color: var(--primary-50); 
+    outline: none; 
+  }
+`;
+
+export const SubmitButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #f05a7e;
+  color: white;
+  border: none;
+  cursor: pointer;
+`;
+
+export const ReviewList = styled.div`
+  margin-top: 20px;
+`;
+
+export const ReviewItem = styled.li`
+  border-bottom: 1px solidvar(--gary-60); // 테두리
+  border-radius: 8px; // 모서리 둥글기
+  padding: 10px 15px; // 패딩
+  margin: 10px 0; // 여백
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자
+
+  display: flex; // Flexbox로 위치 조정
+  flex-direction: column; // 세로 방향으로 배치
+  align-items: flex-start; // 좌측 정렬
+`;
+
+
+
 
 export const MovieInfoSection = styled.div`
   max-width: 1440px;
   display: flex;
-  justify-content: center;     
   margin: 0 auto; 
   padding : 50px 0;
 
   .movie-content {
+    max-width: 1440px;
     display: flex;
+    flex-shrink: 0;
     gap: 30px;
   }
   .poster-wrapper {
+    width: 340px;
+    height: 490px; 
     flex-shrink: 0;
-    width: 490px;
-    height: 340px; 
     
     img {
       width: 100%;
+      height: 100%; 
       border-radius: 5px;
+      object-fit: cover;
     }
   }
   .info-wrapper {
@@ -35,6 +123,7 @@ export const MovieInfoSection = styled.div`
     .overview{
       font-size: var(--font-lebel-l);
       margin-bottom: 40px;
+      display: block;
     }
   }
     
@@ -81,6 +170,8 @@ export const CardBox = styled.div`
     flex-direction: column; 
     overflow: hidden;
     height: 100%;  
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
     
     .content {
     display: flex;
@@ -91,12 +182,12 @@ export const CardBox = styled.div`
     width: 345px;
     height: 195px; 
     flex-shrink: 0;
+    border-radius: 5px;
 
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        border-radius: 5px;
+        object-fit: cover; 
       }
     }
     
@@ -128,6 +219,38 @@ export const CardBox = styled.div`
       overflow: hidden;
     }
   }
+
+.episodes-list {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.swiper-slide{
+  width: 200px;
+}
+.episode-detail {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  h4{
+
+  }
+  p{
+
+  }
+}
+
+.episode-detail img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.episode-detail:hover {
+  transform: scale(1.05);
+}
+
+
 
   
   @media (max-width: 1024px) {
@@ -179,6 +302,7 @@ export const RecommendedWrapper = styled.div`
 export const RecommendeddBox = styled.div`
   max-width: 1440px;
   overflow: hidden; 
+  margin-bottom: 75px;
   h2 {
     font-size: var(--font-content-xxl);
     margin-bottom: 15px;
@@ -208,6 +332,7 @@ export const HeroSectionWrapper = styled.section`
   justify-content: center;
   .inner{
   max-width: 1440px;
+  height: 100%;
   margin: 0 auto; 
   padding: 0; 
 
@@ -237,6 +362,7 @@ export const HeroContent = styled.div`
   position: absolute;
   z-index: 1;
   text-align: left;
+  bottom: 50px;
 
   h1 {
     font-size: var(--font-title-s);
@@ -249,7 +375,7 @@ export const HeroContent = styled.div`
   }
 
   .description {
-    margin-bottom : 50px;
+    margin-bottom : 30px;
     font-size: var(--font-content-s);
     cursor: pointer;
   }
@@ -270,21 +396,17 @@ export const Actions = styled.div`
     transition: color 0.3s ease-in-out;
 
     &:hover {
-      color: var(--primary-50);
+      color: var(--hover-color);
+      transition: transform 0.3s ease-in-out;
       transform: scale(1.2);
-    }
-
-    svg {
+      
+      svg {
       margin-bottom: 5px;
-      color: white;
-      transition: transform 0.3s ease-in-out, color 0.2s ease-in-out, filter 0.3s ease-in-out;
-
-      &:hover {
-        color: var(--primary-50);
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 8px var(--primary-50));
-      }
+      color: var(--hover-color);
     }
+    }
+
+    
   }
 `;
 
@@ -310,10 +432,10 @@ export const TabMenu = styled.ul`
     padding: 0 30px;
     border-radius: 5px;
     font-size: var(--font-content-m);
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
     &:hover {
         color: var(--hover-color);
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 8px var(--primary-50));
+        
       }
 
     &.active {
@@ -328,11 +450,4 @@ export const TabContent = styled.div`
   color: #fff;
   border-radius: 5px;
   margin-top: 20px;
-`;
-
-export const Description = styled.p`
-  margin-top: 20px;
-  cursor: pointer;
-  text-decoration: underline;
-  color: var(--primary-50);
 `;
