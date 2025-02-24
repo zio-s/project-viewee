@@ -79,7 +79,7 @@ const EpisodeList = () => {
         {seasonDetails.map((season) => (
           <div
             key={season.id}
-            className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`} // ✅ active 클래스 추가
+            className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`} 
           >
             <div
               className="pic"

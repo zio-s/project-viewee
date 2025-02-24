@@ -20,6 +20,13 @@ const HeroSection = ({ changeContent, id }) => {
   const closeReviewSection = () => setIsReviewSectionOpen(false);
 
   useEffect(() => {
+    const storedReviews = JSON.parse(localStorage.getItem("reviews"));
+    if (storedReviews) {
+      setReviews(storedReviews);
+    }
+  }, []);
+
+  useEffect(() => {
     if (id && state?.type) {
       dispatch(getContentDetail({ type: state.type, id }));
     }
@@ -27,6 +34,12 @@ const HeroSection = ({ changeContent, id }) => {
       dispatch(detailActions.clearDetail());
     };
   }, [dispatch, id, state?.type]);
+
+  const handleAddReview = (newReview) => {
+    const updatedReviews = [...reviews, newReview];
+    setReviews(updatedReviews);
+    localStorage.setItem("reviews", JSON.stringify(updatedReviews)); 
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -138,16 +151,17 @@ const HeroSection = ({ changeContent, id }) => {
       </HeroContent>
 </div>
 {isReviewSectionOpen && (
-        <ReviewSection
-        isOpen={isReviewSectionOpen}
-        onClose={closeReviewSection}
-        reviews={reviews} // 로컬 리뷰 상태 전달
-        onSubmit={(newReview) => {
-            console.log("리뷰 제출:", newReview); // 리뷰 제출 로그
-        }} 
-        setReviews={setReviews} // setReviews를 ReviewSection에 전달
-    />
-)}
+          <ReviewSection
+          isOpen={isReviewSectionOpen}
+          onClose={closeReviewSection}
+          reviews={reviews} 
+          onSubmit={(newReview) => {
+            console.log("리뷰 제출:", newReview);
+            setReviews((prevReviews) => [...prevReviews, newReview]); 
+          }} 
+          setReviews={setReviews} 
+        />
+      )}
     </HeroSectionWrapper>
   );
 };
