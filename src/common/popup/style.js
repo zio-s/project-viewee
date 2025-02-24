@@ -20,6 +20,7 @@ export const StyledPopupContainer = styled.div`
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 
   .swiper {
     width: 100%;
