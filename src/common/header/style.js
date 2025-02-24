@@ -105,7 +105,6 @@ export const TopMenu = styled.ul`
 
       a {
         font-size: var(--font-heading-m-mobile);
-        display: block;
 
         ${mobileMore`
           font-size: var(--font-heading-m-tablet);
