@@ -10,6 +10,7 @@ import { MainPageData } from '../../store/modules/getThunk';
 import Marquees from './components/marquee/Marquees';
 import TextSection from './components/TextSection';
 import ReviewSection from './components/review/ReviewSection';
+import Intro from './components/intro/Intro';
 
 const LandingPage = ({ handleEnterSite }) => {
   const dispatch = useDispatch();
@@ -89,7 +90,7 @@ const LandingPage = ({ handleEnterSite }) => {
           transition: 'background-color 0.3s ease',
         }}
       >
-        {/* {isLenisReady && <Intro lenisRef={lenisRef} />} */}
+        {isLenisReady && <Intro lenisRef={lenisRef} />}
         <Marquees />
         <TextSection />
         <ReviewSection />

@@ -18,24 +18,37 @@ import LandingPage from './pages/landing';
 import { useEffect } from 'react';
 
 const App = () => {
-  useEffect(() => {
-    if (window.location.pathname === '/') {
-      const hasVisited = localStorage.getItem('hasVisited');
+  const RedirectHandler = () => {
+    const hasVisited = localStorage.getItem('hasVisited');
+
+    useEffect(() => {
       if (!hasVisited) {
         localStorage.setItem('hasVisited', 'true');
-
-        window.location.href = '/landing';
       }
+    }, []);
+
+    if (!hasVisited) {
+      return <Navigate to="/landing" replace />;
     }
-  }, []);
+
+    return null;
+  };
   return (
     <>
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/" element={<Layout />}>
-            <Route path="/landing" element={<LandingPage />} />
-            <Route index element={<Home />} />
+            <Route
+              index
+              element={
+                <>
+                  <RedirectHandler />
+                  <Home />
+                </>
+              }
+            />
             <Route path="/:category">
               <Route index element={<CateGoryPage />} />
               <Route path=":id" element={<Detail />} />
