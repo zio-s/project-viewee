@@ -78,9 +78,9 @@ const Marquees = () => {
 
   return (
     <MarqueeContainer>
-      <MarqueeTitle ref={textRef}>
-        <h2 className="white-content hoverable">여러분을 콘텐츠의 세계로 초대합니다</h2>
-        <p className="hoverable"> 최신 스트리밍 기술과 똑똑한 추천 알고리즘을 통해 최고의 시청 경험을 제공합니다.</p>
+      <MarqueeTitle ref={textRef} data-cursor-color="primary" className="white-bg">
+        <h2 data-cursor="hover">여러분을 콘텐츠의 세계로 초대합니다</h2>
+        <p className="white-text"> 최신 스트리밍 기술과 똑똑한 추천 알고리즘을 통해 최고의 시청 경험을 제공합니다.</p>
       </MarqueeTitle>
       <ul ref={topContainerRef}>
         {images.map((image, index) => (

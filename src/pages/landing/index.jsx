@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
-import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CardSection from './components/card/CardSection';
 import Hero from './components/Hero';
@@ -12,6 +11,8 @@ import { MainPageData } from '../../store/modules/getThunk';
 // import MarqueeSection from '../home/components/MarqueeSection';
 import Marquees from './components/marquee/Marquees';
 import CustomCursor from './components/CustomCursor';
+import TextSection from './components/TextSection';
+import ReviewSection from './components/review/ReviewSection';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -68,17 +69,19 @@ const LandingPage = () => {
   };
   return (
     <p>
-      <CustomCursor />
+      {/* <CustomCursor /> */}
       <LandingWrap
         style={{
           backgroundColor: backgroundColor,
           transition: 'background-color 0.3s ease',
         }}
       >
+        <Hero />
         <Marquees />
+        <TextSection />
+        <ReviewSection />
         <CardSection />
         <ScrollSection scrollToTop={scrollToTop} />
-        <Hero />
       </LandingWrap>
     </p>
   );

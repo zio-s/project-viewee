@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { NavWrap } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 
-const NavBar = () => {
+const NavBar = ({ isVisible }) => {
   return (
     <>
-      <NavWrap className="nav">
+      <NavWrap className="nav" $isVisible={isVisible}>
         <ul>
           <li>
             <Link to="/movie">영화</Link>

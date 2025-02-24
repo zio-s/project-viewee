@@ -22,7 +22,7 @@ const MarqueeSection = () => {
       <MarqueeWrapper>
         {MarqueePoster.map((poster) => (
           <MarqueeItem key={poster.id}>
-            <Link to={`/category/:${poster.num}`}>
+            <Link to={`/tv/${poster.num}`}>
               <img src={poster.src} alt={`Movie Poster ${poster.id}`} />
             </Link>
           </MarqueeItem>

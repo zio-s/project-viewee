@@ -64,7 +64,6 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   img {
     display: block;
     width: 100%;
-    height: auto;
   }
 
   // 기본적으로 슬라이드를 어둡게 처리
@@ -377,11 +376,10 @@ export const NewSwiperSlide = styled.li`
 `;
 
 export const MainCustomButtonPrev = styled.div`
-  
   svg {
-    width:20px;
-    height:30px;
-    margin-left:20px;
+    width: 20px;
+    height: 30px;
+    margin-left: 20px;
     ${mobileMore`
     width:40px;
     height:40px;
@@ -399,8 +397,6 @@ export const MainCustomButtonPrev = styled.div`
   position: absolute;
   cursor: pointer;
   z-index: 10;
-  }
-
 `;
 
 export const MainCustomButtonNext = styled.div`
@@ -412,7 +408,8 @@ export const MainCustomButtonNext = styled.div`
     width:40px;
     height:40px;
     margin-right:50px;
-    `} ${tabletMore`
+    `}
+    ${tabletMore`
     width:50px;
     height:50px;
     margin-right:50px;
@@ -428,10 +425,9 @@ export const MainCustomButtonNext = styled.div`
 `;
 
 export const NewCustomButtonPrev = styled.div`
-  
   img {
-    width:20px;
-    height:30px;
+    width: 20px;
+    height: 30px;
     background: rgb(0, 0, 0, 0.1);
     ${mobileMore`
     width:40px;
@@ -448,8 +444,6 @@ export const NewCustomButtonPrev = styled.div`
   position: absolute;
   cursor: pointer;
   z-index: 10;
-  }
-
 `;
 
 export const NewCustomButtonNext = styled.div`
@@ -511,8 +505,13 @@ export const HoverModalWrap = styled.div`
   .videoArea {
     width: 100%;
     height: 256px;
-    background-color: var(--gray-40);
     border-radius: 10px 10px 0 0;
+    pointer-events: auto;
+
+    img {
+      height: 100%;
+      border-radius: 5px;
+    }
   }
   .infoArea {
     padding: 15px;
@@ -542,18 +541,6 @@ export const HoverModalWrap = styled.div`
       }
       .button:hover {
         background: var(--primary-60);
-<<<<<<< HEAD
-=======
-      }
-
-      .moreButton:hover,
-      .steamedButton:hover,
-      .likeButton:hover {
-        border-color: white;
-      }
-      .button:hover {
-        background: rgb(255, 255, 255, 0.1);
->>>>>>> a83a5a46affb991354281ec9537f254583428d8e
       }
       .steamedButton {
         width: 60px;
