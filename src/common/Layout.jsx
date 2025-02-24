@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import SubHeader from './subheader';
 import ScrollToTopButton from '../ui/button/topButton/ScrollToTopButton';
 import { Wrap } from './style';
-import Footer from './footer/Footer';
+import Footer from './footer/Footer.jsx';
 
 const Layout = () => {
   const [path, setPath] = useState(false);
@@ -16,7 +16,7 @@ const Layout = () => {
     } else {
       setPath(true);
     }
-  }, []);
+  }, [location.pathname]);
   return (
     <Wrap className="wrap">
       {path ? <Header /> : <SubHeader />}
