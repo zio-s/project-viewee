@@ -15,8 +15,17 @@ import Subscribe from './pages/mypage/subscribe';
 import QnA from './pages/mypage/qna';
 import CustomerCenter from './pages/mypage/customercenter';
 import LandingPage from './pages/landing';
+import { useEffect } from 'react';
 
 const App = () => {
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisited');
+
+    if (!hasVisited && window.location.pathname === '/') {
+      localStorage.setItem('hasVisited', 'true');
+      window.location.href = '/landing';
+    }
+  }, []);
   return (
     <>
       <BrowserRouter>
