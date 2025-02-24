@@ -76,16 +76,47 @@ export const ReviewList = styled.div`
 `;
 
 export const ReviewItem = styled.li`
-  border-bottom: 1px solidvar(--gary-60); // 테두리
-  border-radius: 8px; // 모서리 둥글기
+  border-bottom: 1px solid var(--gray-60); // 테두리
   padding: 10px 15px; // 패딩
   margin: 10px 0; // 여백
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자
 
   display: flex; // Flexbox로 위치 조정
   flex-direction: column; // 세로 방향으로 배치
   align-items: flex-start; // 좌측 정렬
+
+  &:hover {
+    background-color: var(--gray-80); // 호버 시 배경색 변화
+  }
+
+  .icon-container {
+    display: flex; // 가로 정렬
+    gap: 10px; // 아이콘 간격
+    margin-top: 10px; // 상단 여백
+  }
+
+  span {
+    font-size: var(--font-content-m); // 글자 크기
+    color: var(--gray-50); // 글자 색상
+    margin-bottom: 10px; // 아래쪽 여백
+  }
+
+  p {
+    font-size: var(--font-content-l); // 본문 텍스트 크기
+    color: var(--gray-30); // 본문 텍스트 색상
+    margin-bottom: 10px; // 아래쪽 여백
+  }
+
+  .icon-wrapper {
+    stroke: var(--gray-60); // 스트로크 색상
+    border: 1.5px solid var(--gray-60); // 테두리
+    border-radius: 25px; // 모서리 둥글기
+    padding: 10px; // 패딩
+    margin: 0 15px 15px 0;
+    display: flex; // Flexbox로 정렬
+    align-items: center; // 가운데 정렬
+  }
 `;
+
 
 
 

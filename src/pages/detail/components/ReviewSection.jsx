@@ -4,6 +4,8 @@ import { ModalOverlay, ModalContent, CloseButton, StarContainer, SubmitButton, R
 const ReviewSection = ({ isOpen, onClose, reviews, setReviews }) => {
   const [selectedStars, setSelectedStars] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [currentUser, setCurrentUser] = useState("currentUser"); 
+  const [dropdownOpen, setDropdownOpen] = useState(null);
 
   useEffect(() => {
     const storedReviews = localStorage.getItem("reviews");
@@ -24,14 +26,27 @@ const ReviewSection = ({ isOpen, onClose, reviews, setReviews }) => {
     e.preventDefault();
     if (reviewText.trim()) {
       const currentDate = new Date().toLocaleDateString();
-      const newReview = { stars: selectedStars, text: reviewText, date: currentDate };
+      const newReview = { stars: selectedStars, text: reviewText, date: currentDate, user: currentUser };
 
-      // 이전 리뷰 목록에 새 리뷰 추가
       setReviews((prevReviews) => [...prevReviews, newReview]);
       setReviewText("");
       setSelectedStars(0);
     }
   };
+
+  const handleEdit = (index) => {
+    const reviewToEdit = reviews[index];
+    setReviewText(reviewToEdit.text);
+    setSelectedStars(reviewToEdit.stars);
+    setDropdownOpen(null); 
+  };
+
+  const handleDelete = (index) => {
+    const updatedReviews = reviews.filter((_, i) => i !== index);
+    setReviews(updatedReviews);
+    setDropdownOpen(null); 
+  };
+
 
   if (!isOpen) return null;
 
@@ -70,7 +85,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, setReviews }) => {
 
         <ReviewList>
           {reviews.length > 0 ? (
-            reviews.map((review, index) => (
+            [...reviews].reverse().map((review, index) => (
               <ReviewItem key={index}>
                 <span>
                   {[...Array(5)].map((_, i) => (
@@ -87,11 +102,51 @@ const ReviewSection = ({ isOpen, onClose, reviews, setReviews }) => {
                 </span>
                 <span>유저네임 | {review.date}</span>
                 <p>{review.text}</p>
+                <div className="icon-container">
+                  <div className= "icon-wrapper">
+                    <svg width="25" height="25" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.69549 24.0373C4.58964 22.82 5.54918 21.7734 6.77099 21.7734H10.7486C11.8993 21.7734 12.832 22.7061 12.832 23.8568V43.6484C12.832 44.7991 11.8993 45.7318 10.7486 45.7318H8.492C7.41136 45.7318 6.51011 44.9055 6.4165 43.829L4.69549 24.0373Z" stroke="var(--gray-60)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M19.082 23.2052C19.082 22.3347 19.6231 21.5555 20.4105 21.1844C22.1277 20.3749 25.0538 18.7461 26.3737 16.5448C28.0748 13.7077 28.3957 8.58172 28.4479 7.40758C28.4552 7.24322 28.4505 7.07866 28.4731 6.91569C28.7551 4.88225 32.6803 7.25773 34.1862 9.7694C35.0035 11.1325 35.1083 12.9234 35.0223 14.3217C34.9304 15.8177 34.4917 17.2629 34.0614 18.6988L33.1445 21.7573H44.4538C45.8354 21.7573 46.8342 23.0774 46.4587 24.4069L40.8646 44.2147C40.6112 45.1121 39.7922 45.7318 38.8597 45.7318H21.1654C20.0147 45.7318 19.082 44.7991 19.082 43.6484V23.2052Z" stroke="var(--gray-60)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg></div>
+                  <div className= "icon-wrapper">
+                    <svg width="25" height="25" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g transform="rotate(180, 25.5, 25.5)">
+                        <path d="M4.69549 24.0373C4.58964 22.82 5.54918 21.7734 6.77099 21.7734H10.7486C11.8993 21.7734 12.832 22.7061 12.832 23.8568V43.6484C12.832 44.7991 11.8993 45.7318 10.7486 45.7318H8.492C7.41136 45.7318 6.51011 44.9055 6.4165 43.829L4.69549 24.0373Z" stroke="var(--gray-60)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.082 23.2052C19.082 22.3347 19.6231 21.5555 20.4105 21.1844C22.1277 20.3749 25.0538 18.7461 26.3737 16.5448C28.0748 13.7077 28.3957 8.58172 28.4479 7.40758C28.4552 7.24322 28.4505 7.07866 28.4731 6.91569C28.7551 4.88225 32.6803 7.25773 34.1862 9.7694C35.0035 11.1325 35.1083 12.9234 35.0223 14.3217C34.9304 15.8177 34.4917 17.2629 34.0614 18.6988L33.1445 21.7573H44.4538C45.8354 21.7573 46.8342 23.0774 46.4587 24.4069L40.8646 44.2147C40.6112 45.1121 39.7922 45.7318 38.8597 45.7318H21.1654C20.0147 45.7318 19.082 44.7991 19.082 43.6484V23.2052Z" stroke="var(--gray-60)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+                {review.user === currentUser && (
+                  <div className="dropdown">
+                    <div onClick={() => setDropdownOpen(dropdownOpen === index ? null : index)}>
+                    <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_641_37578)">
+<path d="M9.90301 21.5806C7.70569 21.5806 5.92694 23.3385 5.92694 25.5357C5.92694 27.733 7.70569 29.5117 9.90301 29.5117C12.1002 29.5117 13.8789 27.733 13.8789 25.5357C13.8789 23.3385 12.1002 21.5806 9.90301 21.5806Z" fill="var(--gray-30)" fill-opacity="0.85"/>
+<path d="M25.4537 21.5806C23.2563 21.5806 21.4987 23.3385 21.4987 25.5357C21.4987 27.733 23.2563 29.5117 25.4537 29.5117C27.651 29.5117 29.4297 27.733 29.4297 25.5357C29.4297 23.3385 27.651 21.5806 25.4537 21.5806Z" fill="var(--gray-30)" fill-opacity="0.85"/>
+<path d="M41.0006 21.5806C38.8033 21.5806 37.0455 23.3385 37.0455 25.5357C37.0455 27.733 38.8033 29.5117 41.0006 29.5117C43.1978 29.5117 44.9766 27.733 44.9766 25.5357C44.9766 23.3385 43.1978 21.5806 41.0006 21.5806Z" fill="var(--gray-30)" fill-opacity="0.85"/>
+</g>
+<defs>
+<clipPath id="clip0_641_37578">
+<rect width="39.0486" height="7.97293" fill="white" transform="matrix(-1 0 0 -1 44.9766 29.5117)"/>
+</clipPath>
+</defs>
+</svg>
+
+                    </div>
+                    {dropdownOpen === index && (
+                      <div className="dropdown-menu">
+                        <button onClick={() => handleEdit(index)}>수정</button>
+                        <button onClick={() => handleDelete(index)}>삭제</button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </ReviewItem>
             ))
-          ) : (
-            <p>아직 리뷰가 없습니다.</p>
-          )}
+  ) : (
+    <p>아직 리뷰가 없습니다.</p>
+  )}
         </ReviewList>
 
       </ModalContent>
