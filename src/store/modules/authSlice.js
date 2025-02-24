@@ -16,14 +16,32 @@ const initialState = {
       coupon: [],
       liked: [],
       reviewed: [],
-      downed: [],
+      downloaded: [],
+      watched: [],
+      requested: [],
+    },
+    {
+      id: 2,
+      username: '김미선',
+      userId: '1',
+      userEmail: 'test@test.com',
+      password: '123456',
+      phone: '010-0000-0000',
+      gender: 'female',
+      birth: '1997-03-27',
+      profileImg: 'images/profileImg1.jpg',
+      isMembershiped: false,
+      coupon: [],
+      liked: [],
+      reviewed: [],
+      downloaded: [],
       watched: [],
       requested: [],
     },
   ],
   user: JSON.parse(localStorage.getItem('user')) || null,
   prevUser: JSON.parse(localStorage.getItem('prevUser')) || null,
-  connected: JSON.parse(localStorage.getItem('connected')) || [[1]],
+  connected: JSON.parse(localStorage.getItem('connected')) || [[1, 2]],
   authed: localStorage.getItem('authed') === 'true',
 };
 
@@ -49,7 +67,7 @@ export const authSlice = createSlice({
         coupon: [],
         liked: [],
         reviewed: [],
-        downed: [],
+        downloaded: [],
         watched: [],
         requested: [],
       };
@@ -100,13 +118,18 @@ export const authSlice = createSlice({
       state.user.watched = state.user.watched.filter((item) => !action.payload.includes(item.id));
     },
     deleteDowned: (state, action) => {
-      state.user.downed = state.user.downed.filter((item) => !action.payload.includes(item.id));
+      state.user.downloaded = state.user.downloaded.filter((item) => !action.payload.includes(item.id));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('prevUser', JSON.stringify(state.user));
     },
     deleteReviewed: (state, action) => {
       state.user.reviewed = state.user.reviewed.filter((item) => item.id !== action.payload);
     },
     changeUser: (state, action) => {
       state.user = state.joinData.find((item) => item.id === action.payload);
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('prevUser', JSON.stringify(state.user));
     },
     changeUserImg: (state, action) => {
       state.user.profileImg = action.payload;

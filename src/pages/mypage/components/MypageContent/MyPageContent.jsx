@@ -60,28 +60,24 @@ const MyPageContent = ({ changeContent }) => {
         </div>
 
         <ul>
-          {downloaded.length > 0 ? (
-            downloaded.map((content) => {
-              console.log('🔍 개별 콘텐츠 확인:', content);
+          {downloaded.length > 0
+            ? downloaded.map((content) => {
+                const imageUrl =
+                  content.img ||
+                  (content.poster_path ? `https://image.tmdb.org/t/p/w500${content.poster_path}` : '') ||
+                  (content.backdrop_path ? `https://image.tmdb.org/t/p/w500${content.backdrop_path}` : '');
 
-              const imageUrl =
-                content.img ||
-                (content.poster_path ? `https://image.tmdb.org/t/p/w500${content.poster_path}` : '') ||
-                (content.backdrop_path ? `https://image.tmdb.org/t/p/w500${content.backdrop_path}` : '');
-
-              return (
-                <li key={content.id}>
-                  {imageUrl ? (
-                    <img src={imageUrl} alt="다운로드 콘텐츠" />
-                  ) : (
-                    <div className="no-image">이미지 없음</div>
-                  )}
-                </li>
-              );
-            })
-          ) : (
-            <p>다운로드한 콘텐츠가 없습니다.</p>
-          )}
+                return (
+                  <li key={content.id}>
+                    {imageUrl ? (
+                      <img src={imageUrl} alt="다운로드 콘텐츠" />
+                    ) : (
+                      <div className="no-image">이미지 없음</div>
+                    )}
+                  </li>
+                );
+              })
+            : ''}
         </ul>
 
         <div className="caution">
