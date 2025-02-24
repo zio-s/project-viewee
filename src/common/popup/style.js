@@ -104,13 +104,49 @@ export const StyledCheckboxLabel = styled.label`
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 1rem;
   color: #fff;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
 
   input {
+    appearance: none;
     width: 16px;
     height: 16px;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    background-color: transparent;
     cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+
+    &:checked {
+      background-color: #3d7cf4;
+      border-color: #3d7cf4;
+    }
+
+    &:checked:after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(61, 124, 244, 0.3);
+    }
   }
 `;
