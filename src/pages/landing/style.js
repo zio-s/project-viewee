@@ -6,7 +6,6 @@ export const LandingWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 200px;
   background-color: #1e1e1e;
   overflow: hidden;
   /* & > div {
@@ -15,7 +14,7 @@ export const LandingWrap = styled.div`
     z-index: 1;
   } */
   & > div:not(:last-child) {
-    margin-bottom: 100vh;
+    /* margin-bottom: 100vh; */
   }
 
   &[data-lenis-prevent] {

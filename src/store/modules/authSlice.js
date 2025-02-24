@@ -67,7 +67,7 @@ export const authSlice = createSlice({
     login: (state, action) => {
       const { userId, password } = action.payload;
       const user = state.joinData.find((item) => item.userId === userId && item.password === password);
-      const rememberId = document.getElementsByClassName('rememberMe')[0];
+      const rememberId = document.getElementById('rememberMe');
 
       if (user) {
         state.user = user;
@@ -224,20 +224,51 @@ export const authSlice = createSlice({
       localStorage.setItem('joinData', JSON.stringify(state.joinData));
       localStorage.setItem('user', JSON.stringify(state.user));
     },
-    toggleLike: (state, action) => {
+    toggleLiked: (state, action) => {
       if (!state.user) return;
-      const content = action.payload;
-      const existingIndex = state.user.liked.findIndex((item) => item.id === content.id);
 
-      if (existingIndex >= 0) {
-        state.user.liked = state.user.liked.filter((item) => item.id !== content.id);
+      const content = action.payload;
+      console.log('좋아요 액션 실행됨', content);
+
+      const index = state.user.liked.findIndex((item) => item.id === content.id);
+
+      if (index !== -1) {
+        state.user.liked = [...state.user.liked.slice(0, index), ...state.user.liked.slice(index + 1)];
       } else {
-        state.user.liked.push(content);
+        state.user.liked = [...state.user.liked, content];
       }
 
-      state.joinData = state.joinData.map((item) =>
-        item.id === state.user.id ? { ...item, liked: state.user.liked } : item
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, liked: [...state.user.liked] } : user
       );
+
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
+    toggleDownloaded: (state, action) => {
+      if (!state.user) return;
+
+      if (!state.user.downloaded) {
+        state.user.downloaded = []; // ✅ undefined 방지
+      }
+
+      const content = action.payload;
+      console.log('✅ 다운로드 액션 실행됨', content);
+
+      const index = state.user.downloaded.findIndex((item) => item.id === content.id);
+
+      if (index !== -1) {
+        state.user.downloaded.splice(index, 1);
+      } else {
+        state.user.downloaded.push(content);
+      }
+
+      // ✅ joinData도 최신 상태 반영
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, downloaded: [...state.user.downloaded] } : user
+      );
+
+      // ✅ Redux 변경 사항이 반영될 수 있도록 상태 업데이트
       localStorage.setItem('user', JSON.stringify(state.user));
       localStorage.setItem('joinData', JSON.stringify(state.joinData));
     },

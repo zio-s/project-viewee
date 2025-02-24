@@ -51,7 +51,7 @@ const ScrollSection = () => {
     const radius = 100;
     const totalItems = gridItems.length;
     gridItems.forEach((item, index) => {
-      const angle = (index / totalItems) * Math.PI * 5;
+      const angle = (index / totalItems) * Math.PI * 10;
 
       const x = Math.cos(angle) * radius;
       const y = Math.sin(angle) * radius;
@@ -92,8 +92,8 @@ const ScrollSection = () => {
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top bottom',
-        end: 'bottom top-=10%',
+        start: 'top center',
+        end: 'bottom bottom-=10%',
         scrub: 2,
         anticipatePin: 1,
         onUpdate: (self) => {
@@ -154,7 +154,7 @@ const ScrollSection = () => {
           },
           stagger: {
             amount: 1,
-            from: 'random',
+            // from: 'random',
           },
           duration: 4,
           ease: 'power2.out',
@@ -164,7 +164,7 @@ const ScrollSection = () => {
       .fromTo(
         gridWrap,
         {
-          z: 500,
+          z: 200,
           rotationX: -15,
           scale: 0.8,
           delay: 2,

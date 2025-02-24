@@ -5,16 +5,14 @@ import { authActions } from '../../../../store/modules/authSlice';
 import { useEffect, useState } from 'react';
 import { pageActions } from '../../../../store/modules/pageSlice';
 import { MyReviewPopUp } from './MyReviewPopup';
-import { GiConsoleController } from 'react-icons/gi';
-
 export const MyReview = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authR);
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
   const { reviewed } = user;
-  const [nowReviewed, setNowRevied] = useState(reviewed);
+  const [nowReviewed, setNowReviewed] = useState(reviewed);
   useEffect(() => {
-    setNowRevied(reviewed);
+    setNowReviewed(reviewed);
   }, [user]);
   useEffect(() => {
     dispatch(pageActions.addData(reviewed));
@@ -25,7 +23,9 @@ export const MyReview = () => {
       dispatch(authActions.deleteReviewed(id));
     }
   };
-  dispatch(pageActions.changePostsPerPage(8));
+  useEffect(() => {
+    dispatch(pageActions.changePostsPerPage(8));
+  }, [dispatch]);
   const lastPost = currentPage * postsperPage;
   const currentPost = nowReviewed.slice(0, lastPost);
   const morePost = () => {

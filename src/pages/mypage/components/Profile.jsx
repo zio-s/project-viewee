@@ -10,7 +10,7 @@ const Profile = () => {
   const onSubscribe = () => {
     navigate('/subscribe');
   };
-  const couponNumber = coupon.filter((item) => item.used === true).length;
+  const couponNumber = coupon.filter((item) => item.used === false).length;
   return (
     <ProfileWrap>
       <div className="profile">
@@ -29,7 +29,7 @@ const Profile = () => {
                 <img src="/icons/util/pencil.svg" />
               </a>
             </div>
-            <a href="/changeProfile">
+            <a href="/changeprofile">
               <Button variant="gray" size="small">
                 프로필 전환
               </Button>
@@ -49,7 +49,7 @@ const Profile = () => {
             <div className="coupon">보유중인 쿠폰 {couponNumber}</div>
           </div>
         </a>
-        <a href="/useredit">
+        <a href="/modifyprofile">
           <div className="userEdit">회원정보 수정</div>
         </a>
       </div>

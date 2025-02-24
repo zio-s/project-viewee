@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MarqueeContainer = styled.section`
+export const MarqueeContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;

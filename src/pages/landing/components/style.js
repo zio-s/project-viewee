@@ -4,24 +4,23 @@ export const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-  --perspective: 1500px;
+  --perspective: 2500px;
   --grid-item-ratio: 1.5;
   --grid-width: 100%;
   --grid-height: auto;
   --grid-gap: 1vw;
   --grid-columns: 8;
-  --grid-inner-scale: 0.8;
-  /* margin-bottom: 100vh; */
+  /* --grid-inner-scale: 0.8; */
   .section-inner {
     position: relative;
-    height: 100vh;
+    height: 200vh;
     z-index: 999;
     .overlay {
       width: 100%;
       height: 100%;
       position: absolute;
       bottom: 0%;
-      background: linear-gradient(0deg, rgba(28, 28, 30, 1) 30%, rgba(28, 28, 30, 0) 100%);
+      background: linear-gradient(0deg, rgba(28, 28, 30, 1) 10%, rgba(28, 28, 30, 0) 100%);
       z-index: 999;
     }
   }
@@ -57,6 +56,7 @@ export const Section = styled.section`
   width: 100%;
   perspective: var(--perspective);
   position: relative;
+  height: 100vh;
 `;
 
 export const GridWrap = styled.div`
@@ -98,48 +98,128 @@ export const GridImg = styled.div`
   background-position: center;
 `;
 
-export const ReviewWrapper = styled.div`
+export const ViewContainer = styled.section`
+  position: relative;
   width: 100%;
-  max-width: 100%;
-  position: relative;
-`;
-
-export const ReviewContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  position: relative;
-  z-index: 20;
-
-  @media screen and (max-width: 568px) {
-    grid-template-columns: 1fr;
+  height: 100%;
+  .inner {
+    width: 100vw;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
   }
-`;
 
-export const ReviewVideo = styled.div`
-  position: relative;
-  overflow: hidden;
-`;
+  h1 {
+    font-size: 90px;
+  }
+  .content {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    margin-right: -20px;
 
-export const ReviewInner = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+    .text-l {
+      span {
+        font-size: 60px;
+      }
+    }
+    .text-r {
+      text-align: right;
+      span {
+        font-size: 60px;
+      }
+    }
+    .view {
+      .img-box {
+        width: 200px;
+        height: 248px;
+        position: relative;
+        background: url('/public/images/v.png') center/contain no-repeat;
+        .eye-l {
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          padding: 5px;
+          left: 7%;
+          top: -13%;
+          background: url('/images/eye-1.png') no-repeat;
+          .eye-bl {
+            position: absolute;
+            top: 10px;
+          }
+        }
+        .eye-r {
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          padding: 5px;
+          right: 7%;
+          top: -13%;
+          background: url('/images/eye-1.png') no-repeat;
+          .eye-br {
+            position: absolute;
+            top: 10px;
+          }
+        }
+      }
+    }
+  }
 
-export const ReviewCard = styled.div`
-  perspective: 1000px;
-  padding-right: 10px;
-  position: relative;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
+  .text-l span,
+  .text-r span {
+    font-size: var(--font-content-xxxl);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    will-change: color, text-shadow;
 
-  ${({ $isSticky, $isMobile }) =>
-    $isSticky &&
-    !$isMobile &&
-    `
-    position: sticky;
-    top: 20%;
-  `}
+    &.text-flicker-in-glow {
+      animation: text-flicker-in-glow 4s linear;
+    }
+  }
+
+  @keyframes text-flicker-in-glow {
+    0% {
+      opacity: 0;
+    }
+    // ... 중간 키프레임들 ...
+    65.1% {
+      opacity: 1;
+      text-shadow: 0 0 30px var(--primary-30), 0 0 60px var(--primary-40), 0 0 100px var(--primary-20);
+    }
+    75% {
+      opacity: 1;
+      text-shadow: 0 0 30px var(--primary-30), 0 0 60px var(--primary-40), 0 0 100px var(--primary-20);
+    }
+    // ... 중간 키프레임들 ...
+    100% {
+      opacity: 1;
+      text-shadow: 0 0 30px var(--primary-30), 0 0 60px var(--primary-40), 0 0 110px var(--primary-30),
+        0 0 100px var(--primary-20);
+    }
+  }
+
+  // 반응형 스타일 적용
+  @media screen and (max-width: 1024px) {
+    .text-l span,
+    .text-r span {
+      font-size: var(--font-content-xxl-tablet);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .text-l span,
+    .text-r span {
+      font-size: var(--font-content-xxl-mobile);
+    }
+  }
 `;

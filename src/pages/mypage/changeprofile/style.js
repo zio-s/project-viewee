@@ -42,8 +42,10 @@ export const ChangeProfileWrap = styled.div`
           border-radius: 50%;
           object-fit: cover;
         }
-        .ongo {
-          display: none;
+        @media (hover: hover) and (pointer: fine) {
+          .ongo {
+            display: none;
+          }
         }
         &:hover {
           cursor: pointer;
@@ -89,7 +91,9 @@ export const ChangeProfileWrap = styled.div`
         .ongo {
           display: none;
         }
-        &:hover {
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .editImg:hover {
           img {
             transition: all 0.5s ease;
             scale: 1.1;

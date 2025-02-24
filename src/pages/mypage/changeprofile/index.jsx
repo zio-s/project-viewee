@@ -35,9 +35,9 @@ const ChangeProfile = () => {
   };
 
   const [onChangeName, setOnChageName] = useState(false);
-  const [name, setName] = useState(user.name);
+  const [name, setName] = useState(user.username);
   useEffect(() => {
-    setName(user.name);
+    setName(user.username);
   }, [user]);
   const changeInput = (e) => {
     const { value } = e.target;
@@ -48,8 +48,8 @@ const ChangeProfile = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    if (name.trim() === '') {
-      alert('변경할 이름을 입력하세요.');
+    if (!name.trim()) {
+      alert('이름을 입력 해주세요!');
       return;
     }
 
@@ -58,12 +58,12 @@ const ChangeProfile = () => {
   };
 
   useEffect(() => {
-    setName(user.name);
-  }, [user.name]);
+    setName(user.username);
+  }, [user.username]);
 
   const prveName = () => {
     setOnChageName(!onChangeName);
-    setName(user.name);
+    setName(user.username);
   };
 
   const onGo = () => {
@@ -93,7 +93,6 @@ const ChangeProfile = () => {
       });
     }
   }, []);
-
   return (
     <ChangeProfileWrap>
       <h2>프로필 전환</h2>
@@ -101,7 +100,7 @@ const ChangeProfile = () => {
         <div className="userProfile onChange">
           <div className="main users">
             <div className="editImg">
-              <input type="file" name="userImg" accept="imgae/*" ref={fileInputRef} onChange={changeImg}></input>
+              <input type="file" name="userImg" accept="image/*" ref={fileInputRef} onChange={changeImg}></input>
               <img className="connectedUsers" src={user.profileImg}></img>
               <div className="imgChange" onClick={() => fileInputRef.current.click()}>
                 프로필 이미지 수정
@@ -127,7 +126,7 @@ const ChangeProfile = () => {
         </div>
       ) : (
         <div className="userProfile nochange">
-          {isMobile ? (
+          {isMobile && nowUser.length > 1 ? (
             <Swiper
               className="swiperUser"
               ref={swiperRef}
@@ -156,11 +155,9 @@ const ChangeProfile = () => {
                 key={i}
                 onClick={() => changeUser(item.id)}
               >
-                <div className="editImg">
+                <div className="editImg" onClick={() => onGo()}>
                   <img className="connectedUsers" src={item.profileImg}></img>
-                  <div className="ongo" onClick={() => onGo()}>
-                    Go
-                  </div>
+                  <div className="ongo">Go</div>
                 </div>
                 <div className="editName">
                   <div className="userName">{item.username}</div>
