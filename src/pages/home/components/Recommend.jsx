@@ -13,11 +13,20 @@ import {
   NewCustomButtonPrev,
   NewCustomButtonNext,
   NewSectionWrapper,
+  HoverModalWrapper,
 } from '../style';
+import { useDispatch, useSelector } from 'react-redux';
+import { detailActions } from '../../../store/modules/detailSlice';
+import { getContentDetail } from '../../../store/modules/getThunk';
+import HoverModal from './HoverModal';
 
-const Recommend = () => {
+const Recommend = ({ hotData }) => {
   const [slidesPerView, setSlidesPerView] = useState(4);
+  const [hoveredSlide, setHoveredSlide] = useState(null);
+  const [hoverTimeout, setHoverTimeout] = useState(null);
   const swiperRef = useRef(null);
+  const dispatch = useDispatch();
+  const contentDetail = useSelector((state) => state.detailR);
 
   useEffect(() => {
     const calculateSlidesPerView = () => {
@@ -59,6 +68,30 @@ const Recommend = () => {
       window.removeEventListener('resize', updateSlidesPerView);
     };
   }, []);
+  const handleMouseEnter = (content) => {
+    const mediaType = content.media_type || (content.first_air_date ? 'tv' : 'movie');
+
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+
+    const timeout = setTimeout(() => {
+      dispatch(detailActions.clearDetail()); // 새 데이터 요청 전에 초기화
+      setHoveredSlide(content.id);
+      dispatch(
+        getContentDetail({
+          type: mediaType,
+          id: content.id,
+        })
+      );
+    }, 500);
+
+    setHoverTimeout(timeout);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(hoverTimeout);
+    setHoveredSlide(null);
+    dispatch(detailActions.clearDetail());
+  };
 
   return (
     <NewSectionWrapper>
@@ -83,9 +116,17 @@ const Recommend = () => {
 
       <NewSwiperContainer className="new-card-carousel2">
         <NewSwiperWrapper className="swiper-wrapper">
-          {[...Array(10)].map((_, index) => (
-            <NewSwiperSlide key={index} className="swiper-slide">
-              <img src={`https://via.placeholder.com/150?text=Item+${index + 1}`} alt={`Placeholder ${index + 1}`} />
+          {hotData.map((item, index) => (
+            <NewSwiperSlide
+              key={item.id}
+              className="swiper-slide"
+              onMouseEnter={() => handleMouseEnter(item)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+              <HoverModalWrapper className={hoveredSlide === item.id ? 'active' : ''}>
+                <HoverModal reviewData={item} detailData={hoveredSlide === item.id ? contentDetail : null} />
+              </HoverModalWrapper>
             </NewSwiperSlide>
           ))}
         </NewSwiperWrapper>

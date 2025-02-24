@@ -89,11 +89,22 @@ const MyPageContentLiked = () => {
           </div>
         ) : (
           <ul>
-            {currentPost.map((url, i) => (
-              <li key={i} onClick={() => isDeleteToggle(url.id)}>
-                <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
-              </li>
-            ))}
+            {liked.map((content, i) => {
+              const imageUrl =
+                content.img ||
+                (content.poster_path ? `https://image.tmdb.org/t/p/w500${content.poster_path}` : '') ||
+                (content.backdrop_path ? `https://image.tmdb.org/t/p/w500${content.backdrop_path}` : '');
+
+              return (
+                <li key={i}>
+                  {imageUrl ? (
+                    <img src={imageUrl} alt={content.title || content.name || '콘텐츠 이미지'} />
+                  ) : (
+                    <div className="no-image">이미지 없음</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
         {currentPage >= totalPage ? (

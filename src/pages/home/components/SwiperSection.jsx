@@ -5,20 +5,22 @@ import Button from '../../../ui/button/defaultButton';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
+import { Navigate, useNavigate } from 'react-router';
 
 const contentData = [
-  { id: 1, score: '3.2', genre: '애니메이션', time: '1시간 43분' },
-  { id: 2, score: '4.5', genre: '예능', time: '1시간 40분' },
-  { id: 3, score: '3.2', genre: '드라마', time: '1시간 32분' },
-  { id: 4, score: '3.2', genre: '드라마', time: '1시간 32분' },
-  { id: 5, score: '3.2', genre: '드라마', time: '1시간 32분' },
+  { id: 1, score: '3.2', genre: '드라마', time: '1시간 10분', num: '/tv/217553' },
+  { id: 2, score: '4.5', genre: '예능', time: '1시간 40분', num: '/tv/33238' },
+  { id: 3, score: '3.2', genre: '드라마', time: '1시간 32분', num: '/tv/200709' },
+  { id: 4, score: '3.2', genre: '드라마', time: '1시간 32분', num: '/category/110534' },
+  { id: 5, score: '3.2', genre: '드라마', time: '1시간 32분', num: 'tv/233100' },
 ];
 
-const SwiperSection = () => {
+const SwiperSection = ({ content }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [isTablet, setIsTablet] = useState(null);
   const [isMobile, setIsMobile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -111,7 +113,7 @@ const SwiperSection = () => {
                 <span>{item.time}</span>
               </div>
               <PlayButton>
-                <Button className="mainSwiperPlay" size="small">
+                <Button className="mainSwiperPlay" size="small" onClick={() => navigate(item.num)}>
                   <svg className="playIcon" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M3.85811 26.5605C2.35142 27.4707 0.625 26.7488 0.625 25.1794V2.67301C0.625 1.13492 2.47699 0.475747 3.85811 1.29188L22.2838 12.2154C23.6022 13.0002 23.6336 14.8835 22.2838 15.6997L3.85811 26.5605Z"

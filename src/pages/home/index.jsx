@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { VisualWrap, SectionWrapper, NewCardsSectionTitle, NewMoreLink, EventSectionWrapper } from './style';
 import SwiperSection from './components/SwiperSection';
 import ContentSwiper from './components/ContentSwiper';
@@ -6,17 +6,20 @@ import MarqueeSection from './components/MarqueeSection';
 import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
-import SpeicialEditionBack from './components/SpeicialEditionBack';
+
 import TagSection from './components/TagSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { MainPageData } from '../../store/modules/getThunk';
 import NowPlaying from './components/NowPlaying';
-import AnotherSwiperSection from './components/NowPlaying';
 import Recommend from './components/Recommend';
+import SpecialEdition2 from './components/SpecialEdition2';
+import SpecialEdition2Back from './components/SpecialEdition2Back';
+import SpecialEditionBack from './components/SpeicialEditionBack';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { trending, hot, review, upcoming, nowPlaying, loading } = useSelector((state) => state.tmdbR);
+  const [showFirst, setShowFirst] = useState(Math.random() < 0.5);
 
   useEffect(() => {
     dispatch(MainPageData());
@@ -38,13 +41,19 @@ const Home = () => {
           <TopRated hotData={trending} />
         </SectionWrapper>
 
-        <EventSectionWrapper>
-          <SpeicialEditionBack />
-          <SpecialEdition />
-        </EventSectionWrapper>
-
+        {showFirst ? (
+          <EventSectionWrapper>
+            <SpecialEditionBack />
+            <SpecialEdition />
+          </EventSectionWrapper>
+        ) : (
+          <EventSectionWrapper>
+            <SpecialEdition2Back />
+            <SpecialEdition2 />
+          </EventSectionWrapper>
+        )}
         <SectionWrapper>
-          <NowPlaying />
+          <NowPlaying nowPlaying={nowPlaying} />
         </SectionWrapper>
         <NewCardsSectionTitle>
           지구에서 나만 안본 그 작품
@@ -74,7 +83,7 @@ const Home = () => {
         </SectionWrapper>
 
         <SectionWrapper>
-          <Recommend nowPlaying={nowPlaying} />
+          <Recommend hotData={hot} />
         </SectionWrapper>
       </VisualWrap>
     </>

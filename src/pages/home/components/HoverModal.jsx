@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { HoverModalWrap } from '../style';
 import { StyledPlayButton } from '../../../ui/button/playButton/style';
 import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../../store/modules/authSlice';
 
 const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, icon, ...props }) => {
   return (
@@ -13,7 +14,51 @@ const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, ico
   );
 };
 
-const LikeButton = ({ isLiked, onClick }) => {
+const DownloadButton = ({ content }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth?.user) || null;
+
+  if (!content) {
+    console.warn('🚨 DownloadButton: content 데이터가 없습니다.');
+    return null;
+  }
+
+  const isDownloaded = user?.downloaded?.some((item) => item.id === content?.id) || false;
+
+  const handleDownloadClick = () => {
+    console.log('✅ 다운로드 토글 실행됨:', content);
+    dispatch(authActions.toggleDownloaded(content));
+  };
+
+  return (
+    <PlayButton className="steamedButton" onClick={handleDownloadClick}>
+      <svg width="20" height="20" viewBox="0 0 23 23" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M0.667969 11.0491C0.667969 11.7054 1.21708 12.241 1.85993 12.241H10.5251V20.9063C10.5251 21.5491 11.0608 22.0982 11.7171 22.0982C12.3733 22.0982 12.9225 21.5491 12.9225 20.9063V12.241H21.5743C22.2171 12.241 22.7661 11.7054 22.7661 11.0491C22.7661 10.3929 22.2171 9.84375 21.5743 9.84375H12.9225V1.19197C12.9225 0.549107 12.3733 0 11.7171 0C11.0608 0 10.5251 0.549107 10.5251 1.19197V9.84375H1.85993C1.21708 9.84375 0.667969 10.3929 0.667969 11.0491Z"
+          fill="white"
+        />
+      </svg>
+    </PlayButton>
+  );
+};
+
+const LikeButton = ({ onLiked, onClick, content }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth?.user) || null;
+
+  if (!content) {
+    console.warn('🚨 LikeButton: content 데이터가 없습니다.');
+    return null;
+  }
+
+  const isLiked = user?.liked?.some((item) => item.id === content?.id) || false;
+
+  const handleLikeClick = () => {
+    console.log('✅ 좋아요 토글 실행됨:', content);
+    dispatch(authActions.toggleLiked(content));
+    setOnLiked(!onLiked);
+  };
+
   return (
     <PlayButton className="likeButton" onClick={onClick}>
       <motion.svg
@@ -23,9 +68,9 @@ const LikeButton = ({ isLiked, onClick }) => {
         xmlns="http://www.w3.org/2000/svg"
         initial={{ scale: 1 }}
         animate={{
-          y: isLiked ? [-10, 0] : [0, -5, 0],
-          rotate: isLiked ? [0, -10, 10, -5, 5, 0] : 0,
-          scale: isLiked ? [1, 1.2, 1] : [1, 0.8, 1],
+          y: onLiked ? [-10, 0] : [0, -5, 0],
+          rotate: onLiked ? [0, -10, 10, -5, 5, 0] : 0,
+          scale: onLiked ? [1, 1.2, 1] : [1, 0.8, 1],
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
       >
@@ -35,8 +80,8 @@ const LikeButton = ({ isLiked, onClick }) => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          fill={isLiked ? 'white' : 'none'}
-          animate={{ fill: isLiked ? 'white' : 'none' }}
+          fill={onLiked ? 'white' : 'none'}
+          animate={{ fill: onLiked ? 'white' : 'none' }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
         />
         <motion.path
@@ -45,8 +90,8 @@ const LikeButton = ({ isLiked, onClick }) => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          fill={isLiked ? 'white' : 'none'}
-          animate={{ fill: isLiked ? 'white' : 'none' }}
+          fill={onLiked ? 'white' : 'none'}
+          animate={{ fill: onLiked ? 'white' : 'none' }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
         />
       </motion.svg>
@@ -55,7 +100,8 @@ const LikeButton = ({ isLiked, onClick }) => {
 };
 
 const HoverModal = ({ reviewData, detailData }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const dispatch = useDispatch();
+  const [onLiked, setOnLiked] = useState(false);
   const [showTrailer, setShowTrailer] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
@@ -73,6 +119,9 @@ const HoverModal = ({ reviewData, detailData }) => {
     }
     console.log('showTrailer changed to:', showTrailer);
   }, [detailData]);
+  useEffect(() => {
+    console.log('🔥 HoverModal: content 값:', content);
+  }, [content]);
 
   const handlePlayClick = () => {
     if (trailerKey) {
@@ -80,7 +129,12 @@ const HoverModal = ({ reviewData, detailData }) => {
       setIsTrailerPlaying(true);
     }
   };
-  const handleLikeClick = () => setIsLiked(!isLiked);
+
+  const handleLikeClick = () => {
+    console.log('✅ 좋아요 토글 실행됨:', content);
+    dispatch(authActions.toggleLiked(content));
+    setOnLiked(!onLiked);
+  };
 
   const handleImageHover = () => {
     if (trailerKey) {
@@ -159,15 +213,8 @@ const HoverModal = ({ reviewData, detailData }) => {
               />
             </svg>
           </PlayButton>
-          <PlayButton className="steamedButton">
-            <svg width="20" height="20" viewBox="0 0 23 23" fill="white" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0.667969 11.0491C0.667969 11.7054 1.21708 12.241 1.85993 12.241H10.5251V20.9063C10.5251 21.5491 11.0608 22.0982 11.7171 22.0982C12.3733 22.0982 12.9225 21.5491 12.9225 20.9063V12.241H21.5743C22.2171 12.241 22.7661 11.7054 22.7661 11.0491C22.7661 10.3929 22.2171 9.84375 21.5743 9.84375H12.9225V1.19197C12.9225 0.549107 12.3733 0 11.7171 0C11.0608 0 10.5251 0.549107 10.5251 1.19197V9.84375H1.85993C1.21708 9.84375 0.667969 10.3929 0.667969 11.0491Z"
-                fill="white"
-              />
-            </svg>
-          </PlayButton>
-          <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
+          <DownloadButton content={content} />
+          <LikeButton onLiked={onLiked} onClick={handleLikeClick} content={content} />
           <PlayButton className="moreButton" onClick={() => onGo(content)}>
             <svg width="30" height="30" viewBox="0 0 51 51" fill="white" xmlns="http://www.w3.org/2000/svg">
               <path
