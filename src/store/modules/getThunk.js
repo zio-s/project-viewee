@@ -78,8 +78,8 @@ const CATEGORY_CONFIG = {
       include_adult: false,
       'vote_average.gte': 5.0,
       'vote_count.gte': 20,
-      with_original_language: 'ko',
-      region: 'KR',
+      with_original_language: 'ja',
+      region: 'JP',
       sort_by: 'release_date.desc',
     },
   },
@@ -87,11 +87,11 @@ const CATEGORY_CONFIG = {
     type: 'tv',
     endpoint: 'discover/tv',
     params: {
-      with_genres: `${GENRES.KIDS},${GENRES.FAMILY}`,
-      'vote_average.gte': 5.0,
-      'vote_count.gte': 10,
-      with_original_language: 'ko',
-      origin_country: 'KR',
+      with_genres: `${GENRES.KIDS}`,
+      'vote_average.gte': 3.0,
+      'vote_count.gte': 5,
+      with_original_language: 'ko,ja',
+      origin_country: 'KR,JP,US',
       sort_by: 'first_air_date.desc',
     },
   },
@@ -509,7 +509,7 @@ export const getFilteredContent = createAsyncThunk(
 //메인에 넣어줄 데이터
 export const MainPageData = createAsyncThunk('tmdbR/MainPage', async () => {
   try {
-    const [topRated, nowPlaying, upcoming] = await Promise.all([
+    const [topRated, tvShows, nowPlayingMovies, upcomingMovies] = await Promise.all([
       axios.get(`${BASE_URL}/discover/movie`, {
         params: {
           ...baseOptions,
@@ -575,9 +575,9 @@ export const MainPageData = createAsyncThunk('tmdbR/MainPage', async () => {
     return {
       trending: koreanTrending.slice(0, 20),
       hot: topRated.data.results,
-      review: nowPlaying.data.results,
-      upcoming: upcoming.data.results,
-      nowPlaying: nowPlaying.data.results,
+      review: tvShows.data.results,
+      upcoming: upcomingMovies.data.results,
+      nowPlaying: nowPlayingMovies.data.results,
     };
   } catch (error) {
     console.error('Main page data fetch error:', error);

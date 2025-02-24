@@ -75,12 +75,12 @@ const Subscribe = () => {
           <div className="toggleButton" onClick={toggle}>
             {priceToggle === 'month' ? (
               <>
-                <div className="month on">매월</div>
+                <div className="month on">월간</div>
                 <div className="years">연간</div>
               </>
             ) : (
               <>
-                <div className="month">매월</div>
+                <div className="month">월간</div>
                 <div className="years on">연간</div>
               </>
             )}

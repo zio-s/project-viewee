@@ -1,32 +1,38 @@
 import React from 'react';
 import { ActiveText, Banner, BoldText, Card, CardContainer, Text } from './style';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const CardData = [
   {
     bannerImage: '/images/banenrFigure1.png',
+    genre: '액션 & 범죄',
     logo: '/images/bannerLogo1.png',
     icon: '/images/bannerIcon1.png',
     item: '/images/bannerItem1.png',
     text: '길복순',
     boldText: '죽을 때 까지 숨길 것 \n숨기지 못한다면 죽일 것',
+    num: '/movie/849869',
   },
   {
     bannerImage: '/images/bannerFigure2.png',
+    genre: '액션 & 범죄',
     logo: '/images/bannerLogo2.png',
     icon: '/images/bannerIcon2.png',
     item: '/images/bannerItem2.png',
     text: 'D.P.',
     boldText: '나는 군인을 잡는\n군인이다',
+    num: '/category/110534',
   },
   {
     bannerImage: '/images/bannerFigure3.png',
+    genre: '예능 & 토크',
     logo: '/images/bannerLogo3.png',
     icon: '/images/bannerIcon3.png',
     item: '/images/bannerItem3.png',
     text: '유퀴즈온더블럭',
     boldText: '구교환의 \n구며들 수밖에 없는 모먼트',
+    num: '/tv/81978',
   },
 ];
 
@@ -39,13 +45,13 @@ const SpecialEdition = () => {
             <Banner bgImage={data.bannerImage} className="banner">
               <img src={data.logo} alt="" className={`bannerLogo${index + 1}`} />
               <ActiveText className="activeText">
-                <div className="">액션 & 범죄</div>
+                <div className="">{data.genre}</div>
                 <div
                   className={`pointLine ${
                     index === 1 ? 'pointLinePink' : index === 2 ? 'pointLineBlue' : 'pointLineDefault'
                   }`}
                 ></div>
-                <Link className="goToPlay" to="/detail">
+                <Link className="goToPlay" to={`${data.num}`}>
                   <span>보러가기</span>
                   <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_630_1220)">
@@ -71,7 +77,7 @@ const SpecialEdition = () => {
               variants={{
                 hover: {
                   y: [-5, -10, -5],
-                  transition: { duration: 0.7, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' },
+                  transition: { duration: 1.2, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' },
                 },
               }}
             />

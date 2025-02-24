@@ -1,11 +1,13 @@
 import React from 'react';
 import { ActiveText, Banner, BoldText, Card, CardContainer, Text } from './style';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const CardData = [
   {
     bannerImage: '/images/banenrFigure1.png',
+    num: '/movie/532444',
+    genre: '로코 & 멜로',
     logo: '/images/banner2Logo1.png',
     icon: '/images/banner2Icon1.png',
     item: '/images/banner2Item1.png',
@@ -14,6 +16,8 @@ const CardData = [
   },
   {
     bannerImage: '/images/bannerFigure2.png',
+    num: '/tv/205319',
+    genre: 'TV드라마',
     logo: '/images/banner2Logo2.png',
     icon: '/images/banner2Icon2.png',
     item: '/images/banner2Item1.png',
@@ -22,6 +26,8 @@ const CardData = [
   },
   {
     bannerImage: '/images/bannerFigure3.png',
+    num: '/tv/238276',
+    genre: '예능 & 토크',
     logo: '/images/banner2Logo3.png',
     icon: '/images/banner2Icon3.png',
     item: '/images/banner2Item3.png',
@@ -31,6 +37,7 @@ const CardData = [
 ];
 
 const SpecialEdition2 = () => {
+  const navigate = useNavigate();
   return (
     <CardContainer>
       {CardData.map((data, index) => (
@@ -39,13 +46,13 @@ const SpecialEdition2 = () => {
             <Banner bgImage={data.bannerImage} className="banner">
               <img src={data.logo} alt="" className={`banner2Logo${index + 1}`} />
               <ActiveText className="activeText">
-                <div className="">액션 & 범죄</div>
+                <div className="">{data.genre}</div>
                 <div
                   className={`pointLine ${
                     index === 1 ? 'pointLinePink' : index === 2 ? 'pointLineBlue' : 'pointLineDefault'
                   }`}
                 ></div>
-                <Link className="goToPlay" to="/detail">
+                <Link className="goToPlay" to={`${data.num}`}>
                   <span>보러가기</span>
                   <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_630_1220)">

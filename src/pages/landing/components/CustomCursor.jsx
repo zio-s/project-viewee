@@ -1,93 +1,117 @@
-import { useState, useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import gsap from 'gsap';
 
 const CursorWrapper = styled.div`
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: all 150ms ease;
-  transform: translate(-50%, -50%) scale(${(props) => (props.$isClicking ? 0.75 : 1)});
-`;
-
-const CursorDot = styled.div`
-  width: ${(props) => (props.$isHovering ? '64px' : '32px')};
-  height: ${(props) => (props.$isHovering ? '64px' : '32px')};
-  border-radius: 50%;
-  opacity: ${(props) => (props.$isVisible ? 1 : 0)};
-  transition: all 300ms ease;
-  background-color: ${(props) => (props.$isHovering ? '#FF6B8B' : '#fff')};
-  mix-blend-mode: difference;
-`;
-
-const GlobalStyles = createGlobalStyle`
-  .hoverable {
+  a,
+  button,
+  .hover-target h2,
+  p {
     cursor: none !important;
   }
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  background: var(--primary-50, #fff);
+  border-radius: 80%;
+  z-index: 9999;
+  backface-visibility: hidden;
+  pointer-events: none;
+  mix-blend-mode: difference;
 
-  .white-content {
-    color: white;
-    mix-blend-mode: difference;
+  &.hover {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-50, #fff);
+  }
+`;
+
+const HoverBox = styled.div`
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--primary-50, #fff);
+  /* background: #fff; */
+  border-radius: 80%;
+  z-index: 9999;
+  transition: 0.15s ease;
+  font-size: 14px;
+  color: #000;
+  font-weight: 700;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: multiply;
+
+  .hover & {
+    width: 180px;
+    height: 180px;
+    opacity: 1;
+    /* background: #000; */
   }
 `;
 
 const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isClicking, setIsClicking] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+  const cursorRef = useRef(null);
+  const hoverBoxRef = useRef(null);
 
   useEffect(() => {
-    const updatePosition = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+    const cursor = cursorRef.current;
+
+    const onMouseMove = (e) => {
+      gsap.to(cursor, {
+        duration: 0.1,
+        x: e.clientX,
+        y: e.clientY,
+        ease: 'power2.out',
+      });
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const addHoverEffect = (element) => {
+      element.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+      });
 
-    // 호버 상태 감지
-    const handleHoverStart = (e) => {
-      if (e.target.classList.contains('hoverable')) {
-        setIsHovering(true);
-      }
+      element.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+      });
     };
-
-    const handleHoverEnd = () => {
-      setIsHovering(false);
+    const setupHoverEffects = () => {
+      const hoverTargets = document.querySelectorAll('a, button, .hover-target,h2,p');
+      hoverTargets.forEach(addHoverEffect);
     };
+    window.addEventListener('mousemove', onMouseMove);
+    setupHoverEffects();
 
-    document.addEventListener('mousemove', updatePosition);
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseover', handleHoverStart);
-    document.addEventListener('mouseout', handleHoverEnd);
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          setupHoverEffects();
+        }
+      });
+    });
 
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
     return () => {
-      document.removeEventListener('mousemove', updatePosition);
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseover', handleHoverStart);
-      document.removeEventListener('mouseout', handleHoverEnd);
+      window.removeEventListener('mousemove', onMouseMove);
+      observer.disconnect();
     };
   }, []);
 
   return (
     <>
-      <GlobalStyles />
-      <CursorWrapper
-        $isClicking={isClicking}
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-        }}
-      >
-        <CursorDot $isVisible={isVisible} $isHovering={isHovering} />
+      <CursorWrapper ref={cursorRef} id="cursor">
+        <HoverBox ref={hoverBoxRef} className="hover-box" />
       </CursorWrapper>
     </>
   );

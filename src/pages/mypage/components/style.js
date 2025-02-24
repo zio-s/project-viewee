@@ -85,10 +85,18 @@ export const RequestListWrap = styled.div`
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .data {
+        .date {
           font-size: var(--font-label-s);
-          padding-right: 0.5rem;
           box-sizing: border-box;
+          padding-right: 0.5rem;
+          ${mobileMore`
+            font-size: var(--font-content-m);
+            padding: 2.8rem 5rem;
+            width: auto;
+          `}
+          ${tabletMore`      
+            font-size: var(--font-content-l);
+          `}
         }
       }
       .tableTitle {

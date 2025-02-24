@@ -85,7 +85,7 @@ const CardSection = () => {
       scrollTrigger: {
         trigger: container,
         start: 'top top',
-        end: '+=100%',
+        end: '+=900',
         scrub: 2,
         // pin: true,
         // pinSpacing: true,

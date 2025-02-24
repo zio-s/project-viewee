@@ -66,7 +66,6 @@ const QnA = () => {
   const { user } = useSelector((state) => state.authR);
   const handletoggle = (id) => {
     setFaq((prevFaq) => prevFaq.map((item) => (item.id === id ? { ...item, toggle: !item.toggle } : item)));
-    console.log(faq[id - 1]);
   };
   const Phone = user.phone.split('-');
   const firstPhone = Phone[0];
@@ -76,7 +75,6 @@ const QnA = () => {
   const email = user.userEmail.split('@');
   const id = email[0];
   const domain = email[1];
-  console.log(id)
 
   const [category, setCategory] = useState('사이트 이용');
   const [title, setTitle] = useState('');
@@ -127,35 +125,34 @@ const QnA = () => {
               <div className="itemWrap1">
                 <div className="name item">
                   <p>이름</p>
-                  <Input type="text" variant="gray" value={user.username} />
+                  <Input type="text" variant="gray" value={user.username} readOnly />
                 </div>
                 <div className="id item">
                   <p>아이디</p>
-                  <Input type="text" variant="gray" value={user.userId} />
+                  <Input type="text" variant="gray" value={user.userId} readOnly />
                 </div>
               </div>
               <div className="itemSet">
                 <div className="email item">
                   <p>Email</p>
                   <div className="emailInput">
-                    <Input type="text" variant="gray" value={id} />
+                    <Input type="text" variant="gray" value={id} readOnly />
                     @
-                    <Input type="text" variant="gray" value={domain} />
+                    <Input type="text" variant="gray" value={domain} readOnly />
                   </div>
-                  </div>
+                </div>
                 <div className="phone item">
                   <p>휴대폰 번호</p>
                   <div className="phoneInput">
-
-                    <Input variant="gray" type="text" value={firstPhone} />
-                    <Input variant="gray" type="text" value={secondPhone} />
-                    <Input variant="gray" type="text" value={thirdPhone} />
+                    <Input variant="gray" type="text" value={firstPhone} readOnly />
+                    <Input variant="gray" type="text" value={secondPhone} readOnly />
+                    <Input variant="gray" type="text" value={thirdPhone} readOnly />
                   </div>
                 </div>
               </div>
               <div className="category">
                 <p>문의 종류</p>
-                <form>
+                <div className="form">
                   <div>
                     <input
                       type="radio"
@@ -236,7 +233,7 @@ const QnA = () => {
                     <input type="radio" id="etc" name="questionType" value="기타" onChange={onChangeCategory} />
                     <label htmlFor="etc">기타</label>
                   </div>
-                </form>
+                </div>
               </div>
               <div className="title">
                 <p>문의 제목</p>
@@ -280,8 +277,8 @@ const QnA = () => {
             {faq.map((faq) => (
               <div key={faq.id} className="faqItem">
                 <div className="faqItemWrapper">
-                  <div className="no">{faq.id <= 9 ? '0' + faq.id : faq.id}</div>
                   <div className="itemContent">
+                    <div className="no">{faq.id <= 9 ? '0' + faq.id : faq.id}</div>
                     <div className="accordian">
                       <h4>{faq.question}</h4>
                       <p className={faq.toggle ? 'on' : ''}>
