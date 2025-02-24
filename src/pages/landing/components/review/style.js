@@ -113,7 +113,7 @@ export const ReviewWrapper = styled.div`
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        color: rgb(255, 107, 107);
+        color: var(--primary-50);
         transform-style: preserve-3d;
         opacity: 0;
         pointer-events: none;
