@@ -13,7 +13,6 @@ import {
   setSectionPlaying,
   selectSection,
 } from '../../../store/modules/gsapSlice';
-import { Link } from 'react-router';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -170,7 +169,7 @@ const ScrollSection = () => {
           delay: 2,
         },
         {
-          z: 2000,
+          z: 1500,
           rotationX: -35,
           scale: 1,
           duration: 4,

@@ -4,6 +4,8 @@ import Footer from './footer/footer';
 import Header from './header';
 import { useEffect, useState } from 'react';
 import SubHeader from './subheader';
+import ScrollToTopButton from '../ui/button/topButton/ScrollToTopButton';
+import { Wrap } from './style';
 
 const Layout = () => {
   const [path, setPath] = useState(false);
@@ -16,14 +18,15 @@ const Layout = () => {
     }
   }, []);
   return (
-    <div className="wrap">
+    <Wrap className="wrap">
       {path ? <Header /> : <SubHeader />}
       <main className="main">
         {/* 라우터페이지 들어오기 */}
         <Outlet />
       </main>
       {path ? <Footer /> : ''}
-    </div>
+      <ScrollToTopButton size="large" />
+    </Wrap>
   );
 };
 

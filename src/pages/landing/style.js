@@ -6,7 +6,7 @@ export const LandingWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: #1e1e1e;
+  background-color: #1c1c1e;
   overflow: hidden;
   /* & > div {
     min-height: 100vh;
