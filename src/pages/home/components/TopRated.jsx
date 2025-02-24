@@ -27,15 +27,18 @@ const TopRated = ({ hotData }) => {
 
     swiperRef.current = new Swiper('.new-card-carousel2', {
       slidesPerView: 'auto',
-      spaceBetween: 30,
+      spaceBetween: 20,
       navigation: {
         nextEl: '.new-swiper-button-next',
         prevEl: '.new-swiper-button-prev',
       },
+
       breakpoints: {
-        1024: { slidesPerView: 'auto' },
-        768: { slidesPerView: 'auto' },
-        390: { slidesPerView: 'auto' },
+        1440: { slidesPerView: 5.6, slidesPerGroup: 5, spaceBetween: 15 },
+        1024: { slidesPerView: 4.2, slidesPerGroup: 5, spaceBetween: 15 },
+        768: { slidesPerView: 3.8, slidesPerGroup: 1, spaceBetween: 10 },
+        390: { slidesPerView: 3, slidesPerGroup: 1, spaceBetween: 10 },
+        330: { slidesPerView: 2.8, slidesPerGroup: 1, spaceBetween: 10 },
       },
     });
   }, []); // `destroy()` 없이 유지됨
@@ -70,7 +73,7 @@ const TopRated = ({ hotData }) => {
 
         <RatedSwiperContainer className="new-card-carousel2">
           <RatedSwiperWrapper className="swiper-wrapper">
-            {hotData.slice(0, 8).map((content, index) => (
+            {hotData.slice(0, 10).map((content, index) => (
               <RatedSwiperSlide
                 key={content.id}
                 className="swiper-slide"
