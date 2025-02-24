@@ -1,10 +1,8 @@
 import React from 'react';
 import Tag from '../../../ui/tag/index';
 import { TagSectionWrapper } from '../style';
-import { getContentByGenre } from '../../../store/modules/genreThunk';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { useDispatch } from 'react-redux';
 
 const GENRE_IDS = {
   액션: 28,
@@ -18,17 +16,7 @@ const GENRE_IDS = {
   드라마: 18,
 };
 
-const TagSection = ({ onSelectGenre }) => {
-  const dispatch = useDispatch();
-
-  const handleTagClick = (tag) => {
-    const genreId = GENRE_IDS[tag];
-    if (genreId) {
-      console.log('🎯 선택한 장르 ID:', genreId);
-      dispatch(getContentByGenre({ genreId }));
-      onSelectGenre(genreId);
-    }
-  };
+const TagSection = () => {
   return (
     <TagSectionWrapper>
       <Swiper spaceBetween={10} slidesPerView={'auto'}>
