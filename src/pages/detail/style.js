@@ -51,8 +51,8 @@ export const ReviewInput = styled(OriginalStyledInput)`
   width: 100%; 
   padding: 20px; 
   border: 1px solid #ccc; 
-  border-radius: 5px; 
-  font-size: 16px; 
+  border-radius: 5px;  
+  font-size: var(--font-content-m); 
   margin: 20px 0; 
 
   &:focus {
@@ -73,22 +73,49 @@ export const SubmitButton = styled.button`
 
 export const ReviewList = styled.div`
   margin-top: 20px;
+  text-align: center;
 `;
 
 export const ReviewItem = styled.li`
-  border-bottom: 1px solidvar(--gary-60); // 테두리
-  border-radius: 8px; // 모서리 둥글기
-  padding: 10px 15px; // 패딩
-  margin: 10px 0; // 여백
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자
+  border-bottom: 1px solid var(--gray-60); 
+  padding: 10px 15px; 
+  margin: 10px 0; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
 
-  display: flex; // Flexbox로 위치 조정
-  flex-direction: column; // 세로 방향으로 배치
-  align-items: flex-start; // 좌측 정렬
+  &:hover {
+    background-color: var(--gray-80); 
+  }
+
+  .icon-container {
+    display: flex; 
+    gap: 10px; 
+    margin-top: 10px; 
+  }
+
+  span {
+    font-size: var(--font-content-m); 
+    color: var(--gray-50); 
+    margin-bottom: 10px; 
+  }
+
+  p {
+    font-size: var(--font-content-l); 
+    color: var(--gray-30); 
+    margin-bottom: 10px; 
+  }
+
+  .icon-wrapper {
+    stroke: var(--gray-60); 
+    border: 1.5px solid var(--gray-60); 
+    border-radius: 25px; 
+    padding: 10px; 
+    margin: 0 15px 15px 0;
+    display: flex; 
+    align-items: center; 
+  }
 `;
-
-
-
 
 export const MovieInfoSection = styled.div`
   max-width: 1440px;
@@ -178,16 +205,22 @@ export const CardBox = styled.div`
     align-items: center;
     }
 
+    .title {
+      display: flex;
+      align-items: center;
+      }
+
     .pic {
+    display: flex;
     width: 345px;
     height: 195px; 
     flex-shrink: 0;
-    border-radius: 5px;
 
       img {
         width: 100%;
         height: 100%;
         object-fit: cover; 
+        border-radius: 5px;
       }
     }
     
@@ -195,6 +228,7 @@ export const CardBox = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      margin-left: 20px;
 
       h2 {
         font-size: var(--font-content-l);
@@ -225,26 +259,29 @@ export const CardBox = styled.div`
   width: 100%;
 }
 
-.swiper-slide{
-  width: 200px;
-}
 .episode-detail {
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-  transition: transform 0.3s ease-in-out;
-  h4{
+  background: var(--gray-80);
+  padding: 15px;
+  border-radius: 10px;
+  font-size: var(--font-content-m);
+  color: var(--gray-50);
 
+  img {
+    display: block; 
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px; 
   }
-  p{
 
+  h4 {
+    font-size: var(--font-content-m);
+    color: var(--gray-20);
+    margin-bottom: 10px;
   }
 }
 
-.episode-detail img {
-  width: 100%;
-  border-radius: 6px;
-}
+
 
 .episode-detail:hover {
   transform: scale(1.05);
@@ -273,7 +310,6 @@ export const CardBox = styled.div`
 
 export const EpisodeWrap = styled.div`
   max-width: 1440px;
-  display: flex;
   justify-content: center;    
   margin: 0 auto; 
   .EpisodeContainer {
@@ -285,7 +321,7 @@ export const EpisodeWrap = styled.div`
 
 export const CustomButton = styled(StyledButton)`
   color: white;
-  font-size: 18px;
+  font-size: var(--font-content-m);
   padding: 12px 24px;
 
 `;
@@ -446,8 +482,6 @@ export const TabMenu = styled.ul`
 
 export const TabContent = styled.div`
   padding: 20px;
-  background-color: #1c1c1e;
-  color: #fff;
   border-radius: 5px;
   margin-top: 20px;
 `;
