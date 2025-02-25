@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mobileMore, tabletMore } from '../../../../styled/Mixin';
 
 export const ReviewContainer = styled.section`
   position: relative;
@@ -29,84 +30,45 @@ export const ReviewWrapper = styled.div`
     video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       position: absolute;
       top: 0;
       left: 0;
+
+      ${tabletMore`
+        object-fit: cover; 
+      `}
     }
 
     .text-box {
       position: absolute;
       top: 50%;
-      left: 15%;
-      transform: translateY(-50%);
+      left: 30%;
+      transform: translate(-50%, -50%);
       z-index: 2;
       color: white;
-
-      @media (max-width: 768px) {
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%;
-      }
+      width: 90%;
+      text-align: center;
 
       h1 {
-        font-size: 7rem;
+        font-size: var(--font-title-m-mobile);
         margin: 0;
-        white-space: nowrap;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 2.5rem;
-        font-weight: 700;
-
-        @media (max-width: 1440px) {
-          font-size: 6rem;
-        }
-
-        @media (max-width: 1024px) {
-          font-size: 5rem;
-          gap: 1rem;
-        }
-
-        @media (max-width: 768px) {
-          font-size: 4rem;
-          flex-direction: column;
-          align-items: flex-start;
-          white-space: normal;
-          gap: 0.5rem;
-        }
-
-        @media (max-width: 480px) {
-          font-size: 3rem;
-        }
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: var(--font-weight-bold);
+        white-space: normal;
       }
 
       .text-container {
         position: relative;
-        height: 7rem;
+        height: 3rem;
         display: flex;
         align-items: center;
-        perspective: 1000px;
-        min-width: 200px;
+        perspective: var(--perspective);
+        width: 100%;
         justify-content: center;
-
-        @media (max-width: 1440px) {
-          height: 6rem;
-        }
-
-        @media (max-width: 1024px) {
-          height: 5rem;
-          min-width: 150px;
-        }
-
-        @media (max-width: 768px) {
-          height: 4rem;
-          width: 100%;
-          justify-content: flex-start;
-        }
-
-        @media (max-width: 480px) {
-          height: 3rem;
-        }
       }
 
       .highlight-text {
@@ -119,18 +81,71 @@ export const ReviewWrapper = styled.div`
         pointer-events: none;
         white-space: nowrap;
         will-change: transform, opacity;
-        font-weight: 700;
+        font-weight: var(--font-weight-bold);
         letter-spacing: -0.02em;
 
         &.active {
           opacity: 1;
           pointer-events: auto;
         }
-
-        @media (max-width: 768px) {
-          left: 0;
-        }
       }
+
+      ${mobileMore`
+        left: 15%;
+        transform: translateY(-50%);
+        width: auto;
+        text-align: left;
+        
+        h1 {
+          font-size: 4rem;
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+          white-space: nowrap;
+        }
+        
+        .text-container {
+          height: 4rem;
+          min-width: 150px;
+          width: auto;
+        }
+      `}
+
+      ${tabletMore`
+        h1 {
+          font-size: 5rem;
+          gap: 1.5rem;
+        }
+        
+        .text-container {
+          height: 5rem;
+          min-width: 180px;
+        }
+        
+        @media (min-width: 1280px) {
+          h1 {
+            font-size: 6rem;
+            gap: 2rem;
+          }
+          
+          .text-container {
+            height: 6rem;
+            min-width: 190px;
+          }
+        }
+        
+        @media (min-width: 1440px) {
+          h1 {
+            font-size: 7rem;
+            gap: 2.5rem;
+          }
+          
+          .text-container {
+            height: 7rem;
+            min-width: 200px;
+          }
+        }
+      `}
     }
   }
 `;

@@ -17,6 +17,10 @@ const Layout = () => {
       setPath(true);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <Wrap className="wrap">
       {path ? <Header /> : <SubHeader />}

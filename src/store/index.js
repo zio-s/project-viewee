@@ -11,6 +11,7 @@ import detailR from './modules/detailSlice';
 import couponR from './modules/couponSlice';
 import searchR from './modules/searchSlice';
 import gsapR from './modules/gsapSlice';
+
 export const store = configureStore({
   reducer: {
     tmdbR,
