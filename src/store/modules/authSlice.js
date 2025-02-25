@@ -295,6 +295,16 @@ export const authSlice = createSlice({
       localStorage.setItem('user', JSON.stringify(state.user));
       localStorage.setItem('joinData', JSON.stringify(state.joinData));
     },
+    modifyUser: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, ...action.payload } : user
+      );
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      state.prevUser = state.user;
+      localStorage.setItem('prevUser', JSON.stringify(state.prevUser));
+    },
   },
 });
 
