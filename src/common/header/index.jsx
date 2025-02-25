@@ -59,7 +59,7 @@ const Header = () => {
             <NotificationBell />
           </li>
           <li>
-            <Button variant="search" size="search" onClick={toggleSearch} data-search-toggle>
+            <Button className="search" variant="search" size="search" onClick={toggleSearch} data-search-toggle>
               <i>
                 <svg width="28" height="28" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_622_4047)">
