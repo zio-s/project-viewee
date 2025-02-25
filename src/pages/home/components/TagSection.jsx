@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Tag from '../../../ui/tag/index';
 import { TagSectionWrapper } from '../style';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,6 +18,12 @@ const GENRE_IDS = {
 };
 
 const TagSection = () => {
+  const navigate = useNavigate();
+
+  const handleTagClick = (tag) => {
+    navigate(`/category?search=${encodeURIComponent(tag)}`);
+  };
+
   return (
     <TagSectionWrapper>
       <Swiper spaceBetween={10} slidesPerView={'auto'}>
