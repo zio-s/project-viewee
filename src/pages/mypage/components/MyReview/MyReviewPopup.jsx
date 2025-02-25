@@ -2,14 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../../ui/button/defaultButton';
 import { MyReviewPopupWrap } from './style';
 import { authActions } from '../../../../store/modules/authSlice';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const MyReviewPopUp = ({ itemID, editToggle }) => {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.authR.user.reviewed.find((item) => item.id === itemID));
   const prevData = useSelector((state) => state.authR.prevUser);
-  console.log(item);
-  const { title, rate, date, img, content, id } = item;
+  const { title, rate, content, id } = item;
   const [nowContent, setNowContent] = useState(content);
   const cancleToggle = () => {
     editToggle();
@@ -30,7 +29,7 @@ export const MyReviewPopUp = ({ itemID, editToggle }) => {
     <MyReviewPopupWrap>
       <div className="popContent">
         <div className="img">
-          <img src={img} alt={title}></img>
+          <img src={`https://image.tmdb.org/t/p/w1280${item.poster_path}`} alt={title}></img>
           <div className="bgImg" />
         </div>
         <h2>{title}</h2>

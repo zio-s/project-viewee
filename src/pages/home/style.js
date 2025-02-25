@@ -5,6 +5,56 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { mobileMore, tabletMore } from '../../styled/Mixin';
 
+export const HomeWrap = styled.div`
+  .lineBanner {
+    display: none;
+    ${tabletMore`
+    margin-bottom:70px;
+    display:block;
+    width: 1920px;
+    height: 116px;
+    `}
+  }
+`;
+
+export const GenreTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
+`;
+
+export const ContentCard = styled.div`
+  width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #222;
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+  }
+
+  p {
+    font-size: 14px;
+    color: white;
+    margin-top: 5px;
+  }
+`;
+
 export const StyledSwiper = styled(Swiper)`
   width: 100%;
   margin: 0 auto;
@@ -40,6 +90,7 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   }
   background-position: center;
   background-size: cover;
+  border-radius: 10px;
 
   width: ${(props) => props.width || 'calc(280px + (280 * ((100vw - 390px) / (768 - 390))))'};
   height: ${(props) => props.height || 'calc(180px + (180 * ((100vw - 390px) / (768 - 390))))'};
@@ -143,6 +194,9 @@ export const VisualWrap = styled.div`
 `;
 
 export const TagSectionWrapper = styled.div`
+  .genreSwiper {
+    margin-top: 70px;
+  }
   margin: 40px 0;
   overflow: hidden;
   ${mobileMore`
@@ -237,11 +291,13 @@ export const RatedSwiperSlide = styled.li`
   ${mobileMore`
     width: 190px;
     height: 300px;
+    border-radius: 10px;
   `}
 
   ${tabletMore`
     width: 275px;
     height: 400px;
+    border-radius: 10px;
   `}
   background: #333333;
   border-radius: 10px;
@@ -249,8 +305,9 @@ export const RatedSwiperSlide = styled.li`
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    border-radius: 5px;
   }
 `;
 
@@ -352,14 +409,16 @@ export const NewSwiperSlide = styled.li`
   ${mobileMore`
     width: 190px;
     height: 300px;
+    border-radius: 10px;
   `}
 
   ${tabletMore`
     width: 275px;
     height: 400px;
+    border-radius: 10px;
   `}
   background: #333333;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: transform 0.3s ease;
 
   &:hover {
@@ -368,8 +427,9 @@ export const NewSwiperSlide = styled.li`
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    border-radius: 5px;
   }
 
   p {

@@ -34,7 +34,6 @@ export const HeaderWrap = styled.header`
     align-items: normal;
     width: 100%;
     max-width: var(--layout);
-    margin: 0 auto;
     z-index: 9999;
     ${mobileMore`
       flex-direction: row;

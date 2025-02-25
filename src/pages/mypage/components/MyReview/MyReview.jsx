@@ -49,7 +49,7 @@ export const MyReview = () => {
         <ul>
           {currentPost.map((item) => (
             <li key={item.id}>
-              <img src={item.img} alt={item.title} />
+              <img src={`https://image.tmdb.org/t/p/w1280${item.poster_path}`} alt={item.title} />
               <div className="reviewItem">
                 <h2>{item.title}</h2>
                 <p className="rate">
