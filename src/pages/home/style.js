@@ -5,6 +5,18 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { mobileMore, tabletMore } from '../../styled/Mixin';
 
+export const HomeWrap = styled.div`
+  .lineBanner {
+    display: none;
+    ${tabletMore`
+    margin-bottom:70px;
+    display:block;
+    width: 1920px;
+    height: 116px;
+    `}
+  }
+`;
+
 export const GenreTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
@@ -78,6 +90,7 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   }
   background-position: center;
   background-size: cover;
+  border-radius: 10px;
 
   width: ${(props) => props.width || 'calc(280px + (280 * ((100vw - 390px) / (768 - 390))))'};
   height: ${(props) => props.height || 'calc(180px + (180 * ((100vw - 390px) / (768 - 390))))'};
@@ -278,11 +291,13 @@ export const RatedSwiperSlide = styled.li`
   ${mobileMore`
     width: 190px;
     height: 300px;
+    border-radius: 10px;
   `}
 
   ${tabletMore`
     width: 275px;
     height: 400px;
+    border-radius: 10px;
   `}
   background: #333333;
   border-radius: 10px;
@@ -290,8 +305,9 @@ export const RatedSwiperSlide = styled.li`
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    border-radius: 5px;
   }
 `;
 
@@ -393,14 +409,16 @@ export const NewSwiperSlide = styled.li`
   ${mobileMore`
     width: 190px;
     height: 300px;
+    border-radius: 10px;
   `}
 
   ${tabletMore`
     width: 275px;
     height: 400px;
+    border-radius: 10px;
   `}
   background: #333333;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: transform 0.3s ease;
 
   &:hover {
@@ -409,8 +427,9 @@ export const NewSwiperSlide = styled.li`
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    border-radius: 5px;
   }
 
   p {
