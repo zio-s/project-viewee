@@ -241,7 +241,6 @@ export const authSlice = createSlice({
       const rState = '처리중';
       const nowDate = new Date();
       const month = nowDate.getMonth() + 1;
-
       const date = `${nowDate.getFullYear()}-${month <= 9 ? '0' + month : month}-${nowDate.getDate()}`;
       const requested = { id: id, category: category, title: title, state: rState, date: date, content: content };
       state.joinData = state.joinData.map((item) => {
