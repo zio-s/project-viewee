@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tag from '../../../ui/tag/index';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,30 +29,41 @@ const GENRE_IDS = {
 };
 
 const TagSection = () => {
-<<<<<<<<< Temporary merge branch 1
-=========
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  const contentList = useSelector((state) => state.genre.contentList || []);
 
   const handleTagClick = (tag) => {
-    navigate(`/category?search=${encodeURIComponent(tag)}`);
+    if (selectedGenre === tag) {
+   
+      setSelectedGenre(null);
+    } else {
+
+      setSelectedGenre(tag);
+      dispatch(setGenre(tag));
+      dispatch(fetchGenreContent(GENRE_IDS[tag]));
+    }
   };
 
->>>>>>>>> Temporary merge branch 2
   return (
     <TagSectionWrapper>
       <div style={{ marginBottom: '30px' }}>
         <Swiper spaceBetween={10} slidesPerView={'auto'}>
           {Object.keys(GENRE_IDS).map((tag, index) => (
             <SwiperSlide key={index} onClick={() => handleTagClick(tag)}>
-              <Tag className="tagSlide">{tag}</Tag>
+              <Tag className={`tagSlide ${selectedGenre === tag ? 'active' : ''}`}>{tag}</Tag>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
 
+  
       {selectedGenre && contentList.length > 0 && (
         <NewSwiperContainer style={{ marginTop: '30px' }}>
-          {selectedGenre && <GenreTitle>{selectedGenre}</GenreTitle>}
+          <GenreTitle>{selectedGenre}</GenreTitle>
           <Swiper
             modules={[Navigation]}
             slidesPerView={'auto'}
