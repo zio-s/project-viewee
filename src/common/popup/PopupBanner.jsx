@@ -12,6 +12,8 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { authActions } from '../../store/modules/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { showToast } from '../../ui/toast/showToast';
+import { notificationActions } from '../../store/modules/notificationSlice';
 
 const POPUP_DATA = [
   {
@@ -65,21 +67,33 @@ const PopupBanner = () => {
       const couponToIssue = availableCoupons.find((coupon) => coupon.code === popupData.couponCode);
 
       if (!couponToIssue) {
-        alert('발급 가능한 쿠폰이 아닙니다.');
+        showToast('error', { message: '로그인 후 쿠폰을 받을 수 있습니다!' });
         return;
       }
       const alreadyIssued = user?.coupon.some((coupon) => coupon.code === popupData.couponCode);
 
       if (alreadyIssued) {
-        alert('이미 발급된 쿠폰입니다.');
+        showToast('info', { message: '이미 발급된 쿠폰 입니다!' });
         return;
       }
       dispatch(authActions.couponAdd(couponToIssue));
-      alert(`${couponToIssue.title} 쿠폰이 발급되었습니다.`);
+      dispatch(
+        notificationActions.createContentNotification({
+          userId: user.id,
+          contentId: couponToIssue.id,
+          contentTitle: couponToIssue.title,
+          contentType: 'coupon',
+          action: 'couponIssued',
+        })
+      );
+      showToast('success', {
+        title: couponToIssue.title,
+        name: couponToIssue.title,
+        message: '쿠폰이 발급되었습니다.',
+      });
       handleClose();
-    } catch (error) {
-      console.error('쿠폰 발급 중 오류 발생:', error);
-      alert('쿠폰 발급 중 문제가 발생했습니다.');
+    } catch {
+      showToast('error', { message: '쿠폰 발급 중 오류가 발생 했습니다.' });
     }
   };
 

@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 import Button from '../../ui/button/defaultButton';
 import { useEffect, useState } from 'react';
 import UserDropdown from './components/UserDropdown';
+import NotificationBell from '../noti/Notification';
 
 const Header = () => {
   const { authed, user } = useSelector((state) => state.authR);
@@ -54,6 +55,9 @@ const Header = () => {
           <NavBar />
         </div>
         <TopMenu className="top-menu">
+          <li>
+            <NotificationBell />
+          </li>
           <li>
             <Button variant="search" size="search" onClick={toggleSearch} data-search-toggle>
               <i>

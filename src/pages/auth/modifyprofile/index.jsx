@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { authActions } from '../../../store/modules/authSlice';
 import Button from '../../../ui/button/defaultButton';
 import { useNavigate } from 'react-router';
+import { showToast } from '../../../ui/toast/showToast';
 
 const ModifyProfile = () => {
   const navigate = useNavigate();
@@ -28,11 +29,11 @@ const ModifyProfile = () => {
       !changeUser.birth.trim() ||
       !changeUser.gender.trim()
     ) {
-      alert('변경할 내용을 모두 입력하세요.');
+      showToast('centerInfo', { message: '빈 공간을 다 입력 해주세요!' });
       return;
     } else {
       dispatch(authActions.modifyUser(changeUser));
-      alert('회원정보가 수정되었습니다.');
+      showToast('centerSuccess', { message: '회원정보가 수정 되었습니다!' });
       setChangeUser(user);
     }
   };
