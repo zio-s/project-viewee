@@ -12,10 +12,11 @@ import {
 } from '../style';
 import InfoSection from './InfoSection';
 import ReviewSection from './ReviewSection';
-import { useDispatch, useSelector } from 'react-redux';
 import { getContentDetail } from '../../../store/modules/getThunk';
 import { useLocation } from 'react-router';
 import { detailActions } from '../../../store/modules/detailSlice';
+import { authActions } from '../../../store/modules/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HeroSection = ({ changeContent, id }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,8 @@ const HeroSection = ({ changeContent, id }) => {
   const { state } = useLocation();
   const [reviews, setReviews] = useState([]);
   const [isReviewSectionOpen, setIsReviewSectionOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // 미리보기 모달 상태를 여기로 이동
+  const [isOpen, setIsOpen] = useState(false);
+  const { user } = useSelector((state) => state.authR);
 
   const openReviewSection = () => setIsReviewSectionOpen(true);
   const closeReviewSection = () => setIsReviewSectionOpen(false);
@@ -43,13 +45,35 @@ const HeroSection = ({ changeContent, id }) => {
   }, [dispatch, id, state?.type]);
 
   const handleAddReview = (newReview) => {
-    const reviewWithMovieId = {
+    // 현재 로그인한 사용자가 없으면 리뷰 작성 불가
+    if (!user) {
+      alert('리뷰를 작성하려면 로그인이 필요합니다.');
+      return;
+    }
+
+    const reviewWithDetails = {
       ...newReview,
       movieId: currentMovieId,
+      userId: user.id,
+      username: user.username,
+      profileImg: user.profileImg,
+      date: new Date().toLocaleDateString(),
     };
-    const updatedReviews = [...reviews, reviewWithMovieId];
+
+    const updatedReviews = [...reviews, reviewWithDetails];
     setReviews(updatedReviews);
     localStorage.setItem('reviews', JSON.stringify(updatedReviews));
+
+    const contentData = {
+      id: currentMovieId,
+      title: detail.title,
+      poster_path: detail.poster_path,
+      type: state?.type || 'movie',
+      content: newReview.text,
+      rate: newReview.stars,
+    };
+
+    dispatch(authActions.addReview(contentData));
   };
 
   if (loading) return <div>Loading...</div>;
