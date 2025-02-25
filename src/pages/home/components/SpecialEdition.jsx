@@ -22,7 +22,7 @@ const CardData = [
     item: '/images/bannerItem2.png',
     text: 'D.P.',
     boldText: '나는 군인을 잡는\n군인이다',
-    num: '/category/110534',
+    num: '/tv/110534',
   },
   {
     bannerImage: '/images/bannerFigure3.png',
