@@ -127,7 +127,7 @@ const NotificationBell = () => {
         <NotificationDropdown>
           <DropdownHeader>
             <HeaderTitle>알림</HeaderTitle>
-            {unreadCount > 0 && <MarkAllReadButton onClick={handleMarkAllAsRead}>모두 읽음 표시</MarkAllReadButton>}
+            {unreadCount > 0 && <MarkAllReadButton onClick={handleMarkAllAsRead}>모두 읽음</MarkAllReadButton>}
           </DropdownHeader>
 
           <NotificationList>
@@ -167,7 +167,7 @@ const NotificationBell = () => {
 
           {userNotifications.length > 0 && (
             <DropdownFooter>
-              <ViewAllButton>모든 알림 보기</ViewAllButton>
+              <ViewAllButton>모든 알림</ViewAllButton>
             </DropdownFooter>
           )}
         </NotificationDropdown>
