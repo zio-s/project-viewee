@@ -51,8 +51,8 @@ export const ReviewInput = styled(OriginalStyledInput)`
   width: 100%; 
   padding: 20px; 
   border: 1px solid #ccc; 
-  border-radius: 5px; 
-  font-size: 16px; 
+  border-radius: 5px;  
+  font-size: var(--font-content-m); 
   margin: 20px 0; 
 
   &:focus {
@@ -73,47 +73,47 @@ export const SubmitButton = styled.button`
 
 export const ReviewList = styled.div`
   margin-top: 20px;
+  text-align: center;
 `;
 
 export const ReviewItem = styled.li`
-  border-bottom: 1px solid var(--gray-60); // 테두리
-  padding: 10px 15px; // 패딩
-  margin: 10px 0; // 여백
-
-  display: flex; // Flexbox로 위치 조정
-  flex-direction: column; // 세로 방향으로 배치
-  align-items: flex-start; // 좌측 정렬
+  border-bottom: 1px solid var(--gray-60); 
+  padding: 10px 15px; 
+  margin: 10px 0; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
 
   &:hover {
-    background-color: var(--gray-80); // 호버 시 배경색 변화
+    background-color: var(--gray-80); 
   }
 
   .icon-container {
-    display: flex; // 가로 정렬
-    gap: 10px; // 아이콘 간격
-    margin-top: 10px; // 상단 여백
+    display: flex; 
+    gap: 10px; 
+    margin-top: 10px; 
   }
 
   span {
-    font-size: var(--font-content-m); // 글자 크기
-    color: var(--gray-50); // 글자 색상
-    margin-bottom: 10px; // 아래쪽 여백
+    font-size: var(--font-content-m); 
+    color: var(--gray-50); 
+    margin-bottom: 10px; 
   }
 
   p {
-    font-size: var(--font-content-l); // 본문 텍스트 크기
-    color: var(--gray-30); // 본문 텍스트 색상
-    margin-bottom: 10px; // 아래쪽 여백
+    font-size: var(--font-content-l); 
+    color: var(--gray-30); 
+    margin-bottom: 10px; 
   }
 
   .icon-wrapper {
-    stroke: var(--gray-60); // 스트로크 색상
-    border: 1.5px solid var(--gray-60); // 테두리
-    border-radius: 25px; // 모서리 둥글기
-    padding: 10px; // 패딩
+    stroke: var(--gray-60); 
+    border: 1.5px solid var(--gray-60); 
+    border-radius: 25px; 
+    padding: 10px; 
     margin: 0 15px 15px 0;
-    display: flex; // Flexbox로 정렬
-    align-items: center; // 가운데 정렬
+    display: flex; 
+    align-items: center; 
   }
 `;
 
@@ -260,18 +260,18 @@ export const CardBox = styled.div`
 }
 
 .episode-detail {
-  background: #222;
+  background: var(--gray-80);
   padding: 15px;
   border-radius: 10px;
   font-size: var(--font-content-m);
   color: var(--gray-50);
 
   img {
-    display: block; /* ✅ 인라인 요소 특성을 제거하고 블록 요소로 변경 */
+    display: block; 
     width: 100%;
     height: auto;
     border-radius: 8px;
-    margin-bottom: 10px; /* ✅ 아래 여백 추가 */
+    margin-bottom: 10px; 
   }
 
   h4 {
@@ -321,7 +321,7 @@ export const EpisodeWrap = styled.div`
 
 export const CustomButton = styled(StyledButton)`
   color: white;
-  font-size: 18px;
+  font-size: var(--font-content-m);
   padding: 12px 24px;
 
 `;
@@ -482,8 +482,6 @@ export const TabMenu = styled.ul`
 
 export const TabContent = styled.div`
   padding: 20px;
-  background-color: #1c1c1e;
-  color: #fff;
   border-radius: 5px;
   margin-top: 20px;
 `;
