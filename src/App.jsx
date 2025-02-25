@@ -16,7 +16,8 @@ import QnA from './pages/mypage/qna';
 import CustomerCenter from './pages/mypage/customercenter';
 import LandingPage from './pages/landing';
 import { useEffect } from 'react';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   const RedirectHandler = () => {
     const hasVisited = localStorage.getItem('hasVisited');
@@ -67,6 +68,15 @@ const App = () => {
           <Route path="*" element={<NotFiles />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
     </>
   );
 };

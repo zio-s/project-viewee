@@ -1,0 +1,52 @@
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export const showToast = (type, content) => {
+  switch (type) {
+    case 'liked':
+      toast.success(`"${content.title || content.name}"를 찜 목록에 추가했습니다`, {
+        position: 'bottom-right',
+        icon: '❤️',
+        autoClose: 3000,
+      });
+      break;
+
+    case 'unliked':
+      toast.info(`"${content.title || content.name}"를 찜 목록에서 제거했습니다`, {
+        position: 'bottom-right',
+        icon: '💔',
+        autoClose: 3000,
+      });
+      break;
+
+    case 'download':
+      toast.info(`"${content.title || content.name}" 다운로드를 시작합니다`, {
+        position: 'bottom-right',
+        icon: '⬇️',
+        autoClose: 3000,
+      });
+      break;
+
+    case 'review':
+      toast.success(`"${content.title || content.name}"에 리뷰를 작성했습니다`, {
+        position: 'bottom-right',
+        icon: '✍️',
+        autoClose: 3000,
+      });
+      break;
+
+    case 'error':
+      toast.error(`오류가 발생했습니다: ${content.message}`, {
+        position: 'bottom-right',
+        autoClose: 4000,
+      });
+      break;
+
+    default:
+      toast(`"${content.title || content.name}"에 대한 알림`, {
+        position: 'bottom-right',
+        icon: '🔔',
+        autoClose: 3000,
+      });
+  }
+};

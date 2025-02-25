@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/modules/authSlice';
 import { notificationActions } from '../../../store/modules/notificationSlice';
+import { toast } from 'react-toastify';
+import { showToast } from '../../../ui/toast/showToast';
 
 const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, icon, ...props }) => {
   const handleClick = (event) => {
@@ -33,7 +35,7 @@ const DownloadButton = ({ content }) => {
     if (user) {
       setIsDownloaded(user.downloaded?.some((item) => item.id === content?.id) || false);
     }
-  }, [user, content]); // Redux 상태 변경 시, 다시 체크하도록 의존성 추가
+  }, [user, content]);
 
   if (!content) {
     console.warn('🚨 DownloadButton: content 데이터가 없습니다.');
@@ -58,7 +60,14 @@ const DownloadButton = ({ content }) => {
         })
       );
     }
-
+    toast.success(`"${content.title || content.name}"를 찜하셨습니다.`, {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
     setIsDownloaded((prev) => !prev);
   };
 
@@ -122,6 +131,9 @@ const LikeButton = ({ content, onClick }) => {
           action: 'liked',
         })
       );
+      showToast('liked', content);
+    } else {
+      showToast('unliked', content);
     }
   };
 
