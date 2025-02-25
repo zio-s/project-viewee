@@ -14,34 +14,29 @@ const TextSection = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // 메인 타임라인 생성
     const mainTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: 'top top', // 섹션이 화면 상단에 닿으면 시작
-        end: '+=100%', // 뷰포트 높이만큼 스크롤
-        pin: true, // 섹션 고정
-        pinSpacing: true, // 핀 간격 유지
-        scrub: 2, // 스크롤 스크럽 효과
-        markers: true, // 개발용 마커
+        start: 'top top',
+        end: '+=200%',
+        pin: true,
+        pinSpacing: true,
+        scrub: 2,
       },
     });
 
-    // 텍스트 요소 애니메이션
     const textElements = [textLeftRef.current, textRightRef.current];
 
     textElements.forEach((element, index) => {
       if (!element) return;
 
-      // 초기 상태 설정
       gsap.set(element, {
         color: 'var(--primary-10)',
         textShadow: 'none',
         opacity: 0,
-        yPercent: 50, // 약간 아래에서 시작
+        yPercent: 50,
       });
 
-      // 텍스트 애니메이션 추가
       mainTimeline.to(
         element,
         {
@@ -59,10 +54,9 @@ const TextSection = () => {
           onReverseComplete: () => element.classList.remove('text-flicker-in-glow'),
         },
         index * 0.2
-      ); // 약간의 시차를 두고 애니메이션
+      );
     });
 
-    // 눈 움직임 이벤트 핸들러
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
       const eyes = [eyeLeftRef.current, eyeRightRef.current];

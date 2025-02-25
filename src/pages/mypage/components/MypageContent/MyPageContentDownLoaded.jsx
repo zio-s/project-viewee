@@ -10,46 +10,56 @@ const MyPageContentDownLoaded = () => {
   const [iseditOpen, setIsEditOpen] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const [isDelete, setIsDelete] = useState([]);
-
   const { user } = useSelector((state) => state.authR);
-  const downed = user?.downloaded || [];
-
+  const { downloaded } = user;
+  const openToggle = () => {
+    if (downloaded.length !== 0) {
+      setIsEditOpen(!iseditOpen);
+      setOnDelete(!onDelete);
+    } else {
+      alert('관심 콘텐츠가 없습니다.');
+    }
+  };
   const isDeleteToggle = (id) => {
     if (onDelete) {
-      setIsDelete((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
+      setIsDelete((item) => [...item, id]);
+    } else {
+      return;
     }
   };
-
   const deletedToggle = (index) => {
     if (onDelete && index.length !== 0) {
-      if (confirm('삭제하시겠습니까?')) {
+      if (confirm('삭제하시겠습니까?') === true) {
         dispatch(authActions.deleteDowned(index));
         setIsEditOpen(false);
+      } else {
         setIsDelete([]);
       }
+    } else if (index.length == 0) {
+      alert('선택된 항목이 없습니다.');
     } else {
-      alert(index.length === 0 ? '선택된 항목이 없습니다.' : '오류! 새로고침 후 다시 시도하세요.');
+      alert('오류! 새로고침 후 다시 시도하세요.');
     }
   };
-
+  const allDownedId = downloaded.map((item) => item.id);
   useEffect(() => {
-    dispatch(pageActions.addData(downed));
+    dispatch(pageActions.addData(downloaded));
     dispatch(pageActions.totalData());
-  }, [downed]);
+  }, [downloaded]);
 
   const { currentPage, postsperPage, totalPage } = useSelector((state) => state.pageR);
   const lastPost = currentPage * postsperPage;
-  const currentPost = downed.slice(0, lastPost);
+  const currentPost = downloaded.slice(0, lastPost);
 
   return (
     <MyPageContentLikedWrap>
       <div className="header">
         <h2>다운 받은 콘텐츠</h2>
-        {downed.length > 0 && (
+        {downloaded.length > 0 && (
           <div className="contentEdit">
             {iseditOpen ? (
               <>
-                <Button variant="gray" size="small" onClick={() => deletedToggle(downed.map((item) => item.id))}>
+                <Button variant="gray" size="small" onClick={() => deletedToggle(allDownedId)}>
                   전체선택
                 </Button>
                 <Button variant="gray" size="small" onClick={() => setIsEditOpen(false)}>
@@ -60,7 +70,7 @@ const MyPageContentDownLoaded = () => {
                 </Button>
               </>
             ) : (
-              <Button variant="primary" size="small" onClick={() => setIsEditOpen(true)}>
+              <Button variant="primary" size="small" onClick={openToggle}>
                 수정하기
               </Button>
             )}
@@ -69,7 +79,7 @@ const MyPageContentDownLoaded = () => {
       </div>
 
       <div className="content">
-        {downed.length === 0 ? (
+        {downloaded.length === 0 ? (
           <div className="nodata">
             <img src="/images/nodata.png" alt="nodata" />
             <p>다운로드한 콘텐츠가 없습니다.</p>

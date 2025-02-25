@@ -34,7 +34,6 @@ const Marquees = () => {
   useEffect(() => {
     const topList = topContainerRef.current;
     const bottomList = bottomContainerRef.current;
-    const textBox = textRef.current;
     const createDuplicates = (container) => {
       const items = container.querySelectorAll('.roll-item');
       items.forEach((item) => {
