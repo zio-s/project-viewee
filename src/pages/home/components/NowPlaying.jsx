@@ -94,8 +94,23 @@ const NowPlaying = ({ nowPlaying }) => {
     setHoveredSlide(null);
     dispatch(detailActions.clearDetail());
   };
-  const onGo = (content) => {
-    navigate(`/${content.media_type || 'movie'}/${content.id}`);
+  const onGo = (event, content) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!content || !content.id) {
+      console.warn('🚨 onGo: 콘텐츠 데이터가 없습니다.', content);
+      return;
+    }
+
+    // ✅ 콘텐츠 유형을 정확히 설정 (TV 또는 영화 자동 판단)
+    const mediaType = content.media_type || (content.first_air_date ? 'tv' : 'movie');
+
+    // ✅ 디버깅용 로그 추가 (콘솔에서 클릭된 콘텐츠 확인)
+    console.log(`✅ 이동할 페이지: /${mediaType}/${content.id}`);
+
+    // ✅ 네비게이션 실행
+    navigate(`/${mediaType}/${content.id}`);
   };
 
   return (
@@ -127,11 +142,11 @@ const NowPlaying = ({ nowPlaying }) => {
               className="swiper-slide"
               onMouseEnter={() => handleMouseEnter(content)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => onGo(content)}
+              onClick={(event) => onGo(event, content)}
             >
               <img src={`https://image.tmdb.org/t/p/w500${content.poster_path}`} alt="" />
               <HoverModalWrapper className={hoveredSlide === content.id ? 'active' : ''}>
-                <HoverModal reviewData={content} detailData={hoveredSlide === content.id ? contentDetail : null} />
+                <HoverModal nowPlaying={content} detailData={hoveredSlide === content.id ? contentDetail : null} />
               </HoverModalWrapper>
             </NewSwiperSlide>
           ))}

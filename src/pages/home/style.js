@@ -5,6 +5,44 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { mobileMore, tabletMore } from '../../styled/Mixin';
 
+export const GenreTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
+`;
+
+export const ContentCard = styled.div`
+  width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #222;
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+  }
+
+  p {
+    font-size: 14px;
+    color: white;
+    margin-top: 5px;
+  }
+`;
+
 export const StyledSwiper = styled(Swiper)`
   width: 100%;
   margin: 0 auto;
@@ -143,6 +181,9 @@ export const VisualWrap = styled.div`
 `;
 
 export const TagSectionWrapper = styled.div`
+  .genreSwiper {
+    margin-top: 70px;
+  }
   margin: 40px 0;
   overflow: hidden;
   ${mobileMore`
