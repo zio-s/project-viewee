@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 import Button from '../../ui/button/defaultButton';
 import { useEffect, useState } from 'react';
 import UserDropdown from './components/UserDropdown';
-import NotificationBell from '../noti/NotiFication';
+import NotificationBell from '../noti/Notification';
 
 const Header = () => {
   const { authed, user } = useSelector((state) => state.authR);

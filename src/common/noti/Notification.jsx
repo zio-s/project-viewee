@@ -1,200 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { notificationActions } from '../../store/modules/notificationSlice';
-
-// 스타일드 컴포넌트 정의
-const NotificationContainer = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-const BellButton = styled.button`
-  position: relative;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const BellBadge = styled.span`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #e53e3e;
-  color: white;
-  border-radius: 50%;
-  min-width: 18px;
-  height: 18px;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-`;
-
-const NotificationDropdown = styled.div`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 320px;
-  max-height: 500px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  overflow: hidden;
-  margin-top: 10px;
-  border: 1px solid #e2e8f0;
-`;
-
-const DropdownHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e2e8f0;
-`;
-
-const HeaderTitle = styled.h3`
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-`;
-
-const MarkAllReadButton = styled.button`
-  background: none;
-  border: none;
-  color: #3182ce;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const NotificationList = styled.div`
-  max-height: 400px;
-  overflow-y: auto;
-`;
-
-const EmptyNotification = styled.div`
-  padding: 20px;
-  text-align: center;
-  color: #718096;
-`;
-
-const NotificationItem = styled.div`
-  padding: 12px 16px;
-  border-bottom: 1px solid #e2e8f0;
-  display: flex;
-  align-items: flex-start;
-  background-color: ${(props) => (props.unread ? '#EBF8FF' : 'white')};
-
-  &:hover {
-    background-color: ${(props) => (props.unread ? '#BEE3F8' : '#F7FAFC')};
-  }
-`;
-
-const NotificationIcon = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: ${(props) => {
-    switch (props.type) {
-      case 'favorite':
-        return '#FEF3C7';
-      case 'update':
-        return '#E0F2FE';
-      case 'review':
-        return '#E9D8FD';
-      case 'coupon':
-        return '#D1FAE5';
-      default:
-        return '#E2E8F0';
-    }
-  }};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${(props) => {
-    switch (props.type) {
-      case 'favorite':
-        return '#D97706';
-      case 'update':
-        return '#0284C7';
-      case 'review':
-        return '#7E22CE';
-      case 'coupon':
-        return '#059669';
-      default:
-        return '#4A5568';
-    }
-  }};
-  flex-shrink: 0;
-`;
-
-const ContentWrapper = styled.div`
-  margin-left: 12px;
-  flex-grow: 1;
-  cursor: pointer;
-`;
-
-const NotificationMessage = styled.p`
-  margin: 0 0 4px;
-  font-size: 14px;
-  color: #1a202c;
-`;
-
-const NotificationTime = styled.p`
-  margin: 0;
-  font-size: 12px;
-  color: #718096;
-`;
-
-const DeleteButton = styled.button`
-  background: none;
-  border: none;
-  color: #a0aec0;
-  margin-left: 8px;
-  cursor: pointer;
-  flex-shrink: 0;
-
-  &:hover {
-    color: #4a5568;
-  }
-`;
-
-const DropdownFooter = styled.div`
-  padding: 12px;
-  text-align: center;
-  border-top: 1px solid #e2e8f0;
-`;
-
-const ViewAllButton = styled.button`
-  background: none;
-  border: none;
-  color: #3182ce;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import {
+  BellBadge,
+  BellButton,
+  ContentWrapper,
+  DeleteButton,
+  DropdownFooter,
+  DropdownHeader,
+  EmptyNotification,
+  HeaderTitle,
+  MarkAllReadButton,
+  NotificationContainer,
+  NotificationDropdown,
+  NotificationIcon,
+  NotificationItem,
+  NotificationList,
+  NotificationMessage,
+  NotificationTime,
+  ViewAllButton,
+} from './style';
 
 const NotificationBell = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -203,12 +28,10 @@ const NotificationBell = () => {
   const { notifications, unreadCount } = useSelector((state) => state.notiR);
   const { user } = useSelector((state) => state.authR);
 
-  // 로그인한 사용자의 알림만 필터링
   const userNotifications = user
     ? notifications.filter((notification) => !notification.userId || notification.userId === user.id)
     : [];
 
-  // 클릭 외부 감지하여 드롭다운 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -220,7 +43,6 @@ const NotificationBell = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 사용자 로그인 시 알림 초기화
   useEffect(() => {
     if (user) {
       dispatch(notificationActions.initNotifications(user.id));
@@ -244,7 +66,6 @@ const NotificationBell = () => {
     dispatch(notificationActions.removeNotification(id));
   };
 
-  // 시간 포맷팅 함수
   const formatTime = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -268,7 +89,6 @@ const NotificationBell = () => {
     }
   };
 
-  // 알림 유형에 따른 아이콘 렌더링
   const renderIcon = (type) => {
     switch (type) {
       case 'favorite':

@@ -41,7 +41,20 @@ export const showToast = (type, content) => {
         autoClose: 4000,
       });
       break;
-
+    case 'info':
+      toast.info(`${content.message}`, {
+        position: 'bottom-right',
+        icon: 'ℹ️',
+        autoClose: 3000,
+      });
+      break;
+    case 'couponIssued':
+      toast.success(`"${content.title}" 쿠폰이 발급되었습니다`, {
+        position: 'bottom-right',
+        icon: '🎟️',
+        autoClose: 3000,
+      });
+      break;
     default:
       toast(`"${content.title || content.name}"에 대한 알림`, {
         position: 'bottom-right',
