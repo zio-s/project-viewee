@@ -50,8 +50,10 @@ const TopRated = ({ hotData }) => {
     }
   };
 
-  const onGo = (content) => {
-    navigate(`/${content.media_type || 'movie'}/${content.id}`);
+  const onGo = (event, content) => {
+    if (!content?.id) return;
+    const mediaType = content.media_type || (content.first_air_date ? 'tv' : 'movie');
+    navigate(`/${mediaType}/${content.id}`);
   };
 
   return (
@@ -77,7 +79,7 @@ const TopRated = ({ hotData }) => {
               <RatedSwiperSlide
                 key={content.id}
                 className="swiper-slide"
-                onClick={() => onGo(content)}
+                onClick={(event) => onGo(event, content)}
                 onMouseEnter={() => getDetail(content)}
               >
                 <img
