@@ -131,7 +131,7 @@ const Recommend = ({ hotData }) => {
             >
               <img src={`https://image.tmdb.org/t/p/w500${content.poster_path}`} alt="" />
               <HoverModalWrapper className={hoveredSlide === content.id ? 'active' : ''}>
-                <HoverModal reviewData={content} detailData={hoveredSlide === content.id ? contentDetail : null} />
+                <HoverModal hotData={content} detailData={hoveredSlide === content.id ? contentDetail : null} />
               </HoverModalWrapper>
             </NewSwiperSlide>
           ))}

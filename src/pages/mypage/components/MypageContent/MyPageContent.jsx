@@ -27,7 +27,7 @@ const MyPageContent = ({ changeContent }) => {
       </section>
       <section className="liked">
         <div className="title" onClick={() => changeContent(<MyPageContentLiked />)}>
-          <h2>저장한 콘텐츠</h2>
+          <h2>관심 콘텐츠</h2>
           <div className="iconNext">
             <img src="/icons/arrow/right.svg" />
           </div>

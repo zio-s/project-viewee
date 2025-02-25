@@ -7,8 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/modules/authSlice';
 
 const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, icon, ...props }) => {
+  const handleClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   return (
-    <StyledPlayButton $size={size} $fullWidth={fullWidth} onClick={onClick} {...props}>
+    <StyledPlayButton type="button" $size={size} $fullWidth={fullWidth} onClick={handleClick} {...props}>
       {children}
     </StyledPlayButton>
   );
@@ -32,7 +41,7 @@ const DownloadButton = ({ content }) => {
 
   const handleDownloadClick = (event) => {
     event.stopPropagation();
-    console.log('✅ 다운로드 토글 실행됨:', content);
+
     dispatch(authActions.toggleDownloaded(content));
     setIsDownloaded((prev) => !prev); // 로컬 상태 업데이트로 즉각 반응
   };
@@ -82,8 +91,10 @@ const LikeButton = ({ onLiked, onClick, content }) => {
 
   const isLiked = user?.liked?.some((item) => item.id === content?.id) || false;
 
-  const handleLikeClick = () => {
-    console.log('✅ 좋아요 토글 실행됨:', content);
+  const handleLikeClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     dispatch(authActions.toggleLiked(content));
     setOnLiked(!onLiked);
   };
@@ -128,14 +139,17 @@ const LikeButton = ({ onLiked, onClick, content }) => {
   );
 };
 
-const HoverModal = ({ reviewData, detailData }) => {
+const HoverModal = ({ reviewData, detailData, hotData, nowPlaying }) => {
   const dispatch = useDispatch();
   const [onLiked, setOnLiked] = useState(false);
   const [showTrailer, setShowTrailer] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
   const navigate = useNavigate();
-  const content = detailData?.detail || reviewData;
+  const content =
+    detailData?.detail && Object.keys(detailData.detail).length > 0
+      ? detailData.detail
+      : reviewData || hotData || nowPlaying;
 
   useEffect(() => {
     if (detailData?.detail?.videos?.results) {
@@ -146,12 +160,8 @@ const HoverModal = ({ reviewData, detailData }) => {
         setTrailerKey(trailer.key);
       }
     }
-    console.log('showTrailer changed to:', showTrailer);
   }, [detailData]);
-  useEffect(() => {
-    console.log('🔥 HoverModal: content 값:', content);
-  }, [content]);
-
+  useEffect(() => {}, [content]);
   const handlePlayClick = () => {
     if (trailerKey) {
       setShowTrailer(true);
@@ -160,7 +170,6 @@ const HoverModal = ({ reviewData, detailData }) => {
   };
 
   const handleLikeClick = () => {
-    console.log('✅ 좋아요 토글 실행됨:', content);
     dispatch(authActions.toggleLiked(content));
     setOnLiked(!onLiked);
   };
@@ -171,9 +180,19 @@ const HoverModal = ({ reviewData, detailData }) => {
     }
   };
   const handleImageLeave = () => setShowTrailer(false);
-  const onGo = (content) => {
-    navigate(`/${content.media_type || 'tv'}/${content.id}`);
+  const onGo = (event, content) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!content || !content.id) {
+      return;
+    }
+
+    const mediaType = content.media_type || (content.first_air_date ? 'tv' : 'movie');
+
+    navigate(`/${mediaType}/${content.id}`);
   };
+
   const getAgeRating = () => {
     if (content?.adult) return '19+';
     if (content?.content_ratings?.results) {
@@ -244,7 +263,7 @@ const HoverModal = ({ reviewData, detailData }) => {
           </PlayButton>
           <DownloadButton content={content} />
           <LikeButton onLiked={onLiked} onClick={handleLikeClick} content={content} />
-          <PlayButton className="moreButton" onClick={() => onGo(content)}>
+          <PlayButton className="moreButton" onClick={(event) => onGo(event, content)}>
             <svg width="30" height="30" viewBox="0 0 51 51" fill="white" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M35.0831 26.2461C35.0831 25.7229 34.874 25.2416 34.4763 24.865L17.9026 8.62612C17.526 8.27037 17.0656 8.08203 16.5215 8.08203C15.4542 8.08203 14.6172 8.89816 14.6172 9.98633C14.6172 10.5095 14.8265 10.9908 15.1613 11.3465L30.3957 26.2461L15.1613 41.1456C14.8265 41.5013 14.6172 41.9619 14.6172 42.5058C14.6172 43.594 15.4542 44.4102 16.5215 44.4102C17.0656 44.4102 17.526 44.2219 17.9026 43.8451L34.4763 27.6272C34.874 27.2297 35.0831 26.7692 35.0831 26.2461Z"

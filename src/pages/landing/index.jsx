@@ -10,6 +10,7 @@ import { MainPageData } from '../../store/modules/getThunk';
 import Marquees from './components/marquee/Marquees';
 import TextSection from './components/TextSection';
 import ReviewSection from './components/review/ReviewSection';
+import DeviceSection from './components/device/DeviceSection';
 import Intro from './components/intro/Intro';
 
 const LandingPage = ({ handleEnterSite }) => {
@@ -94,6 +95,7 @@ const LandingPage = ({ handleEnterSite }) => {
         <Marquees />
         <TextSection />
         <ReviewSection />
+        <DeviceSection />
         <CardSection />
         <ScrollSection scrollToTop={scrollToTop} />
       </LandingWrap>

@@ -11,6 +11,8 @@ import detailR from './modules/detailSlice';
 import couponR from './modules/couponSlice';
 import searchR from './modules/searchSlice';
 import gsapR from './modules/gsapSlice';
+import genre from './modules/genreSlice';
+
 export const store = configureStore({
   reducer: {
     tmdbR,
@@ -25,7 +27,9 @@ export const store = configureStore({
     couponR,
     searchR,
     gsapR,
+    genre,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

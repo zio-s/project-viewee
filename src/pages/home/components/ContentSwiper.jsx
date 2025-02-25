@@ -98,8 +98,10 @@ const NewSwiperSection = ({ reviewData }) => {
     dispatch(detailActions.clearDetail());
   };
 
-  const onGo = (content) => {
-    navigate(`/${content.media_type || 'movie'}/${content.id}`);
+  const onGo = (event, content) => {
+    if (!content?.id) return;
+    const mediaType = content.media_type || (content.first_air_date ? 'tv' : 'movie');
+    navigate(`/${mediaType}/${content.id}`);
   };
 
   return (
@@ -131,7 +133,7 @@ const NewSwiperSection = ({ reviewData }) => {
               className="swiper-slide"
               onMouseEnter={() => handleMouseEnter(content)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => onGo(content)}
+              onClick={(event) => onGo(event, content)}
             >
               <img src={`https://image.tmdb.org/t/p/w500${content.poster_path}`} alt="" />
 

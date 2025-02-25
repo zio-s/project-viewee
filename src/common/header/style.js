@@ -34,7 +34,6 @@ export const HeaderWrap = styled.header`
     align-items: normal;
     width: 100%;
     max-width: var(--layout);
-    margin: 0 auto;
     z-index: 9999;
     ${mobileMore`
       flex-direction: row;
@@ -170,7 +169,8 @@ export const NavWrap = styled.nav`
           width: 100%;
           font-size: var(--font-heading-m-mobile);
           font-weight: 500;
-          transition: 0.3s;
+          transition: all 0.3s;
+          position: relative;
 
           ${mobileMore`
             font-size: var(--font-heading-m-tablet);
@@ -183,8 +183,39 @@ export const NavWrap = styled.nav`
           &:hover {
             color: var(--hover-color);
           }
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--hover-color);
+            transform-origin: center;
+            transition: all 0.3s;
+          }
         }
 
+        &.active {
+          a {
+            color: var(--hover-color);
+            font-weight: 700;
+            position: relative;
+            transition: all 0.3s;
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -5px;
+              left: 0;
+              width: 100%;
+              height: 2px;
+              background-color: var(--hover-color);
+              transform-origin: center;
+              transition: all 0.3s;
+            }
+          }
+        }
         &:last-child span {
           font-size: 16px;
           border-radius: 50%;

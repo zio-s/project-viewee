@@ -47,6 +47,10 @@ export const MyReviewWrap = styled.div`
         flex-direction: column;
         h2 {
           font-size: var(--font-label-l);
+          text-wrap: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .rate {
           display: flex;

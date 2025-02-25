@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CardBox } from '../style';
 import { getContentDetail, getEpisodeDetails } from '../../../store/modules/getThunk';
 import { useNavigate } from 'react-router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const EpisodeList = () => {
   const { detail, loading, error, seasonDetails, episodeDetails, collection } = useSelector((state) => state.detailR);
@@ -60,10 +65,10 @@ const EpisodeList = () => {
               )}
             </div>
             <div>
-            <h2>{movie.title}</h2>
-            <h3>
-              {movie.release_date}, {converRuntime(movie.runtime)}
-            </h3>
+              <h2>{movie.title}</h2>
+              <h3>
+                {movie.release_date}, {converRuntime(movie.runtime)}
+              </h3>
             </div>
             <p>{movie.overview}</p>
           </div>
@@ -77,39 +82,47 @@ const EpisodeList = () => {
     return (
       <CardBox>
         {seasonDetails.map((season) => (
-          <div
-            key={season.id}
-            className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`} // ✅ active 클래스 추가
-          >
-            <div
-              className="pic"
-              onClick={(e) => handleSeasonClick(e, season.season_number)}
-              style={{ cursor: 'pointer' }}
-            >
-              {season.poster_path && (
-                <img src={`https://image.tmdb.org/t/p/w500${season.poster_path}`} alt={season.name} />
-              )}
-            </div>
-            <div className="text-info">
-              <h2>{season.name}</h2>
-              <h3>
-                {season.air_date}, {season.episodes?.length}개 에피소드
-              </h3>
+          <div key={season.id} className={`episode-item ${selectedSeason === season.season_number ? 'active' : ''}`}>
+            <div className="title">
+              <div
+                className="pic"
+                onClick={(e) => handleSeasonClick(e, season.season_number)}
+                style={{ cursor: 'pointer' }}
+              >
+                {season.poster_path && (
+                  <img src={`https://image.tmdb.org/t/p/w500${season.poster_path}`} alt={season.name} />
+                )}
+              </div>
+              <div className="text-info">
+                <h2>{season.name}</h2>
+                <h3>
+                  {season.air_date}, {season.episodes?.length}개 에피소드
+                </h3>
+              </div>
             </div>
             <p>{season.overview}</p>
             <>
               {selectedSeason === season.season_number && episodeDetails[season.season_number] && (
-                <div className="episodes-list">
+                <Swiper
+                  className="episodes-list"
+                  modules={[Navigation, Pagination]}
+                  spaceBetween={10}
+                  slidesPerView={2}
+                >
                   {episodeDetails[season.season_number].map((episode) => (
-                    <div key={episode.id} className="episode-detail">
-                      <h4>
-                        {episode.episode_number}. {episode.name}
-                      </h4>
-                      {episode.overview || '줄거리 정보가 없습니다.'}
-                      <img src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt={episode.name} />
-                    </div>
+                    <SwiperSlide key={episode.id}>
+                      <div className="episode-detail">
+                        {episode.still_path && (
+                          <img src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} alt={episode.name} />
+                        )}
+                        <h4>
+                          {episode.episode_number}. {episode.name}
+                        </h4>
+                        {episode.overview || '줄거리 정보가 없습니다.'}
+                      </div>
+                    </SwiperSlide>
                   ))}
-                </div>
+                </Swiper>
               )}
             </>
           </div>

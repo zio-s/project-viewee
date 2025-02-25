@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Tag from '../../../ui/tag/index';
-import { TagSectionWrapper } from '../style';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
+
+import { setGenre, fetchGenreContent } from '../../../store/modules/genreSlice';
+import {
+  TagSectionWrapper,
+  NewSwiperContainer,
+  NewSwiperSlide,
+  NewCustomButtonPrev,
+  NewCustomButtonNext,
+  GenreTitle,
+} from '../style';
 
 const GENRE_IDS = {
   액션: 28,
@@ -17,15 +29,63 @@ const GENRE_IDS = {
 };
 
 const TagSection = () => {
+  const dispatch = useDispatch();
+
+
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  const contentList = useSelector((state) => state.genre.contentList || []);
+
+  const handleTagClick = (tag) => {
+    if (selectedGenre === tag) {
+   
+      setSelectedGenre(null);
+    } else {
+
+      setSelectedGenre(tag);
+      dispatch(setGenre(tag));
+      dispatch(fetchGenreContent(GENRE_IDS[tag]));
+    }
+  };
+
   return (
     <TagSectionWrapper>
-      <Swiper spaceBetween={10} slidesPerView={'auto'}>
-        {Object.keys(GENRE_IDS).map((tag, index) => (
-          <SwiperSlide key={index} onClick={() => handleTagClick(tag)}>
-            <Tag className="tagSlide">{tag}</Tag>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div style={{ marginBottom: '30px' }}>
+        <Swiper spaceBetween={10} slidesPerView={'auto'}>
+          {Object.keys(GENRE_IDS).map((tag, index) => (
+            <SwiperSlide key={index} onClick={() => handleTagClick(tag)}>
+              <Tag className={`tagSlide ${selectedGenre === tag ? 'active' : ''}`}>{tag}</Tag>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+  
+      {selectedGenre && contentList.length > 0 && (
+        <NewSwiperContainer style={{ marginTop: '30px' }}>
+          <GenreTitle>{selectedGenre}</GenreTitle>
+          <Swiper
+            modules={[Navigation]}
+            slidesPerView={'auto'}
+            spaceBetween={20}
+            navigation={{
+              nextEl: '.new-swiper-button-next',
+              prevEl: '.new-swiper-button-prev',
+            }}
+          >
+            {contentList.slice(0, 10).map((movie) => (
+              <SwiperSlide key={movie.id}>
+                <NewSwiperSlide>
+                  <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+                </NewSwiperSlide>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <NewCustomButtonPrev className="new-swiper-button-prev"></NewCustomButtonPrev>
+          <NewCustomButtonNext className="new-swiper-button-next"></NewCustomButtonNext>
+        </NewSwiperContainer>
+      )}
     </TagSectionWrapper>
   );
 };

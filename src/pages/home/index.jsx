@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { VisualWrap, SectionWrapper, NewCardsSectionTitle, NewMoreLink, EventSectionWrapper } from './style';
+import { VisualWrap, SectionWrapper, NewCardsSectionTitle, NewMoreLink, EventSectionWrapper, HomeWrap } from './style';
 import SwiperSection from './components/SwiperSection';
 import ContentSwiper from './components/ContentSwiper';
 import MarqueeSection from './components/MarqueeSection';
 import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
-
 import TagSection from './components/TagSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { MainPageData } from '../../store/modules/getThunk';
@@ -15,6 +14,8 @@ import Recommend from './components/Recommend';
 import SpecialEdition2 from './components/SpecialEdition2';
 import SpecialEdition2Back from './components/SpecialEdition2Back';
 import SpecialEditionBack from './components/SpeicialEditionBack';
+import PopupBanner from '../../common/popup/PopupBanner';
+import { Link } from 'react-router';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Home = () => {
   //   dispatch(addToContinueWatching(content));
   // };
   return (
-    <>
+    <HomeWrap>
       <SwiperSection />
       <VisualWrap>
         <SectionWrapper>
@@ -58,9 +59,17 @@ const Home = () => {
             <SpecialEdition2 />
           </EventSectionWrapper>
         )}
+
         <SectionWrapper>
           <NowPlaying nowPlaying={nowPlaying} />
         </SectionWrapper>
+      </VisualWrap>
+      <div>
+        <Link to="/tv/126485">
+          <img src="/images/lineBanner1.png" alt="banner" className="lineBanner" />
+        </Link>
+      </div>
+      <VisualWrap>
         <NewCardsSectionTitle>
           지구에서 나만 안본 그 작품
           <NewMoreLink href="./page/nowplaying.html" className="more">
@@ -91,8 +100,14 @@ const Home = () => {
         <SectionWrapper>
           <Recommend hotData={hot} />
         </SectionWrapper>
+        <PopupBanner />
       </VisualWrap>
-    </>
+      <div>
+        <Link to="/subscribe">
+          <img src="/images/lineBanner2.png" alt="banner" className="lineBanner" />
+        </Link>
+      </div>
+    </HomeWrap>
   );
 };
 
