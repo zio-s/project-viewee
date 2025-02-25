@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tag from '../../../ui/tag/index';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,30 +29,42 @@ const GENRE_IDS = {
 };
 
 const TagSection = () => {
-<<<<<<<<< Temporary merge branch 1
-=========
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // ✅ 선택된 장르 상태 추가
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  // ✅ Redux에서 콘텐츠 리스트 가져오기
+  const contentList = useSelector((state) => state.genre.contentList || []);
 
   const handleTagClick = (tag) => {
-    navigate(`/category?search=${encodeURIComponent(tag)}`);
+    if (selectedGenre === tag) {
+      // ✅ 같은 태그 클릭 시 초기화 (토글 기능)
+      setSelectedGenre(null);
+    } else {
+      // ✅ 선택한 장르 업데이트 및 데이터 요청
+      setSelectedGenre(tag);
+      dispatch(setGenre(tag));
+      dispatch(fetchGenreContent(GENRE_IDS[tag]));
+    }
   };
 
->>>>>>>>> Temporary merge branch 2
   return (
     <TagSectionWrapper>
       <div style={{ marginBottom: '30px' }}>
         <Swiper spaceBetween={10} slidesPerView={'auto'}>
           {Object.keys(GENRE_IDS).map((tag, index) => (
             <SwiperSlide key={index} onClick={() => handleTagClick(tag)}>
-              <Tag className="tagSlide">{tag}</Tag>
+              <Tag className={`tagSlide ${selectedGenre === tag ? 'active' : ''}`}>{tag}</Tag>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
 
+      {/* ✅ 선택한 장르가 있을 경우 스와이퍼 표시 */}
       {selectedGenre && contentList.length > 0 && (
         <NewSwiperContainer style={{ marginTop: '30px' }}>
-          {selectedGenre && <GenreTitle>{selectedGenre}</GenreTitle>}
+          <GenreTitle>{selectedGenre}</GenreTitle>
           <Swiper
             modules={[Navigation]}
             slidesPerView={'auto'}
