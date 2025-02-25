@@ -9,13 +9,16 @@ import {
   ReviewItem,
   ReviewInput,
 } from '../style';
+import { useSelector } from 'react-redux';
 
 const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
   const [selectedStars, setSelectedStars] = useState(0);
   const [reviewText, setReviewText] = useState('');
-  const [currentUser, setCurrentUser] = useState('currentUser');
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
+
+  const { user } = useSelector((state) => state.authR);
+  const currentUser = user ? user.username : '게스트';
 
   const handleStarClick = (index) => {
     setSelectedStars(index + 1);
@@ -25,26 +28,43 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
     e.preventDefault();
     console.log('Submitting review:', reviewText, selectedStars);
 
+    if (!user) {
+      alert('리뷰를 작성하려면 로그인이 필요합니다.');
+      return;
+    }
+
     if (reviewText.trim()) {
       const currentDate = new Date().toLocaleDateString();
 
       if (editingIndex !== null) {
+        // 수정 모드일 경우
         const updatedReviews = reviews.map((review, index) =>
-          index === editingIndex ? { ...review, stars: selectedStars, text: reviewText, date: currentDate } : review
+          index === editingIndex
+            ? {
+                ...review,
+                stars: selectedStars,
+                text: reviewText,
+                date: currentDate,
+              }
+            : review
         );
         setReviews(updatedReviews);
-
+        // 로컬 스토리지 업데이트
         localStorage.setItem('reviews', JSON.stringify(updatedReviews));
 
         setEditingIndex(null);
       } else {
+        // 새 리뷰 추가
         const newReview = {
           stars: selectedStars,
           text: reviewText,
           date: currentDate,
           user: currentUser,
+          userId: user.id,
+          profileImg: user.profileImg || 'images/defaultImg1.png',
         };
 
+        // onSubmit 통해 상위 컴포넌트로 전달 (HeroSection의 handleAddReview 호출)
         if (onSubmit) {
           onSubmit(newReview);
         }
@@ -58,6 +78,13 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
 
   const handleEdit = (index) => {
     const reviewToEdit = reviews[index];
+
+    // 현재 사용자가 작성한 리뷰만 수정 가능
+    if (reviewToEdit.userId !== user?.id) {
+      alert('자신이 작성한 리뷰만 수정할 수 있습니다.');
+      return;
+    }
+
     setReviewText(reviewToEdit.text);
     setSelectedStars(reviewToEdit.stars);
     setEditingIndex(index);
@@ -65,8 +92,17 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
   };
 
   const handleDelete = (index) => {
+    const reviewToDelete = reviews[index];
+
+    // 현재 사용자가 작성한 리뷰만 삭제 가능
+    if (reviewToDelete.userId !== user?.id) {
+      alert('자신이 작성한 리뷰만 삭제할 수 있습니다.');
+      return;
+    }
+
     const updatedReviews = reviews.filter((_, i) => i !== index);
     setReviews(updatedReviews);
+    // 로컬 스토리지 업데이트
     localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     setDropdownOpen(null);
   };
@@ -225,7 +261,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
               </ReviewItem>
             ))
           ) : (
-            <p>아직 리뷰가 없습니다.</p>
+            <p>작성된 리뷰가 없습니다.</p>
           )}
         </ReviewList>
       </ModalContent>

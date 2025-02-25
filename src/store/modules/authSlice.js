@@ -305,6 +305,86 @@ export const authSlice = createSlice({
       state.prevUser = state.user;
       localStorage.setItem('prevUser', JSON.stringify(state.prevUser));
     },
+    addReview: (state, action) => {
+      if (!state.user) return;
+
+      const contentData = action.payload;
+      const reviewId = Date.now();
+
+      const existingReviewIndex = state.user.reviewed.findIndex((item) => item.id === contentData.id);
+
+      const newReview = {
+        id: contentData.id,
+        reviewId: reviewId,
+        title: contentData.title,
+        poster_path: contentData.poster_path,
+        type: contentData.type,
+        content: contentData.content,
+        rate: contentData.rate,
+        date: new Date().toLocaleDateString(),
+      };
+
+      if (existingReviewIndex !== -1) {
+        state.user.reviewed[existingReviewIndex] = newReview;
+      } else {
+        state.user.reviewed.push(newReview);
+      }
+
+      state.joinData = state.joinData.map((item) =>
+        item.id === state.user.id ? { ...item, reviewed: [...state.user.reviewed] } : item
+      );
+
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
+
+    updateReview: (state, action) => {
+      if (!state.user) return;
+
+      const { contentId, reviewData } = action.payload;
+
+      const reviewIndex = state.user.reviewed.findIndex((review) => review.id === contentId);
+
+      if (reviewIndex !== -1) {
+        state.user.reviewed[reviewIndex] = {
+          ...state.user.reviewed[reviewIndex],
+          ...reviewData,
+          date: new Date().toLocaleDateString(),
+        };
+
+        state.joinData = state.joinData.map((user) =>
+          user.id === state.user.id ? { ...user, reviewed: [...state.user.reviewed] } : user
+        );
+
+        localStorage.setItem('user', JSON.stringify(state.user));
+        localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      }
+    },
+
+    addToWatched: (state, action) => {
+      if (!state.user) return;
+
+      const content = action.payload;
+
+      const existingIndex = state.user.watched.findIndex((item) => item.id === content.id);
+
+      if (existingIndex === -1) {
+        state.user.watched.push({
+          id: content.id,
+          title: content.title,
+          poster_path: content.poster_path,
+          type: content.type,
+          date: new Date().toLocaleDateString(),
+        });
+
+        state.joinData = state.joinData.map((user) =>
+          user.id === state.user.id ? { ...user, watched: [...state.user.watched] } : user
+        );
+
+        localStorage.setItem('user', JSON.stringify(state.user));
+        localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      }
+    },
   },
 });
 
