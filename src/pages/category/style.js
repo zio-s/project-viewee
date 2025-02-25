@@ -11,10 +11,9 @@ export const CateGoryWrap = styled.div`
 
   .category-header {
     display: flex;
-    gap: 2rem;
     align-items: center;
+    gap: 16px;
     margin: 40px 0;
-
     @media (max-width: 768px) {
       flex-direction: column;
       align-items: flex-start;
@@ -23,9 +22,12 @@ export const CateGoryWrap = styled.div`
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 2.8rem;
       font-weight: 700;
-      color: #fff;
+      background: linear-gradient(90deg, #ff3b6f 0%, #ffb86c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
 
       @media (max-width: 768px) {
         font-size: 24px;

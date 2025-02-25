@@ -1,30 +1,38 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CardSection from './components/card/CardSection';
-import Hero from './components/Hero';
 import ScrollSection from './components/ScrollSection';
 import { LandingWrap } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBackgroundColor } from '../../store/modules/gsapSlice';
 import { MainPageData } from '../../store/modules/getThunk';
-// import MarqueeSection from '../home/components/MarqueeSection';
 import Marquees from './components/marquee/Marquees';
-import CustomCursor from './components/CustomCursor';
 import TextSection from './components/TextSection';
 import ReviewSection from './components/review/ReviewSection';
+import DeviceSection from './components/device/DeviceSection';
+import Intro from './components/intro/Intro';
 
-const LandingPage = () => {
+const LandingPage = ({ handleEnterSite }) => {
   const dispatch = useDispatch();
   const lenisRef = useRef();
   const rafRef = useRef(null);
   const backgroundColor = useSelector(selectBackgroundColor);
+  const [isLenisReady, setIsLenisReady] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (lenisRef?.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(MainPageData());
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     lenisRef.current = new Lenis({
       duration: 3,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -34,6 +42,9 @@ const LandingPage = () => {
       normalizeWheel: true,
       smoothWheel: true,
     });
+
+    setIsLenisReady(true);
+
     function raf(time) {
       lenisRef.current?.raf(time);
       rafRef.current = requestAnimationFrame(raf);
@@ -51,9 +62,12 @@ const LandingPage = () => {
         lenisRef.current.destroy();
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
+      setIsLenisReady(false);
     };
   }, []);
+
   const scrollToTop = () => {
+    handleEnterSite();
     if (lenisRef.current) {
       lenisRef.current.stop();
       if (rafRef.current) {
@@ -67,6 +81,7 @@ const LandingPage = () => {
       lenisRef.current.scrollTo(0, { immediate: true });
     }
   };
+
   return (
     <p>
       {/* <CustomCursor /> */}
@@ -76,10 +91,11 @@ const LandingPage = () => {
           transition: 'background-color 0.3s ease',
         }}
       >
-        <Hero />
+        {isLenisReady && <Intro lenisRef={lenisRef} />}
         <Marquees />
         <TextSection />
         <ReviewSection />
+        <DeviceSection />
         <CardSection />
         <ScrollSection scrollToTop={scrollToTop} />
       </LandingWrap>

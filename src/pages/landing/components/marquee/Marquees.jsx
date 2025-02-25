@@ -5,25 +5,31 @@ import { useEffect } from 'react';
 
 const images = [
   {
-    url: 'public/images/roll-img1.jpg',
+    url: '/images/MarqueePoster1.png',
   },
   {
-    url: 'public/images/roll-img2.jpg',
+    url: '/images/MarqueePoster2.png',
   },
   {
-    url: 'public/images/roll-img3.jpg',
+    url: '/images/MarqueePoster3.png',
   },
   {
-    url: 'public/images/roll-img4.jpg',
+    url: '/images/MarqueePoster4.png',
   },
   {
-    url: 'public/images/roll-img5.jpg',
+    url: '/images/MarqueePoster5.png',
   },
   {
-    url: 'public/images/roll-img6.jpg',
+    url: '/images/MarqueePoster6.png',
   },
   {
-    url: 'public/images/roll-img7.jpg',
+    url: '/images/MarqueePoster7.png',
+  },
+  {
+    url: '/images/MarqueePoster8.png',
+  },
+  {
+    url: '/images/MarqueePoster9.png',
   },
 ];
 
@@ -34,7 +40,6 @@ const Marquees = () => {
   useEffect(() => {
     const topList = topContainerRef.current;
     const bottomList = bottomContainerRef.current;
-    const textBox = textRef.current;
     const createDuplicates = (container) => {
       const items = container.querySelectorAll('.roll-item');
       items.forEach((item) => {

@@ -155,9 +155,11 @@ const ChangeProfile = () => {
                 key={i}
                 onClick={() => changeUser(item.id)}
               >
-                <div className="editImg" onClick={() => onGo()}>
+                <div className="editImg">
                   <img className="connectedUsers" src={item.profileImg}></img>
-                  <div className="ongo">Go</div>
+                  <div className="ongo" onClick={() => onGo()}>
+                    Go
+                  </div>
                 </div>
                 <div className="editName">
                   <div className="userName">{item.username}</div>

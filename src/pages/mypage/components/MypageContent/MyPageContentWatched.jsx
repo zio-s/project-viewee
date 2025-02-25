@@ -64,49 +64,49 @@ const MyPageContentWatched = () => {
         {watched.length === 0 ? (
           ''
         ) : (
-        <div className="contentEdit">
-          {iseditOpen ? (
-            <>
-              <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
-                전체선택
+          <div className="contentEdit">
+            {iseditOpen ? (
+              <>
+                <Button variant="gray" size="small" onClick={() => deletedToggle(allLikedId)}>
+                  전체선택
+                </Button>
+                <Button variant="gray" size="small" onClick={openToggle}>
+                  취소
+                </Button>
+                <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
+                  선택삭제
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" size="small" onClick={openToggle}>
+                수정하기
               </Button>
-              <Button variant="gray" size="small" onClick={openToggle}>
-                취소
-              </Button>
-              <Button variant="primary" size="small" onClick={() => deletedToggle(isDelete)}>
-                선택삭제
-              </Button>
-            </>
-          ) : (
-            <Button variant="primary" size="small" onClick={openToggle}>
-              수정하기
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
         )}
       </div>
 
       <div className="content">
-      {watched.length === 0 ? (
+        {watched.length === 0 ? (
           <div className="nodata">
             <img src="/images/nodata.png" alt="nodata" />
-            <p> 리뷰 내역이 없습니다.</p>
+            <p> 시청 콘텐츠가 없습니다.</p>
           </div>
         ) : (
-        <ul>
-          {currentPost.map((url, i) => (
-            <li key={i} onClick={() => isDeleteToggle(url.id)}>
-              <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
-              <svg
-                viewBox="0 0 100 100"
-                className={`check-mark ${isDelete.find((item) => item === url.id) ? 'check-active' : ''}`}
-              >
-                <circle cx="50" cy="50" r="40" className="check-circle" />
-                <path d="M20,50 L40,70 L80,30" fill="none" stroke="#F05A7E" strokeWidth="8" className="check-path" />
-              </svg>
-            </li>
-          ))}
-        </ul>
+          <ul>
+            {currentPost.map((url, i) => (
+              <li key={i} onClick={() => isDeleteToggle(url.id)}>
+                <img src={url.img} className={isDelete.find((item) => item === url.id) ? 'on' : ''} />
+                <svg
+                  viewBox="0 0 100 100"
+                  className={`check-mark ${isDelete.find((item) => item === url.id) ? 'check-active' : ''}`}
+                >
+                  <circle cx="50" cy="50" r="40" className="check-circle" />
+                  <path d="M20,50 L40,70 L80,30" fill="none" stroke="#F05A7E" strokeWidth="8" className="check-path" />
+                </svg>
+              </li>
+            ))}
+          </ul>
         )}
         {currentPage >= totalPage ? (
           ''

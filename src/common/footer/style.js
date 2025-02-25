@@ -75,15 +75,43 @@ export const FooterWrap = styled.footer`
       `}
       }
     }
-    .sns {
-      display: flex;
-      gap: 1rem;
-      ${mobileMore`
-        gap: 1rem;
-      `}
-      ${tabletMore`
-        gap: 3rem;
-      `}
+  }
+`;
+export const SocialContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
     }
   }
+
+  ${mobileMore`
+  gap: 1rem;
+  
+  a svg {
+    width: 40px;
+    height: 40px;
+  }
+`}
+
+  ${tabletMore`
+  gap: 3rem;
+  
+  a svg {
+    width: 50px;
+    height: 50px;
+  }
+`}
 `;

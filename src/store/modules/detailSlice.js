@@ -46,6 +46,7 @@ const detailSlice = createSlice({
       })
       .addCase(getCollection.fulfilled, (state, action) => {
         state.collection = action.payload;
+        state.detail = action.payload; // 여기에 detail을 저장
         state.loading = false;
       })
       .addCase(getCollection.rejected, (state, action) => {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { HeroSectionWrapper, BackgroundContent, HeroContent, Actions, StyledButton, Buttons } from "../style";
 import InfoSection from "./InfoSection";
 import ReviewSection from "./ReviewSection";
@@ -11,6 +11,13 @@ const HeroSection = ({ changeContent, id }) => {
   const dispatch = useDispatch();
   const { detail, loading, error, cachedImages } = useSelector((state) => state.detailR);
   const { state } = useLocation();
+  const [reviews, setReviews] = useState([]); 
+
+  
+  const [isReviewSectionOpen, setIsReviewSectionOpen] = useState(false);
+
+  const openReviewSection = () => setIsReviewSectionOpen(true);
+  const closeReviewSection = () => setIsReviewSectionOpen(false);
 
   useEffect(() => {
     if (id && state?.type) {
@@ -51,7 +58,24 @@ const HeroSection = ({ changeContent, id }) => {
   const releaseYear = release_date ? release_date.split("-")[0] : "미정";
   const formattedRuntime = runtime ? `${runtime}분` : "미정";
   const genreNames = genres?.map((genre) => genre.name).join(", ") || "미정";
-  const ageRating = certification || "미정";
+  const getRating = () => {
+    const releaseDates = detail?.release_dates?.results;
+    if (!releaseDates) return '등급 정보 없음';
+    const koreanRelease = releaseDates.find((item) => item.iso_3166_1 === 'KR');
+    const certification = koreanRelease?.release_dates[0]?.certification;
+    const ratingMap = {
+      ALL: '전체 관람가',
+      12: '12세 관람가',
+      15: '15세 관람가',
+      18: '청소년 관람불가',
+      G: '전체 관람가',
+      PG: '12세 관람가',
+      'PG-13': '15세 관람가',
+      R: '청소년 관람불가',
+      'NC-17': '청소년 관람불가',
+    };
+    return ratingMap[certification] || '등급 정보 없음';
+  };
 
 
   return (
@@ -72,7 +96,7 @@ const HeroSection = ({ changeContent, id }) => {
         <HeroContent>
         <h1>{title}</h1>
         <p>
-        {releaseYear} | {formattedRuntime} | {genreNames} | {ageRating}
+        {releaseYear} | {formattedRuntime} | {genreNames} | {getRating()}
         </p>
 
         <Buttons>
@@ -95,24 +119,35 @@ const HeroSection = ({ changeContent, id }) => {
             </svg>
             공유
           </div>
-
-          <div>
+          <div onClick={openReviewSection} style={{ cursor: "pointer" }}>
             <svg width="32" height="32" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M40.1758 7.18945H10.4883C9.03915 7.19358 7.65054 7.77107 6.62585 8.79577C5.60115 9.82046 5.02365 11.2091 5.01953 12.6582V31.4082C5.02365 32.8573 5.60115 34.2459 6.62585 35.2706C7.65054 36.2953 9.03915 36.8728 10.4883 36.877H14.3945V44.6895L23.5469 37.0586C23.6874 36.9412 23.8647 36.8769 24.0479 36.877H40.1758C41.6249 36.8728 43.0135 36.2953 44.0382 35.2706C45.0629 34.2459 45.6404 32.8573 45.6445 31.4082V12.6582C45.6404 11.2091 45.0629 9.82046 44.0382 8.79577C43.0135 7.77107 41.6249 7.19358 40.1758 7.18945V7.18945Z" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"/>
             <path d="M15.957 25.1582C17.6829 25.1582 19.082 23.7591 19.082 22.0332C19.082 20.3073 17.6829 18.9082 15.957 18.9082C14.2311 18.9082 12.832 20.3073 12.832 22.0332C12.832 23.7591 14.2311 25.1582 15.957 25.1582Z" fill="currentColor"/>
             <path d="M25.332 25.1582C27.0579 25.1582 28.457 23.7591 28.457 22.0332C28.457 20.3073 27.0579 18.9082 25.332 18.9082C23.6061 18.9082 22.207 20.3073 22.207 22.0332C22.207 23.7591 23.6061 25.1582 25.332 25.1582Z" fill="currentColor"/>
             <path d="M34.707 25.1582C36.4329 25.1582 37.832 23.7591 37.832 22.0332C37.832 20.3073 36.4329 18.9082 34.707 18.9082C32.9811 18.9082 31.582 20.3073 31.582 22.0332C31.582 23.7591 32.9811 25.1582 34.707 25.1582Z" fill="currentColor"/>
             </svg>
-            댓글
+            리뷰
           </div>
         </Actions>
         </Buttons>
-        <div className="description" onClick={() => changeContent("detail", <InfoSection data={detail} />)}>
-          {truncateText(overview, 95)}
-        </div>
+        <div className="description" onClick={() => {
+  changeContent("detail", <InfoSection data={detail} />);
+}}>
+  {truncateText(overview, 95)}
+</div>
       </HeroContent>
 </div>
-      
+{isReviewSectionOpen && (
+        <ReviewSection
+        isOpen={isReviewSectionOpen}
+        onClose={closeReviewSection}
+        reviews={reviews} // 로컬 리뷰 상태 전달
+        onSubmit={(newReview) => {
+            console.log("리뷰 제출:", newReview); // 리뷰 제출 로그
+        }} 
+        setReviews={setReviews} // setReviews를 ReviewSection에 전달
+    />
+)}
     </HeroSectionWrapper>
   );
 };
