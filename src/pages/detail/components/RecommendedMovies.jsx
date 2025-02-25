@@ -44,20 +44,20 @@ const RecommendedMovies = () => {
       </RecommendeddBox>
 
       <RecommendeddBox>
-        <h2>연관 작품</h2>
-        <Swiper spaceBetween={10} slidesPerView={'auto'}>
-          {recommendedList.map((movie) => (
-            <SwiperSlide key={movie.id} className="movie-slide">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                onClick={() => handleMovieClick(movie)}
-                style={{ cursor: 'pointer' }}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </RecommendeddBox>
+  <h2>연관 작품</h2>
+  <Swiper spaceBetween={10} slidesPerView={'auto'}>
+    {detail.similar?.results?.map((movie) => (
+      <SwiperSlide key={movie.id} className="movie-slide">
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          onClick={() => handleMovieClick(movie)}
+          style={{ cursor: 'pointer' }}
+        />
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</RecommendeddBox>
     </>
   );
 };
