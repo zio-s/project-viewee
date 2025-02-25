@@ -80,7 +80,7 @@ const HeroSection = ({ changeContent, id }) => {
   if (error) return <div>Error: {error}</div>;
   if (!detail) return null;
 
-  const { trailer } = detail.videoData;
+  const trailer = detail.videoData?.trailer || null;
   const { title, overview, backdrop_path, poster_path } = detail;
   const opts = trailer
     ? [
