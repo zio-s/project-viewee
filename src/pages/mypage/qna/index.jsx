@@ -6,6 +6,7 @@ import Button from '../../../ui/button/defaultButton';
 import { useState } from 'react';
 import { authActions } from '../../../store/modules/authSlice';
 import { useNavigate } from 'react-router';
+import { showToast } from '../../../ui/toast/showToast';
 
 const QnA = () => {
   const dispatch = useDispatch();
@@ -97,10 +98,10 @@ const QnA = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (title.trim() === '' || content.trim() === '') {
-      alert('제목과 내용을 모두 입력하세요.');
+      showToast(`centerInfo`, { message: '제목과 내용을 모두 입력하세요.' });
       return;
     } else if (!isAgree) {
-      alert('개인정보 수집 및 이용에 동의하셔야 합니다.');
+      showToast(`centerInfo`, { message: '개인정보 수집 및 이용에 동의하셔야 합니다.' });
       return;
     } else {
       const requested = { category: category, title: title, content: content };
