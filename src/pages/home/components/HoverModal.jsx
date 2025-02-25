@@ -7,8 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/modules/authSlice';
 
 const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, icon, ...props }) => {
+  const handleClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   return (
-    <StyledPlayButton $size={size} $fullWidth={fullWidth} onClick={onClick} {...props}>
+    <StyledPlayButton type="button" $size={size} $fullWidth={fullWidth} onClick={handleClick} {...props}>
       {children}
     </StyledPlayButton>
   );
@@ -82,7 +91,9 @@ const LikeButton = ({ onLiked, onClick, content }) => {
 
   const isLiked = user?.liked?.some((item) => item.id === content?.id) || false;
 
-  const handleLikeClick = () => {
+  const handleLikeClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     console.log('✅ 좋아요 토글 실행됨:', content);
     dispatch(authActions.toggleLiked(content));
     setOnLiked(!onLiked);
