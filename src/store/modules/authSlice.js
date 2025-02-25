@@ -125,6 +125,14 @@ export const authSlice = createSlice({
     },
     deleteReviewed: (state, action) => {
       state.user.reviewed = state.user.reviewed.filter((item) => item.id !== action.payload);
+      state.joinData = state.joinData.map((item) =>
+        item.id === state.user.id
+          ? { ...item, reviewed: item.reviewed.filter((item) => item.id !== action.payload) }
+          : item
+      );
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('prevUser', JSON.stringify(state.user));
     },
     changeUser: (state, action) => {
       state.user = state.joinData.find((item) => item.id === action.payload);
@@ -176,6 +184,9 @@ export const authSlice = createSlice({
           : item
       );
       state.user.reviewed = state.user.reviewed.map((item) => (item.id === id ? { ...item, rate: rate } : item));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('prevUser', JSON.stringify(state.user));
     },
     prevUser: (state, action) => {
       state.user = action.payload;
@@ -336,6 +347,7 @@ export const authSlice = createSlice({
 
       localStorage.setItem('user', JSON.stringify(state.user));
       localStorage.setItem('joinData', JSON.stringify(state.joinData));
+      localStorage.setItem('prevUser', JSON.stringify(state.user));
     },
 
     updateReview: (state, action) => {
