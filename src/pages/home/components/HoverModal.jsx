@@ -162,7 +162,6 @@ const HoverModal = ({ reviewData, detailData, hotData, nowPlaying }) => {
     }
   }, [detailData]);
   useEffect(() => {}, [content]);
-
   const handlePlayClick = () => {
     if (trailerKey) {
       setShowTrailer(true);
