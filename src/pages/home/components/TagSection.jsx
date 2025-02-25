@@ -31,18 +31,17 @@ const GENRE_IDS = {
 const TagSection = () => {
   const dispatch = useDispatch();
 
-  // ✅ 선택된 장르 상태 추가
+
   const [selectedGenre, setSelectedGenre] = useState(null);
 
-  // ✅ Redux에서 콘텐츠 리스트 가져오기
   const contentList = useSelector((state) => state.genre.contentList || []);
 
   const handleTagClick = (tag) => {
     if (selectedGenre === tag) {
-      // ✅ 같은 태그 클릭 시 초기화 (토글 기능)
+   
       setSelectedGenre(null);
     } else {
-      // ✅ 선택한 장르 업데이트 및 데이터 요청
+
       setSelectedGenre(tag);
       dispatch(setGenre(tag));
       dispatch(fetchGenreContent(GENRE_IDS[tag]));
@@ -61,7 +60,7 @@ const TagSection = () => {
         </Swiper>
       </div>
 
-      {/* ✅ 선택한 장르가 있을 경우 스와이퍼 표시 */}
+  
       {selectedGenre && contentList.length > 0 && (
         <NewSwiperContainer style={{ marginTop: '30px' }}>
           <GenreTitle>{selectedGenre}</GenreTitle>
