@@ -29,20 +29,15 @@ const GENRE_IDS = {
 };
 
 const TagSection = () => {
-  const dispatch = useDispatch();
-  const { contentList, status, selectedGenre } = useSelector((state) => state.genre);
+<<<<<<<<< Temporary merge branch 1
+=========
+  const navigate = useNavigate();
 
   const handleTagClick = (tag) => {
-    const genreId = GENRE_IDS[tag];
-
-    if (selectedGenre === tag) {
-      dispatch(setGenre(null));
-    } else {
-      dispatch(setGenre(tag));
-      dispatch(fetchGenreContent(genreId));
-    }
+    navigate(`/category?search=${encodeURIComponent(tag)}`);
   };
 
+>>>>>>>>> Temporary merge branch 2
   return (
     <TagSectionWrapper>
       <div style={{ marginBottom: '30px' }}>
