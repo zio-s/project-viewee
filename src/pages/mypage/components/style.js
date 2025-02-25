@@ -185,6 +185,7 @@ export const ProfileWrap = styled.div`
         `}
         h2 {
           font-size: var(--font-content-l-mobile);
+
           ${mobileMore`
             font-size: var(--font-content-xl);
           `}
@@ -192,8 +193,10 @@ export const ProfileWrap = styled.div`
             font-size: var(--font-content-xxl);
           `}
           .userName {
-            display: inline;
+            display: inline-block;
             text-decoration: underline;
+            color: var(--primary-50);
+            text-underline-offset: 7px;
           }
         }
         .edit {

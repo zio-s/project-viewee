@@ -1,28 +1,34 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Tag from '../../../ui/tag/index';
 import { TagSectionWrapper } from '../style';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
+const GENRE_IDS = {
+  액션: 28,
+  미스터리: 9648,
+  로맨스: 10749,
+  스릴러: 53,
+  코미디: 35,
+  SF: 878,
+  리얼리티: 10764,
+  모험: 12,
+  드라마: 18,
+};
+
 const TagSection = () => {
-  const tags = ['태그1', '태그2', '태그3', '태그4', '태그5', '태그6', '태그7', '태그8'];
+  const navigate = useNavigate();
+
+  const handleTagClick = (tag) => {
+    navigate(`/category?search=${encodeURIComponent(tag)}`);
+  };
+
   return (
     <TagSectionWrapper>
-      <Swiper
-        spaceBetween={10} // 기본값
-        slidesPerView={'auto'}
-        breakpoints={{
-          768: {
-            spaceBetween: 18, // 768px 이하일 때 spaceBetween 변경
-          },
-          1024: {
-            spaceBetween: 18, // 768px 이하일 때 spaceBetween 변경
-          },
-        }}
-      >
-        {tags.map((tag, index) => (
-          <SwiperSlide key={index} style={{ minWidth: 'auto', maxWidth: '100%' }}>
+      <Swiper spaceBetween={10} slidesPerView={'auto'}>
+        {Object.keys(GENRE_IDS).map((tag, index) => (
+          <SwiperSlide key={index} onClick={() => handleTagClick(tag)}>
             <Tag className="tagSlide">{tag}</Tag>
           </SwiperSlide>
         ))}

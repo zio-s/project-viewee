@@ -20,7 +20,7 @@ const CardData = [
     genre: 'TV드라마',
     logo: '/images/banner2Logo2.png',
     icon: '/images/banner2Icon2.png',
-    item: '/images/banner2Item1.png',
+    item: '/images/banner2Item2.png',
     text: '정신병동에도 아침이 와요',
     boldText: `안녕하세요! '다시' 좋은 아침입니다!`,
   },

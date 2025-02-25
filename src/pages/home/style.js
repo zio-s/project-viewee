@@ -230,6 +230,9 @@ export const RatedSwiperSlide = styled.li`
   flex: 0 0 auto;
   width: 100px;
   height: 150px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 
   ${mobileMore`
     width: 190px;
@@ -344,6 +347,7 @@ export const NewSwiperSlide = styled.li`
   width: 100px;
   height: 150px;
   flex-shrink: 0;
+  cursor: pointer;
 
   ${mobileMore`
     width: 190px;

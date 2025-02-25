@@ -6,7 +6,6 @@ import MarqueeSection from './components/MarqueeSection';
 import MarqueeSection2 from './components/MarqueeSection2';
 import TopRated from './components/TopRated';
 import SpecialEdition from './components/SpecialEdition';
-
 import TagSection from './components/TagSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { MainPageData } from '../../store/modules/getThunk';
@@ -15,6 +14,7 @@ import Recommend from './components/Recommend';
 import SpecialEdition2 from './components/SpecialEdition2';
 import SpecialEdition2Back from './components/SpecialEdition2Back';
 import SpecialEditionBack from './components/SpeicialEditionBack';
+import PopupBanner from '../../common/popup/PopupBanner';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,12 @@ const Home = () => {
     dispatch(MainPageData());
     // window.scrollTo(0, 0);
   }, [dispatch]);
+
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  const handleSelectGenre = (genreId) => {
+    setSelectedGenre(genreId);
+  };
 
   // 컨텐츠 클릭 핸들러
   // const handleContentClick = (content) => {
@@ -85,6 +91,7 @@ const Home = () => {
         <SectionWrapper>
           <Recommend hotData={hot} />
         </SectionWrapper>
+        <PopupBanner />
       </VisualWrap>
     </>
   );

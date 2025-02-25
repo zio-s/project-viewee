@@ -52,15 +52,15 @@ const InfoSection = ({ changeContent, id }) => {
     const certification = koreanRelease?.release_dates[0]?.certification;
 
     const ratingMap = {
-      ALL: '전체 관람가',
-      12: '12세 관람가',
-      15: '15세 관람가',
-      18: '청소년 관람불가',
-      G: '전체 관람가',
-      PG: '12세 관람가',
-      'PG-13': '15세 관람가',
-      R: '청소년 관람불가',
-      'NC-17': '청소년 관람불가',
+      ALL: <img src='../public/icons/age/square/ALL.svg' alt='전체 관람가' />,
+      12: <img src='../public/icons/age/square/12.svg' alt='12세 관람가' />,
+      15: <img src='../public/icons/age/square/15.svg' alt='15세 관람가' />,
+      18: <img src='../public/icons/age/square/19.svg' alt='19세 관람가' />,
+      G: <img src='../public/icons/age/square/ALL.svg' alt='전체 관람가' />,
+      PG: <img src='../public/icons/age/square/12.svg' alt='12세 관람가' />,
+      'PG-13': <img src='../public/icons/age/square/15.svg' alt='15세 관람가' />,
+      R: <img src='../public/icons/age/square/19.svg' alt='19세 관람가' />,
+      'NC-17': <img src='../public/icons/age/square/19.svg' alt='19세 관람가' />,
     };
     return ratingMap[certification] || '등급 정보 없음';
   };
@@ -69,7 +69,7 @@ const InfoSection = ({ changeContent, id }) => {
     <MovieInfoSection>
       <div className="movie-content">
         <div className="poster-wrapper">
-          <img src={`https://image.tmdb.org/t/p/w1280${imagePath}`} alt={contentTitle} />
+          <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={contentTitle} />
         </div>
         <div className="info-wrapper">
           <h2>{contentTitle}</h2>
