@@ -5,6 +5,18 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { mobileMore, tabletMore } from '../../styled/Mixin';
 
+export const HomeWrap = styled.div`
+  .lineBanner {
+    display: none;
+    ${tabletMore`
+    margin-bottom:70px;
+    display:block;
+    width: 1920px;
+    height: 116px;
+    `}
+  }
+`;
+
 export const GenreTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
