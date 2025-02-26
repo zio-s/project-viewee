@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/modules/authSlice';
+import { notificationActions } from '../../../store/modules/notificationSlice';
+import { toast } from 'react-toastify';
+import { showToast } from '../../../ui/toast/showToast';
 
 const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, icon, ...props }) => {
   const handleClick = (event) => {
@@ -25,14 +28,14 @@ const PlayButton = ({ children, onClick, size = 'medium', fullWidth = false, ico
 
 const DownloadButton = ({ content }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth?.user) || null;
+  const user = useSelector((state) => state.authR?.user) || null;
   const [isDownloaded, setIsDownloaded] = useState(false);
 
   useEffect(() => {
     if (user) {
       setIsDownloaded(user.downloaded?.some((item) => item.id === content?.id) || false);
     }
-  }, [user, content]); // Redux 상태 변경 시, 다시 체크하도록 의존성 추가
+  }, [user, content]);
 
   if (!content) {
     console.warn('🚨 DownloadButton: content 데이터가 없습니다.');
@@ -42,8 +45,30 @@ const DownloadButton = ({ content }) => {
   const handleDownloadClick = (event) => {
     event.stopPropagation();
 
+    const wasDownloaded = isDownloaded;
+
     dispatch(authActions.toggleDownloaded(content));
-    setIsDownloaded((prev) => !prev); // 로컬 상태 업데이트로 즉각 반응
+
+    if (!wasDownloaded) {
+      dispatch(
+        notificationActions.createContentNotification({
+          userId: user.id,
+          contentId: content.id,
+          contentTitle: content.title || content.name,
+          contentType: content.media_type || (content.first_air_date ? 'tv' : 'movie'),
+          action: 'download',
+        })
+      );
+    }
+    toast.success(`"${content.title || content.name}"를 찜하셨습니다.`, {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+    setIsDownloaded((prev) => !prev);
   };
 
   return (
@@ -80,27 +105,40 @@ const DownloadButton = ({ content }) => {
   );
 };
 
-const LikeButton = ({ onLiked, onClick, content }) => {
+const LikeButton = ({ content, onClick }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth?.user) || null;
-
-  if (!content) {
-    console.warn('🚨 LikeButton: content 데이터가 없습니다.');
-    return null;
-  }
+  const user = useSelector((state) => state.authR?.user) || null;
+  const [onLiked, setOnLiked] = useState(false);
+  useEffect(() => {
+    setOnLiked(isLiked);
+  }, []);
 
   const isLiked = user?.liked?.some((item) => item.id === content?.id) || false;
 
   const handleLikeClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
-
+    const wasLiked = isLiked;
     dispatch(authActions.toggleLiked(content));
     setOnLiked(!onLiked);
+    if (!wasLiked) {
+      dispatch(
+        notificationActions.createContentNotification({
+          userId: user.id,
+          contentId: content.id,
+          contentTitle: content.title || content.name,
+          contentType: content.media_type || (content.first_air_date ? 'tv' : 'movie'),
+          action: 'liked',
+        })
+      );
+      showToast('liked', content);
+    } else {
+      showToast('unliked', content);
+    }
   };
 
   return (
-    <PlayButton className="likeButton" onClick={onClick}>
+    <PlayButton className="likeButton" onClick={handleLikeClick}>
       <motion.svg
         width="35"
         height="35"

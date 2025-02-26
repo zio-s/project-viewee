@@ -12,6 +12,7 @@ import couponR from './modules/couponSlice';
 import searchR from './modules/searchSlice';
 import gsapR from './modules/gsapSlice';
 import genre from './modules/genreSlice';
+import notiR from './modules/notificationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     searchR,
     gsapR,
     genre,
+    notiR,
   },
 
   middleware: (getDefaultMiddleware) =>
