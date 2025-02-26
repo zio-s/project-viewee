@@ -25,6 +25,9 @@ const detailSlice = createSlice({
     cacheImage: (state, action) => {
       state.cachedImages[action.payload.path] = action.payload.imageUrl;
     },
+    share: (state, action) => {
+      console.log('shared');
+    },
   },
   extraReducers: (builder) => {
     builder
