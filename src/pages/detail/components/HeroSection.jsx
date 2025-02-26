@@ -18,7 +18,7 @@ import { detailActions } from '../../../store/modules/detailSlice';
 import { authActions } from '../../../store/modules/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { notificationActions } from '../../../store/modules/notificationSlice';
-import SharePopup from './SharePopUp';
+import SharePopup from './SharePopup';
 
 const HeroSection = ({ changeContent, id }) => {
   const dispatch = useDispatch();
