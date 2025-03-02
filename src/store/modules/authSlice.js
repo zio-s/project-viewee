@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { notificationActions } from './notificationSlice';
 
 const initialState = {
   joinData: JSON.parse(localStorage.getItem('joinData')) || [
@@ -395,6 +396,99 @@ export const authSlice = createSlice({
         localStorage.setItem('user', JSON.stringify(state.user));
         localStorage.setItem('joinData', JSON.stringify(state.joinData));
       }
+    },
+    // authSlice.js의 reducers 객체 안에 아래 액션들을 추가하세요
+
+    // 알림 관련 액션 추가
+    initializeNotifications: (state, action) => {
+      if (!state.user) return;
+
+      // 사용자의 알림 초기화 로직
+      // 예: API에서 사용자의 알림을 가져온 후 저장
+      const userId = state.user.id;
+      // API 호출 후 저장된 알림을 가져오는 로직이 필요
+    },
+
+    addNotification: (state, action) => {
+      if (!state.user) return;
+
+      // user 객체에 notifications 필드가 없으면 추가
+      if (!state.user.notifications) {
+        state.user.notifications = [];
+      }
+
+      // 새 알림 추가
+      const newNotification = {
+        id: Date.now(),
+        ...action.payload,
+        read: false,
+        createdAt: new Date().toISOString(),
+      };
+
+      state.user.notifications.unshift(newNotification);
+
+      // joinData도 업데이트
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, notifications: [...state.user.notifications] } : user
+      );
+
+      // localStorage 업데이트
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
+
+    markNotificationAsRead: (state, action) => {
+      if (!state.user || !state.user.notifications) return;
+
+      const notificationId = action.payload;
+
+      // 알림 상태 업데이트
+      state.user.notifications = state.user.notifications.map((notification) =>
+        notification.id === notificationId ? { ...notification, read: true } : notification
+      );
+
+      // joinData도 업데이트
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, notifications: [...state.user.notifications] } : user
+      );
+
+      // localStorage 업데이트
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
+
+    markAllNotificationsAsRead: (state) => {
+      if (!state.user || !state.user.notifications) return;
+
+      // 모든 알림 읽음 처리
+      state.user.notifications = state.user.notifications.map((notification) => ({ ...notification, read: true }));
+
+      // joinData도 업데이트
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, notifications: [...state.user.notifications] } : user
+      );
+
+      // localStorage 업데이트
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
+    },
+
+    deleteNotification: (state, action) => {
+      if (!state.user || !state.user.notifications) return;
+
+      const notificationId = action.payload;
+
+      // 알림 삭제
+      state.user.notifications = state.user.notifications.filter((notification) => notification.id !== notificationId);
+
+      // joinData도 업데이트
+      state.joinData = state.joinData.map((user) =>
+        user.id === state.user.id ? { ...user, notifications: [...state.user.notifications] } : user
+      );
+
+      // localStorage 업데이트
+      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('joinData', JSON.stringify(state.joinData));
     },
   },
 });
