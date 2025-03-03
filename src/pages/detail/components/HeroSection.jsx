@@ -19,6 +19,7 @@ import { authActions } from '../../../store/modules/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { notificationActions } from '../../../store/modules/notificationSlice';
 import SharePopup from './SharePopup';
+import { showToast } from '../../../ui/toast/showToast';
 
 const HeroSection = ({ changeContent, id }) => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const HeroSection = ({ changeContent, id }) => {
     const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
     setReviews(storedReviews);
   }, []);
+
   useEffect(() => {
     if (id && state?.type) {
       dispatch(getContentDetail({ type: state.type, id }));
@@ -54,13 +56,12 @@ const HeroSection = ({ changeContent, id }) => {
   }, [dispatch, id, state?.type]);
 
   const handleAddReview = (newReview) => {
-    // 현재 로그인한 사용자가 없으면 리뷰 작성 불가
     if (!user) {
-      alert('리뷰를 작성하려면 로그인이 필요합니다.');
+      showToast('centerInfo', { message: '리뷰를 작성하려면 로그인이 필요합니다.' });
       return;
     }
     if (nowReview.find((item) => item.userId === user.userId)) {
-      alert('이미 해당 작품에 리뷰를 등록하셨습니다.');
+      showToast('centerInfo', { message: '이미 해당 작품에 리뷰를 등록하셨습니다.' });
       return;
     }
 
