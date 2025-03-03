@@ -4,6 +4,7 @@ import Input from '../../../ui/input';
 import { CouponWrap } from './style';
 import { useRef, useState } from 'react';
 import { authActions } from '../../../store/modules/authSlice';
+import { showToast } from '../../../ui/toast/showToast';
 const Coupon = () => {
   const couponList = useSelector((state) => state.authR.user.coupon);
   const nowCoupon = useSelector((state) => state.couponR.couponList);
@@ -18,17 +19,17 @@ const Coupon = () => {
     e.preventDefault();
     const addCoupon = nowCoupon.find((coupon) => coupon.code === inputValue);
     if (!addCoupon) {
-      alert('존재하지 않는 쿠폰입니다.');
+      showToast(`centerInfo`, { message: '존재하지 않는 쿠폰입니다!' });
       setInputValue('');
       textRef.current.focus();
       return;
     } else if (couponList.find((coupon) => coupon.code === inputValue)) {
-      alert('이미 발급된 쿠폰입니다.');
+      showToast(`centerInfo`, { message: '이미 발급된 쿠폰입니다!' });
       setInputValue('');
       textRef.current.focus();
       return;
     } else {
-      alert(addCoupon.title + '쿠폰이 발급되었습니다.');
+      showToast(`centerSuccess`, { message: addCoupon.title + '쿠폰이 발급되었습니다.', center: true });
       dispatch(authActions.couponAdd(addCoupon));
       setInputValue('');
       textRef.current.focus();
@@ -37,7 +38,7 @@ const Coupon = () => {
   const onUse = (id) => {
     if (confirm('사용하시겠습니까?')) {
       dispatch(authActions.couponUse(id));
-      alert('쿠폰 사용 완료!');
+      showToast(`centerSuccess`, { message: '쿠폰이 사용 되었습니다!' });
     }
   };
   return (

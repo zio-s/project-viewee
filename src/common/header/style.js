@@ -114,7 +114,7 @@ export const TopMenu = styled.ul`
       }
     }
 
-    button {
+    .search {
       display: inline-flex;
       align-items: center;
       justify-content: center;

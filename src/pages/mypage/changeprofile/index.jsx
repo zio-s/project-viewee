@@ -6,6 +6,7 @@ import Input from '../../../ui/input';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../ui/button/defaultButton';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { showToast } from '../../../ui/toast/showToast';
 const ChangeProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const ChangeProfile = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) {
-      alert('이름을 입력 해주세요!');
+      showToast('centerInfo', { message: '이름을 입력 해주세요!' });
       return;
     }
 
