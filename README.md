@@ -406,7 +406,7 @@ project-root/
 
 ## 📞 연락처
 
-프로젝트에 관한 문의나 제안이 있으시면 [이메일](mailto:email@example.com)로 연락주세요.
+프로젝트에 관한 문의나 제안이 있으시면 [이메일](mailto:popqr1@gmail.com)로 연락주세요.
 
 ---
 
