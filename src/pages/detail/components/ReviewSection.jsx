@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   ModalOverlay,
   ModalContent,
@@ -11,23 +11,19 @@ import {
 } from '../style';
 import { useSelector } from 'react-redux';
 
-const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
+const ReviewSection = ({ isOpen, onClose, reviewed, onSubmit, setReviews }) => {
   const [selectedStars, setSelectedStars] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
-
   const { user } = useSelector((state) => state.authR);
-  const currentUser = user ? user.username : '게스트';
-
+  const currentUser = user ? user.userId : '게스트';
   const handleStarClick = (index) => {
     setSelectedStars(index + 1);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitting review:', reviewText, selectedStars);
-
     if (!user) {
       alert('리뷰를 작성하려면 로그인이 필요합니다.');
       return;
@@ -37,8 +33,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
       const currentDate = new Date().toLocaleDateString();
 
       if (editingIndex !== null) {
-        // 수정 모드일 경우
-        const updatedReviews = reviews.map((review, index) =>
+        const updatedReviews = reviewed.map((review, index) =>
           index === editingIndex
             ? {
                 ...review,
@@ -77,7 +72,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
   };
 
   const handleEdit = (index) => {
-    const reviewToEdit = reviews[index];
+    const reviewToEdit = reviewed[index];
 
     // 현재 사용자가 작성한 리뷰만 수정 가능
     if (reviewToEdit.userId !== user?.id) {
@@ -92,7 +87,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
   };
 
   const handleDelete = (index) => {
-    const reviewToDelete = reviews[index];
+    const reviewToDelete = reviewed[index];
 
     // 현재 사용자가 작성한 리뷰만 삭제 가능
     if (reviewToDelete.userId !== user?.id) {
@@ -100,7 +95,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
       return;
     }
 
-    const updatedReviews = reviews.filter((_, i) => i !== index);
+    const updatedReviews = reviewed.filter((_, i) => i !== index);
     setReviews(updatedReviews);
     // 로컬 스토리지 업데이트
     localStorage.setItem('reviews', JSON.stringify(updatedReviews));
@@ -157,8 +152,8 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
         </SubmitButton>
 
         <ReviewList>
-          {reviews.length > 0 ? (
-            [...reviews].reverse().map((review, index) => (
+          {reviewed.length > 0 ? (
+            [...reviewed].reverse().map((review, index) => (
               <ReviewItem key={index}>
                 <span>
                   {[...Array(5)].map((_, i) => (
@@ -167,16 +162,16 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
                       width="20"
                       height="20"
                       viewBox="0 0 50 50"
-                      fill={i < review.stars ? 'var(--secondary-50)' : '#CECECE'}
+                      fill={i < review.rate ? 'var(--secondary-50)' : '#CECECE'}
                     >
                       <path d="M11.0338 46.7535C11.8918 47.4232 12.98 47.193 14.2774 46.2514L25.3474 38.111L36.4384 46.2514C37.7358 47.193 38.8031 47.4232 39.682 46.7535C40.54 46.105 40.7283 45.0376 40.2052 43.51L35.8315 30.4939L47.0061 22.4582C48.3036 21.5375 48.8268 20.5748 48.492 19.5285C48.1572 18.524 47.1736 18.0218 45.5624 18.0427L31.8556 18.1264L27.6911 5.04743C27.189 3.49888 26.4356 2.72461 25.3474 2.72461C24.2802 2.72461 23.5268 3.49888 23.0247 5.04743L18.8603 18.1264L5.15353 18.0427C3.54219 18.0218 2.55865 18.524 2.22383 19.5285C1.86808 20.5748 2.41217 21.5375 3.7096 22.4582L14.8843 30.4939L10.5107 43.51C9.98751 45.0376 10.1758 46.105 11.0338 46.7535Z" />
                     </svg>
                   ))}
                 </span>
                 <span>
-                  {review.user} | {review.date}
+                  {review.username} | {review.date}
                 </span>
-                <p>{review.text}</p>
+                <p>{review.content}</p>
                 <div className="icon-container">
                   <div className="icon-wrapper">
                     <svg width="25" height="25" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,7 +212,7 @@ const ReviewSection = ({ isOpen, onClose, reviews, onSubmit, setReviews }) => {
                     </svg>
                   </div>
                 </div>
-                {review.user === currentUser && (
+                {review.userId === currentUser && (
                   <div className="dropdown">
                     <div onClick={() => setDropdownOpen(dropdownOpen === index ? null : index)}>
                       <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">

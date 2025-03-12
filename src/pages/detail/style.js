@@ -2,6 +2,85 @@ import styled from 'styled-components';
 import { StyledButton as OriginalStyledButton } from '../../common/button/style';
 import { StyledInput as OriginalStyledInput } from '../../ui/input/style';
 
+export const SharePopupWrap = styled.div`
+  position: absolute;
+  width: calc(100vw - 30px);
+  max-width: 360px;
+  height: auto;
+  padding: 1.2rem 0.8rem;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  background-color: var(--gray-80);
+  border-radius: 0.5rem;
+  align-items: center;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    h2 {
+      font-size: var(--font-content-xxl-tablet);
+      font-weight: bold;
+      padding: 0.8rem 1.2rem;
+    }
+    img {
+      width: 4.5rem;
+      height: 4.5rem;
+      filter: invert(33%) sepia(3%) saturate(14%) hue-rotate(314deg) brightness(87%) contrast(89%);
+      cursor: pointer;
+    }
+  }
+  .shareSNS {
+    display: flex;
+    gap: 4rem;
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      cursor: pointer;
+      .icon {
+        width: 5rem;
+        height: 5rem;
+        background-color: var(--gray-70);
+        border-radius: 1000rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 3rem;
+          height: 3rem;
+        }
+      }
+    }
+  }
+  .copyLink {
+    display: flex;
+    gap: 3rem;
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    box-sizing: border-box;
+    input {
+      background-color: var(--gray-60);
+      width: 100%;
+      height: 3rem;
+      color: var(--text-primary);
+      border-radius: 0.5rem;
+      padding: 0 1rem;
+    }
+    button {
+      width: 5.5rem;
+      height: 3rem;
+      background-color: var(--gray-70);
+      color: var(--text-primary);
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+  }
+`;
 export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -459,8 +538,8 @@ export const Actions = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  div {
+  position: relative;
+  .actionWrap {
     display: flex;
     flex-direction: column;
     align-items: center;
