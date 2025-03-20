@@ -60,7 +60,7 @@ const TopRated = ({ hotData }) => {
     <>
       <NewSectionWrapper>
         <NewCardsSectionTitle>
-          요즘 다들 이거 봐요
+          요즘 다들 이거봐요
           <NewMoreLink href="./page/nowplaying.html" className="more">
             <svg className="moreIcon" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_630_1220)">
